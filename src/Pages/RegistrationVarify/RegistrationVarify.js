@@ -40,7 +40,7 @@ export default function RegistrationVarify() {
                   <div className="col-md-8"> <div class="col-md-12 font-weight-bold text-center h1">
             Create an Account!
           </div>
-          <div class="col-md-12 text-center">( As a Job Sheeker )</div>
+          <div class="col-md-12 text-center">( As a Job Seeker )</div>
           <div class="col-md-12 text-center">
            It only takes a couple of minutes to get started!
           </div>
