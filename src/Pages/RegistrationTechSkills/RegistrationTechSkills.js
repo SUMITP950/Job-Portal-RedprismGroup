@@ -44,7 +44,7 @@ Create an Account!
 
 </div>
 
-<div class="col-md-12 text-center">( As a Job Sheeker )</div>
+<div class="col-md-12 text-center">( As a Job Seeker )</div>
 
 <div class="col-md-12 text-center">
 
