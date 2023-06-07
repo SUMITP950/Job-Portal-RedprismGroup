@@ -20,14 +20,14 @@ export default function LandingPage() {
               />
             </div>
             <h2 class=" text-center font-jav">
-              <span style={{ color: "#35b71d" }}>Are</span> you a job Sheeker ?
+              <span style={{ color: "#35b71d" }}>Are</span> you a job Seeker ?
             </h2>
             <div class="font-19 text-center font-myr">
               "The harder you work , The luckier you get."
             </div>
             <div class="d-flex align-items-center justify-content-center mt-5">
               <Link to="/RegistrationBasic" class="btn border shadow btn-landing">
-                Register as job Sheeker
+                Register as job Seeker
               </Link>
             </div>
             <div class="d-flex align-items-center justify-content-center mt-3">
@@ -98,7 +98,7 @@ export default function LandingPage() {
                         <div class="d-flex">
                             <img src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
                                 style={{height:"50px"}} alt=""/>
-                            <h4 class="  mt-2"><Link to="/RegistrationBasic" class="text-dark">Job Sheekers</Link></h4>
+                            <h4 class="  mt-2"><Link to="/RegistrationBasic" class="text-dark">Job Seekers</Link></h4>
                         </div>
                         <p class="pl-5">Make your dream journey begins here</p>
                     </div>
