@@ -125,13 +125,7 @@ It only takes a couple of minutes to get started!
 
     <div className="col-md-8">
 
-      <i
-
-        className="feather-sunrise"
-
-        style={{ color: "#fff700", border: "2px solid pink" }}
-
-      ></i>
+      
 
     </div>
 

@@ -112,7 +112,7 @@ export default function SigninAsHr() {
                             </a>
                           </span>
                           <span class="ml-auto">
-                            <Link to="/Signup" class="forgot-pass">
+                            <Link to="/RegistrationBasic" class="forgot-pass">
                               Creat a new account
                             </Link>
                           </span>

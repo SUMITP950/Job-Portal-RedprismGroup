@@ -15,12 +15,12 @@ export default function Signin() {
   return (
     <div>
       <div class="d-lg-flex half">
-        <div class="bg order-1 order-md-2 d-none d-md-block login-bg-img"></div>
+        <div class="bg order-1 order-md-2 d-none d-md-block login-bg-img2"></div>
         <div class="contents order-2 order-md-1">
           <div class="container">
             <div class="row align-items-center justify-content-center login-page-height">
               <div class="col-md-7">
-                <h3 class="text-center">Welcome Back</h3>
+                <h3 class="text-center">Sign in as a Job Seeker</h3>
                 <p class="mb-4 text-center">
                   Lorem ipsum dolor sit amet elit. Sapiente sit aut eos
                   consectetur adipisicing.

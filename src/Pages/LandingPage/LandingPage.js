@@ -83,7 +83,7 @@ export default function LandingPage() {
               <Link to="/Signin" class="h6 text-dark">
                 Already have an account?{" "}
               </Link>
-              <Link to="/SignUp" class=" text-dark h6">
+              <Link to="/SigninAsHr" class=" text-dark h6">
                 &nbsp; Login as a HR
               </Link>
             </div>

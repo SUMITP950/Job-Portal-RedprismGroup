@@ -24,6 +24,7 @@ import RegistrationStatus from "./Pages/RegistrationStatus/RegistrationStatus"
 import RegistrationCreate from "./Pages/RegistrationCreate/RegistrationCreate"
 import BuddySurches from "./Pages/BuddySurches/BuddySurches"
 import JobSearch from "./Pages/JobSearch/JobSearch"
+import Rnav from "./Component/Rnav"
 
 
 export default function App() {
@@ -134,7 +135,7 @@ export default function App() {
         <Route
           path="/RegistrationBasic"
           element={
-            <><div className="container">
+            <><Rnav/><div className="container">
                 <div className="row">
                   <div className="col-md-4 dn"><SideBar/> 
                   </div>
@@ -151,7 +152,7 @@ export default function App() {
         <Route 
           path="/RegistrationVarify"
           element={
-            <><RegistrationVarify/>
+            <><Rnav/><RegistrationVarify/>
               
             </>
           }
@@ -159,7 +160,7 @@ export default function App() {
         <Route
           path="/RegistrationStatus"
           element={
-            <><RegistrationStatus/>
+            <><Rnav/><RegistrationStatus/>
               
               
             </>
@@ -168,7 +169,7 @@ export default function App() {
         <Route
           path="/RegistrationCreate"
           element={
-            <><RegistrationCreate/>
+            <><Rnav/><RegistrationCreate/>
               
               
             </>
@@ -177,7 +178,7 @@ export default function App() {
         <Route
           path="/RegistrationTechSkills"
           element={
-            <><RegistrationTechSkills/>
+            <><Rnav/><RegistrationTechSkills/>
             </>
           }
         />
