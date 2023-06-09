@@ -49,7 +49,7 @@ export default function RegistrationCreate() {
       
     </div>
                   </div>
-                  <div className="col-md-8"><div class="col-md-12 font-weight-bold text-center h1">
+                  <div className="col-md-8 mt-3"><div class="col-md-12 font-weight-bold text-center h1">
 
 Create an Account!
 
@@ -135,9 +135,9 @@ It only takes a couple of minutes to get started!
 
   </div>
 
-  <div class="d-flex align-items-center justify-content-center mt-5">
+  <div class="d-flex align-items-center justify-content-center mt-3">
 
-   <Link to="/RegistrationTechSkills"><button class="btn btn-pink mb-5" type="submit">
+   <Link to="/RegistrationTechSkills"><button class="btn btn-pink mb-5 px-5 " type="submit" style={{fontWeight:"600" , fontSize:"16px"}}>
 
       Continue
 

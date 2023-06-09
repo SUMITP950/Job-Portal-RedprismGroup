@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 
 export default function JobProfile() {
+    
   return (
     <div>    <div class="profile-cover text-center">
     <img class="img-fluid" src="img/job-profile.jpg" alt=""/>

@@ -49,7 +49,7 @@ export default function RegistrationStatus() {
       
     </div>
                   </div>
-                  <div className="col-md-8"><div class="col-md-12 font-weight-bold text-center h1">
+                  <div className="col-md-8 mt-3"><div class="col-md-12 font-weight-bold text-center h1">
 
 Create an Account!
 
@@ -159,11 +159,11 @@ style={{ color: "#fff700", border: "2px solid pink" }}
 
   <div class="d-flex align-items-center justify-content-center mt-5">
 
-    <Link to="/LandingPage"><button class="btn btn-pink mb-5" type="submit">
+    <Link to="/"class="btn btn-pink mb-5 px-5" style={{fontWeight:"600" , fontSize:"16px"}} type="submit">
 
-      Continue
+      Submit
 
-    </button></Link>
+    </Link>
 
   </div>
 

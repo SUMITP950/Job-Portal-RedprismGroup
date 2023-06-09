@@ -37,7 +37,7 @@ export default function RegistrationVarify() {
       
     </div> 
                   </div>
-                  <div className="col-md-8"> <div class="col-md-12 font-weight-bold text-center h1">
+                  <div className="col-md-8 mt-3"> <div class="col-md-12 font-weight-bold text-center h1">
             Create an Account!
           </div>
           <div class="col-md-12 text-center">( As a Job Seeker )</div>
@@ -70,8 +70,8 @@ export default function RegistrationVarify() {
                   />
                 </div>
                 </div>
-              <div class="d-flex align-items-center justify-content-center mt-5">
-               <Link to="/RegistrationCreate"> <button class="btn btn-pink mb-5" type="submit">
+              <div class="d-flex align-items-center justify-content-center mt-3">
+               <Link to="/RegistrationCreate"> <button class="btn btn-pink mb-5 px-5" type="submit"style={{fontWeight:"600" , fontSize:"16px"}}>
                  Continue
                 </button></Link>
               </div>

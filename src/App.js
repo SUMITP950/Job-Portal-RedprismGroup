@@ -33,7 +33,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/LandingPage"
+            path="/Home"
             element={
               <>
                 <Nav /> <Home />
@@ -139,7 +139,7 @@ export default function App() {
                 <div className="row">
                   <div className="col-md-4 dn"><SideBar/> 
                   </div>
-                  <div className="col-md-8"><RegistrationBasic/>
+                  <div className="col-md-8 mt-3"><RegistrationBasic/>
                  
                   </div>
                 </div>

@@ -83,9 +83,8 @@ export default function RegistrationBasic() {
                   </div>
                 </div>
                 <div class="col-md-8">
-                  <label>Gender:</label>
-                  <br />
-                   {" "}
+                  <b>Gender:</b>
+                  <div className="mb-4"><br/>
                   <input
                     type="radio"
                     id="html"
@@ -109,6 +108,7 @@ export default function RegistrationBasic() {
                     value="JavaScript"
                   />
                   <label for="javascript">Prefer Not to Say</label>
+                  </div>
                 </div>
               </div>
               <div class="form-row d-flex align-items-center justify-content-center">
@@ -160,10 +160,10 @@ export default function RegistrationBasic() {
               <div class="d-flex align-items-center justify-content-center">
               <Link
               to="/RegistrationVarify"
-              class="btn btn-pink mb-5"
-              type="submit"
+              class="btn btn-pink mb-5 px-5"
+              type="submit" style={{fontWeight:"600" , fontSize:"16px"}}
             >
-              Submit form
+              Continue
             </Link>
               </div>
             </form>

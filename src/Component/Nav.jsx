@@ -46,11 +46,11 @@ export default function Nav() {
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="jobs.html"><i class="feather-home mr-2 menu-icon"></i><span
+                    <a class="nav-link" href="#"><i class="feather-home mr-2 menu-icon"></i><span
                             class="d-none d-lg-inline">Home</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="connection.html"><i class="feather-users mr-2 menu-icon"></i><span
+                    <a class="nav-link" href="#"><i class="feather-users mr-2 menu-icon"></i><span
                             class="d-none d-lg-inline">Buddies</span></a>
                 </li>
 
@@ -166,7 +166,7 @@ export default function Nav() {
 
 
                 <li class="nav-item ml-3">
-                    <a class="btn btn-light upload-btn" href="jobs.html"><img
+                    <a class="btn btn-light upload-btn" href="#"><img
                             src="https://img.icons8.com/fluency/48/upload-2.png" alt="" class="icon-img" /><span
                             class="d-none d-lg-inline color-black upload-btn-text">Upload
                             resume</span></a>
