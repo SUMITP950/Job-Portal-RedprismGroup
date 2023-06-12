@@ -24,6 +24,7 @@ import RegistrationStatus from "./Pages/RegistrationStatus/RegistrationStatus"
 import RegistrationCreate from "./Pages/RegistrationCreate/RegistrationCreate"
 import BuddySurches from "./Pages/BuddySurches/BuddySurches"
 import JobSearch from "./Pages/JobSearch/JobSearch"
+import Internship from "./Pages/Internship/Internship"
 import Rnav from "./Component/Rnav"
 
 
@@ -183,6 +184,7 @@ export default function App() {
           }
         />
         <Route path="/JobSearch" element={<><Nav/><JobSearch/></>}/>
+        <Route path="/Internship" element={<><Nav/><Internship/></>}/>
       </Routes>
       </BrowserRouter>
     </>
