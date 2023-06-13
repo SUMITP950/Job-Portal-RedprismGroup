@@ -25,37 +25,97 @@ export default function BuddySurches() {
                           padding: "10px",
                         }}
                       >
-                        <div class="dropdown">
-                          <button
-                            class="btn dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <img
-                              class="dropdown-menu-img"
-                              src="https://img.icons8.com/ios/50/000000/circuit.png"
-                              alt=""
+                        {/* <div
+                          class="select2-dropdown bigdrop select2-dropdown--below"
+                          dir="ltr"
+                          style={{ width: "242.94px" }}
+                        >
+                          <span class="select2-search select2-search--dropdown">
+                            <input
+                              class="select2-search__field"
+                              type="search"
+                              tabindex="0"
+                              autocomplete="off"
+                              autocorrect="off"
+                              autocapitalize="none"
+                              spellcheck="false"
+                              role="textbox"
                             />
-                            Technology
-                          </button>
-                          <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
-                            <a class="dropdown-item" href="#">
-                              Action
-                            </a>
-                            <a class="dropdown-item" href="#">
-                              Another action
-                            </a>
-                            <a class="dropdown-item" href="#">
-                              Something else here
-                            </a>
-                          </div>
-                        </div>
+                          </span>
+                          <span class="select2-results">
+                            <ul
+                              class="select2-results__options"
+                              role="tree"
+                              id="select2-hess-results"
+                              aria-expanded="true"
+                              aria-hidden="false"
+                            >
+                              <li
+                                class="select2-results__option select2-results__option--highlighted"
+                                id="select2-hess-result-eq5h-Choose Your Class"
+                                role="treeitem"
+                                aria-selected="true"
+                                data-select2-id="select2-hess-result-eq5h-Choose Your Class"
+                              >
+                                Choose Your Class
+                              </li>
+                              <li
+                                class="select2-results__option"
+                                id="select2-hess-result-wmt5-Private &amp; Group Lessons"
+                                role="treeitem"
+                                aria-selected="false"
+                                data-select2-id="select2-hess-result-wmt5-Private &amp; Group Lessons"
+                              >
+                                Private &amp; Group Lessons
+                              </li>
+                              <li
+                                class="select2-results__option"
+                                id="select2-hess-result-16g5-THE FACILITATOR For Beginners"
+                                role="treeitem"
+                                aria-selected="false"
+                                data-select2-id="select2-hess-result-16g5-THE FACILITATOR For Beginners"
+                              >
+                                THE FACILITATOR For Beginners
+                              </li>
+                              <li
+                                class="select2-results__option"
+                                id="select2-hess-result-0pc1-THE FACILITATOR For Pregnant"
+                                role="treeitem"
+                                aria-selected="false"
+                                data-select2-id="select2-hess-result-0pc1-THE FACILITATOR For Pregnant"
+                              >
+                                THE FACILITATOR For Pregnant
+                              </li>
+                              <li
+                                class="select2-results__option"
+                                id="select2-hess-result-jdty-THE FACILITATOR Barre"
+                                role="treeitem"
+                                aria-selected="false"
+                                data-select2-id="select2-hess-result-jdty-THE FACILITATOR Barre"
+                              >
+                                THE FACILITATOR Barre
+                              </li>
+                              <li
+                                class="select2-results__option"
+                                id="select2-hess-result-b18f-THE FACILITATOR Core"
+                                role="treeitem"
+                                aria-selected="false"
+                                data-select2-id="select2-hess-result-b18f-THE FACILITATOR Core"
+                              >
+                                THE FACILITATOR Core
+                              </li>
+                              <li
+                                class="select2-results__option"
+                                id="select2-hess-result-iimm-THE FACILITATOR Restore"
+                                role="treeitem"
+                                aria-selected="false"
+                                data-select2-id="select2-hess-result-iimm-THE FACILITATOR Restore"
+                              >
+                                THE FACILITATOR Restore
+                              </li>
+                            </ul>
+                          </span>
+                        </div> */}
 
                         <div class="dropdown">
                           <button
