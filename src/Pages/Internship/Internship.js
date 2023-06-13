@@ -7,24 +7,23 @@ export default function Internship() {
     document.title = "Internship";
   }, []);
 
-  const [data, setData]=useState([]);
+  const [data, setData] = useState([]);
   useEffect(() => {
-  const url = "https://fakestoreapi.com/products/";
-  
-  const fetchData = async () => {
-    try {
-      const response = await fetch(url);
-      const json = await response.json();
-      console.log(json);
-      setData(json)
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-  
-  fetchData();
-  }, []);
+    const url = "https://fakestoreapi.com/products/";
 
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        const json = await response.json();
+        console.log(json);
+        setData(json);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -32,49 +31,61 @@ export default function Internship() {
         <div class="container-fluid body-padding">
           <div class="row justify-content-around">
             <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-            {(<div class="row">
-        {data.map((data, i) => (
-        <><div class="col-md-3">
-                <a href="#">
-                    <div class="border network-item rounded mb-3">
-                        <div class="p-3 d-flex align-items-center network-item-header">
-                            <div class="dropdown-list-image mr-3">
-                                <img class="rounded-circle" src={data.image} alt=""/>
+              {
+                <div class="row">
+                  {data.map((data, i) => (
+                    <>
+                      <div class="col-md-3">
+                        <a href="#">
+                          <div class="border-i network-item rounded mb-3">
+                            <div class="p-3 d-flex align-items-center network-item-header">
+                              <div class="dropdown-list-image mr-3">
+                                <img
+                                  class="rounded-circle"
+                                  src={data.image}
+                                  alt=""
+                                />
+                              </div>
+                              <div class="font-weight-bold">
+                                <h6
+                                  class="font-weight-bold text-dark mb-0 dataoveri"
+                                  title={data.title}
+                                >
+                                  {data.title}
+                                </h6>
+                                <div class="small text-black-50">
+                                  Photographer at Photography
+                                </div>
+                              </div>
                             </div>
-                            <div class="font-weight-bold">
-                                <h6 class="font-weight-bold text-dark mb-0 dataover" title={data.title}>{data.title}</h6>
-                                <div class="small text-black-50">Photographer at Photography</div>
+
+                            <div class="network-item-footer py-2 d-flex text-center">
+                              <div class="col-6 pl-3 pr-1">
+                                <button
+                                  type="button"
+                                  class="btn btn-primary btn-sm btn-block"
+                                >
+                                  {" "}
+                                  Connect{" "}
+                                </button>
+                              </div>
+                              <div class="col-6 pr-3 pl-1">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-primary btn-sm btn-block"
+                                >
+                                  {" "}
+                                  <i class="feather-user-plus"></i> Follow{" "}
+                                </button>
+                              </div>
                             </div>
-                        </div>
-                        <div class="d-flex align-items-center p-3 border-top border-bottom network-item-body">
-                            <div class="overlap-rounded-circle">
-                                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top"
-                                    title="Sophia Lee" src="img/p1.png" alt=""/>
-                                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top"
-                                    title="John Doe" src="img/p2.png" alt=""/>
-                                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top"
-                                    title="Julia Cox" src="img/p3.png" alt=""/>
-                                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top"
-                                    title="Robert Cook" src="img/p4.png" alt=""/>
-                                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top"
-                                    title="Sophia Lee" src="img/p5.png" alt=""/>
-                            </div>
-                            <span class="font-weight-bold small text-primary">4 mutual connections</span>
-                        </div>
-                        <div class="network-item-footer py-2 d-flex text-center">
-                            <div class="col-6 pl-3 pr-1">
-                                <button type="button" class="btn btn-primary btn-sm btn-block"> Connect </button>
-                            </div>
-                            <div class="col-6 pr-3 pl-1">
-                                <button type="button" class="btn btn-outline-primary btn-sm btn-block"> <i
-                                        class="feather-user-plus"></i> Follow </button>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            </>))}
-        </div>)}
+                          </div>
+                        </a>
+                      </div>
+                    </>
+                  ))}
+                </div>
+              }
             </main>
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
               <div class="border rounded bg-white mb-3">

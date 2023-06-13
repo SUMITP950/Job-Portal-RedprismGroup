@@ -123,65 +123,79 @@ export default function BuddySurches() {
                 </div>
               </div>
               <div className="row justify-content-center">
-              <div className="col-md-8 ">
-                {" "}
-                <div
-                  class="col-md-12 mt-5 "
-                  style={{
-                    border: "1px solid gray",
-                    borderRadius: "15px",
-                    backgroundColor: "#fff",
-                  }}
-                >
-                  <div class="d-flex">
-                    <img
-                      src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
-                      style={{ height: "100px" }}
-                      alt=""
-                    />
-                    <div className="d-block">
-                    <h4 class="text-dark mt-2">
-                      
-                       Username
-                      
-                    </h4>
-                  <p class=" ">Business Development Manager
-                    <br/>Confidential
-                    <br/>Mumbai, Maharashtra
-                  </p>
+                <div className="col-md-8 ">
+                  {" "}
+                  <div
+                    class="col-md-12 mt-5 "
+                    style={{
+                      border: "1px solid gray",
+                      borderRadius: "15px",
+                      backgroundColor: "#fff",
+                    }}
+                  >
+                    <div class="row px-2">
+                      <div className="col-md-3">
+                        <img
+                          src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
+                          style={{ height: "100px" }}
+                          alt=""
+                        />
+                      </div>
+                      <div className="col-md-5">
+                        <h4 class="text-dark mt-2">Username</h4>
+                        <p class=" ">
+                          Business Development Manager
+                          <br />
+                          Confidential
+                          <br />
+                          Mumbai, Maharashtra
+                        </p>
+                      </div>
+                      <div className="col-md-4  d-flex align-items-center">
+                        <div className="ml-5">
+                          <Link className="btn btn-dark">
+                            <i className="feather-plus-circle"></i> Add buddies
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <Link className="btn btn-dark my-5 ml-5 "><i className="feather-plus-circle"></i> Add buddies</Link>
+                  <div
+                    class="col-md-12 mt-5 "
+                    style={{
+                      border: "1px solid gray",
+                      borderRadius: "15px",
+                      backgroundColor: "#fff",
+                    }}
+                  >
+                    <div class="row px-2">
+                      <div className="col-md-3">
+                        <img
+                          src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
+                          style={{ height: "100px" }}
+                          alt=""
+                        />
+                      </div>
+                      <div className="col-md-5">
+                        <h4 class="text-dark mt-2">Username</h4>
+                        <p class=" ">
+                          Business Development Manager
+                          <br />
+                          Confidential
+                          <br />
+                          Mumbai, Maharashtra
+                        </p>
+                      </div>
+                      <div className="col-md-4  d-flex align-items-center">
+                        <div className="ml-5">
+                          <Link className="btn btn-dark">
+                            <i className="feather-plus-circle"></i> Add buddies
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div
-                  class="col-md-12 mt-5 "
-                  style={{
-                    border: "1px solid gray",
-                    borderRadius: "15px",
-                    backgroundColor: "#fff",
-                  }}
-                >
-                  <div class="d-flex">
-                    <img
-                      src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
-                      style={{ height: "100px" }}
-                      alt=""
-                    />
-                    <div className="d-block">
-                    <h4 class="text-dark mt-2">
-                      
-                       Username
-                      
-                    </h4>
-                  <p class=" ">Marketing and Adminiistration 
-                    <br/>Confidential
-                    <br/>Kolkata, Westbengal
-                  </p>
-                  </div>
-                  <Link className="btn btn-dark my-5 ml-5 "><i className="feather-plus-circle"></i> Add buddies</Link>
-                  </div>
-                </div>
-              </div>
               </div>
             </main>
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">

@@ -8,7 +8,15 @@
     display: none !important;
   }
 }
-/* Chrome, Safari, Edge, Opera */ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; } /* Firefox */ input[type="number"] { -moz-appearance: textfield; }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} /* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -60,10 +68,14 @@
 .btn-landing:hover {
   background-color: #b1e37d;
 }
-.btn-pink{background-color: var(--pink);
-color: var(--white);}
-.btn-pink:hover{background-color: #f3c5da;
-  color: var(--black);}
+.btn-pink {
+  background-color: var(--pink);
+  color: var(--white);
+}
+.btn-pink:hover {
+  background-color: #f3c5da;
+  color: var(--black);
+}
 /*start reg side bar */
 
 .pindicator {
@@ -80,9 +92,10 @@ color: var(--white);}
   position: relative;
   text-align: center;
   transform-style: preserve-3d;
-  
 }
-.tns90{transform: rotate(270deg);}
+.tns90 {
+  transform: rotate(270deg);
+}
 .pindicator .bullet::before,
 .pindicator .bullet::after {
   content: "";
@@ -149,11 +162,40 @@ color: var(--white);}
 .pindicator .next .text {
   color: black;
 }
-.bg-yellow{background-color:  var(--yellow);}
-.font-19{font-size: 19px;}
-.page-set{padding-right: 0px !important; padding-left: 0px !important; overflow: hidden; height: 100vh;}
-.font-jav{font-family:Javaneseo;}
-.font-myr{font-family: Myriad Pro; letter-spacing: 0.7px;font-weight: bold;}
+.bg-yellow {
+  background-color: var(--yellow);
+}
+.font-19 {
+  font-size: 19px;
+}
+.page-set {
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+  overflow: hidden;
+  height: 100vh;
+}
+.font-jav {
+  font-family: Javaneseo;
+}
+.font-myr {
+  font-family: Myriad Pro;
+  letter-spacing: 0.7px;
+  font-weight: bold;
+}
 
 /*end reg side bar */
-.jcc{justify-content: space-around !important;}
+.jcc {
+  justify-content: space-around !important;
+}
+
+/* internship start */
+.dataoveri {
+  white-space: nowrap;
+  width: 7rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.border-i {
+  border: 2px solid #000 !important;
+}
+/* internship end */

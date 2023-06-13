@@ -7,14 +7,14 @@ export default function RegistrationStatus() {
     document.title = "Registration";
   }, []);
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setMessage(event.target.value);
 
-    if(event.target.value=="No"){
-      document.getElementById("dis1").disabled="true" 
-      document.getElementById("dis2").disabled="true" 
+    if (event.target.value === "No") {
+      document.getElementById("dis1").disabled = "true";
+      document.getElementById("dis2").disabled = "true";
     }
   };
 
@@ -79,8 +79,11 @@ export default function RegistrationStatus() {
                   <div class="col-md-8 mb-3">
                     <label for="text">Looking For Job</label>
 
-                    <select class="form-control form-control-lg"  onChange={handleChange}
-        value={message}>
+                    <select
+                      class="form-control form-control-lg"
+                      onChange={handleChange}
+                      value={message}
+                    >
                       <option>Yes</option>
 
                       <option>No</option>
@@ -90,14 +93,14 @@ export default function RegistrationStatus() {
                   <div class="col-md-8 mb-3 ">
                     <label for="text">Notice Period</label>
 
-                    <select class="form-control form-control-lg"  id="dis1">
+                    <select class="form-control form-control-lg" id="dis1">
                       <option>Yes</option>
 
                       <option>No</option>
                     </select>
                   </div>
 
-                  <div class="col-md-8 mb-3 " >
+                  <div class="col-md-8 mb-3 ">
                     <label for="text">Immediate Joiner</label>
 
                     <select class="form-control form-control-lg" id="dis2">
