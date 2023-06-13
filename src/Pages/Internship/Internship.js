@@ -69,7 +69,7 @@ export default function Internship() {
                                   Connect{" "}
                                 </button>
                               </div>
-                              <div class="col-6 pr-3 pl-1">
+                              <div class="col-6  pl-1">
                                 <button
                                   type="button"
                                   class="btn btn-outline-primary btn-sm btn-block"

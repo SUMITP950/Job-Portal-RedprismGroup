@@ -27,7 +27,7 @@ export default function BuddySurches() {
                       >
                         <div class="dropdown">
                           <button
-                            class="btn  dropdown-toggle"
+                            class="btn dropdown-toggle"
                             type="button"
                             id="dropdownMenuButton"
                             data-toggle="dropdown"
@@ -151,8 +151,8 @@ export default function BuddySurches() {
                           Mumbai, Maharashtra
                         </p>
                       </div>
-                      <div className="col-md-4  d-flex align-items-center">
-                        <div className="ml-5">
+                      <div className="col-md-4 d-flex align-items-center">
+                        <div className="ml-4">
                           <Link className="btn btn-dark">
                             <i className="feather-plus-circle"></i> Add buddies
                           </Link>
@@ -187,7 +187,7 @@ export default function BuddySurches() {
                         </p>
                       </div>
                       <div className="col-md-4  d-flex align-items-center">
-                        <div className="ml-5">
+                        <div className="ml-4">
                           <Link className="btn btn-dark">
                             <i className="feather-plus-circle"></i> Add buddies
                           </Link>

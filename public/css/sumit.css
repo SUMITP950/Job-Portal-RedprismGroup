@@ -191,7 +191,7 @@ input[type="number"] {
 /* internship start */
 .dataoveri {
   white-space: nowrap;
-  width: 7rem;
+  width: 6rem;
   overflow: hidden;
   text-overflow: ellipsis;
 }
