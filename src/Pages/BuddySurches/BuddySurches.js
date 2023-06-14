@@ -1,22 +1,36 @@
 import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
+import Select from 'react-select';
 
-export default function BuddySurches() {
+
+export default function BuddySurches(props) {
   useEffect(() => {
-    document.title = "Job Search";
+    document.title = "Buddy Search";
   }, []);
 
+
+    const options = [
+      { value: 'chocolate', label: 'Chocolate' },
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'vanilla', label: 'Vanilla' }
+    ]
+
+
+
+    
   return (
     <>
+
+
       <div class="py-4">
         <div class="container-fluid body-padding">
           <div class="row justify-content-around">
             <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-              <div class="pt-3 body-color">
+              <div class="pt-3" style={{backgroundColor:"#edf2f6"}}>
                 <div class="container-fluid">
                   <div class="row justify-content-center">
-                    <div class="col-lg-8">
+                    <div class="col-md-12">
                       <div
                         class="d-flex justify-content-around"
                         style={{
@@ -25,158 +39,18 @@ export default function BuddySurches() {
                           padding: "10px",
                         }}
                       >
-                        {/* <div
-                          class="select2-dropdown bigdrop select2-dropdown--below"
-                          dir="ltr"
-                          style={{ width: "242.94px" }}
-                        >
-                          <span class="select2-search select2-search--dropdown">
-                            <input
-                              class="select2-search__field"
-                              type="search"
-                              tabindex="0"
-                              autocomplete="off"
-                              autocorrect="off"
-                              autocapitalize="none"
-                              spellcheck="false"
-                              role="textbox"
-                            />
-                          </span>
-                          <span class="select2-results">
-                            <ul
-                              class="select2-results__options"
-                              role="tree"
-                              id="select2-hess-results"
-                              aria-expanded="true"
-                              aria-hidden="false"
-                            >
-                              <li
-                                class="select2-results__option select2-results__option--highlighted"
-                                id="select2-hess-result-eq5h-Choose Your Class"
-                                role="treeitem"
-                                aria-selected="true"
-                                data-select2-id="select2-hess-result-eq5h-Choose Your Class"
-                              >
-                                Choose Your Class
-                              </li>
-                              <li
-                                class="select2-results__option"
-                                id="select2-hess-result-wmt5-Private &amp; Group Lessons"
-                                role="treeitem"
-                                aria-selected="false"
-                                data-select2-id="select2-hess-result-wmt5-Private &amp; Group Lessons"
-                              >
-                                Private &amp; Group Lessons
-                              </li>
-                              <li
-                                class="select2-results__option"
-                                id="select2-hess-result-16g5-THE FACILITATOR For Beginners"
-                                role="treeitem"
-                                aria-selected="false"
-                                data-select2-id="select2-hess-result-16g5-THE FACILITATOR For Beginners"
-                              >
-                                THE FACILITATOR For Beginners
-                              </li>
-                              <li
-                                class="select2-results__option"
-                                id="select2-hess-result-0pc1-THE FACILITATOR For Pregnant"
-                                role="treeitem"
-                                aria-selected="false"
-                                data-select2-id="select2-hess-result-0pc1-THE FACILITATOR For Pregnant"
-                              >
-                                THE FACILITATOR For Pregnant
-                              </li>
-                              <li
-                                class="select2-results__option"
-                                id="select2-hess-result-jdty-THE FACILITATOR Barre"
-                                role="treeitem"
-                                aria-selected="false"
-                                data-select2-id="select2-hess-result-jdty-THE FACILITATOR Barre"
-                              >
-                                THE FACILITATOR Barre
-                              </li>
-                              <li
-                                class="select2-results__option"
-                                id="select2-hess-result-b18f-THE FACILITATOR Core"
-                                role="treeitem"
-                                aria-selected="false"
-                                data-select2-id="select2-hess-result-b18f-THE FACILITATOR Core"
-                              >
-                                THE FACILITATOR Core
-                              </li>
-                              <li
-                                class="select2-results__option"
-                                id="select2-hess-result-iimm-THE FACILITATOR Restore"
-                                role="treeitem"
-                                aria-selected="false"
-                                data-select2-id="select2-hess-result-iimm-THE FACILITATOR Restore"
-                              >
-                                THE FACILITATOR Restore
-                              </li>
-                            </ul>
-                          </span>
-                        </div> */}
+                         
+                    
+                  
+                            <Select  options={options} isMulti  placeholder={'Technology'}/>
+                                 <Select  options={options} isMulti  placeholder={'Type'}/>
+                                 <Select  options={options} isMulti  placeholder={'Location'}/>
+                        
+                   
+                     
+                        
 
-                        <div class="dropdown">
-                          <button
-                            class="btn  dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <img
-                              class="dropdown-menu-img"
-                              src="https://img.icons8.com/ios/50/popular-man.png"
-                              alt=""
-                            />
-                            Type
-                          </button>
-                          <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
-                            <a class="dropdown-item" href="#">
-                              Action
-                            </a>
-                            <a class="dropdown-item" href="#">
-                              Another action
-                            </a>
-                            <a class="dropdown-item" href="#">
-                              Something else here
-                            </a>
-                          </div>
-                        </div>
-
-                        <div class="dropdown">
-                          <button
-                            class="btn  dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i class="feather-map-pin mr-2 menu-icon"></i>{" "}
-                            Location
-                          </button>
-
-                          <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
-                            <a class="dropdown-item" href="#">
-                              Action
-                            </a>
-                            <a class="dropdown-item" href="#">
-                              Another action
-                            </a>
-                            <a class="dropdown-item" href="#">
-                              Something else here
-                            </a>
-                          </div>
-                        </div>
+                       
                       </div>
                     </div>
                   </div>
@@ -258,7 +132,7 @@ export default function BuddySurches() {
                 </div>
               </div>
             </main>
-            <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+            <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12 dn">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm pt-4 pb-4">
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -324,7 +198,7 @@ export default function BuddySurches() {
                 </div>
               </div>
             </aside>
-            <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
+            <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12 dn">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm">
                   <h6 class="pt-3 text-center">Other Option</h6>

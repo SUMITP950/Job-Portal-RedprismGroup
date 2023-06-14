@@ -169,45 +169,50 @@ return (
         </div>
         {(<div class="row">
         {data.map((data, i) => (
-        <><div class="col-md-3">
-                <a href="profile.html">
-                    <div class="border network-item rounded mb-3">
-                        <div class="p-3 d-flex align-items-center network-item-header">
-                            <div class="dropdown-list-image mr-3">
-                                <img class="rounded-circle" src={data.image} alt=""/>
-                            </div>
-                            <div class="font-weight-bold">
-                                <h6 class="font-weight-bold text-dark mb-0 dataover" title={data.title}>{data.title}</h6>
-                                <div class="small text-black-50">Photographer at Photography</div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center p-3 border-top border-bottom network-item-body">
-                            <div class="overlap-rounded-circle">
-                                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top"
-                                    title="Sophia Lee" src="img/p1.png" alt=""/>
-                                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top"
-                                    title="John Doe" src="img/p2.png" alt=""/>
-                                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top"
-                                    title="Julia Cox" src="img/p3.png" alt=""/>
-                                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top"
-                                    title="Robert Cook" src="img/p4.png" alt=""/>
-                                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top"
-                                    title="Sophia Lee" src="img/p5.png" alt=""/>
-                            </div>
-                            <span class="font-weight-bold small text-primary">4 mutual connections</span>
-                        </div>
-                        <div class="network-item-footer py-2 d-flex text-center">
-                            <div class="col-6 pl-3 pr-1">
-                                <button type="button" class="btn btn-primary btn-sm btn-block"> Connect </button>
-                            </div>
-                            <div class="col-6 pr-3 pl-1">
-                                <button type="button" class="btn btn-outline-primary btn-sm btn-block"> <i
-                                        class="feather-user-plus"></i> Follow </button>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
+        <> <table class="table" style={{border:"none"}}>
+        <thead class="thead-pink">
+            <tr>
+                <th scope="col">Job Name</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Experience</th>
+                <th scope="col">Location</th>
+                <th scope="col">Technology</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Digital Marketing</td>
+                <td>7,000-20,00</td>
+                <td>2-3 Years</td>
+                <td>Kolkata</td>
+                <td>Python</td>
+                <td><button class="apply-btn"> Apply Now</button> <button class="share-btn"> Share <img
+                            src="img/icon/whatsapp.png" alt="" class="whatsapp-img"/></button>
+                </td>
+            </tr>
+            <tr>
+                <td>Web designer</td>
+                <td>7,000-20,00</td>
+                <td>2-3 Years</td>
+                <td>Kolkata</td>
+                <td>Java</td>
+                <td><button class="apply-btn"> Apply Now</button> <button class="share-btn"> Share <img
+                            src="img/icon/whatsapp.png" alt="" class="whatsapp-img"/></button>
+                </td>
+            </tr>
+            <tr>
+                <td>web development</td>
+                <td>7,000-20,00</td>
+                <td>2-3 Years</td>
+                <td>Kolkata</td>
+                <td>PHP</td>
+                <td><button class="apply-btn"> Apply Now</button> <button class="share-btn"> Share <img
+                            src="img/icon/whatsapp.png" alt="" class="whatsapp-img"/></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
             </>))}
         </div>)}
     </div>
