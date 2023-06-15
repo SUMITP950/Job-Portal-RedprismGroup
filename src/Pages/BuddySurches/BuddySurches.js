@@ -1,33 +1,26 @@
 import React, { useEffect, useState } from "react";
-
+import "../../App.css";
 import { Link } from "react-router-dom";
-import Select from 'react-select';
-
+import Select from "react-select";
 
 export default function BuddySurches(props) {
   useEffect(() => {
     document.title = "Buddy Search";
   }, []);
 
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
 
-    const options = [
-      { value: 'chocolate', label: 'Chocolate' },
-      { value: 'strawberry', label: 'Strawberry' },
-      { value: 'vanilla', label: 'Vanilla' }
-    ]
-
-
-
-    
   return (
     <>
-
-
       <div class="py-4">
         <div class="container-fluid body-padding">
           <div class="row justify-content-around">
             <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-              <div class="pt-3" style={{backgroundColor:"#edf2f6"}}>
+              <div class="pt-3" style={{ backgroundColor: "#edf2f6" }}>
                 <div class="container-fluid">
                   <div class="row justify-content-center">
                     <div class="col-md-12">
@@ -39,18 +32,116 @@ export default function BuddySurches(props) {
                           padding: "10px",
                         }}
                       >
-                         
-                    
-                  
-                            <Select  options={options} isMulti  placeholder={'Technology'}/>
-                                 <Select  options={options} isMulti  placeholder={'Type'}/>
-                                 <Select  options={options} isMulti  placeholder={'Location'}/>
-                        
-                   
-                     
-                        
+                        <div class="dropdown">
+                          <div className="d-flex align-items-center">
+                            <img
+                              class="dropdown-menu-img"
+                              src="https://img.icons8.com/ios/50/000000/circuit.png"
+                              alt=""
+                            />
+                            <Select
+                              styles={{
+                                container: (baseStyles, state) => ({
+                                  ...baseStyles,
 
-                       
+                                  display: "inherit",
+                                }),
+                                control: (baseStyles, state) => ({
+                                  ...baseStyles,
+
+                                  border: "none",
+                                  backgroundColor: "#edf2f6",
+                                }),
+                                placeholder: (baseStyles, state) => ({
+                                  ...baseStyles,
+                                  color: "Black",
+                                  fontWeight: "bold",
+                                }),
+                                indicatorSeparator: (baseStyles, state) => ({
+                                  ...baseStyles,
+                                  display: "none",
+                                }),
+                              }}
+                              options={options}
+                              isMulti
+                              placeholder={"Technology"}
+                            />
+                          </div>
+                        </div>
+
+                        <div class="dropdown">
+                          <div className="d-flex align-items-center">
+                            <img
+                              class="dropdown-menu-img"
+                              src="https://img.icons8.com/ios/50/popular-man.png"
+                              alt=""
+                            />
+                            <Select
+                              styles={{
+                                container: (baseStyles, state) => ({
+                                  ...baseStyles,
+
+                                  display: "inherit",
+                                }),
+                                control: (baseStyles, state) => ({
+                                  ...baseStyles,
+
+                                  border: "none",
+                                  backgroundColor: "#edf2f6",
+                                }),
+                                placeholder: (baseStyles, state) => ({
+                                  ...baseStyles,
+                                  color: "Black",
+                                  fontWeight: "bold",
+                                }),
+                                indicatorSeparator: (baseStyles, state) => ({
+                                  ...baseStyles,
+                                  display: "none",
+                                }),
+                              }}
+                              options={options}
+                              isMulti
+                              placeholder={"Type"}
+                            />
+                          </div>
+                        </div>
+
+                        <div class="dropdown">
+                          <div className="d-flex align-items-center">
+                            <img
+                              class="dropdown-menu-img"
+                              src="https://img.icons8.com/ios/50/popular-man.png"
+                              alt=""
+                            />
+                            <Select
+                              styles={{
+                                container: (baseStyles, state) => ({
+                                  ...baseStyles,
+
+                                  display: "inherit",
+                                }),
+                                control: (baseStyles, state) => ({
+                                  ...baseStyles,
+
+                                  border: "none",
+                                  backgroundColor: "#edf2f6",
+                                }),
+                                placeholder: (baseStyles, state) => ({
+                                  ...baseStyles,
+                                  color: "Black",
+                                  fontWeight: "bold",
+                                }),
+                                indicatorSeparator: (baseStyles, state) => ({
+                                  ...baseStyles,
+                                  display: "none",
+                                }),
+                              }}
+                              options={options}
+                              isMulti
+                              placeholder={"Location"}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

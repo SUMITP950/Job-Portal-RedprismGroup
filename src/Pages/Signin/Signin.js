@@ -1,4 +1,5 @@
-import React, { useEffect ,useState} from "react";
+import Axios from "axios";
+import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -6,12 +7,12 @@ export default function Signin() {
   useEffect(() => {
     document.title = "Sign In";
   }, []);
-  const [message, setMessage] = useState('');
+  const [mobile, Setmobile] = useState("");
+  const [otp, Setotp] = useState("");
+  const [username, Setusername] = useState("");
+  const [password, Setpassword] = useState("");
 
-  const handleChange = event => {
-    setMessage(event.target.value);
-
-    console.log('value is:', event.target.value);}
+  const handleSubmit = (e) => {};
   return (
     <div>
       <div class="d-lg-flex half">
@@ -77,33 +78,39 @@ export default function Signin() {
                       role="tabpanel"
                       aria-labelledby="pills-home-tab"
                     >
-                      <form action="#" method="post">
+                      <form action="#" onSubmit={handleSubmit}>
                         <div class="form-group first">
                           <label for="mobile number">Mobile Number</label>
                           <input
                             type="text"
                             class="form-control"
                             placeholder="Enter Mobile Number"
-                            id="username"
                             required
-                            onChange={handleChange}
-                            value={message}
+                            onChange={(e) => Setmobile(e.target.value)}
+                            value={mobile}
                           />
                         </div>
                         <div class="form-group last mb-3">
-                          <label for="password">Enter Your OTP</label>
+                          <label for="otp">Enter Your OTP</label>
                           <input
                             type="password"
                             class="form-control"
                             placeholder="Enter Your OTP"
-                            id="password"
                             required
+                            onChange={(e) => Setmobile(e.target.value)}
+                            value={otp}
                           />
                         </div>
 
-                        <Link to="/"> <button type="submit" class="btn btn-block btn-primary">
-                          <strong>SIGN IN</strong>
-                        </button></Link>
+                        <Link to="/">
+                          {" "}
+                          <button
+                            type="submit"
+                            class="btn btn-block btn-primary"
+                          >
+                            <strong>SIGN IN</strong>
+                          </button>
+                        </Link>
 
                         <div class="d-flex mb-3 align-items-center mt-3">
                           <span class="mr-auto">
@@ -135,6 +142,8 @@ export default function Signin() {
                             placeholder="Enter Your Username"
                             id="username"
                             required
+                            onChange={(e) => Setusername(e.target.value)}
+                            value={username}
                           />
                         </div>
                         <div class="form-group last mb-3">
@@ -143,8 +152,9 @@ export default function Signin() {
                             type="password"
                             class="form-control"
                             placeholder="Your Password"
-                            id="password"
                             required
+                            onChange={(e) => Setpassword(e.target.value)}
+                            value={password}
                           />
                         </div>
 
