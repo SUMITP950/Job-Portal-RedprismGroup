@@ -1,4 +1,4 @@
-import Axios from "axios";
+import {Axios} from "axios";
 import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
@@ -12,7 +12,7 @@ export default function Signin() {
   const [username, Setusername] = useState("");
   const [password, Setpassword] = useState("");
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = (e) => {Axios.post(),mobile,username,password,otp};
   return (
     <div>
       <div class="d-lg-flex half">
@@ -97,7 +97,7 @@ export default function Signin() {
                             class="form-control"
                             placeholder="Enter Your OTP"
                             required
-                            onChange={(e) => Setmobile(e.target.value)}
+                            onChange={(e) => Setotp(e.target.value)}
                             value={otp}
                           />
                         </div>
