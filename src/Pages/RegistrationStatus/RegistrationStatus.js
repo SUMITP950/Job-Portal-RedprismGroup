@@ -17,6 +17,7 @@ export default function RegistrationStatus() {
       document.getElementById("dis2").disabled = "true";
     }
   };
+  const data = {};
 
   return (
     <>

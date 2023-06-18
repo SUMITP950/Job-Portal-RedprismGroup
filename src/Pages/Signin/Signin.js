@@ -1,4 +1,4 @@
-import {Axios} from "axios";
+import Axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
@@ -12,7 +12,24 @@ export default function Signin() {
   const [username, Setusername] = useState("");
   const [password, Setpassword] = useState("");
 
-  const handleSubmit = (e) => {Axios.post(),mobile,username,password,otp};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = {
+      mobile: "",
+      username: "",
+      password: "",
+      otp: "",
+    };
+
+    Axios.post("https://example.com/api/endpoint", data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <div>
       <div class="d-lg-flex half">
@@ -102,15 +119,9 @@ export default function Signin() {
                           />
                         </div>
 
-                        <Link to="/">
-                          {" "}
-                          <button
-                            type="submit"
-                            class="btn btn-block btn-primary"
-                          >
-                            <strong>SIGN IN</strong>
-                          </button>
-                        </Link>
+                        <button type="submit" class="btn btn-block btn-primary">
+                          <strong>SIGN IN</strong>
+                        </button>
 
                         <div class="d-flex mb-3 align-items-center mt-3">
                           <span class="mr-auto">
