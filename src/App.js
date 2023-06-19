@@ -18,7 +18,7 @@ import SigninAsHr from "./Pages/SigninAsHr/SigninAsHr";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import SideBar from "./Component/SideBar";
 import RegistrationBasic from "./Pages/RegistrationBasic/RegistrationBasic"
-import RegistrationVarify from "./Pages/RegistrationVarify/RegistrationVarify"
+// import RegistrationVarify from "./Pages/RegistrationVarify/RegistrationVarify"
 import RegistrationTechSkills from "./Pages/RegistrationTechSkills/RegistrationTechSkills"
 import RegistrationStatus from "./Pages/RegistrationStatus/RegistrationStatus"
 import RegistrationCreate from "./Pages/RegistrationCreate/RegistrationCreate"
@@ -26,6 +26,7 @@ import BuddySurches from "./Pages/BuddySurches/BuddySurches"
 import JobSearch from "./Pages/JobSearch/JobSearch"
 import Internship from "./Pages/Internship/Internship"
 import Rnav from "./Component/Rnav"
+import EmployerJobPost  from "./Pages/JobPost/JobPost"
 
 
 export default function App() {
@@ -150,14 +151,14 @@ export default function App() {
             </>
           }
         />
-        <Route 
+        {/* <Route 
           path="/RegistrationVarify"
           element={
             <><Rnav/><RegistrationVarify/>
               
             </>
           }
-        />
+        /> */}
         <Route
           path="/RegistrationStatus"
           element={
@@ -185,6 +186,7 @@ export default function App() {
         />
         <Route path="/JobSearch" element={<><Nav/><JobSearch/></>}/>
         <Route path="/Internship" element={<><Nav/><Internship/></>}/>
+        <Route path="/JobPost" element={<><Nav/><EmployerJobPost/></>}/>
       </Routes>
       </BrowserRouter>
     </>

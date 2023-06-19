@@ -25,7 +25,7 @@ const RegistrationTechSkills = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    window.location.replace("./RegistrationStatus");
     // Create an object with the form data
     const formData = {
       currentCompany,

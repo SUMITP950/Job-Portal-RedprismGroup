@@ -16,14 +16,12 @@ export default function RegistrationBasic() {
   const [State, SetState] = useState("");
   const [Zip, SetZip] = useState("");
 
-  // const handlegender = (e) => {
-  //   window.location.replace("https://codefrontend.com");
-  // };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    window.location.replace("./RegistrationVarify");
+    window.location.replace("./RegistrationCreate");
 
     // Perform form validation
     if (FirstName.trim() === "") {
