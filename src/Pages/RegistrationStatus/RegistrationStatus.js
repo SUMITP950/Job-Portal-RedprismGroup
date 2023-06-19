@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function RegistrationStatus() {
   useEffect(() => {
@@ -8,113 +8,124 @@ export default function RegistrationStatus() {
   }, []);
 
   const [message, setMessage] = useState("");
+  const [noticePeriod, setNoticePeriod] = useState("");
+  const [immediateJoiner, setImmediateJoiner] = useState("");
 
   const handleChange = (event) => {
     setMessage(event.target.value);
 
     if (event.target.value === "No") {
-      document.getElementById("dis1").disabled = "true";
-      document.getElementById("dis2").disabled = "true";
+      setNoticePeriod("");
+      setImmediateJoiner("");
     }
   };
-  const data = {};
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post("https://jsonplaceholder.typicode.com/posts", {
+        message,
+        noticePeriod,
+        immediateJoiner,
+      });
+      console.log(response.data); // Handle the response data
+    } catch (error) {
+      console.error(error); // Handle the error
+    }
+  };
 
   return (
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-4 dn ">
-            <div class="pindicator">
-              <div class="bullet current ">
-                {" "}
+          <div className="col-md-4 dn">
+            <div className="pindicator">
+              <div className="bullet current ">
                 <Link to="/RegistrationBasic">
-                  <span class="icon1 tns90">1</span>
+                  <span className="icon1 tns90">1</span>
                 </Link>
               </div>
-              <div class="bullet current">
+              <div className="bullet current">
                 <Link to="/RegistrationVarify">
-                  <span class="icon1 tns90">2</span>
+                  <span className="icon1 tns90">2</span>
                 </Link>
               </div>
-              <div class="bullet next current">
+              <div className="bullet next current">
                 <Link to="/RegistrationCreate">
-                  <span class="icon1 tns90">3</span>
+                  <span className="icon1 tns90">3</span>
                 </Link>
               </div>
-              <div class="bullet current">
+              <div className="bullet current">
                 <Link to="/RegistrationTechSkills">
-                  <span class="icon1 tns90">4</span>
+                  <span className="icon1 tns90">4</span>
                 </Link>
               </div>
-              <div class="bullet current">
+              <div className="bullet current">
                 <Link to="/RegistrationStatus">
-                  <span class="icon1 tns90">5</span>
+                  <span className="icon1 tns90">5</span>
                 </Link>
               </div>
             </div>
           </div>
           <div className="col-md-8 mt-3">
-            <div class="col-md-12 font-weight-bold text-center h1">
+            <div className="col-md-12 font-weight-bold text-center h1">
               Create an Account!
             </div>
-
-            <div class="col-md-12 text-center">( As a Job Seeker )</div>
-
-            <div class="col-md-12 text-center">
+            <div className="col-md-12 text-center">( As a Job Seeker )</div>
+            <div className="col-md-12 text-center">
               It only takes a couple of minutes to get started!
             </div>
-
-            <div class="col-md-12 text-center">
-              <span class="px-3 py-1 backcolor">It's free</span>
+            <div className="col-md-12 text-center">
+              <span className="px-3 py-1 backcolor">It's free</span>
             </div>
-
-            <div class="col-md-12 mt-3 text-center d-flex align-items-center justify-content-center">
+            <div className="col-md-12 mt-3 text-center d-flex align-items-center justify-content-center">
               <b className="midil backcolor px-3 py-1">
                 Please Verify yourself
               </b>
             </div>
-
-            <div class="container">
-              <form>
-                <div class="form-row d-flex align-items-center justify-content-center">
-                  <div class="col-md-8 mb-3">
-                    <label for="text">Looking For Job</label>
-
+            <div className="container">
+              <form onSubmit={handleSubmit}>
+                <div className="form-row d-flex align-items-center justify-content-center">
+                  <div className="col-md-8 mb-3">
+                    <label htmlFor="lookingJob">Looking For Job</label>
                     <select
-                      class="form-control form-control-lg"
+                      className="form-control form-control-lg"
+                      id="lookingJob"
                       onChange={handleChange}
                       value={message}
                     >
-                      <option>Yes</option>
-
-                      <option>No</option>
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
                     </select>
                   </div>
-
-                  <div class="col-md-8 mb-3 ">
-                    <label for="text">Notice Period</label>
-
-                    <select class="form-control form-control-lg" id="dis1">
-                      <option>Yes</option>
-
-                      <option>No</option>
+                  <div className="col-md-8 mb-3">
+                    <label htmlFor="noticePeriod">Notice Period</label>
+                    <select
+                      className="form-control form-control-lg"
+                      id="noticePeriod"
+                      value={noticePeriod}
+                      onChange={(e) => setNoticePeriod(e.target.value)}
+                      disabled={message === "No"}
+                    >
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
                     </select>
                   </div>
-
-                  <div class="col-md-8 mb-3 ">
-                    <label for="text">Immediate Joiner</label>
-
-                    <select class="form-control form-control-lg" id="dis2">
-                      <option>Yes</option>
-
-                      <option>No</option>
+                  <div className="col-md-8 mb-3">
+                    <label htmlFor="immediateJoiner">Immediate Joiner</label>
+                    <select
+                      className="form-control form-control-lg"
+                      id="immediateJoiner"
+                      value={immediateJoiner}
+                      onChange={(e) => setImmediateJoiner(e.target.value)}
+                      disabled={message === "No"}
+                    >
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
                     </select>
                   </div>
-
-                  <div
-                    className="col-md-8"
-                    style={{ justifyContent: "space-around", display: "flex" }}
-                  >
+                  <div className="col-md-8 d-flex justify-content-center">
                     <i
                       className="feather-sun"
                       style={{ color: "#000", border: "2px solid pink" }}
@@ -133,16 +144,14 @@ export default function RegistrationStatus() {
                     ></i>
                   </div>
                 </div>
-
-                <div class="d-flex align-items-center justify-content-center mt-5">
-                  <Link
-                    to="/"
-                    class="btn btn-pink mb-5 px-5"
+                <div className="d-flex align-items-center justify-content-center mt-5">
+                  <button
+                    className="btn btn-pink mb-5 px-5"
                     style={{ fontWeight: "600", fontSize: "16px" }}
                     type="submit"
                   >
                     Submit
-                  </Link>
+                  </button>
                 </div>
               </form>
             </div>
