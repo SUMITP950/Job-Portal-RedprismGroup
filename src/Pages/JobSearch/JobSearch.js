@@ -279,7 +279,7 @@ export default function JobSearch() {
                         <td>Python</td>
                         <td>
                           <button class="apply-btn"> Apply Now</button>{" "}
-                          <button class="share-btn-intern">
+                          <button class="share-btn">
                             {" "}
                             Share{" "}
                             <img
