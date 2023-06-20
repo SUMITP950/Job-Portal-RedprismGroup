@@ -78,7 +78,7 @@ export default function JobSearch() {
   }, []);
 
   useEffect(() => {
-    document.title = "Buddy Search";
+    document.title = "Job Search";
   }, []);
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -113,115 +113,115 @@ export default function JobSearch() {
                 }}
               >
                 <div class="dropdown">
-                          <div className="d-flex align-items-center">
-                            <img
-                              class="dropdown-menu-img"
-                              src="https://img.icons8.com/ios/50/000000/circuit.png"
-                              alt=""
-                            />
-                            <Select
-                              styles={{
-                                container: (baseStyles, state) => ({
-                                  ...baseStyles,
+                  <div className="d-flex align-items-center">
+                    <img
+                      class="dropdown-menu-img"
+                      src="https://img.icons8.com/ios/50/000000/circuit.png"
+                      alt=""
+                    />
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
 
-                                  display: "inherit",
-                                }),
-                                control: (baseStyles, state) => ({
-                                  ...baseStyles,
+                          display: "inherit",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
 
-                                  border: "none",
-                                  backgroundColor: "#fff",
-                                }),
-                                placeholder: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  color: "Black",
-                                  fontWeight: "bold",
-                                }),
-                                indicatorSeparator: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  display: "none",
-                                }),
-                              }}
-                              options={options}
-                              isMulti
-                              placeholder={"Technology"}
-                            />
-                          </div>
-                        </div>
+                          border: "none",
+                          backgroundColor: "#fff",
+                        }),
+                        placeholder: (baseStyles, state) => ({
+                          ...baseStyles,
+                          color: "Black",
+                          fontWeight: "bold",
+                        }),
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options}
+                      isMulti
+                      placeholder={"Technology"}
+                    />
+                  </div>
+                </div>
 
-                        <div class="dropdown">
-                          <div className="d-flex align-items-center">
-                            <img
-                              class="dropdown-menu-img"
-                              src="https://img.icons8.com/ios/50/popular-man.png"
-                              alt=""
-                            />
-                            <Select
-                              styles={{
-                                container: (baseStyles, state) => ({
-                                  ...baseStyles,
+                <div class="dropdown">
+                  <div className="d-flex align-items-center">
+                    <img
+                      class="dropdown-menu-img"
+                      src="https://img.icons8.com/ios/50/popular-man.png"
+                      alt=""
+                    />
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
 
-                                  display: "inherit",
-                                }),
-                                control: (baseStyles, state) => ({
-                                  ...baseStyles,
+                          display: "inherit",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
 
-                                  border: "none",
-                                  backgroundColor: "#fff",
-                                }),
-                                placeholder: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  color: "Black",
-                                  fontWeight: "bold",
-                                }),
-                                indicatorSeparator: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  display: "none",
-                                }),
-                              }}
-                              options={options}
-                              isMulti
-                              placeholder={"Type"}
-                            />
-                          </div>
-                        </div>
+                          border: "none",
+                          backgroundColor: "#fff",
+                        }),
+                        placeholder: (baseStyles, state) => ({
+                          ...baseStyles,
+                          color: "Black",
+                          fontWeight: "bold",
+                        }),
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options}
+                      isMulti
+                      placeholder={"Type"}
+                    />
+                  </div>
+                </div>
 
-                        <div class="dropdown">
-                          <div className="d-flex align-items-center">
-                            <img
-                              class="dropdown-menu-img"
-                              src="https://img.icons8.com/ios/50/popular-man.png"
-                              alt=""
-                            />
-                            <Select
-                              styles={{
-                                container: (baseStyles, state) => ({
-                                  ...baseStyles,
+                <div class="dropdown">
+                  <div className="d-flex align-items-center">
+                    <img
+                      class="dropdown-menu-img"
+                      src="https://img.icons8.com/ios/50/popular-man.png"
+                      alt=""
+                    />
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
 
-                                  display: "inherit",
-                                }),
-                                control: (baseStyles, state) => ({
-                                  ...baseStyles,
+                          display: "inherit",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
 
-                                  border: "none",
-                                  backgroundColor: "#fff",
-                                }),
-                                placeholder: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  color: "Black",
-                                  fontWeight: "bold",
-                                }),
-                                indicatorSeparator: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  display: "none",
-                                }),
-                              }}
-                              options={options}
-                              isMulti
-                              placeholder={"Location"}
-                            />
-                          </div>
-                        </div>
+                          border: "none",
+                          backgroundColor: "#fff",
+                        }),
+                        placeholder: (baseStyles, state) => ({
+                          ...baseStyles,
+                          color: "Black",
+                          fontWeight: "bold",
+                        }),
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options}
+                      isMulti
+                      placeholder={"Location"}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
             <main class="col col-xl-9 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
@@ -279,7 +279,7 @@ export default function JobSearch() {
                         <td>Python</td>
                         <td>
                           <button class="apply-btn"> Apply Now</button>{" "}
-                          <button class="share-btn">
+                          <button class="share-btn-intern">
                             {" "}
                             Share{" "}
                             <img

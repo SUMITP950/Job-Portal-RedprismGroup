@@ -3,7 +3,7 @@ import "../../App.css";
 import { Link } from "react-router-dom";
 import Select from "react-select";
 
-export default function BuddySurches(props) {
+export default function BuddySearch(props) {
   useEffect(() => {
     document.title = "Buddy Search";
   }, []);

@@ -128,20 +128,25 @@ export default function Internship() {
                             <div class="network-item-footer py-2 d-flex text-center">
                               <div class="col-6 pl-3 pr-1">
                                 <button
+                                  style={{ fontSize: "14px !importent" }}
                                   type="button"
-                                  class="btn btn-primary btn-sm btn-block"
+                                  class="btn apply-btn-intern btn-sm btn-block"
                                 >
                                   {" "}
-                                  Connect{" "}
+                                  Apply Now{" "}
                                 </button>
                               </div>
                               <div class="col-6  pl-1">
                                 <button
                                   type="button"
-                                  class="btn btn-outline-primary btn-sm btn-block"
+                                  class="btn share-btn-intern btn-sm btn-block"
                                 >
-                                  {" "}
-                                  <i class="feather-user-plus"></i> Follow{" "}
+                                  <img
+                                    src="img/icon/whatsapp.png"
+                                    alt=""
+                                    class="whatsapp-img-intern"
+                                  />{" "}
+                                  Share{" "}
                                 </button>
                               </div>
                             </div>

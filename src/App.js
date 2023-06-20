@@ -17,17 +17,17 @@ import JobProfile from "./Pages/JobProfile/JobProfile";
 import SigninAsHr from "./Pages/SigninAsHr/SigninAsHr";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import SideBar from "./Component/SideBar";
-import RegistrationBasic from "./Pages/RegistrationBasic/RegistrationBasic"
+import RegistrationBasic from "./Pages/RegistrationBasic/RegistrationBasic";
 // import RegistrationVarify from "./Pages/RegistrationVarify/RegistrationVarify"
-import RegistrationTechSkills from "./Pages/RegistrationTechSkills/RegistrationTechSkills"
-import RegistrationStatus from "./Pages/RegistrationStatus/RegistrationStatus"
-import RegistrationCreate from "./Pages/RegistrationCreate/RegistrationCreate"
-import BuddySurches from "./Pages/BuddySurches/BuddySurches"
-import JobSearch from "./Pages/JobSearch/JobSearch"
-import Internship from "./Pages/Internship/Internship"
-import Rnav from "./Component/Rnav"
-import EmployerJobPost  from "./Pages/JobPost/JobPost"
-
+import RegistrationTechSkills from "./Pages/RegistrationTechSkills/RegistrationTechSkills";
+import RegistrationStatus from "./Pages/RegistrationStatus/RegistrationStatus";
+import RegistrationCreate from "./Pages/RegistrationCreate/RegistrationCreate";
+import BuddySearch from "./Pages/BuddySearch/BuddySearch";
+import JobSearch from "./Pages/JobSearch/JobSearch";
+import Internship from "./Pages/Internship/Internship";
+import Rnav from "./Component/Rnav";
+import EmployerJobPost from "./Pages/JobPost/JobPost";
+import Training from "./Pages/Training/Training";
 
 export default function App() {
   return (
@@ -115,8 +115,15 @@ export default function App() {
               </>
             }
           />
-          <Route path="/BuddySurches"
-          element={<><Nav/><BuddySurches/></>}/>
+          <Route
+            path="/BuddySearch"
+            element={
+              <>
+                <Nav />
+                <BuddySearch />
+              </>
+            }
+          />
           <Route
             path="/SigninAsHr"
             element={
@@ -133,25 +140,26 @@ export default function App() {
               </>
             }
           />
-        
-        <Route
-          path="/RegistrationBasic"
-          element={
-            <><Rnav/><div className="container">
-                <div className="row">
-                  <div className="col-md-4 dn"><SideBar/> 
-                  </div>
-                  <div className="col-md-8 mt-3"><RegistrationBasic/>
-                 
+
+          <Route
+            path="/RegistrationBasic"
+            element={
+              <>
+                <Rnav />
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-4 dn">
+                      <SideBar />
+                    </div>
+                    <div className="col-md-8 mt-3">
+                      <RegistrationBasic />
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              
-            </>
-          }
-        />
-        {/* <Route 
+              </>
+            }
+          />
+          {/* <Route 
           path="/RegistrationVarify"
           element={
             <><Rnav/><RegistrationVarify/>
@@ -159,35 +167,70 @@ export default function App() {
             </>
           }
         /> */}
-        <Route
-          path="/RegistrationStatus"
-          element={
-            <><Rnav/><RegistrationStatus/>
-              
-              
-            </>
-          }
-        />
-        <Route
-          path="/RegistrationCreate"
-          element={
-            <><Rnav/><RegistrationCreate/>
-              
-              
-            </>
-          }
-        />
-        <Route
-          path="/RegistrationTechSkills"
-          element={
-            <><Rnav/><RegistrationTechSkills/>
-            </>
-          }
-        />
-        <Route path="/JobSearch" element={<><Nav/><JobSearch/></>}/>
-        <Route path="/Internship" element={<><Nav/><Internship/></>}/>
-        <Route path="/JobPost" element={<><Nav/><EmployerJobPost/></>}/>
-      </Routes>
+          <Route
+            path="/RegistrationStatus"
+            element={
+              <>
+                <Rnav />
+                <RegistrationStatus />
+              </>
+            }
+          />
+          <Route
+            path="/RegistrationCreate"
+            element={
+              <>
+                <Rnav />
+                <RegistrationCreate />
+              </>
+            }
+          />
+          <Route
+            path="/RegistrationTechSkills"
+            element={
+              <>
+                <Rnav />
+                <RegistrationTechSkills />
+              </>
+            }
+          />
+          <Route
+            path="/JobSearch"
+            element={
+              <>
+                <Nav />
+                <JobSearch />
+              </>
+            }
+          />
+          <Route
+            path="/Internship"
+            element={
+              <>
+                <Nav />
+                <Internship />
+              </>
+            }
+          />
+          <Route
+            path="/JobPost"
+            element={
+              <>
+                <Nav />
+                <EmployerJobPost />
+              </>
+            }
+          />
+          <Route
+            path="/Training"
+            element={
+              <>
+                <Nav />
+                <Training />
+              </>
+            }
+          />
+        </Routes>
       </BrowserRouter>
     </>
   );
