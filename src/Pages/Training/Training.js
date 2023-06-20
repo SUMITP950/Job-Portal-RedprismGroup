@@ -216,8 +216,34 @@ export default function Training(props) {
 
               <div className="container-fluid mt-4">
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-8">
                     <h5>Recommended Training</h5>
+                  </div>
+                  <div className="col-md-4">
+                    <Select
+                      placeholder={"Search Trainings"}
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          borderRadius: "100px",
+                        }),
+                        option: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          display: "none",
+                        }),
+                        indicatorsContainer: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                    />
                   </div>
                 </div>
                 <div
