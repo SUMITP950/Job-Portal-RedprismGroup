@@ -28,6 +28,9 @@ import Internship from "./Pages/Internship/Internship";
 import Rnav from "./Component/Rnav";
 import EmployerJobPost from "./Pages/JobPost/JobPost";
 import Training from "./Pages/Training/Training";
+import MyBuddies from "./Pages/MyBuddies/MyBuddies";
+import FresherJob from "./Pages/FresherJob/FresherJob";
+import SampleResume from "./Pages/SampleResume/SampleResume";
 
 export default function App() {
   return (
@@ -227,6 +230,33 @@ export default function App() {
               <>
                 <Nav />
                 <Training />
+              </>
+            }
+          />
+          <Route
+            path="/MyBuddies"
+            element={
+              <>
+                <Nav />
+                <MyBuddies />
+              </>
+            }
+          />
+          <Route
+            path="/FresherJob"
+            element={
+              <>
+                <Nav />
+                <FresherJob />
+              </>
+            }
+          />
+          <Route
+            path="/SampleResume"
+            element={
+              <>
+                <Nav />
+                <SampleResume />
               </>
             }
           />

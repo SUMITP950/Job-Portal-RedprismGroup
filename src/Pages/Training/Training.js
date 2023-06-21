@@ -221,13 +221,10 @@ export default function Training(props) {
                   </div>
                   <div className="col-md-4">
                     <Select
-                      placeholder={"Search Trainings"}
+                      placeholder={"Search Trainings...."}
                       styles={{
-                        container: (baseStyles, state) => ({
-                          ...baseStyles,
-
-                          borderRadius: "100px",
-                        }),
+                        control:(baseStyles, state) => ({
+                          ...baseStyles,borderRadius:"50px"}),
                         option: (baseStyles, state) => ({
                           ...baseStyles,
 

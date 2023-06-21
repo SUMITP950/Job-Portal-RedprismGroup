@@ -3,11 +3,90 @@ import { Link } from "react-router-dom";
 
 export default function Message() {
   return (
-    <div>
-      <div class="py-4">
-        <div class="container">
-          <div class="row">
-            <main class="col col-xl-9 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+    <>
+    <div className="py-4">
+      <div className="container-fluid body-padding">
+        <div className="row justify-content-around">
+          <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="border rounded bg-white mb-3">
+              <div class="shadow-sm">
+                <h6 class="pt-3 text-center">Other Option</h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile border-rm">
+                      <i class="feather-settings left-menu-icon"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">Settings</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile border-rm">
+                      <i class="feather-log-out left-menu-icon"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">Sign Out</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile border-rm">
+                      <i class="feather-file-text left-menu-icon"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">Simple Resume</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile border-rm">
+                      <img
+                        src="img/icon/training.png"
+                        alt=""
+                        class="icon-image"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">Trainings</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile border-rm">
+                      <img
+                        src="img/icon/2255545.png"
+                        alt=""
+                        class="icon-image"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">Fresher Jobs</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile border-rm">
+                      <img
+                        src="https://static.thenounproject.com/png/960899-200.png"
+                        alt=""
+                        class="icon-image"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">Internship</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </aside>
+          <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
               <div class="box shadow-sm rounded bg-white mb-3 osahan-chat">
                 <h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3">
                   Messaging
@@ -519,84 +598,76 @@ export default function Message() {
                 </div>
               </div>
             </main>
-            <aside class="col col-xl-3 order-xl-2 col-lg-12 order-lg-2 col-12">
-              <div class="box mb-3 shadow-sm border rounded bg-white list-sidebar">
-                <div class="box-title p-3">
-                  <h6 class="m-0">Manage my network</h6>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <a href="#">
-                    <li class="list-group-item pl-3 pr-3 d-flex align-items-center text-dark">
-                      <i class="feather-users mr-2 text-dark"></i> Connections{" "}
-                      <span class="ml-auto font-weight-bold">68</span>
-                    </li>
-                  </a>
-                  <a href="#">
-                    <li class="list-group-item pl-3 pr-3 d-flex align-items-center text-dark">
-                      <i class="feather-book mr-2 text-dark"></i> Contacts{" "}
-                      <span class="ml-auto font-weight-bold">869</span>
-                    </li>
-                  </a>
-                  <a href="#">
-                    <li class="list-group-item pl-3 pr-3 d-flex align-items-center text-dark">
-                      <i class="feather-user-check mr-2 text-dark"></i> People I
-                      Follow <span class="ml-auto font-weight-bold">156</span>
-                    </li>
-                  </a>
-                  <a href="#">
-                    <li class="list-group-item pl-3 pr-3 d-flex align-items-center text-dark">
-                      <i class="feather-message-circle mr-2 text-dark"></i>{" "}
-                      Groups <span class="ml-auto font-weight-bold">15</span>
-                    </li>
-                  </a>
-                  <a href="#">
-                    <li class="list-group-item pl-3 pr-3 d-flex align-items-center text-dark">
-                      <i class="feather-clipboard mr-2 text-dark"></i> Page{" "}
-                      <span class="ml-auto font-weight-bold">3</span>
-                    </li>
-                  </a>
-                  <a href="#">
-                    <li class="list-group-item pl-3 pr-3 d-flex align-items-center text-dark">
-                      <i class="feather-tag mr-2 text-dark"></i> Hashtag{" "}
-                      <span class="ml-auto font-weight-bold">8</span>
-                    </li>
-                  </a>
-                </ul>
+
+          <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 ">
+            <div class="border rounded bg-white mb-3">
+              <div class="shadow-sm pt-4 pb-4">
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile">
+                      <i class="feather-user left-menu-icon"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">User Name</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile">
+                      <i class="feather-edit left-menu-icon"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">Edit Profile</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile">
+                      <img src="img/icon/smile.svg" alt="" />
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">User Profile</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile">
+                      <i class="feather-users left-menu-icon"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">My Buddies</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile">
+                      <i class="feather-briefcase left-menu-icon"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">Jobs</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle-profile">
+                      <i class="feather-save left-menu-icon"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">My Jobs</span>
+                  </div>
+                </a>
               </div>
-              <div class="box shadow-sm mb-3 border rounded bg-white ads-box text-center">
-                <div class="image-overlap-2 pt-4">
-                  <img
-                    src="img/l4.png"
-                    class="img-fluid rounded-circle shadow-sm"
-                    alt="Responsive image"
-                  />
-                  <img
-                    src="img/user.png"
-                    class="img-fluid rounded-circle shadow-sm"
-                    alt="Responsive image"
-                  />
-                </div>
-                <div class="p-3 border-bottom">
-                  <h6 class="text-dark">
-                    Gurdeep, grow your career by following{" "}
-                    <span class="font-weight-bold">Askbootsrap</span>
-                  </h6>
-                  <p class="mb-0 text-muted">Stay up-to industry trends!</p>
-                </div>
-                <div class="p-3">
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary btn-sm pl-4 pr-4"
-                  >
-                    {" "}
-                    FOLLOW{" "}
-                  </button>
-                </div>
-              </div>
-            </aside>
-          </div>
+            </div>
+          </aside>
         </div>
       </div>
     </div>
+  </>
   );
 }
