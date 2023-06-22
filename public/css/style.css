@@ -144,7 +144,7 @@ p {
 }
 .navbar {
   background-color: var(--head);
-  box-shadow: 0 6px 22px 0 rgb(255 255 255) !important;
+  /* box-shadow: 0 6px 22px 0 rgb(255 255 255) !important;*/
 }
 .slick-arrow:before {
   color: #000;
