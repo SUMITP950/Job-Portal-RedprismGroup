@@ -18,12 +18,12 @@ import SigninAsHr from "./Pages/SigninAsHr/SigninAsHr";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import SideBar from "./Component/SideBar";
 import RegistrationBasic from "./Pages/RegistrationBasic/RegistrationBasic";
-import RegistrationVarify from "./Pages/RegistrationVarify/RegistrationVarify"
+import RegistrationVarify from "./Pages/RegistrationVarify/RegistrationVarify";
 import RegistrationTechSkills from "./Pages/RegistrationTechSkills/RegistrationTechSkills";
 import RegistrationStatus from "./Pages/RegistrationStatus/RegistrationStatus";
 import RegistrationCreate from "./Pages/RegistrationCreate/RegistrationCreate";
 import RegistrationBasicHR from "./Pages/RegisterAsHR/RegistrationBasic/RegistrationBasic";
-import RegistrationVarifyHR from "./Pages/RegisterAsHR/RegistrationVarify/RegistrationVarify"
+import RegistrationVarifyHR from "./Pages/RegisterAsHR/RegistrationVarify/RegistrationVarify";
 import RegistrationTechSkillsHR from "./Pages/RegisterAsHR/RegistrationTechSkills/RegistrationTechSkills";
 import RegistrationStatusHR from "./Pages/RegisterAsHR/RegistrationStatus/RegistrationStatus";
 import RegistrationCreateHR from "./Pages/RegisterAsHR/RegistrationCreate/RegistrationCreate";
@@ -155,27 +155,20 @@ export default function Router() {
             element={
               <>
                 <Rnav />
-                <div className="container">
-                  <div className="row">
-                    <div className="col-md-4 dn">
-                      <SideBar />
-                    </div>
-                    <div className="col-md-8 mt-3">
-                      <RegistrationBasic />
-                    </div>
-                  </div>
-                </div>
+
+                <RegistrationBasic />
               </>
             }
           />
-          <Route 
-          path="/RegistrationVarify"
-          element={
-            <><Rnav/><RegistrationVarify/>
-              
-            </>
-          }
-        />
+          <Route
+            path="/RegistrationVarify"
+            element={
+              <>
+                <Rnav />
+                <RegistrationVarify />
+              </>
+            }
+          />
           <Route
             path="/RegistrationStatus"
             element={
@@ -208,27 +201,22 @@ export default function Router() {
             element={
               <>
                 <Rnav />
-                <div className="container">
-                  <div className="row">
-                    <div className="col-md-4 dn">
-                      <SideBar />
-                    </div>
-                    <div className="col-md-8 mt-3">
-                      <RegistrationBasicHR />
-                    </div>
-                  </div>
-                </div>
+
+                <SideBar />
+
+                <RegistrationBasicHR />
               </>
             }
           />
-          <Route 
-          path="/RegistrationVarifyHR"
-          element={
-            <><Rnav/><RegistrationVarifyHR/>
-              
-            </>
-          }
-        />
+          <Route
+            path="/RegistrationVarifyHR"
+            element={
+              <>
+                <Rnav />
+                <RegistrationVarifyHR />
+              </>
+            }
+          />
           <Route
             path="/RegistrationStatusHR"
             element={
@@ -323,7 +311,6 @@ export default function Router() {
             path="/Sendotp"
             element={
               <>
-               
                 <Sendotp />
               </>
             }

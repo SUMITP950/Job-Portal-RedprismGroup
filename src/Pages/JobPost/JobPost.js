@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Select from "react-select";
+import { SearchBar } from "../../Component/SearchBar/SearchBar";
+import { SearchResultsList } from "../../Component/SearchBar/SearchResultList";
 
 const EmployerJobPost = () => {
-    const options = [
-        { value: "chocolate", label: "Chocolate" },
-        { value: "strawberry", label: "Strawberry" },
-        { value: "vanilla", label: "Vanilla" },
-      ];
+  const [results, setResults] = useState([]);
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -84,31 +87,30 @@ const EmployerJobPost = () => {
                 </div>
 
                 <div className="form-group">
-              
-                <Select
-                              styles={{
-                                container: (baseStyles, state) => ({
-                                  ...baseStyles,
+                  <Select
+                    styles={{
+                      container: (baseStyles, state) => ({
+                        ...baseStyles,
 
-                                  display: "inherit",
-                                }),
-                                control: (baseStyles, state) => ({
-                                  ...baseStyles,
+                        display: "inherit",
+                      }),
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
 
-                                  border: "none",
-                                  backgroundColor: "#fff",
-                                }),
-                                placeholder: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  color: "Black",
-                                  fontWeight: "bold",
-                                }),
-                                indicatorSeparator: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  display: "none",
-                                }),
-                              }}
-                              options={options}
+                        border: "none",
+                        backgroundColor: "#fff",
+                      }),
+                      placeholder: (baseStyles, state) => ({
+                        ...baseStyles,
+                        color: "Black",
+                        fontWeight: "bold",
+                      }),
+                      indicatorSeparator: (baseStyles, state) => ({
+                        ...baseStyles,
+                        display: "none",
+                      }),
+                    }}
+                    options={options}
                     isMulti
                     placeholder="Select skills"
                     value={options.filter((option) =>
@@ -116,8 +118,7 @@ const EmployerJobPost = () => {
                     )}
                     onChange={handleTechnicalSkillsChange}
                     required
-                             
-                            />
+                  />
                 </div>
 
                 <div className="form-group">
@@ -137,7 +138,24 @@ const EmployerJobPost = () => {
                     <option value="12LPA-Above">12LPA and Above</option>
                   </select>
                 </div>
-
+                <div className="form-group">
+                  <label htmlFor="salaryRange">Location</label>
+                  <div className="search-bar-container">
+                    <SearchBar setResults={setResults} />
+                    {results && results.length > 0 && (
+                      <SearchResultsList results={results} />
+                    )}
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="salaryRange">Technology</label>
+                  <div className="search-bar-container">
+                    <SearchBar setResults={setResults} />
+                    {results && results.length > 0 && (
+                      <SearchResultsList results={results} />
+                    )}
+                  </div>
+                </div>
                 <div className="form-group">
                   <label htmlFor="experienceYear">Experience in Year</label>
                   <select

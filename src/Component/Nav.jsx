@@ -90,10 +90,10 @@ export default function Nav() {
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <Link class="nav-link" to="/Home">
                 <i class="feather-home mr-2 menu-icon"></i>
                 <span class="d-none d-lg-inline">Home</span>
-              </a>
+              </Link>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">

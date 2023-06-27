@@ -15,7 +15,7 @@ export default function RegistrationVarify() {
     if (otp.trim() === "") {
       // Zip code is required
       alert("Please enter your OTP code");
-      return;
+      return window.location.replace("./RegistrationVarify");
     }
 
     const data = { otp };
@@ -45,9 +45,9 @@ export default function RegistrationVarify() {
                 </Link>
               </div>
               <div class="bullet next future">
-                <Link>
-                  <span class="icon1 tns90">3</span>
-                </Link>
+                <span onClick={handleSubmit} class="icon1 tns90">
+                  3
+                </span>
               </div>
               <div class="bullet future">
                 <Link onClick={handleSubmit}>

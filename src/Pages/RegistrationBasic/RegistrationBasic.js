@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function RegistrationBasic() {
@@ -16,20 +16,17 @@ export default function RegistrationBasic() {
   const [State, SetState] = useState("");
   const [Zip, SetZip] = useState("");
 
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    window.location.replace("./RegistrationCreate");
+    window.location.replace("./RegistrationVarify");
 
     // Perform form validation
     if (FirstName.trim() === "") {
       // First name is required
       alert("Please enter your first name");
-      return;
+      return window.location.replace("./RegistrationBasic");
     }
-
     if (LastName.trim() === "") {
       // Last name is required
       alert("Please enter your last name");
@@ -84,7 +81,8 @@ export default function RegistrationBasic() {
       Zip,
     };
 
-    Axios.post("https://jsonplaceholder.typicode.com/posts", data)
+    axios
+      .post("https://jsonplaceholder.typicode.com/posts", data)
       .then((response) => {
         console.log(response.data);
       })
@@ -95,174 +93,210 @@ export default function RegistrationBasic() {
 
   return (
     <>
-      <div className="col-md-12 font-weight-bold text-center h1">
-        Create an Account!
-      </div>
-      <div className="col-md-12 text-center">( As a Job Seeker )</div>
-      <div className="col-md-12 text-center">
-        It only takes a couple of minutes to get started!
-      </div>
-      <div className="col-md-12 text-center">
-        <span
-          style={{ borderRadius: 10 + "px", backgroundColor: "#fde9f2" }}
-          className="px-3 "
-        >
-          It's free
-        </span>
-      </div>
-      <div className="col-md-12 mt-3 text-center d-flex align-items-center justify-content-center">
-        <span className="midil">Please fill up more details</span>
-      </div>
       <div className="container">
-        <form onSubmit={handleSubmit}>
-          <div className="form-row d-flex align-items-center justify-content-center">
-            <div className="col-md-8 mb-3">
-              <label htmlFor="validationDefault01">First name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="validationDefault01"
-                placeholder="First name"
-                onChange={(e) => SetFirstName(e.target.value)}
-                value={FirstName}
-                required
-              />
-            </div>
-            <div className="col-md-8 mb-3">
-              <label htmlFor="validationDefault02">Last name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="validationDefault02"
-                placeholder="Last name"
-                onChange={(e) => SetLastName(e.target.value)}
-                value={LastName}
-                required
-              />
-            </div>
-            <div className="col-md-8 mb-3">
-              <label htmlFor="Email">Email</label>
-              <div className="input-group">
-                <input
-                  type="email"
-                  className="form-control"
-                  id="validationDefaultUsername"
-                  placeholder="abc@example.com"
-                  aria-describedby="inputGroupPrepend2"
-                  onChange={(e) => SetEmail(e.target.value)}
-                  value={Email}
-                  required
-                />
+        <div className="row">
+          <div className="col-md-4 dn">
+            <div class="pindicator">
+              <div class="bullet current ">
+                {" "}
+                <Link>
+                  <span class="icon1 tns90">1</span>
+                </Link>
               </div>
-            </div>
-            <div className="col-md-8 mb-3">
-              <label htmlFor="phone">Mob No.</label>
-              <div className="input-group">
-                <input
-                  type="number"
-                  className="form-control"
-                  id="phone"
-                  placeholder="Enter Your Mobile No."
-                  aria-describedby="inputGroupPrepend2"
-                  onChange={(e) => SetMobile(e.target.value)}
-                  value={mobile}
-                  required
-                />
+              <div class="bullet ">
+                <span onClick={handleSubmit} class="icon1 tns90">
+                  2
+                </span>
               </div>
-            </div>
-            <div className="col-md-8">
-              <b>Gender:</b>
-              <div className="mb-4">
-                <br />
-                <input
-                  type="radio"
-                  id="male"
-                  name="gender"
-                  value="Male"
-                  onChange={(e) => SetGender(e.target.value)}
-                />
-                <label htmlFor="male">Male</label>{" "}
-                <input
-                  type="radio"
-                  id="female"
-                  name="gender"
-                  value="Female"
-                  onChange={(e) => SetGender(e.target.value)}
-                />
-                <label htmlFor="female">Female</label>{" "}
-                <input
-                  type="radio"
-                  id="preferNotToSay"
-                  name="gender"
-                  value="Prefer Not to Say"
-                  onChange={(e) => SetGender(e.target.value)}
-                />
-                <label htmlFor="preferNotToSay">Prefer Not to Say</label>
+              <div class="bullet next future">
+                <Link to="/RegistrationCreate">
+                  <span class="icon1 tns90">3</span>
+                </Link>
+              </div>
+              <div class="bullet future">
+                <Link to="/RegistrationTechSkills">
+                  <span class="icon1 tns90">4</span>
+                </Link>
+              </div>
+              <div class="bullet future">
+                <Link to="/RegistrationStatus">
+                  <span class="icon1 tns90">5</span>
+                </Link>
               </div>
             </div>
           </div>
-          <div className="form-row d-flex align-items-center justify-content-center">
-            <div className="col-md-4 mb-3">
-              <label htmlFor="validationDefault03">City</label>
-              <input
-                type="text"
-                className="form-control"
-                id="validationDefault03"
-                placeholder="City"
-                onChange={(e) => SetCity(e.target.value)}
-                value={City}
-                required
-              />
+          <div className="col-md-8 mt-3">
+            <div className="col-md-12 font-weight-bold text-center h1">
+              Create an Account!
             </div>
-            <div className="col-md-2 mb-3">
-              <label htmlFor="validationDefault04">State</label>
-              <input
-                type="text"
-                className="form-control"
-                id="validationDefault04"
-                placeholder="State"
-                onChange={(e) => SetState(e.target.value)}
-                value={State}
-                required={true}
-              />
+            <div className="col-md-12 text-center">( As a Job Seeker )</div>
+            <div className="col-md-12 text-center">
+              It only takes a couple of minutes to get started!
             </div>
-            <div className="col-md-2 mb-3">
-              <label htmlFor="validationDefault05">Zip</label>
-              <input
-                type="text"
-                className="form-control"
-                id="validationDefault05"
-                placeholder="Zip"
-                onChange={(e) => SetZip(e.target.value)}
-                value={Zip}
-                required
-              />
+            <div className="col-md-12 text-center">
+              <span
+                style={{ borderRadius: 10 + "px", backgroundColor: "#fde9f2" }}
+                className="px-3 "
+              >
+                It's free
+              </span>
+            </div>
+            <div className="col-md-12 mt-3 text-center d-flex align-items-center justify-content-center">
+              <span className="midil">Please fill up more details</span>
+            </div>
+            <div className="container">
+              <form onSubmit={handleSubmit}>
+                <div className="form-row d-flex align-items-center justify-content-center">
+                  <div className="col-md-8 mb-3">
+                    <label htmlFor="validationDefault01">First name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="validationDefault01"
+                      placeholder="First name"
+                      onChange={(e) => SetFirstName(e.target.value)}
+                      value={FirstName}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-8 mb-3">
+                    <label htmlFor="validationDefault02">Last name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="validationDefault02"
+                      placeholder="Last name"
+                      onChange={(e) => SetLastName(e.target.value)}
+                      value={LastName}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-8 mb-3">
+                    <label htmlFor="Email">Email</label>
+                    <div className="input-group">
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="validationDefaultUsername"
+                        placeholder="abc@example.com"
+                        aria-describedby="inputGroupPrepend2"
+                        onChange={(e) => SetEmail(e.target.value)}
+                        value={Email}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-8 mb-3">
+                    <label htmlFor="phone">Mob No.</label>
+                    <div className="input-group">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="phone"
+                        placeholder="Enter Your Mobile No."
+                        aria-describedby="inputGroupPrepend2"
+                        onChange={(e) => SetMobile(e.target.value)}
+                        value={mobile}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-8">
+                    <b>Gender:</b>
+                    <div className="mb-4">
+                      <br />
+                      <input
+                        type="radio"
+                        id="male"
+                        name="gender"
+                        value="Male"
+                        onChange={(e) => SetGender(e.target.value)}
+                      />
+                      <label htmlFor="male">Male</label>{" "}
+                      <input
+                        type="radio"
+                        id="female"
+                        name="gender"
+                        value="Female"
+                        onChange={(e) => SetGender(e.target.value)}
+                      />
+                      <label htmlFor="female">Female</label>{" "}
+                      <input
+                        type="radio"
+                        id="preferNotToSay"
+                        name="gender"
+                        value="Prefer Not to Say"
+                        onChange={(e) => SetGender(e.target.value)}
+                      />
+                      <label htmlFor="preferNotToSay">Prefer Not to Say</label>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-row d-flex align-items-center justify-content-center">
+                  <div className="col-md-4 mb-3">
+                    <label htmlFor="validationDefault03">City</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="validationDefault03"
+                      placeholder="City"
+                      onChange={(e) => SetCity(e.target.value)}
+                      value={City}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-2 mb-3">
+                    <label htmlFor="validationDefault04">State</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="validationDefault04"
+                      placeholder="State"
+                      onChange={(e) => SetState(e.target.value)}
+                      value={State}
+                      required={true}
+                    />
+                  </div>
+                  <div className="col-md-2 mb-3">
+                    <label htmlFor="validationDefault05">Zip</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="validationDefault05"
+                      placeholder="Zip"
+                      onChange={(e) => SetZip(e.target.value)}
+                      value={Zip}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="form-group d-flex align-items-center justify-content-center">
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="invalidCheck2"
+                      required
+                    />
+                    <label className="form-check-label" htmlFor="invalidCheck2">
+                      Agree to terms and conditions
+                    </label>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center justify-content-center">
+                  <button
+                    className="btn btn-pink mb-5 px-5"
+                    type="submit"
+                    style={{ fontWeight: "600", fontSize: "16px" }}
+                  >
+                    Continue
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
-          <div className="form-group d-flex align-items-center justify-content-center">
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value=""
-                id="invalidCheck2"
-                required
-              />
-              <label className="form-check-label" htmlFor="invalidCheck2">
-                Agree to terms and conditions
-              </label>
-            </div>
-          </div>
-          <div className="d-flex align-items-center justify-content-center">
-            <button
-              className="btn btn-pink mb-5 px-5"
-              type="submit"
-              style={{ fontWeight: "600", fontSize: "16px" }}
-            >
-              Continue
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </>
   );

@@ -21,7 +21,8 @@ export default function RegistrationCreate() {
     };
 
     // Send a POST request to the server using Axios
-    axios.post("https://jsonplaceholder.typicode.com/posts", formData)
+    axios
+      .post("https://jsonplaceholder.typicode.com/posts", formData)
       .then((response) => {
         // Handle the response
         console.log(response.data);
