@@ -95,12 +95,109 @@ export default function Nav() {
                 <span class="d-none d-lg-inline">Home</span>
               </Link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item desktop-view-menu">
               <a class="nav-link" href="#">
                 <i class="feather-users mr-2 menu-icon"></i>
                 <span class="d-none d-lg-inline">Buddies</span>
               </a>
             </li>
+
+            {/* mobile menu view start */}
+            <li class="nav-item dropdown no-arrow mx-1 osahan-list-dropdown mobile-view-menu">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="feather-users mr-2 menu-icon"></i>
+
+                {/* <span class="badge badge-danger badge-counter">8</span> */}
+              </a>
+
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow-sm">
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#" data-toggle="modal" data-target="#staticBackdrop"
+                >
+                  <div class="dropdown-list-icon">
+                    <i class="feather-upload-cloud left-menu-icon"></i>
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> Upload Resume</div>
+                  </div>
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <i class="feather-user left-menu-icon"></i>
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> User Name</div>
+                  </div>
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <i class="feather-edit left-menu-icon"></i>
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> Edit Profile</div>
+                  </div>
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <img src="img/icon/smile.svg" alt="" />
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> User Profile</div>
+                  </div>
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <i class="feather-users left-menu-icon"></i>
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> My Buddies</div>
+                  </div>
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <i class="feather-briefcase left-menu-icon"></i>
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> Jobs</div>
+                  </div>
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <i class="feather-save left-menu-icon"></i>
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> My Jobs</div>
+                  </div>
+                </a>
+              </div>
+            </li>
+            {/* mobile menu view end */}
 
             <li class="nav-item dropdown no-arrow mx-1 osahan-list-dropdown">
               <a
@@ -120,7 +217,7 @@ export default function Nav() {
                 <h6 class="dropdown-header">Message Center</h6>
                 <a
                   class="dropdown-item d-flex align-items-center"
-                  href="messages.html"
+                  href="#"
                 >
                   <div class="dropdown-list-image mr-3">
                     <img class="rounded-circle" src="img/p1.png" alt="" />
@@ -136,7 +233,7 @@ export default function Nav() {
                 </a>
                 <a
                   class="dropdown-item d-flex align-items-center"
-                  href="messages.html"
+                  href="#"
                 >
                   <div class="dropdown-list-image mr-3">
                     <img class="rounded-circle" src="img/p2.png" alt="" />
@@ -152,7 +249,7 @@ export default function Nav() {
                 </a>
                 <a
                   class="dropdown-item d-flex align-items-center"
-                  href="messages.html"
+                  href="#"
                 >
                   <div class="dropdown-list-image mr-3">
                     <img class="rounded-circle" src="img/p3.png" alt="" />
@@ -168,7 +265,7 @@ export default function Nav() {
                 </a>
                 <a
                   class="dropdown-item d-flex align-items-center"
-                  href="messages.html"
+                  href="#"
                 >
                   <div class="dropdown-list-image mr-3">
                     <img class="rounded-circle" src="img/p4.png" alt="" />
@@ -185,7 +282,7 @@ export default function Nav() {
                 </a>
                 <a
                   class="dropdown-item text-center small text-gray-500"
-                  href="messages.html"
+                  href="#"
                 >
                   Read More Messages
                 </a>
@@ -260,6 +357,93 @@ export default function Nav() {
                 </a>
               </div>
             </li>
+
+            {/*Settings mobile menu view start */}
+            <li class="nav-item dropdown no-arrow mx-1 osahan-list-dropdown mobile-view-menu">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="feather-settings left-menu-icon menu-icon"></i>
+
+                {/* <span class="badge badge-danger badge-counter">8</span> */}
+              </a>
+
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow-sm">
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <i class="feather-file-text left-menu-icon"></i>
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> Simple Resume</div>
+                  </div>
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <img src="img/icon/training.png" alt="" class="icon-image" />
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> Trainings</div>
+                  </div>
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <img src="img/icon/2255545.png" alt="" class="icon-image" />
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> Fresher Jobs</div>
+                  </div>
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <img src="https://static.thenounproject.com/png/960899-200.png" alt="" class="icon-image" />
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> Internship</div>
+                  </div>
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <i class="feather-save left-menu-icon"></i>
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> My Jobs</div>
+                  </div>
+                </a>
+
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="#"
+                >
+                  <div class="dropdown-list-icon">
+                    <i class="feather-log-out left-menu-icon"></i>
+                  </div>
+                  <div class="font-weight-bold overflow-hidden">
+                    <div class="text-truncate"> Sign Out</div>
+                  </div>
+                </a>
+              </div>
+            </li>
+            {/* Settings mobile menu view end */}
 
             <li class="nav-item ml-3">
               <button
