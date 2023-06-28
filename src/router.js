@@ -37,7 +37,8 @@ import MyBuddies from "./Pages/MyBuddies/MyBuddies";
 import FresherJob from "./Pages/FresherJob/FresherJob";
 import SampleResume from "./Pages/SampleResume/SampleResume";
 import Sendotp from "./Pages/Send-otp/Sendotp";
-
+import JobDetails from "./Pages/JobDetails/JobDetails";
+import ProfileEdit from "./Pages/ProfileEdit/ProfileEdit";
 export default function Router() {
   return (
     <>
@@ -304,6 +305,24 @@ export default function Router() {
               <>
                 <Nav />
                 <SampleResume />
+              </>
+            }
+          />
+          <Route
+            path="/JobDetails"
+            element={
+              <>
+                <Nav />
+                <JobDetails />
+              </>
+            }
+          />
+          <Route
+            path="/ProfileEdit"
+            element={
+              <>
+                <Nav />
+                <ProfileEdit />
               </>
             }
           />
