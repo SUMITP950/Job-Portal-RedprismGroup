@@ -4,7 +4,7 @@ import Select from "react-select";
 import { SearchBar } from "../../Component/SearchBar/SearchBar";
 import { SearchResultsList } from "../../Component/SearchBar/SearchResultList";
 
-const EmployerJobPost = () => {
+const EmployerJobPostHR = () => {
   const [results, setResults] = useState([]);
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -12,6 +12,7 @@ const EmployerJobPost = () => {
     { value: "vanilla", label: "Vanilla" },
   ];
   const [title, setTitle] = useState("");
+  const [mobile, setMobile] = useState("");
   const [description, setDescription] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [technicalSkills, setTechnicalSkills] = useState("");
@@ -20,6 +21,9 @@ const EmployerJobPost = () => {
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
+  };
+  const handleMobieChange = (event) => {
+    setMobile(event.target.value);
   };
 
   const handleDescriptionChange = (event) => {
@@ -49,6 +53,7 @@ const EmployerJobPost = () => {
       technicalSkills: technicalSkills,
       salaryRange: salaryRange,
       experienceYear: experienceYear,
+      mobile:mobile,
     };
 
     try {
@@ -69,7 +74,7 @@ const EmployerJobPost = () => {
         <div className="col-md-8 offset-md-2">
           <div className="card">
             <div className="card-header">
-              <h3 className="card-title">Post a Job</h3>
+              <h3 className="card-title">Job Post By HR </h3>
             </div>
             <div className="card-body">
               <form onSubmit={handleSubmit} >
@@ -177,7 +182,18 @@ const EmployerJobPost = () => {
                     <option value="7-8 Year">7-8 Year</option>
                   </select>
                 </div>
-
+                <div className="form-group">
+                  <label htmlFor="title">Mobile No.</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="title"
+                    placeholder="Enter the job title"
+                    value={mobile}
+                    onChange={handleMobieChange}
+                    required
+                  />
+                </div>
                 <div className="form-group">
                   <label htmlFor="description">Job Description</label>
                   <textarea
@@ -207,4 +223,4 @@ const EmployerJobPost = () => {
   );
 };
 
-export default EmployerJobPost;
+export default EmployerJobPostHR;
