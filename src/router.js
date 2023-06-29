@@ -32,6 +32,7 @@ import JobSearch from "./Pages/JobSearch/JobSearch";
 import Internship from "./Pages/Internship/Internship";
 import Rnav from "./Component/Rnav";
 import EmployerJobPost from "./Pages/JobPost/JobPost";
+import EmployerJobPostHR from "./Pages/JobPostHR/JobPost";
 import Training from "./Pages/Training/Training";
 import MyBuddies from "./Pages/MyBuddies/MyBuddies";
 import FresherJob from "./Pages/FresherJob/FresherJob";
@@ -268,7 +269,16 @@ export default function Router() {
             element={
               <>
                 <Nav />
-                <EmployerJobPost />
+                <EmployerJobPost  />
+              </>
+            }
+          />
+          <Route
+            path="/JobPostHR"
+            element={
+              <>
+                <Nav />
+                <EmployerJobPostHR  />
               </>
             }
           />

@@ -3,7 +3,8 @@ import { useState } from "react";
 
 import "./SearchBar.css";
 
-export const SearchBar = ({ setResults }) => {
+export const SearchBar = ({setResults,name}) => {
+
   const [input, setInput] = useState("");
 
   const fetchData = (value) => {
@@ -25,14 +26,16 @@ export const SearchBar = ({ setResults }) => {
   const handleChange = (value) => {
     setInput(value);
     fetchData(value);
+   
   };
 
   return (
     <div className="input-wrapper">
       {/* <FaSearch id="search-icon" /> */}
-      <i class="feather-search searchicon" style={{ color: "gray" }}></i>
+      <i class="feather-search searchicon" style={{ color: "gray" ,fontSize:"15px" }}></i>
       <input
-        placeholder="Type Your City"
+        
+        placeholder={name}
         value={input}
         onChange={(e) => handleChange(e.target.value)}
       />

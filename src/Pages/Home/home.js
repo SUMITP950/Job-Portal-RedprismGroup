@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState ,useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -70,21 +71,40 @@ export default function Home() {
       document.body.setAttribute("class", "noBoxShadow");
     }
   }, []);
+  const [thoughts, setThoughts] = useState("");
+
+  const handleThoughtsChange = (e) => {
+    setThoughts(e.target.value);
+  };
+
+  const handlePost = () => {
+    // Make a POST request to the backend with the thoughts data
+    axios
+      .post("https://fakestoreapi.com/products", { thoughts })
+      .then((response) => {
+        // Handle the response if needed
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // Handle the error if needed
+        console.error(error);
+      });
+  };
 
   return (
     <div>
-      <div class="py-4">
-        <div class="container-fluid body-padding">
-          <div class="row justify-content-around">
-            <main class="col col-xl-7 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-              <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
-                <div class="wrapper">
-                  <div class="icon">
-                    <i id="left" class="feather-arrow-left"></i>
+      <div className="py-4">
+        <div className="container-fluid body-padding">
+          <div className="row justify-content-around">
+            <main className="col col-xl-7 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+              <div className="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
+                <div className="wrapper">
+                  <div className="icon">
+                    <i id="left" className="feather-arrow-left"></i>
                   </div>
-                  <ul class="tabs-box">
-                    <li class="tab">Coding</li>
-                    <li class="tab active">JavaScript</li>
+                  <ul className="tabs-box">
+                    <li className="tab">Coding</li>
+                    <li className="tab active">JavaScript</li>
                     <li class="tab">Podcasts</li>
                     <li class="tab">Databases</li>
                     <li class="tab">Web Development</li>
@@ -99,44 +119,51 @@ export default function Home() {
                     <li class="tab">Smartphones</li>
                     <li class="tab">Data Structure</li>
                   </ul>
-                  <div class="icon">
-                    <i id="right" class="feather-arrow-right"></i>
+                  <div className="icon">
+                    <i id="right" className="feather-arrow-right"></i>
                   </div>
                 </div>
-                <div class="tab-content" id="myTabContent">
+                <div className="tab-content" id="myTabContent">
                   <div
-                    class="tab-pane fade show active"
+                    className="tab-pane fade show active"
                     id="home"
                     role="tabpanel"
                     aria-labelledby="home-tab"
                   >
-                    <div class="p-3 d-flex w-100" href="#">
-                      <div class="dropdown-list-image mr-3">
+                    <div className="p-3 d-flex w-100" href="#">
+                      <div className="dropdown-list-image mr-3">
                         <img
-                          class="rounded-circle"
+                          className="rounded-circle"
                           src="img/icon/smile.svg"
                           alt=""
                         />
-                        <div class="status-indicator bg-success"></div>
+                        <div className="status-indicator bg-success"></div>
                       </div>
-                      <div class="w-100">
+                      <div className="w-100">
                         <textarea
                           placeholder="Write your thoughts..."
-                          class="form-control shadow-none"
-                          oninput="auto_grow(this)"
+                          className="form-control shadow-none"
+                          onInput="auto_grow(this)"
+                          
+                          value={thoughts}
+                          onChange={handleThoughtsChange}
                         ></textarea>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="border-top p-3 d-flex align-items-center">
-                  <div class="mr-auto">
-                    <a href="#" class="text-link">
-                      <i class="feather-users"></i> Tag Buddies
+                <div className="border-top p-3 d-flex align-items-center">
+                  <div className="mr-auto">
+                    <a href="#" className="text-link">
+                      <i className="feather-users"></i> Tag Buddies
                     </a>
                   </div>
-                  <div class="flex-shrink-1">
-                    <button type="button" class="btn btn-sm post-btn">
+                  <div className="flex-shrink-1">
+                    <button
+                      type="button"
+                      className="btn btn-sm post-btn"
+                      onClick={handlePost}
+                    >
                       Post
                     </button>
                   </div>
