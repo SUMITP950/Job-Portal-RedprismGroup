@@ -1,19 +1,26 @@
+/* profile edit start*/
+.custom-checkbox .custom-control-label::before {
+  border-radius: 0.25rem;
+  margin-left: 15px;
+}
 /* my byddy startbhfg*/
-.small-search{height: 35px !important;
-font-size: 14px !important;}
+.small-search {
+  height: 35px !important;
+  font-size: 14px !important;
+}
 /* sample resume start */
 .badge {
-  
-  margin-right:10px !important;
+  margin-right: 10px !important;
 }
 
 .resume-image {
- width: 100% !important;
+  width: 100% !important;
   height: 45vh !important;
 }
-.card-out-border{border: 1px solid #000 !important;
-border-radius: 10px;
-padding-top: 8px;
+.card-out-border {
+  border: 1px solid #000 !important;
+  border-radius: 10px;
+  padding-top: 8px;
 }
 /* page training start */
 .crdimg {
@@ -340,4 +347,3 @@ tbody {
 .login-bg-img-otp {
   background-image: url(https://www.su.edu/wp-content/uploads/2021/01/iStock-1180210837-1.jpg);
 }
-
