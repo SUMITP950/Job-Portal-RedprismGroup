@@ -3,71 +3,72 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   useEffect(() => {
-    
     const tabsBox = document.querySelector(".tabs-box"),
-allTabs = tabsBox.querySelectorAll(".tab"),
-arrowIcons = document.querySelectorAll(".icon i");
+      allTabs = tabsBox.querySelectorAll(".tab"),
+      arrowIcons = document.querySelectorAll(".icon i");
 
-let isDragging = false;
+    let isDragging = false;
 
-const handleIcons = (scrollVal) => {
-    let maxScrollableWidth = tabsBox.scrollWidth - tabsBox.clientWidth;
-    arrowIcons[0].parentElement.style.display = scrollVal <= 0 ? "none" : "flex";
-    arrowIcons[1].parentElement.style.display = maxScrollableWidth - scrollVal <= 1 ? "none" : "flex";
-}
+    const handleIcons = (scrollVal) => {
+      let maxScrollableWidth = tabsBox.scrollWidth - tabsBox.clientWidth;
+      arrowIcons[0].parentElement.style.display =
+        scrollVal <= 0 ? "none" : "flex";
+      arrowIcons[1].parentElement.style.display =
+        maxScrollableWidth - scrollVal <= 1 ? "none" : "flex";
+    };
 
-arrowIcons.forEach(icon => {
-    icon.addEventListener("click", () => {
+    arrowIcons.forEach((icon) => {
+      icon.addEventListener("click", () => {
         // if clicked icon is left, reduce 350 from tabsBox scrollLeft else add
-        let scrollWidth = tabsBox.scrollLeft += icon.id === "left" ? -340 : 340;
+        let scrollWidth = (tabsBox.scrollLeft +=
+          icon.id === "left" ? -340 : 340);
         handleIcons(scrollWidth);
+      });
     });
-});
 
-allTabs.forEach(tab => {
-    tab.addEventListener("click", () => {
+    allTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
         tabsBox.querySelector(".active").classList.remove("active");
         tab.classList.add("active");
+      });
     });
-});
 
-const dragging = (e) => {
-    if(!isDragging) return;
-    tabsBox.classList.add("dragging");
-    tabsBox.scrollLeft -= e.movementX;
-    handleIcons(tabsBox.scrollLeft)
-}
+    const dragging = (e) => {
+      if (!isDragging) return;
+      tabsBox.classList.add("dragging");
+      tabsBox.scrollLeft -= e.movementX;
+      handleIcons(tabsBox.scrollLeft);
+    };
 
-const dragStop = () => {
-    isDragging = false;
-    tabsBox.classList.remove("dragging");
-}
+    const dragStop = () => {
+      isDragging = false;
+      tabsBox.classList.remove("dragging");
+    };
 
-tabsBox.addEventListener("mousedown", () => isDragging = true);
-tabsBox.addEventListener("mousemove", dragging);
-document.addEventListener("mouseup", dragStop);
-function auto_grow(element) {
-    element.style.height = "5px";
-    element.style.height = (element.scrollHeight)+"px";
-}
-window.onscroll = function() {myFunction()};
+    tabsBox.addEventListener("mousedown", () => (isDragging = true));
+    tabsBox.addEventListener("mousemove", dragging);
+    document.addEventListener("mouseup", dragStop);
+    function auto_grow(element) {
+      element.style.height = "5px";
+      element.style.height = element.scrollHeight + "px";
+    }
+    window.onscroll = function () {
+      myFunction();
+    };
 
-var navbar = document.getElementById("navbar");
-var sticky = navbar.offsetTop;
+    var navbar = document.getElementById("navbar");
+    var sticky = navbar.offsetTop;
 
-const myFunction = () => {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add("sticky")
-  } else {
-    navbar.classList.remove("sticky");
-  }
-}
-if (!('boxShadow' in document.body.style)) {
-    document.body.setAttribute('class', 'noBoxShadow');
-}
-
-
-
+    const myFunction = () => {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky");
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    };
+    if (!("boxShadow" in document.body.style)) {
+      document.body.setAttribute("class", "noBoxShadow");
+    }
   }, []);
 
   return (
@@ -184,7 +185,7 @@ if (!('boxShadow' in document.body.style)) {
                 </div>
               </div>
             </main>
-            <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+            <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm pt-4 pb-4">
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -250,7 +251,7 @@ if (!('boxShadow' in document.body.style)) {
                 </div>
               </div>
             </aside>
-            <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
+            <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm">
                   <h6 class="pt-3 text-center">Other Option</h6>
