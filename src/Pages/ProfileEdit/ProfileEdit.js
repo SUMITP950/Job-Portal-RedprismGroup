@@ -11,6 +11,24 @@ export default function ProfileEdit() {
   const [Email, SetEmail] = useState("");
   const [mobile, SetMobile] = useState("");
   const [Location, SetLocation] = useState("");
+  const [Website, SetWebsite] = useState("");
+  const [Organization, SetOrganization] = useState("");
+  const [Company, SetCompany] = useState("");
+  const [Position, SetPosition] = useState("");
+  const [From, SetFrom] = useState("");
+  const [To, SetTo] = useState("");
+  const [Dmonth, SetDmonth] = useState("");
+  const [Day, SetDay] = useState("");
+  const [Year, SetYear] = useState("");
+  const [Gender, SetGender] = useState("");
+
+  const handleChange = (event) => {
+    SetDmonth(event.target.value);
+    SetDay(event.target.value);
+    SetYear(event.target.value);
+    SetGender(event.target.value);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -20,6 +38,16 @@ export default function ProfileEdit() {
       Email,
       mobile,
       Location,
+      Website,
+      Organization,
+      Company,
+      Position,
+      From,
+      To,
+      Dmonth,
+      Day,
+      Year,
+      Gender,
     };
     axios
       .post("https://jsonplaceholder.typicode.com/posts", data)
@@ -107,6 +135,7 @@ export default function ProfileEdit() {
                           class="custom-control-label"
                           for="customCheck1"
                           style={{ marginLeft: "12px" }}
+                          onChange={(e) => SetGender(e.target.value)}
                         >
                           JavaScript, jQuery
                         </label>
@@ -279,7 +308,9 @@ export default function ProfileEdit() {
                           <div class="form-group">
                             <select
                               class="form-control custom-select"
-                              required=""
+                              required
+                              onChange={handleChange}
+                              value={Dmonth}
                               data-msg="Please select month."
                               data-error-class="u-has-error"
                               data-success-class="u-has-success"
@@ -321,6 +352,8 @@ export default function ProfileEdit() {
                         <div class="js-form-message">
                           <div class="form-group">
                             <select
+                             onChange={handleChange}
+                             value={Day}
                               class="form-control custom-select"
                               required=""
                               data-msg="Please select date."
@@ -373,6 +406,8 @@ export default function ProfileEdit() {
                         <div class="js-form-message">
                           <div class="form-group">
                             <select
+                              onChange={handleChange}
+                              value={Year}
                               class="form-control custom-select"
                               required=""
                               data-msg="Please select year."
@@ -512,6 +547,8 @@ export default function ProfileEdit() {
                         <div class="js-form-message">
                           <div class="form-group">
                             <select
+                            onChange={handleChange}
+                            value={Gender}
                               class="form-control custom-select"
                               required=""
                               data-msg="Please select your gender."
@@ -594,10 +631,11 @@ export default function ProfileEdit() {
                               type="text"
                               class="form-control"
                               name="organization"
-                              value="Askbootsrap Ltd."
+                              onChange={(e) => SetOrganization(e.target.value)}
+                              value={Organization}
                               placeholder="Enter your organization name"
                               aria-label="Enter your organization name"
-                              required=""
+                              required
                               aria-describedby="organizationLabel"
                               data-msg="Please enter your organization name"
                               data-error-class="u-has-error"
@@ -618,10 +656,11 @@ export default function ProfileEdit() {
                               class="form-control"
                               type="url"
                               name="website"
-                              value="https://askbootstrap.com/"
+                              onChange={(e) => SetWebsite(e.target.value)}
+                              value={Website}
                               placeholder="Enter your website"
                               aria-label="Enter your website"
-                              required=""
+                              required
                               aria-describedby="websiteLabel"
                               data-msg="Password enter a valid website"
                               data-error-class="u-has-error"
@@ -700,6 +739,8 @@ export default function ProfileEdit() {
 
                       <div class="input-group">
                         <input
+                           onChange={(e) => SetFrom(e.target.value)}
+                           value={From}
                           type="text"
                           class="form-control"
                           placeholder="From"
@@ -715,6 +756,8 @@ export default function ProfileEdit() {
 
                       <div class="input-group">
                         <input
+                         onChange={(e) => SetTo(e.target.value)}
+                         value={To}
                           type="text"
                           class="form-control"
                           placeholder="TO"
@@ -733,6 +776,8 @@ export default function ProfileEdit() {
                       <div class="input-group">
                         <input
                           type="text"
+                          onChange={(e) => SetCompany(e.target.value)}
+                          value={Company}
                           class="form-control"
                           placeholder="Enter your company title"
                           aria-label="Enter your company title"
@@ -749,6 +794,8 @@ export default function ProfileEdit() {
                         <input
                           type="text"
                           class="form-control"
+                          onChange={(e) => SetPosition(e.target.value)}
+                          value={Position}
                           placeholder="Enter your position"
                           aria-label="Enter your position"
                           aria-describedby="positionLabel"
