@@ -101,7 +101,7 @@ export default function Training(props) {
             <main className="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
               <div className="pt-3" style={{ backgroundColor: "#edf2f6" }}>
                 <div className="container-fluid">
-                  <div className="row justify-content-center">
+                  {/* <div className="row justify-content-center">
                     <div className="col-md-12">
                       <div className="d-flex justify-content-around">
                         <div className="dropdown">
@@ -210,7 +210,7 @@ export default function Training(props) {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
