@@ -204,8 +204,6 @@ export default function Router() {
               <>
                 <Rnav />
 
-                <SideBar />
-
                 <RegistrationBasicHR />
               </>
             }

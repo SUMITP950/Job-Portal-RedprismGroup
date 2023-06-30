@@ -19,7 +19,7 @@ export default function Training(props) {
       <div className="py-4">
         <div className="container-fluid body-padding">
           <div className="row justify-content-around">
-            <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
+            <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12 dn">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm">
                   <h6 class="pt-3 text-center">Other Option</h6>
@@ -382,7 +382,7 @@ export default function Training(props) {
               </div>
             </main>
 
-            <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 ">
+            <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 dn">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm pt-4 pb-4">
                   <a class="dropdown-item d-flex align-items-center" href="#">

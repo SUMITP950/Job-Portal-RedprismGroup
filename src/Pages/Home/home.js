@@ -142,9 +142,7 @@ export default function Home() {
                       <div className="w-100">
                         <textarea
                           placeholder="Write your thoughts..."
-                          className="form-control shadow-none"
-                          onInput="auto_grow(this)"
-                          
+                          className="form-control shadow-none" 
                           value={thoughts}
                           onChange={handleThoughtsChange}
                         ></textarea>
