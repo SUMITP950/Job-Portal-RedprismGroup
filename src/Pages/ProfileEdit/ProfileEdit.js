@@ -1,10 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function ProfileEdit() {
   useEffect(() => {
     document.title = "Profile Edit";
   }, []);
+  const [Name, SetName] = useState("");
+  const [username, setUsername] = useState("");
+  const [Email, SetEmail] = useState("");
+  const [mobile, SetMobile] = useState("");
+  const [Location, SetLocation] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = {
+      Name,
+      username,
+      Email,
+      mobile,
+      Location,
+    };
+    axios
+      .post("https://jsonplaceholder.typicode.com/posts", data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <>
       {" "}
@@ -66,7 +91,7 @@ export default function ProfileEdit() {
                           placeholder="Enter Bio"
                         >
                           Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor :)
+                          elit, sed do eiusmod tempor
                         </textarea>
                       </div>
                     </div>
@@ -78,7 +103,11 @@ export default function ProfileEdit() {
                           class="custom-control-input"
                           id="customCheck1"
                         />
-                        <label class="custom-control-label" for="customCheck1">
+                        <label
+                          class="custom-control-label"
+                          for="customCheck1"
+                          style={{ marginLeft: "12px" }}
+                        >
                           JavaScript, jQuery
                         </label>
                       </div>
@@ -88,7 +117,11 @@ export default function ProfileEdit() {
                           class="custom-control-input"
                           id="customCheck2"
                         />
-                        <label class="custom-control-label" for="customCheck2">
+                        <label
+                          class="custom-control-label"
+                          for="customCheck2"
+                          style={{ marginLeft: "12px" }}
+                        >
                           HTML5, CSS3
                         </label>
                       </div>
@@ -176,7 +209,11 @@ export default function ProfileEdit() {
                   </p>
                 </div>
                 <div class="box-body p-3">
-                  <form class="js-validate" novalidate="novalidate">
+                  <form
+                    onSubmit={handleSubmit}
+                    class="js-validate"
+                    novalidate="novalidate"
+                  >
                     <div class="row">
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
@@ -186,13 +223,14 @@ export default function ProfileEdit() {
                           </label>
                           <div class="form-group">
                             <input
+                              onChange={(e) => SetName(e.target.value)}
+                              value={Name}
                               type="text"
                               class="form-control"
                               name="name"
-                              value="Gurdeep Osahan"
                               placeholder="Enter your name"
                               aria-label="Enter your name"
-                              required=""
+                              required
                               aria-describedby="nameLabel"
                               data-msg="Please enter your name."
                               data-error-class="u-has-error"
@@ -214,13 +252,14 @@ export default function ProfileEdit() {
                           </label>
                           <div class="form-group">
                             <input
+                              value={username}
+                              onChange={(e) => setUsername(e.target.value)}
                               type="text"
                               class="form-control"
                               name="username"
-                              value="iamosahan"
                               placeholder="Enter your username"
                               aria-label="Enter your username"
-                              required=""
+                              required
                               aria-describedby="usernameLabel"
                               data-msg="Please enter your username."
                               data-error-class="u-has-error"
@@ -501,10 +540,11 @@ export default function ProfileEdit() {
                               type="email"
                               class="form-control"
                               name="email"
-                              value="iamosahan@gmail.com"
+                              onChange={(e) => SetEmail(e.target.value)}
+                              value={Email}
                               placeholder="Enter your email address"
                               aria-label="Enter your email address"
-                              required=""
+                              required
                               aria-describedby="emailLabel"
                               data-msg="Please enter a valid email address."
                               data-error-class="u-has-error"
@@ -528,10 +568,11 @@ export default function ProfileEdit() {
                               type="text"
                               class="form-control"
                               name="location"
-                              value="Ludhiana, Punjab"
+                              onChange={(e) => SetLocation(e.target.value)}
+                              value={Location}
                               placeholder="Enter your location"
                               aria-label="Enter your location"
-                              required=""
+                              required
                               aria-describedby="locationLabel"
                               data-msg="Please enter your location."
                               data-error-class="u-has-error"
@@ -598,7 +639,7 @@ export default function ProfileEdit() {
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
                           <label id="phoneNumberLabel" class="form-label">
-                            Phone number
+                            Mobile number
                             <span class="text-danger">*</span>
                           </label>
                           <div class="form-group">
@@ -606,10 +647,11 @@ export default function ProfileEdit() {
                               class="form-control"
                               type="tel"
                               name="phoneNumber"
-                              value="+91 85680 79956"
+                              onChange={(e) => SetMobile(e.target.value)}
+                              value={mobile}
                               placeholder="Enter your phone number"
                               aria-label="Enter your phone number"
-                              required=""
+                              required
                               aria-describedby="phoneNumberLabel"
                               data-msg="Please enter a valid phone number"
                               data-error-class="u-has-error"

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
 import { SearchBar } from "../../Component/SearchBar/SearchBar";
 import { SearchResultsList } from "../../Component/SearchBar/SearchResultList";
 
 const EmployerJobPostHR = () => {
+  useEffect(() => {
+    document.title = "HR Job Post";
+  }, []);
   const [results, setResults] = useState([]);
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -53,7 +56,7 @@ const EmployerJobPostHR = () => {
       technicalSkills: technicalSkills,
       salaryRange: salaryRange,
       experienceYear: experienceYear,
-      mobile:mobile,
+      mobile: mobile,
     };
 
     try {
@@ -77,7 +80,7 @@ const EmployerJobPostHR = () => {
               <h3 className="card-title">Job Post By HR </h3>
             </div>
             <div className="card-body">
-              <form onSubmit={handleSubmit} >
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="title">Job Title</label>
                   <input
@@ -146,7 +149,7 @@ const EmployerJobPostHR = () => {
                 <div className="form-group">
                   <label htmlFor="salaryRange">Location</label>
                   <div className="search-bar-container">
-                    <SearchBar setResults={setResults} name="Type City"  />
+                    <SearchBar setResults={setResults} name="Type City" />
                     {results && results.length > 0 && (
                       <SearchResultsList results={results} />
                     )}
@@ -155,7 +158,10 @@ const EmployerJobPostHR = () => {
                 <div className="form-group">
                   <label htmlFor="salaryRange">Technology</label>
                   <div className="search-bar-container">
-                    <SearchBar setResults={setResults} name={"Type Technology"} />
+                    <SearchBar
+                      setResults={setResults}
+                      name={"Type Technology"}
+                    />
                     {results && results.length > 0 && (
                       <SearchResultsList results={results} />
                     )}

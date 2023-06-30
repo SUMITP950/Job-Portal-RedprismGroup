@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Select from "react-select";
 import { SearchBar } from "../../Component/SearchBar/SearchBar";
 import { SearchResultsList } from "../../Component/SearchBar/SearchResultList";
 
 const EmployerJobPost = () => {
+  useEffect(() => {
+    document.title = "Job Post";
+  }, []);
   const [results, setResults] = useState([]);
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -72,7 +75,7 @@ const EmployerJobPost = () => {
               <h3 className="card-title">Post a Job</h3>
             </div>
             <div className="card-body">
-              <form onSubmit={handleSubmit} >
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="title">Job Title</label>
                   <input
@@ -141,19 +144,55 @@ const EmployerJobPost = () => {
                 <div className="form-group">
                   <label htmlFor="salaryRange">Location</label>
                   <div className="search-bar-container">
-                    <SearchBar setResults={setResults} name="Type City"  />
-                    {results && results.length > 0 && (
-                      <SearchResultsList results={results} />
-                    )}
+                    <SearchBar setResults={setResults} name="Type City" />
+                    {results &&
+                      results.length > 0 && ( //result is not display in input
+                        <SearchResultsList results={results} />
+                      )}
                   </div>
                 </div>
                 <div className="form-group">
                   <label htmlFor="salaryRange">Technology</label>
-                  <div className="search-bar-container">
-                    <SearchBar setResults={setResults} name={"Type Technology"} />
-                    {results && results.length > 0 && (
-                      <SearchResultsList results={results} />
-                    )}
+                  <br />
+                  <div className="form-control">
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          display: "inline",
+                          left: "-93px",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          border: "none",
+                          backgroundColor: "#fff",
+                        }),
+                        indicatorsContainer: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          left: "0px",
+                        }),
+                        option: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "block", //problem here not
+                          left: "-93px",
+                        }),
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options}
+                      isMulti
+                      placeholder="Select skills"
+                      value={options.filter((option) =>
+                        technicalSkills.includes(option.value)
+                      )}
+                      onChange={handleTechnicalSkillsChange}
+                      required
+                    />
                   </div>
                 </div>
                 <div className="form-group">
