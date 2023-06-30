@@ -125,23 +125,14 @@ export default function RegistrationStatusHR() {
                       <option value="No">No</option>
                     </select>
                   </div>
-                  <div className="col-md-8 d-flex justify-content-center">
-                    <i
-                      className="feather-sun"
-                      style={{ color: "#000", border: "2px solid pink" }}
-                    ></i>
-                    <i
-                      className="feather-umbrella"
-                      style={{ color: "#000", border: "2px solid pink" }}
-                    ></i>
-                    <i
-                      className="feather-sunrise"
-                      style={{ color: "#000", border: "2px solid pink" }}
-                    ></i>
-                    <i
-                      className="feather-sunrise"
-                      style={{ color: "#000", border: "2px solid pink" }}
-                    ></i>
+                  <div className="col-md-8 d-flex justify-content-center ">
+                   <div className="d-inline mr-10"> <h3 >Status</h3>
+                    <button className="m-2"> <img src="img/icon/icons8-light-on-100.png" alt="" height={70} width={70}  /></button>
+                    <button className="m-2" > <img src="img/icon/image_processing20220416-11036-d1bb4y.png" alt="" height={70} width={70} /></button>
+                    <button className="m-2"> <img src="img/icon/man-standing-on-window-6810201-5665296.png" alt="" height={70} width={70}/></button>
+                    <button  className="m-2"> <img src="img/icon/icons8-american-eagle-100.png" alt="" height={70} width={70}/></button>
+                    </div>
+                   
                   </div>
                 </div>
                 <div className="d-flex align-items-center justify-content-center mt-5">
