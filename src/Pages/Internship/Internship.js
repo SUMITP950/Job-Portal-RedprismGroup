@@ -1,29 +1,47 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Skeleton from "react-loading-skeleton";
 
-import { Link } from "react-router-dom";
-
-export default function Internship() {
+export default async function Internship() {
   useEffect(() => {
     document.title = "Internship";
   }, []);
 
   const [data, setData] = useState([]);
-  useEffect(() => {
-    const url = "https://fakestoreapi.com/products/";
+  const [isLoading, setIsLoading] = useState(true);
+  try {
+    const { data } = await axios({
+      method: "put",
+      url: "https://fakestoreapi.com/products/",
+      data: {
+        title: "Making PUT Requests with Axios",
+        status: "published",
+      },
+    });
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        console.log(json);
-        setData(json);
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
+    console.log(data);
+  } catch (err) {
+    if (err.response.status === 404) {
+      console.log("Resource could not be found!");
+    } else {
+      console.log(err.message);
+    }
+  }
+  // useEffect(() => {
+  //   const url = "https://fakestoreapi.com/products/";
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(url);
+  //       const json = await response.json();
+  //       console.log(json);
+  //       setData(json);
+  //     } catch (error) {
+  //       console.log("error", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <>
@@ -96,6 +114,7 @@ export default function Internship() {
                 </div>
               </div>
             </aside>
+            <Skeleton count={5} baseColor="#202020" highlightColor="#444" />
             <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
               {
                 <div class="row">
@@ -145,8 +164,8 @@ export default function Internship() {
                                     src="img/icon/whatsapp.png"
                                     alt=""
                                     class="whatsapp-img-intern"
-                                  />{" "}
-                                  Share{" "}
+                                  />
+                                  Share
                                 </button>
                               </div>
                             </div>
