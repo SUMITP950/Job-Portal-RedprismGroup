@@ -58,7 +58,7 @@ function auto_grow(element) {
 
   element.style.height = element.scrollHeight + "px";
 }
-
+// home menu scroll end 
 window.onscroll = function () {
   myFunction();
 };
