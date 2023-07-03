@@ -1,32 +1,36 @@
-import React, { useEffect, useState } from "react";
-import Axios from "axios";
-import { Link } from "react-router-dom";
+// include
+import React,{useEffect} from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 export default function RegistrationVarify() {
+
   useEffect(() => {
     document.title = "Registration";
   }, []);
-  const [otp, Setotp] = useState("");
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    window.location.replace("./RegistrationTechSkills");
+  const navigate = useNavigate();
 
-    if (otp.trim() === "") {
-      // Zip code is required
-      alert("Please enter your OTP code");
-      return window.location.replace("./RegistrationVarify");
-    }
+  // form validation
+  const formik = useFormik({
+    initialValues: {
+      otp: "",
+    },
+    validationSchema: yup.object({
+      otp: yup
+        .string()
+        .required("*Required")
+        .min(6, "Minimum 6 digits")
+        .matches(/^[0-9]+$/, "This field  must be a number")
+        .max(6, "Maximum 6 digits"),
+    }),
+    onSubmit: (values) => {
+      console.log(values); // In this section data send to backend
+      navigate("/RegistrationCreate");
+    },
+  });
 
-    const data = { otp };
-    Axios.post("https://jsonplaceholder.typicode.com/posts", data)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
   return (
     <>
       <div className="container">
@@ -35,7 +39,7 @@ export default function RegistrationVarify() {
             <div class="pindicator">
               <div class="bullet current ">
                 {" "}
-                <Link to="/RegistrationBasic">
+                <Link to="/RegistrationVarify">
                   <span class="icon1 tns90">1</span>
                 </Link>
               </div>
@@ -45,17 +49,21 @@ export default function RegistrationVarify() {
                 </Link>
               </div>
               <div class="bullet next future">
-                <span onClick={handleSubmit} class="icon1 tns90">
+              <Link to="/RegistrationVarify" onClick={formik.handleSubmit}>
+                <span
+                  class="icon1 tns90"
+                >
                   3
                 </span>
+                </Link>
               </div>
               <div class="bullet future">
-                <Link onClick={handleSubmit}>
+                <Link to="/RegistrationVarify" onClick={formik.handleSubmit}>
                   <span class="icon1 tns90">4</span>
                 </Link>
               </div>
               <div class="bullet future">
-                <Link to="/RegistrationStatus">
+                <Link to="/RegistrationVarify" onClick={formik.handleSubmit}>
                   <span class="icon1 tns90">5</span>
                 </Link>
               </div>
@@ -82,18 +90,21 @@ export default function RegistrationVarify() {
               <b className="midil">Please Verify yourself</b>
             </div>
             <div class="container">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={formik.handleSubmit}>
                 <div class="form-row d-flex align-items-center justify-content-center">
                   <div class="col-md-8 mb-3">
                     <p className="d-flex h4 my-5 justify-content-center">OTP</p>
                     <input
-                      type="text"
+                      type="number"
+                      name="otp"
                       class="form-control"
                       placeholder="Enter Your 6 Digit OTP"
-                      onChange={(e) => Setotp(e.target.value)}
-                      value={otp}
-                      required
+                      onChange={formik.handleChange}
+                      value={formik.values.otp}
                     />
+                    {formik.errors.otp && (
+                      <em style={{ color: "red" }}>{formik.errors.otp}</em>
+                    )}
                   </div>
                 </div>
                 <div class="d-flex align-items-center justify-content-center mt-3">

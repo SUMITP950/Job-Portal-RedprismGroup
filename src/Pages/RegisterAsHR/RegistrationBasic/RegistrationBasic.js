@@ -1,99 +1,83 @@
-import React, { useEffect, useState } from "react";
-import Axios from "axios";
-import { Link } from "react-router-dom";
+// include
+import React,{useEffect} from "react";
+// import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
-export default function RegistrationBasicHR() {
+export default function RegistrationBasic() {
   useEffect(() => {
     document.title = "Registration";
   }, []);
+  
+  const navigate = useNavigate();
 
-  const [FirstName, SetFirstName] = useState("");
-  const [LastName, SetLastName] = useState("");
-  const [Email, SetEmail] = useState("");
-  const [mobile, SetMobile] = useState("");
-  const [Gender, SetGender] = useState("");
-  const [City, SetCity] = useState("");
-  const [State, SetState] = useState("");
-  const [Zip, SetZip] = useState("");
+  // form validation
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      mobile: "",
+      city: "",
+      state: "",
+      zip: "",
+    },
+    validationSchema: yup.object({
+      firstName: yup
+        .string()
+        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
+        .required("*Required")
+        .min(3, "Minimum 3 characters length")
+        .max(15, "Maximum 15 characters length"),
+      lastName: yup
+        .string()
+        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
+        .required("*Required")
+        .min(3, "Minimum 3 characters length")
+        .max(15, "Maximum 15 characters length"),
 
-    window.location.replace("./RegistrationVarify");
+      email: yup.string().required("*Required").email("Invalid Email"),
+      mobile: yup
+        .string()
+        .required("*Required")
+        .matches(/^[0-9]+$/, "This field  must be a number")
+        .min(10, "Minimum 10 digits")
+        .max(10, "Maximum 10 digits"),
+      city: yup
+        .string()
+        .required("*Required")
+        .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
+      state: yup
+        .string()
+        .required("*Required")
+        .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
+      zip: yup
+        .string()
+        .required("*Required")
+        .matches(/^[0-9]+$/, "This field  must be a number")
+        .min(5, "Minimum 5 digits")
+        .max(10, "Maximum 10 digits"),
+    }),
+    onSubmit: (values) => {
+      console.log(values); // In this section data send to backend
+      navigate("/RegistrationVarify");
+    },
+  });
 
-    // Perform form validation
-    if (FirstName.trim() === "") {
-      // First name is required
-      alert("Please enter your first name");
-      return;
-    }
-
-    if (LastName.trim() === "") {
-      // Last name is required
-      alert("Please enter your last name");
-      return;
-    }
-
-    if (Email.trim() === "") {
-      // Email is required
-      alert("Please enter your email");
-      return;
-    }
-
-    if (mobile.trim() === "") {
-      // Mobile number is required
-      alert("Please enter your mobile number");
-      return;
-    }
-
-    if (Gender === "") {
-      // Gender is required
-      alert("Please select your gender");
-      return;
-    }
-
-    if (City.trim() === "") {
-      // City is required
-      alert("Please enter your city");
-      return;
-    }
-
-    if (State.trim() === "") {
-      // State is required
-      alert("Please enter your state");
-      return;
-    }
-
-    if (Zip.trim() === "") {
-      // Zip code is required
-      alert("Please enter your zip code");
-      return;
-    }
-
-    // All validation checks passed, proceed with form submission
-    const data = {
-      FirstName,
-      LastName,
-      Email,
-      mobile,
-      Gender,
-      City,
-      State,
-      Zip,
-    };
-
-    Axios.post("https://jsonplaceholder.typicode.com/posts", data)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  //   axios
+  //     .post("https://jsonplaceholder.typicode.com/posts", values)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
 
   return (
     <>
-      {" "}
       <div className="container">
         <div className="row">
           <div className="col-md-4 dn">
@@ -105,22 +89,22 @@ export default function RegistrationBasicHR() {
                 </Link>
               </div>
               <div class="bullet ">
-                <span onClick={handleSubmit} class="icon1 tns90">
-                  2
-                </span>
+                <Link to="/RegistrationBasic" onClick={formik.handleSubmit}>
+                  <span class="icon1 tns90">2</span>
+                </Link>
               </div>
               <div class="bullet next future">
-                <Link to="/RegistrationCreate">
+                <Link to="/RegistrationBasic" onClick={formik.handleSubmit}>
                   <span class="icon1 tns90">3</span>
                 </Link>
               </div>
               <div class="bullet future">
-                <Link to="/RegistrationTechSkills">
+                <Link to="/RegistrationBasic" onClick={formik.handleSubmit}>
                   <span class="icon1 tns90">4</span>
                 </Link>
               </div>
               <div class="bullet future">
-                <Link to="/RegistrationStatus">
+                <Link to="/RegistrationBasic" onClick={formik.handleSubmit}>
                   <span class="icon1 tns90">5</span>
                 </Link>
               </div>
@@ -146,61 +130,73 @@ export default function RegistrationBasicHR() {
               <span className="midil">Please fill up more details</span>
             </div>
             <div className="container">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={formik.handleSubmit}>
                 <div className="form-row d-flex align-items-center justify-content-center">
                   <div className="col-md-8 mb-3">
                     <label htmlFor="validationDefault01">First name</label>
                     <input
                       type="text"
+                      name="firstName"
                       className="form-control"
                       id="validationDefault01"
                       placeholder="First name"
-                      onChange={(e) => SetFirstName(e.target.value)}
-                      value={FirstName}
-                      required
+                      onChange={formik.handleChange}
+                      value={formik.values.firstName}
                     />
+
+                    {formik.errors.firstName && (
+                      <em style={{ color: "red" }}>
+                        {formik.errors.firstName}
+                      </em>
+                    )}
                   </div>
                   <div className="col-md-8 mb-3">
                     <label htmlFor="validationDefault02">Last name</label>
                     <input
                       type="text"
+                      name="lastName"
                       className="form-control"
                       id="validationDefault02"
                       placeholder="Last name"
-                      onChange={(e) => SetLastName(e.target.value)}
-                      value={LastName}
-                      required
+                      onChange={formik.handleChange}
+                      value={formik.values.lastName}
                     />
+
+                    {formik.errors.lastName && (
+                      <em style={{ color: "red" }}>{formik.errors.lastName}</em>
+                    )}
                   </div>
                   <div className="col-md-8 mb-3">
                     <label htmlFor="Email">Email</label>
-                    <div className="input-group">
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="validationDefaultUsername"
-                        placeholder="abc@example.com"
-                        aria-describedby="inputGroupPrepend2"
-                        onChange={(e) => SetEmail(e.target.value)}
-                        value={Email}
-                        required
-                      />
-                    </div>
+                    <input
+                      type="email"
+                      className="form-control"
+                      name="email"
+                      id="validationDefaultUsername"
+                      placeholder="abc@example.com"
+                      aria-describedby="inputGroupPrepend2"
+                      onChange={formik.handleChange}
+                      value={formik.values.email}
+                    />
+                    {formik.errors.email && (
+                      <em style={{ color: "red" }}>{formik.errors.email}</em>
+                    )}
                   </div>
                   <div className="col-md-8 mb-3">
                     <label htmlFor="phone">Mob No.</label>
-                    <div className="input-group">
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="phone"
-                        placeholder="Enter Your Mobile No."
-                        aria-describedby="inputGroupPrepend2"
-                        onChange={(e) => SetMobile(e.target.value)}
-                        value={mobile}
-                        required
-                      />
-                    </div>
+                    <input
+                      type="number"
+                      name="mobile"
+                      className="form-control"
+                      id="phone"
+                      placeholder="Enter Your Mobile No."
+                      aria-describedby="inputGroupPrepend2"
+                      onChange={formik.handleChange}
+                      value={formik.values.mobile}
+                    />
+                    {formik.errors.mobile && (
+                      <em style={{ color: "red" }}>{formik.errors.mobile}</em>
+                    )}
                   </div>
                   <div className="col-md-8">
                     <b>Gender:</b>
@@ -211,7 +207,8 @@ export default function RegistrationBasicHR() {
                         id="male"
                         name="gender"
                         value="Male"
-                        onChange={(e) => SetGender(e.target.value)}
+                        onChange={formik.handleChange}
+                        required
                       />
                       <label htmlFor="male">Male</label>{" "}
                       <input
@@ -219,7 +216,7 @@ export default function RegistrationBasicHR() {
                         id="female"
                         name="gender"
                         value="Female"
-                        onChange={(e) => SetGender(e.target.value)}
+                        onChange={formik.handleChange}
                       />
                       <label htmlFor="female">Female</label>{" "}
                       <input
@@ -227,7 +224,7 @@ export default function RegistrationBasicHR() {
                         id="preferNotToSay"
                         name="gender"
                         value="Prefer Not to Say"
-                        onChange={(e) => SetGender(e.target.value)}
+                        onChange={formik.handleChange}
                       />
                       <label htmlFor="preferNotToSay">Prefer Not to Say</label>
                     </div>
@@ -238,37 +235,49 @@ export default function RegistrationBasicHR() {
                     <label htmlFor="validationDefault03">City</label>
                     <input
                       type="text"
+                      name="city"
                       className="form-control"
                       id="validationDefault03"
                       placeholder="City"
-                      onChange={(e) => SetCity(e.target.value)}
-                      value={City}
-                      required
+                      onChange={formik.handleChange}
+                      value={formik.values.city}
                     />
+
+                    {formik.errors.city && (
+                      <em style={{ color: "red" }}>{formik.errors.city}</em>
+                    )}
                   </div>
                   <div className="col-md-2 mb-3">
                     <label htmlFor="validationDefault04">State</label>
                     <input
                       type="text"
+                      name="state"
                       className="form-control"
                       id="validationDefault04"
                       placeholder="State"
-                      onChange={(e) => SetState(e.target.value)}
-                      value={State}
-                      required={true}
+                      onChange={formik.handleChange}
+                      value={formik.values.state}
                     />
+
+                    {formik.errors.state && (
+                      <em style={{ color: "red" }}>{formik.errors.state}</em>
+                    )}
                   </div>
                   <div className="col-md-2 mb-3">
                     <label htmlFor="validationDefault05">Zip</label>
                     <input
-                      type="text"
+                      type="number"
+                      name="zip"
                       className="form-control"
                       id="validationDefault05"
                       placeholder="Zip"
-                      onChange={(e) => SetZip(e.target.value)}
-                      value={Zip}
-                      required
+                      onChange={formik.handleChange}
+                      value={formik.values.zip}
                     />
+
+                    {formik.errors.zip && (
+                      <em style={{ color: "red" }}>{formik.errors.zip}</em>
+                    )}
                   </div>
                 </div>
                 <div className="form-group d-flex align-items-center justify-content-center">

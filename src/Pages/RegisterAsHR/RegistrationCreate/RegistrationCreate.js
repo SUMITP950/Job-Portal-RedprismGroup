@@ -1,39 +1,43 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+// import axios from "axios";
 
-export default function RegistrationCreateHR() {
+export default function RegistrationCreate() {
   useEffect(() => {
     document.title = "Registration";
   }, []);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    window.location.replace("./RegistrationTechSkills");
+  // form validation
 
-    // Create an object with the form data
-    const formData = {
-      username,
-      password,
-    };
-
-    // Send a POST request to the server using Axios
-    axios.post("https://jsonplaceholder.typicode.com/posts", formData)
-      .then((response) => {
-        // Handle the response
-        console.log(response.data);
-        // Redirect to the next page
-        // You can use React Router's history object for navigation
-        // history.push("/next-page");
-      })
-      .catch((error) => {
-        // Handle the error
-        console.error(error);
-      });
-  };
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: yup.object({
+      username: yup
+        .string()
+        .required("*Required")
+        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
+        .min(3, "Minimum 3 characters length")
+        .max(10, "Maximum 10 characters length"),
+      password: yup
+        .string()
+        .required("*Required")
+        .matches(/[^\w]/, "One Special character Required")
+        .matches(/[0-9]/, "One Number Required")
+        .min(3, "Minimum 3 characters length")
+        .max(10, "Maximum 10 characters length"),
+    }),
+    onSubmit: (values) => {
+      console.log(values); // In this section data send to backend
+      navigate("/RegistrationTechSkills");
+    },
+  });
 
   return (
     <>
@@ -42,27 +46,27 @@ export default function RegistrationCreateHR() {
           <div className="col-md-4 dn">
             <div className="pindicator">
               <div className="bullet current ">
-                <Link to="/RegistrationBasic">
+                <Link to="/RegistrationCreate" onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">1</span>
                 </Link>
               </div>
               <div className="bullet current">
-                <Link to="/RegistrationVarify">
+                <Link to="/RegistrationCreate" onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">2</span>
                 </Link>
               </div>
               <div className="bullet next current">
-                <Link to="/RegistrationCreate">
+                <Link>
                   <span className="icon1 tns90">3</span>
                 </Link>
               </div>
               <div className="bullet future">
-                <Link to="/RegistrationTechSkills">
+                <Link to="/RegistrationCreate" onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">4</span>
                 </Link>
               </div>
               <div className="bullet future">
-                <Link to="/RegistrationStatus">
+                <Link to="/RegistrationCreate" onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">5</span>
                 </Link>
               </div>
@@ -85,37 +89,39 @@ export default function RegistrationCreateHR() {
               </b>
             </div>
             <div className="container">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={formik.handleSubmit}>
                 <div className="form-row d-flex align-items-center justify-content-center">
                   <div className="col-md-8 mb-3">
                     <label htmlFor="text">User Name</label>
-                    <div className="input-group">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="validationDefaultUsername"
-                        placeholder="Enter Your User Name"
-                        aria-describedby="inputGroupPrepend2"
-                        required
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                      />
-                    </div>
+                    <input
+                      type="text"
+                      name="username"
+                      className="form-control"
+                      id="validationDefaultUsername"
+                      placeholder="Enter Your User Name"
+                      aria-describedby="inputGroupPrepend2"
+                      onChange={formik.handleChange}
+                      value={formik.values.username}
+                    />
+                    {formik.errors.username && (
+                      <em style={{ color: "red" }}>{formik.errors.username}</em>
+                    )}
                   </div>
                   <div className="col-md-8 mb-3">
                     <label htmlFor="password">Password</label>
-                    <div className="input-group">
-                      <input
-                        type="password"
-                        className="form-control"
-                        id="validationDefaultPassword"
-                        placeholder="Create Your Password"
-                        aria-describedby="inputGroupPrepend2"
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </div>
+                    <input
+                      type="password"
+                      name="password"
+                      className="form-control"
+                      id="validationDefaultPassword"
+                      placeholder="Create Your Password"
+                      aria-describedby="inputGroupPrepend2"
+                      onChange={formik.handleChange}
+                      value={formik.values.password}
+                    />
+                    {formik.errors.password && (
+                      <em style={{ color: "red" }}>{formik.errors.password}</em>
+                    )}
                   </div>
                 </div>
                 <div className="d-flex align-items-center justify-content-center mt-3">

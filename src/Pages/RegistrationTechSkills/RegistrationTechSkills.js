@@ -1,50 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+// import axios from "axios";
 
 const RegistrationTechSkills = () => {
-  const [currentCompany, setCurrentCompany] = useState("");
-  const [technicalSkills, setTechnicalSkills] = useState("");
-  const [experienceYear, setExperienceYear] = useState("");
-
   useEffect(() => {
     document.title = "Registration";
   }, []);
 
-  const handleCurrentCompanyChange = (e) => {
-    setCurrentCompany(e.target.value);
-  };
+  const navigate = useNavigate();
 
-  const handleTechnicalSkillsChange = (e) => {
-    setTechnicalSkills(e.target.value);
-  };
+  // form validation
 
-  const handleExperienceYearChange = (e) => {
-    setExperienceYear(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    window.location.replace("./RegistrationStatus");
-    // Create an object with the form data
-    const formData = {
-      currentCompany,
-      technicalSkills,
-      experienceYear,
-    };
-
-    // Send the form data to the server
-    axios
-      .post("https://jsonplaceholder.typicode.com/posts", formData)
-      .then((response) => {
-        // Handle the response from the server
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // Handle errors
-        console.error(error);
-      });
-  };
+  const formik = useFormik({
+    initialValues: {
+      currentCompany: "",
+      technicalSkills: "",
+      ExperienceInYear: "",
+    },
+    validationSchema: yup.object({
+      currentCompany: yup.string().required("*Required"),
+      technicalSkills: yup.string().required("*Required"),
+      ExperienceInYear: yup.string().required("*Required"),
+    }),
+    onSubmit: (values) => {
+      console.log(values); // In this section data send to backend
+      navigate("/RegistrationStatus");
+    },
+  });
 
   return (
     <>
@@ -53,27 +37,39 @@ const RegistrationTechSkills = () => {
           <div className="col-md-4 dn">
             <div class="pindicator">
               <div class="bullet current ">
-                <Link to="/RegistrationBasic">
+                <Link
+                  to="/RegistrationTechSkills"
+                  onClick={formik.handleSubmit}
+                >
                   <span class="icon1 tns90">1</span>
                 </Link>
               </div>
               <div class="bullet current">
-                <Link to="/RegistrationVarify">
+                <Link
+                  to="/RegistrationTechSkills"
+                  onClick={formik.handleSubmit}
+                >
                   <span class="icon1 tns90">2</span>
                 </Link>
               </div>
               <div class="bullet current future">
-                <Link to="/RegistrationCreate">
+                <Link
+                  to="/RegistrationTechSkills"
+                  onClick={formik.handleSubmit}
+                >
                   <span class="icon1 tns90">3</span>
                 </Link>
               </div>
               <div class="bullet future current">
-                <Link to="/RegistrationTechSkills">
+                <Link>
                   <span class="icon1 tns90">4</span>
                 </Link>
               </div>
               <div class="bullet future">
-                <Link to="/RegistrationStatus">
+                <Link
+                  to="/RegistrationTechSkills"
+                  onClick={formik.handleSubmit}
+                >
                   <span class="icon1 tns90">5</span>
                 </Link>
               </div>
@@ -96,15 +92,16 @@ const RegistrationTechSkills = () => {
               </b>
             </div>
             <div class="container">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={formik.handleSubmit}>
                 <div class="form-row d-flex align-items-center justify-content-center">
                   <div class="col-md-8 mb-3">
-                    <label for="currentCompany">Current Company</label>
+                    <label htmlFor="currentCompany">Current Company</label>
                     <select
                       class="form-control form-control-lg"
+                      name="currentCompany"
                       id="currentCompany"
-                      value={currentCompany}
-                      onChange={handleCurrentCompanyChange}
+                      onChange={formik.handleChange}
+                      value={formik.values.currentCompany}
                     >
                       <option>--Select--</option>
                       <option>Cognizant</option>
@@ -112,14 +109,20 @@ const RegistrationTechSkills = () => {
                       <option>Wipro</option>
                       <option>Tech Mahindra</option>
                     </select>
+                    {formik.errors.currentCompany && (
+                      <em style={{ color: "red" }}>
+                        {formik.errors.currentCompany}
+                      </em>
+                    )}
                   </div>
                   <div class="col-md-8 mb-3">
-                    <label for="technicalSkills">Technical Skills</label>
+                    <label htmlFor="technicalSkills">Technical Skills</label>
                     <select
                       class="form-control form-control-lg"
+                      name="technicalSkills"
                       id="technicalSkills"
-                      value={technicalSkills}
-                      onChange={handleTechnicalSkillsChange}
+                      onChange={formik.handleChange}
+                      value={formik.values.technicalSkills}
                     >
                       <option>--Select--</option>
                       <option>JAVA</option>
@@ -130,14 +133,20 @@ const RegistrationTechSkills = () => {
                       <option>React JS</option>
                       <option>React Native</option>
                     </select>
+                    {formik.errors.technicalSkills && (
+                      <em style={{ color: "red" }}>
+                        {formik.errors.technicalSkills}
+                      </em>
+                    )}
                   </div>
                   <div class="col-md-8 mb-3">
-                    <label for="experienceYear">Experience In Year</label>
+                    <label htmlFor="experienceYear">Experience In Year</label>
                     <select
                       class="form-control form-control-lg"
+                      name="ExperienceInYear"
                       id="experienceYear"
-                      value={experienceYear}
-                      onChange={handleExperienceYearChange}
+                      onChange={formik.handleChange}
+                      value={formik.values.ExperienceInYear}
                     >
                       <option>--Select--</option>
                       <option>1</option>
@@ -149,6 +158,11 @@ const RegistrationTechSkills = () => {
                       <option>7</option>
                       <option>8</option>
                     </select>
+                    {formik.errors.ExperienceInYear && (
+                      <em style={{ color: "red" }}>
+                        {formik.errors.ExperienceInYear}
+                      </em>
+                    )}
                   </div>
                 </div>
                 <div class="d-flex align-items-center justify-content-center mt-3">
