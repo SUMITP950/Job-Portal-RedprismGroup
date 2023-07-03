@@ -8,74 +8,74 @@ export default function JobSearch() {
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
   ];
-  useEffect(() => {
-    const tabsBox = document.querySelector(".tabs-box"),
-      allTabs = tabsBox.querySelectorAll(".tab"),
-      arrowIcons = document.querySelectorAll(".icon i");
+  // useEffect(() => {
+  //   const tabsBox = document.querySelector(".tabs-box"),
+  //     allTabs = tabsBox.querySelectorAll(".tab"),
+  //     arrowIcons = document.querySelectorAll(".icon i");
 
-    let isDragging = false;
+  //   let isDragging = false;
 
-    const handleIcons = (scrollVal) => {
-      let maxScrollableWidth = tabsBox.scrollWidth - tabsBox.clientWidth;
-      arrowIcons[0].parentElement.style.display =
-        scrollVal <= 0 ? "none" : "flex";
-      arrowIcons[1].parentElement.style.display =
-        maxScrollableWidth - scrollVal <= 1 ? "none" : "flex";
-    };
+  //   const handleIcons = (scrollVal) => {
+  //     let maxScrollableWidth = tabsBox.scrollWidth - tabsBox.clientWidth;
+  //     arrowIcons[0].parentElement.style.display =
+  //       scrollVal <= 0 ? "none" : "flex";
+  //     arrowIcons[1].parentElement.style.display =
+  //       maxScrollableWidth - scrollVal <= 1 ? "none" : "flex";
+  //   };
 
-    arrowIcons.forEach((icon) => {
-      icon.addEventListener("click", () => {
-        // if clicked icon is left, reduce 350 from tabsBox scrollLeft else add
-        let scrollWidth = (tabsBox.scrollLeft +=
-          icon.id === "left" ? -340 : 340);
-        handleIcons(scrollWidth);
-      });
-    });
+  //   arrowIcons.forEach((icon) => {
+  //     icon.addEventListener("click", () => {
+  //       // if clicked icon is left, reduce 350 from tabsBox scrollLeft else add
+  //       let scrollWidth = (tabsBox.scrollLeft +=
+  //         icon.id === "left" ? -340 : 340);
+  //       handleIcons(scrollWidth);
+  //     });
+  //   });
 
-    allTabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        tabsBox.querySelector(".active").classList.remove("active");
-        tab.classList.add("active");
-      });
-    });
+  //   allTabs.forEach((tab) => {
+  //     tab.addEventListener("click", () => {
+  //       tabsBox.querySelector(".active").classList.remove("active");
+  //       tab.classList.add("active");
+  //     });
+  //   });
 
-    const dragging = (e) => {
-      if (!isDragging) return;
-      tabsBox.classList.add("dragging");
-      tabsBox.scrollLeft -= e.movementX;
-      handleIcons(tabsBox.scrollLeft);
-    };
+  //   const dragging = (e) => {
+  //     if (!isDragging) return;
+  //     tabsBox.classList.add("dragging");
+  //     tabsBox.scrollLeft -= e.movementX;
+  //     handleIcons(tabsBox.scrollLeft);
+  //   };
 
-    const dragStop = () => {
-      isDragging = false;
-      tabsBox.classList.remove("dragging");
-    };
+  //   const dragStop = () => {
+  //     isDragging = false;
+  //     tabsBox.classList.remove("dragging");
+  //   };
 
-    tabsBox.addEventListener("mousedown", () => (isDragging = true));
-    tabsBox.addEventListener("mousemove", dragging);
-    document.addEventListener("mouseup", dragStop);
-    function auto_grow(element) {
-      element.style.height = "5px";
-      element.style.height = element.scrollHeight + "px";
-    }
-    window.onscroll = function () {
-      myFunction();
-    };
+  //   tabsBox.addEventListener("mousedown", () => (isDragging = true));
+  //   tabsBox.addEventListener("mousemove", dragging);
+  //   document.addEventListener("mouseup", dragStop);
+  //   function auto_grow(element) {
+  //     element.style.height = "5px";
+  //     element.style.height = element.scrollHeight + "px";
+  //   }
+  //   window.onscroll = function () {
+  //     myFunction();
+  //   };
 
-    var navbar = document.getElementById("navbar");
-    var sticky = navbar.offsetTop;
+  //   var navbar = document.getElementById("navbar");
+  //   var sticky = navbar.offsetTop;
 
-    const myFunction = () => {
-      if (window.pageYOffset >= sticky) {
-        navbar.classList.add("sticky");
-      } else {
-        navbar.classList.remove("sticky");
-      }
-    };
-    if (!("boxShadow" in document.body.style)) {
-      document.body.setAttribute("class", "noBoxShadow");
-    }
-  }, []);
+  //   const myFunction = () => {
+  //     if (window.pageYOffset >= sticky) {
+  //       navbar.classList.add("sticky");
+  //     } else {
+  //       navbar.classList.remove("sticky");
+  //     }
+  //   };
+  //   if (!("boxShadow" in document.body.style)) {
+  //     document.body.setAttribute("class", "noBoxShadow");
+  //   }
+  // }, []);
 
   useEffect(() => {
     document.title = "Job Search";
@@ -102,8 +102,132 @@ export default function JobSearch() {
     <>
       <div class="py-4 bg-white">
         <div class="container-fluid body-padding ">
-          <div class="row justify-content-center">
-            <div class="col-lg-8">
+          <div class="row justify-c-center">
+            {/* mobile menu view start */}
+            <li class="nav-item dropdown no-arrow mx-1 osahan-list-dropdown mobile-view-filter">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="feather-filter mr-2 menu-icon"></i>
+
+                <span class="badge badge-dark badge-counter">Filter</span>
+              </a>
+
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow-sm filter-dropdown-menu">
+                <div class="dropdown">
+                  <div className="d-flex align-items-center">
+                    <img
+                      class="dropdown-menu-img"
+                      src="https://img.icons8.com/ios/50/000000/circuit.png"
+                      alt=""
+                    />
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          display: "inherit",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          border: "none",
+                          backgroundColor: "#fff",
+                        }),
+                        placeholder: (baseStyles, state) => ({
+                          ...baseStyles,
+                          color: "Black",
+                          fontWeight: "bold",
+                        }),
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options}
+                      isMulti
+                      placeholder={"Technology"}
+                    />
+                  </div>
+                </div>
+
+                <div class="dropdown">
+                  <div className="d-flex align-items-center">
+                    <img
+                      class="dropdown-menu-img"
+                      src="https://img.icons8.com/ios/50/popular-man.png"
+                      alt=""
+                    />
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          display: "inherit",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          border: "none",
+                          backgroundColor: "#fff",
+                        }),
+                        placeholder: (baseStyles, state) => ({
+                          ...baseStyles,
+                          color: "Black",
+                          fontWeight: "bold",
+                        }),
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options}
+                      isMulti
+                      placeholder={"Type"}
+                    />
+                  </div>
+                </div>
+                <div class="dropdown">
+                  <div className="d-flex align-items-center">
+                    <i class="feather-map-pin mr-2 menu-icon"></i>
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          display: "inherit",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          border: "none",
+                          backgroundColor: "#fff",
+                        }),
+                        placeholder: (baseStyles, state) => ({
+                          ...baseStyles,
+                          color: "Black",
+                          fontWeight: "bold",
+                        }),
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options}
+                      isMulti
+                      placeholder={"Location"}
+                    />
+                  </div>
+                </div>
+              </div>
+            </li>
+            {/* mobile menu view end */}
+            <div class="col-lg-8 dropdown-m-hide">
               <div
                 class="d-flex justify-content-around"
                 style={{
@@ -188,11 +312,7 @@ export default function JobSearch() {
 
                 <div class="dropdown">
                   <div className="d-flex align-items-center">
-                    <img
-                      class="dropdown-menu-img"
-                      src="https://img.icons8.com/ios/50/popular-man.png"
-                      alt=""
-                    />
+                    <i class="feather-map-pin mr-2 menu-icon"></i>
                     <Select
                       styles={{
                         container: (baseStyles, state) => ({
@@ -259,7 +379,7 @@ export default function JobSearch() {
               {data.map((data, i) => (
                 <>
                   {" "}
-                  <table class="table" style={{ border: "none" }}>
+                  <table class="table table-m-view" style={{ border: "none" }}>
                     <thead class="thead-pink">
                       <tr>
                         <th scope="col">Job Name</th>
