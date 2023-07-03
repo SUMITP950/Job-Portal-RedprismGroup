@@ -1,10 +1,14 @@
-import React from "react";
+import React,{useEffect} from "react";
 // import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 export default function RegistrationBasic() {
+  useEffect(() => {
+    document.title = "Registration";
+  }, []);
+  
   const navigate = useNavigate();
 
   // form validation
@@ -22,26 +26,36 @@ export default function RegistrationBasic() {
     validationSchema: yup.object({
       firstName: yup
         .string()
+        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
         .required("*Required")
         .min(3, "Minimum 3 characters length")
-        .max(10, "Maximum 10 characters length"),
+        .max(15, "Maximum 15 characters length"),
       lastName: yup
         .string()
+        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
         .required("*Required")
         .min(3, "Minimum 3 characters length")
-        .max(10, "Maximum 10 characters length"),
+        .max(15, "Maximum 15 characters length"),
 
       email: yup.string().required("*Required").email("Invalid Email"),
       mobile: yup
         .string()
         .required("*Required")
+        .matches(/^[0-9]+$/, "This field  must be a number")
         .min(10, "Minimum 10 digits")
         .max(10, "Maximum 10 digits"),
-      city: yup.string().required("*Required"),
-      state: yup.string().required("*Required"),
+      city: yup
+        .string()
+        .required("*Required")
+        .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
+      state: yup
+        .string()
+        .required("*Required")
+        .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
       zip: yup
         .string()
         .required("*Required")
+        .matches(/^[0-9]+$/, "This field  must be a number")
         .min(5, "Minimum 5 digits")
         .max(10, "Maximum 10 digits"),
     }),

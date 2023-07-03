@@ -1,39 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+// import axios from "axios";
 
-export default function RegistrationStatusHR() {
+export default function RegistrationStatus() {
   useEffect(() => {
     document.title = "Registration";
   }, []);
+  const navigate = useNavigate();
 
-  const [message, setMessage] = useState("");
-  const [noticePeriod, setNoticePeriod] = useState("");
-  const [immediateJoiner, setImmediateJoiner] = useState("");
+   // form validation
 
-  const handleChange = (event) => {
-    setMessage(event.target.value);
-
-    if (event.target.value === "No") {
-      setNoticePeriod("");
-      setImmediateJoiner("");
-    }
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await axios.post("https://jsonplaceholder.typicode.com/posts", {
-        message,
-        noticePeriod,
-        immediateJoiner,
-      });
-      console.log(response.data); // Handle the response data
-    } catch (error) {
-      console.error(error); // Handle the error
-    }
-  };
+   const formik = useFormik({
+    initialValues: {
+      lookingForJob: "",
+      noticePeriod: "",
+      immediateJoiner: "",
+    },
+    validationSchema: yup.object({
+      lookingForJob: yup.string().required("*Required"),
+      noticePeriod: yup.string().required("*Required"),
+      immediateJoiner: yup.string().required("*Required"),
+    }),
+    onSubmit: (values) => {
+      console.log(values); // In this section data send to backend
+      navigate("/Signin");
+    },
+  });
 
   return (
     <>
@@ -42,27 +36,31 @@ export default function RegistrationStatusHR() {
           <div className="col-md-4 dn">
             <div className="pindicator">
               <div className="bullet current ">
-                <Link to="/RegistrationBasic">
+                <Link to="/RegistrationStatus"
+                  onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">1</span>
                 </Link>
               </div>
               <div className="bullet current">
-                <Link to="/RegistrationVarify">
+                <Link to="/RegistrationStatus"
+                  onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">2</span>
                 </Link>
               </div>
               <div className="bullet next current">
-                <Link to="/RegistrationCreate">
+                <Link to="/RegistrationStatus"
+                  onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">3</span>
                 </Link>
               </div>
               <div className="bullet current">
-                <Link to="/RegistrationTechSkills">
+                <Link to="/RegistrationStatus"
+                  onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">4</span>
                 </Link>
               </div>
               <div className="bullet current">
-                <Link to="/RegistrationStatus">
+                <Link>
                   <span className="icon1 tns90">5</span>
                 </Link>
               </div>
@@ -85,54 +83,84 @@ export default function RegistrationStatusHR() {
               </b>
             </div>
             <div className="container">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={formik.handleSubmit}>
                 <div className="form-row d-flex align-items-center justify-content-center">
                   <div className="col-md-8 mb-3">
                     <label htmlFor="lookingJob">Looking For Job</label>
                     <select
                       className="form-control form-control-lg"
+                      name="lookingForJob"
                       id="lookingJob"
-                      onChange={handleChange}
-                      value={message}
+                      onChange={formik.handleChange}
+                      value={formik.values.lookingForJob}
                     >
+                      <option>--Select--</option>
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
+                    {formik.errors.lookingForJob && (
+                      <em style={{ color: "red" }}>
+                        {formik.errors.lookingForJob}
+                      </em>
+                    )}
                   </div>
                   <div className="col-md-8 mb-3">
                     <label htmlFor="noticePeriod">Notice Period</label>
                     <select
                       className="form-control form-control-lg"
+                      name="noticePeriod"
                       id="noticePeriod"
-                      value={noticePeriod}
-                      onChange={(e) => setNoticePeriod(e.target.value)}
-                      disabled={message === "No"}
+                      onChange={formik.handleChange}
+                      value={formik.values.noticePeriod}
+                      disabled={formik.values.lookingForJob === "No"}
                     >
+                      <option>--Select--</option>
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
+                    {formik.errors.noticePeriod && formik.values.lookingForJob==="Yes" && (
+                      <em style={{ color: "red" }}>
+                        {formik.errors.noticePeriod}
+                      </em>
+                    )}
                   </div>
                   <div className="col-md-8 mb-3">
                     <label htmlFor="immediateJoiner">Immediate Joiner</label>
                     <select
                       className="form-control form-control-lg"
+                      name="immediateJoiner"
                       id="immediateJoiner"
-                      value={immediateJoiner}
-                      onChange={(e) => setImmediateJoiner(e.target.value)}
-                      disabled={message === "No"}
+                      onChange={formik.handleChange}
+                      value={formik.values.immediateJoiner}
+                      disabled={formik.values.lookingForJob === "No"}
                     >
+                      <option>--Select--</option>
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
+                    {formik.errors.immediateJoiner && formik.values.lookingForJob==="Yes" &&(
+                      <em style={{ color: "red" }}>
+                        {formik.errors.immediateJoiner}
+                      </em>
+                    )}
                   </div>
-                  <div className="col-md-8 d-flex justify-content-center ">
-                   <div className="d-inline mr-10"> <h3 >Status</h3>
-                    <button className="m-2"> <img src="img/icon/icons8-light-on-100.png" alt="" height={70} width={70}  /></button>
-                    <button className="m-2" > <img src="img/icon/image_processing20220416-11036-d1bb4y.png" alt="" height={70} width={70} /></button>
-                    <button className="m-2"> <img src="img/icon/man-standing-on-window-6810201-5665296.png" alt="" height={70} width={70}/></button>
-                    <button  className="m-2"> <img src="img/icon/icons8-american-eagle-100.png" alt="" height={70} width={70}/></button>
-                    </div>
-                   
+                  <div className="col-md-8 d-flex justify-content-center">
+                    <i
+                      className="feather-sun"
+                      style={{ color: "#000", border: "2px solid pink" }}
+                    ></i>
+                    <i
+                      className="feather-umbrella"
+                      style={{ color: "#000", border: "2px solid pink" }}
+                    ></i>
+                    <i
+                      className="feather-sunrise"
+                      style={{ color: "#000", border: "2px solid pink" }}
+                    ></i>
+                    <i
+                      className="feather-sunrise"
+                      style={{ color: "#000", border: "2px solid pink" }}
+                    ></i>
                   </div>
                 </div>
                 <div className="d-flex align-items-center justify-content-center mt-5">
