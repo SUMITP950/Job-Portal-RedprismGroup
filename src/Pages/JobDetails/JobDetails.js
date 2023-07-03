@@ -9,7 +9,7 @@ export default function JobDetails() {
     <>
       {" "}
       <div class="bg-white shadow-sm border-bottom">
-        <div class="container">
+        <div class="container body-padding">
           <div class="row">
             <div class="col-md-12">
               <div class="d-flex align-items-center py-3">
@@ -28,11 +28,11 @@ export default function JobDetails() {
                 <div class="profile-right ml-auto">
                   <button type="button" class="btn btn-light mr-1">
                     {" "}
-                    &nbsp; Save &nbsp;{" "}
+                    Save{" "}
                   </button>
                   <button type="button" class="btn btn-warning">
                     {" "}
-                    &nbsp; Apply &nbsp;{" "}
+                    Apply{" "}
                   </button>
                 </div>
               </div>
