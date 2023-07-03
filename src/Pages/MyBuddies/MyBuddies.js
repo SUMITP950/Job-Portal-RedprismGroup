@@ -45,7 +45,10 @@ export default function MyBuddies(props) {
                         }),
                       }}
                     /> */}
-                    <form class="d-none d-sm-inline-block form-inline m-auto my-md-0 mw-100 navbar-search border" style={{borderRadius:"30px"}}>
+                    <form
+                      class="d-none d-sm-inline-block form-inline m-auto my-md-0 mw-100 navbar-search border"
+                      style={{ borderRadius: "30px" }}
+                    >
                       <div class="input-group ">
                         <input
                           type="text"
@@ -128,7 +131,7 @@ export default function MyBuddies(props) {
                               backgroundColor: "rgb(255, 255, 255)",
                             }}
                           >
-                            <div class="row px-2">
+                            <div class="row px-2 padding-bottom">
                               <div class="col-md-3">
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
@@ -136,7 +139,7 @@ export default function MyBuddies(props) {
                                   style={{ height: "100px" }}
                                 />
                               </div>
-                              <div class="col-md-5">
+                              <div class="col-md-6">
                                 <h4 class="text-dark mt-2">Username</h4>
                                 <p class=" ">
                                   Business Development Manager <br />{" "}
@@ -145,7 +148,7 @@ export default function MyBuddies(props) {
                                   Mumbai, Maharashtra
                                 </p>
                               </div>
-                              <div class="col-md-4 d-flex align-items-center">
+                              <div class="col-md-3 d-flex align-items-center">
                                 <div class="ml-4">
                                   <a class="btn btn-dark" href="/MyBuddies">
                                     <i class="feather-minus-circle"></i>{" "}
@@ -163,7 +166,7 @@ export default function MyBuddies(props) {
                               backgroundColor: "rgb(255, 255, 255)",
                             }}
                           >
-                            <div class="row px-2">
+                            <div class="row px-2 padding-bottom">
                               <div class="col-md-3">
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
@@ -171,7 +174,7 @@ export default function MyBuddies(props) {
                                   style={{ height: "100px" }}
                                 />
                               </div>
-                              <div class="col-md-5">
+                              <div class="col-md-6">
                                 <h4 class="text-dark mt-2">Username</h4>
                                 <p>
                                   Business Development Manager
@@ -181,7 +184,7 @@ export default function MyBuddies(props) {
                                   Mumbai, Maharashtra
                                 </p>
                               </div>
-                              <div class="col-md-4  d-flex align-items-center">
+                              <div class="col-md-3  d-flex align-items-center">
                                 <div class="ml-4">
                                   <a class="btn btn-dark" href="/MyBuddies">
                                     <i class="feather-minus-circle"></i>{" "}
@@ -212,7 +215,7 @@ export default function MyBuddies(props) {
                               backgroundColor: "rgb(255, 255, 255)",
                             }}
                           >
-                            <div class="row px-2">
+                            <div class="row px-2 padding-bottom">
                               <div class="col-md-3">
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
@@ -220,7 +223,7 @@ export default function MyBuddies(props) {
                                   style={{ height: "100px" }}
                                 />
                               </div>
-                              <div class="col-md-5">
+                              <div class="col-md-6">
                                 <h4 class="text-dark mt-2">Username</h4>
                                 <p class=" ">
                                   Business Development Manager
@@ -230,7 +233,7 @@ export default function MyBuddies(props) {
                                   Mumbai, Maharashtra
                                 </p>
                               </div>
-                              <div class="col-md-4 d-flex align-items-center">
+                              <div class="col-md-3 d-flex align-items-center">
                                 <div class="ml-4">
                                   <a class="btn btn-dark" href="/MyBuddies">
                                     <i class="feather-plus-circle"></i> Accept
@@ -248,7 +251,7 @@ export default function MyBuddies(props) {
                               backgroundColor: "rgb(255, 255, 255)",
                             }}
                           >
-                            <div class="row px-2">
+                            <div class="row px-2 padding-bottom">
                               <div class="col-md-3">
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
@@ -256,7 +259,7 @@ export default function MyBuddies(props) {
                                   style={{ height: "100px" }}
                                 />
                               </div>
-                              <div class="col-md-5">
+                              <div class="col-md-6">
                                 <h4 class="text-dark mt-2">Username</h4>
                                 <p class=" ">
                                   Business Development Manager
@@ -266,7 +269,7 @@ export default function MyBuddies(props) {
                                   Mumbai, Maharashtra
                                 </p>
                               </div>
-                              <div class="col-md-4  d-flex align-items-center">
+                              <div class="col-md-3  d-flex align-items-center">
                                 <div class="ml-4">
                                   <a class="btn btn-dark" href="/MyBuddies">
                                     <i class="feather-plus-circle"></i> Accept
@@ -297,7 +300,7 @@ export default function MyBuddies(props) {
                               backgroundColor: "rgb(255, 255, 255)",
                             }}
                           >
-                            <div class="row px-2">
+                            <div class="row px-2 padding-bottom">
                               <div class="col-md-3">
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
@@ -305,7 +308,7 @@ export default function MyBuddies(props) {
                                   style={{ height: "100px" }}
                                 />
                               </div>
-                              <div class="col-md-5">
+                              <div class="col-md-6">
                                 <h4 class="text-dark mt-2">Username</h4>
                                 <p class=" ">
                                   Business Development Manager
@@ -315,7 +318,7 @@ export default function MyBuddies(props) {
                                   Mumbai, Maharashtra
                                 </p>
                               </div>
-                              <div class="col-md-4 d-flex align-items-center">
+                              <div class="col-md-3 d-flex align-items-center">
                                 <div class="ml-4">
                                   <a class="btn btn-dark" href="/MyBuddies">
                                     <i class="feather-send"></i> Send Request
@@ -332,7 +335,7 @@ export default function MyBuddies(props) {
                               backgroundColor: "rgb(255, 255, 255)",
                             }}
                           >
-                            <div class="row px-2">
+                            <div class="row px-2 padding-bottom">
                               <div class="col-md-3">
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
@@ -340,7 +343,7 @@ export default function MyBuddies(props) {
                                   style={{ height: "100px" }}
                                 />
                               </div>
-                              <div class="col-md-5">
+                              <div class="col-md-6">
                                 <h4 class="text-dark mt-2">Username</h4>
                                 <p class=" ">
                                   Business Development Manager
@@ -350,7 +353,7 @@ export default function MyBuddies(props) {
                                   Mumbai, Maharashtra
                                 </p>
                               </div>
-                              <div class="col-md-4  d-flex align-items-center">
+                              <div class="col-md-3  d-flex align-items-center">
                                 <div class="ml-4">
                                   <a class="btn btn-dark" href="/MyBuddies">
                                     <i class="feather-send"></i> Send Request
@@ -366,7 +369,7 @@ export default function MyBuddies(props) {
                 </div>
               </div>
             </main>
-            <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+            <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm pt-4 pb-4">
                   <a
@@ -450,7 +453,7 @@ export default function MyBuddies(props) {
                 </div>
               </div>
             </aside>
-            <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
+            <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm">
                   <h6 class="pt-3 text-center">Other Option</h6>

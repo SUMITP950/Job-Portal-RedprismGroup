@@ -30,6 +30,7 @@ export default function BuddySearch(props) {
                           borderRadius: "50px",
                           border: "1px solid rgb(6, 6, 6)",
                           padding: "10px",
+                          backgroundColor: "#fff",
                         }}
                       >
                         <div class="dropdown">
@@ -50,7 +51,7 @@ export default function BuddySearch(props) {
                                   ...baseStyles,
 
                                   border: "none",
-                                  backgroundColor: "#edf2f6",
+                                  backgroundColor: "#fff",
                                 }),
                                 placeholder: (baseStyles, state) => ({
                                   ...baseStyles,
@@ -87,7 +88,7 @@ export default function BuddySearch(props) {
                                   ...baseStyles,
 
                                   border: "none",
-                                  backgroundColor: "#edf2f6",
+                                  backgroundColor: "#fff",
                                 }),
                                 placeholder: (baseStyles, state) => ({
                                   ...baseStyles,
@@ -108,11 +109,7 @@ export default function BuddySearch(props) {
 
                         <div class="dropdown">
                           <div className="d-flex align-items-center">
-                            <img
-                              class="dropdown-menu-img"
-                              src="https://img.icons8.com/ios/50/popular-man.png"
-                              alt=""
-                            />
+                            <i class="feather-map-pin left-menu-icon"></i>
                             <Select
                               styles={{
                                 container: (baseStyles, state) => ({
@@ -124,7 +121,7 @@ export default function BuddySearch(props) {
                                   ...baseStyles,
 
                                   border: "none",
-                                  backgroundColor: "#edf2f6",
+                                  backgroundColor: "#fff",
                                 }),
                                 placeholder: (baseStyles, state) => ({
                                   ...baseStyles,
@@ -148,7 +145,7 @@ export default function BuddySearch(props) {
                 </div>
               </div>
               <div className="row justify-content-center">
-                <div className="col-md-8 ">
+                <div className="col-md-10 ">
                   {" "}
                   <div
                     class="col-md-12 mt-5 "
@@ -158,7 +155,7 @@ export default function BuddySearch(props) {
                       backgroundColor: "#fff",
                     }}
                   >
-                    <div class="row px-2">
+                    <div class="row px-2 padding-bottom">
                       <div className="col-md-3">
                         <img
                           src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
@@ -193,7 +190,7 @@ export default function BuddySearch(props) {
                       backgroundColor: "#fff",
                     }}
                   >
-                    <div class="row px-2">
+                    <div class="row px-2 padding-bottom">
                       <div className="col-md-3">
                         <img
                           src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"

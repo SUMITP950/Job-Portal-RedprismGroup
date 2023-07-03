@@ -27,7 +27,7 @@ export default function ProfileEdit() {
     SetDay(event.target.value);
     SetYear(event.target.value);
     SetGender(event.target.value);
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -352,8 +352,8 @@ export default function ProfileEdit() {
                         <div class="js-form-message">
                           <div class="form-group">
                             <select
-                             onChange={handleChange}
-                             value={Day}
+                              onChange={handleChange}
+                              value={Day}
                               class="form-control custom-select"
                               required=""
                               data-msg="Please select date."
@@ -547,8 +547,8 @@ export default function ProfileEdit() {
                         <div class="js-form-message">
                           <div class="form-group">
                             <select
-                            onChange={handleChange}
-                            value={Gender}
+                              onChange={handleChange}
+                              value={Gender}
                               class="form-control custom-select"
                               required=""
                               data-msg="Please select your gender."
@@ -739,8 +739,8 @@ export default function ProfileEdit() {
 
                       <div class="input-group">
                         <input
-                           onChange={(e) => SetFrom(e.target.value)}
-                           value={From}
+                          onChange={(e) => SetFrom(e.target.value)}
+                          value={From}
                           type="text"
                           class="form-control"
                           placeholder="From"
@@ -756,8 +756,8 @@ export default function ProfileEdit() {
 
                       <div class="input-group">
                         <input
-                         onChange={(e) => SetTo(e.target.value)}
-                         value={To}
+                          onChange={(e) => SetTo(e.target.value)}
+                          value={To}
                           type="text"
                           class="form-control"
                           placeholder="TO"
