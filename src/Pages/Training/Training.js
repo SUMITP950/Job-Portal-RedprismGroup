@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useEffect} from "react";
 import "../../App.css";
 import { Link } from "react-router-dom";
 import Select from "react-select";
@@ -19,7 +20,7 @@ export default function Training(props) {
       <div className="py-4">
         <div className="container-fluid body-padding">
           <div className="row justify-content-around">
-            <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12 dn">
+            <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm">
                   <h6 class="pt-3 text-center">Other Option</h6>
@@ -30,19 +31,12 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                      <Link to="/Setting">
                       <span class="font-weight-bold">Settings</span>
+                      </Link>
                     </div>
                   </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle-profile border-rm">
-                        <i class="feather-log-out left-menu-icon"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <span class="font-weight-bold">Sign Out</span>
-                    </div>
-                  </a>
+                  
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
@@ -50,7 +44,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/SampleResume">
                       <span class="font-weight-bold">Simple Resume</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -64,7 +60,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Training">
                       <span class="font-weight-bold">Trainings</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -78,7 +76,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                      <Link to="/FresherJob">
                       <span class="font-weight-bold">Fresher Jobs</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -92,7 +92,21 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Internship">
                       <span class="font-weight-bold">Internship</span>
+                    </Link>
+                    </div>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                      <div class="icon-circle-profile border-rm">
+                        <i class="feather-log-out left-menu-icon"></i>
+                      </div>
+                    </div>
+                    <div>
+                      <Link to="/">
+                      <span class="font-weight-bold">Sign Out</span>
+                      </Link>
                     </div>
                   </a>
                 </div>
@@ -101,7 +115,7 @@ export default function Training(props) {
             <main className="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
               <div className="pt-3" style={{ backgroundColor: "#edf2f6" }}>
                 <div className="container-fluid">
-                  {/* <div className="row justify-content-center">
+                  <div className="row justify-content-center">
                     <div className="col-md-12">
                       <div className="d-flex justify-content-around">
                         <div className="dropdown">
@@ -210,7 +224,7 @@ export default function Training(props) {
                         </div>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
 
@@ -382,7 +396,7 @@ export default function Training(props) {
               </div>
             </main>
 
-            <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 dn">
+            <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 ">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm pt-4 pb-4">
                   <a class="dropdown-item d-flex align-items-center" href="#">

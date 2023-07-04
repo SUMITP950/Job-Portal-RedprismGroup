@@ -1,29 +1,31 @@
-import React, { useEffect, useState } from "react";
 import "../../App.css";
+import React,{useEffect} from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 export default function Sendotp(props) {
   useEffect(() => {
     document.title = "Send OTP";
   }, []);
-  const [otp, Setotp] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    window.alert("OTP Validation Successful");
-
-    const data = { otp };
-    axios
-      .post("https://jsonplaceholder.typicode.com/posts", data)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  const formik = useFormik({
+    initialValues: {
+      mobile: "",
+    },
+    validationSchema: yup.object({
+      mobile: yup
+        .string()
+        .required("*Required")
+        .matches(/^[0-9]+$/, "This field  must be a number")
+        // .min(10, "Minimum 10 digits")
+        .max(10, "Maximum 10 digits"),
+    }),
+    onSubmit: (values) => {
+      console.log(values); // In this section data send to backend
+    },
+  });
+  
   return (
     <>
       <div class="d-lg-flex half">
@@ -47,18 +49,24 @@ export default function Sendotp(props) {
                       role="tabpanel"
                       aria-labelledby="pills-home-tab"
                     >
-                      <form onSubmit={handleSubmit}>
+                      <form onSubmit={formik.handleSubmit}>
                         <div class="form-group last mb-3">
                           <label for="password">Enter Your Mobile Number</label>
                           <input
-                            type="password"
+                            type="number"
+                            name="mobile"
                             class="form-control"
                             placeholder="Enter Mobile Number"
                             id="password"
-                            onChange={(e) => Setotp(e.target.value)}
-                            value={otp}
-                            required
+                            onChange={formik.handleChange}
+                            value={formik.values.mobile}
+                            
                           />
+                          {formik.errors.mobile && (
+                            <em style={{ color: "red" }}>
+                              {formik.errors.mobile}
+                            </em>
+                          )}
                         </div>
 
                         <button type="submit" class="btn btn-block btn-primary">
@@ -67,9 +75,9 @@ export default function Sendotp(props) {
 
                         <div class="d-flex mb-3 align-items-center mt-3">
                           <span class="ml-auto">
-                            <a href="#" class="forgot-pass">
+                            <Link to="/Signin">
                               Back to Login
-                            </a>
+                              </Link>
                           </span>
                           {/* <!-- <span class="ml-auto"><a href="#" class="forgot-pass"><strong>Creat a new
                                                         account</strong></a></span> --> */}

@@ -1,17 +1,69 @@
-import React, { useEffect ,useState} from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/alt-text */
 
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 export default function SigninAsHr() {
   useEffect(() => {
     document.title = "Sign In As HR";
   }, []);
-  const [message, setMessage] = useState('');
 
-  const handleChange = event => {
-    setMessage(event.target.value);
+  const navigate = useNavigate();
 
-    console.log('value is:', event.target.value);}
+  // form validation
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: yup.object({
+      username: yup
+        .string()
+        .required("*Required")
+        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
+        .min(4, "Minimum 4 characters length")
+        .max(10, "Maximum 10 characters length"),
+      password: yup
+        .string()
+        .required("*Required")
+        .matches(/[^\w]/, "One Special character Required")
+        .matches(/[0-9]/, "One Number Required")
+        // .min(3, "Minimum 3 characters length")
+        .max(10, "Maximum 10 characters length"),
+    }),
+    onSubmit: (values) => {
+      console.log(values); // In this section data send to backend
+      navigate("/Home");
+    },
+  });
+  const formik1 = useFormik({
+    initialValues: {
+      mobile: "",
+      otp: "",
+    },
+    validationSchema: yup.object({
+      mobile: yup
+        .string()
+        .required("*Required")
+        .matches(/^[0-9]+$/, "This field  must be a number")
+        // .min(10, "Minimum 10 digits")
+        .max(10, "Maximum 10 digits"),
+      otp: yup
+        .string()
+        .required("*Required")
+        // .min(6, "Minimum 6 digits")
+        .matches(/^[0-9]+$/, "This field  must be a number")
+        .max(6, "Maximum 6 digits"),
+    }),
+    onSubmit: (values) => {
+      console.log(values); // In this section data send to backend
+      navigate("/Home");
+    },
+  });
   return (
     <div>
       <div class="d-lg-flex half">
@@ -21,10 +73,7 @@ export default function SigninAsHr() {
             <div class="row align-items-center justify-content-center login-page-height">
               <div class="col-md-7">
                 <h3 class="text-center">Sign in as a HR</h3>
-                <p class="mb-4 text-center">
-                  Lorem ipsum dolor sit amet elit. Sapiente sit aut eos
-                  consectetur adipisicing.
-                </p>
+                <p class="mb-4 text-center">Welcome to The Technical World</p>
 
                 <div class="container card shadow d-flex justify-content-center mt-5">
                   {/* <!-- nav options --> */}
@@ -77,28 +126,38 @@ export default function SigninAsHr() {
                       role="tabpanel"
                       aria-labelledby="pills-home-tab"
                     >
-                      <form action="#" method="post">
+                      <form onSubmit={formik1.handleSubmit}>
                         <div class="form-group first">
-                          <label for="mobile number">Mobile Number</label>
+                          <label htmlFor="mobile number">Mobile Number</label>
                           <input
-                            type="text"
+                            type="number"
+                            name="mobile"
                             class="form-control"
                             placeholder="Enter Mobile Number"
-                            id="username"
-                            required
-                            onChange={handleChange}
-                            value={message}
+                            onChange={formik1.handleChange}
+                            value={formik1.values.mobile}
                           />
+                          {formik1.errors.mobile && (
+                            <em style={{ color: "red" }}>
+                              {formik1.errors.mobile}
+                            </em>
+                          )}
                         </div>
                         <div class="form-group last mb-3">
-                          <label for="password">Enter Your OTP</label>
+                          <label htmlFor="otp">Enter Your OTP</label>
                           <input
                             type="password"
+                            name="otp"
                             class="form-control"
                             placeholder="Enter Your OTP"
-                            id="password"
-                            required
+                            onChange={formik1.handleChange}
+                            value={formik1.values.otp}
                           />
+                          {formik1.errors.otp && (
+                            <em style={{ color: "red" }}>
+                              {formik1.errors.otp}
+                            </em>
+                          )}
                         </div>
 
                         <button type="submit" class="btn btn-block btn-primary">
@@ -107,9 +166,9 @@ export default function SigninAsHr() {
 
                         <div class="d-flex mb-3 align-items-center mt-3">
                           <span class="mr-auto">
-                            <a href="#" class="forgot-pass">
+                          <Link to="/Sendotp" class="forgot-pass">
                               Forgot Password ?
-                            </a>
+                            </Link>
                           </span>
                           <span class="ml-auto">
                             <Link to="/RegistrationBasic" class="forgot-pass">
@@ -126,26 +185,39 @@ export default function SigninAsHr() {
                       role="tabpanel"
                       aria-labelledby="pills-profile-tab"
                     >
-                      <form action="#" method="post">
+                      <form onSubmit={formik.handleSubmit}>
                         <div class="form-group first">
-                          <label for="username">Username</label>
+                          <label htmlFor="username">Username</label>
                           <input
                             type="text"
+                            name="username"
                             class="form-control"
                             placeholder="Enter Your Username"
                             id="username"
-                            required
+                            onChange={formik.handleChange}
+                            value={formik.values.username}
                           />
+                          {formik.errors.username && (
+                            <em style={{ color: "red" }}>
+                              {formik.errors.username}
+                            </em>
+                          )}
                         </div>
                         <div class="form-group last mb-3">
-                          <label for="password">Password</label>
+                          <label htmlFor="password">Password</label>
                           <input
                             type="password"
+                            name="password"
                             class="form-control"
                             placeholder="Your Password"
-                            id="password"
-                            required
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
                           />
+                          {formik.errors.password && (
+                            <em style={{ color: "red" }}>
+                              {formik.errors.password}
+                            </em>
+                          )}
                         </div>
 
                         <button type="submit" class="btn btn-block btn-primary">
@@ -154,14 +226,14 @@ export default function SigninAsHr() {
 
                         <div class="d-flex mb-3 align-items-center mt-3">
                           <span class="mr-auto">
-                            <a href="#" class="forgot-pass">
+                          <Link to="/Sendotp" class="forgot-pass">
                               Forgot Password ?
-                            </a>
+                            </Link>
                           </span>
                           <span class="ml-auto">
-                            <a href="#" class="forgot-pass">
+                          <Link to="/RegistrationBasic" class="forgot-pass">
                               Creat a new account
-                            </a>
+                            </Link>
                           </span>
                         </div>
                       </form>
