@@ -31,6 +31,7 @@ import BuddySearch from "./Pages/BuddySearch/BuddySearch";
 import JobSearch from "./Pages/JobSearch/JobSearch";
 import Internship from "./Pages/Internship/Internship";
 import Rnav from "./Component/Rnav";
+import RnavHR from "./Component/RnavHR";
 import EmployerJobPost from "./Pages/JobPost/JobPost";
 import EmployerJobPostHR from "./Pages/JobPostHR/JobPost";
 import Training from "./Pages/Training/Training";
@@ -202,7 +203,7 @@ export default function Router() {
             path="/RegistrationBasicHR"
             element={
               <>
-                <Rnav />
+                <RnavHR />
 
                 <RegistrationBasicHR />
               </>
@@ -212,7 +213,7 @@ export default function Router() {
             path="/RegistrationVarifyHR"
             element={
               <>
-                <Rnav />
+                <RnavHR />
                 <RegistrationVarifyHR />
               </>
             }
@@ -221,7 +222,7 @@ export default function Router() {
             path="/RegistrationStatusHR"
             element={
               <>
-                <Rnav />
+                <RnavHR />
                 <RegistrationStatusHR />
               </>
             }
@@ -230,7 +231,7 @@ export default function Router() {
             path="/RegistrationCreateHR"
             element={
               <>
-                <Rnav />
+                <RnavHR />
                 <RegistrationCreateHR />
               </>
             }
@@ -239,7 +240,7 @@ export default function Router() {
             path="/RegistrationTechSkillsHR"
             element={
               <>
-                <Rnav />
+                <RnavHR />
                 <RegistrationTechSkillsHR />
               </>
             }

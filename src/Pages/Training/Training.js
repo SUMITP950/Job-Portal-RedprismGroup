@@ -1,13 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect} from "react";
+import React, { useEffect,useState} from "react";
 import "../../App.css";
 import { Link } from "react-router-dom";
 import Select from "react-select";
+import axios from "axios";
 
 export default function Training(props) {
   useEffect(() => {
     document.title = "Training";
-  }, []);
+  });
+  const [data,SetData] =useState([]);
+  useEffect(()=>{axios.get("https://dummyjson.com/products").then((res) => {
+    SetData(res.data.products);})
+    // console.log(res.data.products[0]);})
+})
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -260,19 +266,26 @@ export default function Training(props) {
                 <div
                   className="row mt-4 p-4 rounded"
                   style={{ border: "1px solid black" }}
-                >
-                  <div className="col-md-4 mb-4">
+                > {data.map((item,id)=>{
+                  return (
+                  <div className="col-md-4 mb-4" key={id}>
                     <div className="card">
                       <img
-                        src="https://www.redprismgroup.com/img/digita.jpg"
+                        src={item.images[0]}
                         className="card-img-top crdimg"
                         alt="..."
                       />
+                      {/* <img
+                        src="https://www.redprismgroup.com/img/digita.jpg"
+                        className="card-img-top crdimg"
+                        alt="..."
+                      /> */}
                       <div className="card-body">
-                        <h5 className="card-title">Digital Marketing</h5>
+                       
+                         
+                        <h5 className="card-title">{item.title}</h5>
                         <p className="card-text">
-                          What is Digital Marketing? Digital Marketing is
-                          Promoting
+                          {item.description}
                         </p>
                       </div>
                       <div className="card-footer">
@@ -281,8 +294,10 @@ export default function Training(props) {
                         </Link>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-md-4 mb-4">
+                  </div> )
+
+})}
+                  {/* <div className="col-md-4 mb-4">
                     <div className="card">
                       <img
                         src="https://www.redprismgroup.com/img/hadoop.jpg"
@@ -391,7 +406,7 @@ export default function Training(props) {
                         </Link>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </main>
