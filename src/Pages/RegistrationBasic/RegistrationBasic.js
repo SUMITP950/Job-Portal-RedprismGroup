@@ -1,5 +1,5 @@
 import React,{useEffect} from "react";
-// import axios from "axios";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -60,20 +60,20 @@ export default function RegistrationBasic() {
         .max(10, "Maximum 10 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
+      // console.log(values); // In this section data send to backend
+      axios
+      .post("http://localhost:3030/users_registration_jobseeker", values)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
       navigate("/RegistrationVarify");
     },
   });
 
-  //   axios
-  //     .post("https://jsonplaceholder.typicode.com/posts", values)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
+
 
   return (
     <>

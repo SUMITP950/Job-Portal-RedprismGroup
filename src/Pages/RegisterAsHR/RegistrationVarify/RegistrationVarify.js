@@ -1,10 +1,10 @@
-// include
 import React,{useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import axios from "axios";
 
-export default function RegistrationVarify() {
+export default function RegistrationVarifyHR() {
 
   useEffect(() => {
     document.title = "Registration";
@@ -26,8 +26,16 @@ export default function RegistrationVarify() {
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
-      navigate("/RegistrationCreate");
+      // console.log(values); // In this section data send to backend
+      axios
+      .post("http://localhost:3030/users_registration_hr", values)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      navigate("/RegistrationCreateHR");
     },
   });
 

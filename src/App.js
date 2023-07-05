@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import Router from "./router"
+import { ToastContainer } from 'react-toastify';
 
 
 export default function App() {
   return (
-    <> <Router/>  </>
+    <>
+    <ToastContainer theme='colored'></ToastContainer>
+     <Router/>  </>
     );
   }
   

@@ -2,9 +2,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 
 import React, { useEffect } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 
 export default function SigninAsHr() {
   useEffect(() => {
@@ -36,7 +38,17 @@ export default function SigninAsHr() {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
+      // console.log(values); // In this section data send to backend
+      axios
+      .post("http://localhost:3030/sign_in_hr", values)
+      .then((response) => {
+        console.log(response.data);
+        toast.success(`login successfully.`);
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
       navigate("/Home");
     },
   });
@@ -60,7 +72,17 @@ export default function SigninAsHr() {
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
+      // console.log(values); // In this section data send to backend
+      axios
+      .post("http://localhost:3030/sign_in_hr", values)
+      .then((response) => {
+        console.log(response.data);
+        toast.success(`login successfully.`);
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
       navigate("/Home");
     },
   });
