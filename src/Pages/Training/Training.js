@@ -421,7 +421,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Profile">
                       <span class="font-weight-bold">User Name</span>
+                    </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -431,7 +433,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Editprofile">
                       <span class="font-weight-bold">Edit Profile</span>
+                    </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -441,7 +445,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Profile">
                       <span class="font-weight-bold">User Profile</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -451,7 +457,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/MyBuddies">
                       <span class="font-weight-bold">My Buddies</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -461,7 +469,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Jobs">
                       <span class="font-weight-bold">Jobs</span>
+                    </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -471,7 +481,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Jobprofile">
                       <span class="font-weight-bold">My Jobs</span>
+                     </Link>
                     </div>
                   </a>
                 </div>

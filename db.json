@@ -1,9 +1,90 @@
 {
-  "users_registration_jobseeker": [],
+  "users_registration_jobseeker": [
+    {
+      "firstName": "Anirban",
+      "lastName": "Mukherjee",
+      "email": "ani.mukherjee93@gmail.com",
+      "mobile": 9038359297,
+      "city": "kolkata",
+      "state": "westbengal",
+      "zip": 700092,
+      "gender": "Male",
+      "id": 1
+    },
+    {
+      "otp": 123456,
+      "id": 2
+    },
+    {
+      "username": "Anirban",
+      "password": "ani@93",
+      "id": 3
+    },
+    {
+      "currentCompany": "Cognizant",
+      "technicalSkills": "React JS",
+      "ExperienceInYear": "1",
+      "id": 4
+    },
+    {
+      "lookingForJob": "Yes",
+      "noticePeriod": "Yes",
+      "immediateJoiner": "Yes",
+      "id": 5
+    }
+  ],
   "users_registration_hr": [
+    {
+      "firstName": "Arghya",
+      "lastName": "Goswami",
+      "email": "arghya@gmail.com",
+      "mobile": 1234567890,
+      "city": "kolkata",
+      "state": "westbengal",
+      "zip": 700001,
+      "gender": "Male",
+      "id": 1
+    },
+    {
+      "otp": 123456,
+      "id": 2
+    },
+    {
+      "username": "Argya",
+      "password": "argya@93",
+      "id": 3
+    },
+    {
+      "currentCompany": "CTS",
+      "technicalSkills": "React JS",
+      "ExperienceInYear": "1",
+      "id": 4
+    },
+    {
+      "lookingForJob": "Yes",
+      "noticePeriod": "Yes",
+      "immediateJoiner": "Yes",
+      "id": 5
+    }
   ],
   "sign_in_jobseeker": [
+    {
+      "mobile": 9038359297,
+      "otp": "123456",
+      "id": 1
+    }
   ],
   "sign_in_hr": [
+    {
+      "username": "Argya",
+      "password": "argya@93",
+      "id": 1
+    }
+  ],
+  "send_otp": [
+    {
+      "mobile": 9038359297,
+      "id": 1
+    }
   ]
 }

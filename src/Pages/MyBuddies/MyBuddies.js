@@ -382,7 +382,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Profile">
                       <span class="font-weight-bold">User Name</span>
+                    </Link>
                     </div>
                   </a>
                   <a
@@ -395,7 +397,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Editprofile">
                       <span class="font-weight-bold">Edit Profile</span>
+                    </Link>
                     </div>
                   </a>
                   <a
@@ -408,7 +412,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Profile">
                       <span class="font-weight-bold">User Profile</span>
+                      </Link>
                     </div>
                   </a>
                   <a
@@ -421,7 +427,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/MyBuddies">
                       <span class="font-weight-bold">My Buddies</span>
+                      </Link>
                     </div>
                   </a>
                   <a
@@ -434,7 +442,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Jobs">
                       <span class="font-weight-bold">Jobs</span>
+                    </Link>
                     </div>
                   </a>
                   <a
@@ -447,7 +457,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Jobprofile">
                       <span class="font-weight-bold">My Jobs</span>
+                     </Link>
                     </div>
                   </a>
                 </div>
@@ -467,7 +479,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
+                    <Link to="/Setting">
                       <span class="font-weight-bold">Settings</span>
+                      </Link>
                     </div>
                   </a>
                   <a
@@ -480,7 +494,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <span class="font-weight-bold">Sign Out</span>
+                    <Link to="/SampleResume">
+                      <span class="font-weight-bold">Simple Resume</span>
+                      </Link>
                     </div>
                   </a>
                   <a
@@ -493,7 +509,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <span class="font-weight-bold">Simple Resume</span>
+                    <Link to="/Training">
+                      <span class="font-weight-bold">Trainings</span>
+                      </Link>
                     </div>
                   </a>
                   <a
@@ -510,7 +528,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <span class="font-weight-bold">Trainings</span>
+                    <Link to="/FresherJob">
+                      <span class="font-weight-bold">Fresher Jobs</span>
+                      </Link>
                     </div>
                   </a>
                   <a
@@ -527,7 +547,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <span class="font-weight-bold">Fresher Jobs</span>
+                    <Link to="/Internship">
+                      <span class="font-weight-bold">Internship</span>
+                    </Link>
                     </div>
                   </a>
                   <a
@@ -544,7 +566,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <span class="font-weight-bold">Internship</span>
+                    <Link to="/">
+                      <span class="font-weight-bold">Sign Out</span>
+                      </Link>
                     </div>
                   </a>
                 </div>

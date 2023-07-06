@@ -1,14 +1,17 @@
 import "../../App.css";
 import React,{useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
+// import { toast } from "react-toastify";
 
 export default function Sendotp(props) {
   useEffect(() => {
     document.title = "Send OTP";
   }, []);
 
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       mobile: "",
@@ -22,7 +25,19 @@ export default function Sendotp(props) {
         .max(10, "Maximum 10 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
+      console.log(values);
+      axios
+      .post("http://localhost:3030/send_otp", values)
+      .then((response) => {
+        const data= response.data;
+        console.log(data);
+        // toast.success(`login successfully.`);
+      })
+      .catch((error) => {
+        console.error(error);
+        // toast.success(`Failed : ${error.message}`);
+      });
+      navigate("/Signin"); 
     },
   });
   

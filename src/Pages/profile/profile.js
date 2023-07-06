@@ -38,7 +38,9 @@ export default function profile() {
 
               <div class="overflow-hidden border-top">
                 <a class="font-weight-bold p-3 d-block" href="sign-in.html">
+                  <Link to="/Signin">
                   Log Out
+                  </Link>
                 </a>
               </div>
             </div>
