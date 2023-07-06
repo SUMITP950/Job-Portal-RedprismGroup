@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 
-export default async function Internship() {
+export default function Internship() {
   useEffect(() => {
     document.title = "Internship";
   }, []);
 
-  const [data, setData] = useState([]);
-  useEffect(()=>{axios.get("https://dummyjson.com/products").then((res) => {
-    setData(res.data.products);})
-    // console.log(res.data.products);
-  }
-    )
+  const [data1, SetData] = useState([]);
+  useEffect(() => {
+    axios.get("https://dummyjson.com/products").then((res) => {
+      SetData(res.data.products);
+    });
+    // console.log(data.products[0]);})
+  });
 
   // const [isLoading, setIsLoading] = useState(true);
   // try {
@@ -48,7 +49,6 @@ export default async function Internship() {
 
   //   fetchData();
   // }, []);
-
 
   return (
     <>
@@ -121,69 +121,66 @@ export default async function Internship() {
                 </div>
               </div>
             </aside>
-            <Skeleton count={5} baseColor="#202020" highlightColor="#444" />
+            {/* <Skeleton count={5} baseColor="#202020" highlightColor="#444" /> */}
             <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-              
-                <div class="row">
-                  {data.map((item,id)=>{
+              <div class="row">
+                {data1.map((item, id) => {
                   return (
-                    <>
-                      <div class="col-md-3" key={id}>
-                        <a href="#">
-                          <div class="border-i network-item rounded mb-3">
-                            <div class="p-3 d-flex align-items-center network-item-header">
-                              <div class="dropdown-list-image mr-3">
-                                <img
-                                  class="rounded-circle"
-                                  src={item.image}
-                                  alt=""
-                                />
-                              </div>
-                              <div class="font-weight-bold">
-                                <h6
-                                  class="font-weight-bold text-dark mb-0 dataoveri"
-                                  title={item.title}
-                                >
-                                  {item.title}
-                                </h6>
-                                <div class="small text-black-50">
-                                  Photographer at Photography
-                                </div>
-                              </div>
+                    <div class="col-md-3" key={id}>
+                      <a href="#">
+                        <div class="border-i network-item rounded mb-3">
+                          <div class="p-3 d-flex align-items-center network-item-header">
+                            <div class="dropdown-list-image mr-3">
+                              <img
+                                class="rounded-circle"
+                                src={item.image[0]}
+                                alt=""
+                              />
                             </div>
-
-                            <div class="network-item-footer py-2 d-flex text-center">
-                              <div class="col-6 pl-3 pr-1">
-                                <button
-                                  style={{ fontSize: "14px !importent" }}
-                                  type="button"
-                                  class="btn apply-btn-intern btn-sm btn-block"
-                                >
-                                  {" "}
-                                  Apply Now{" "}
-                                </button>
-                              </div>
-                              <div class="col-6  pl-1">
-                                <button
-                                  type="button"
-                                  class="btn share-btn-intern btn-sm btn-block"
-                                >
-                                  <img
-                                    src="img/icon/whatsapp.png"
-                                    alt=""
-                                    class="whatsapp-img-intern"
-                                  />
-                                  Share
-                                </button>
+                            <div class="font-weight-bold">
+                              <h6
+                                class="font-weight-bold text-dark mb-0 dataoveri"
+                                title={item.title}
+                              >
+                                {item.title}
+                              </h6>
+                              <div class="small text-black-50">
+                                Photographer at Photography
                               </div>
                             </div>
                           </div>
-                        </a>
-                      </div>
-                    </>
-                  )})}
-                </div>
-              
+
+                          <div class="network-item-footer py-2 d-flex text-center">
+                            <div class="col-6 pl-3 pr-1">
+                              <button
+                                style={{ fontSize: "14px !importent" }}
+                                type="button"
+                                class="btn apply-btn-intern btn-sm btn-block"
+                              >
+                                {" "}
+                                Apply Now{" "}
+                              </button>
+                            </div>
+                            <div class="col-6  pl-1">
+                              <button
+                                type="button"
+                                class="btn share-btn-intern btn-sm btn-block"
+                              >
+                                <img
+                                  src="img/icon/whatsapp.png"
+                                  alt=""
+                                  class="whatsapp-img-intern"
+                                />
+                                Share
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  );
+                })}
+              </div>
             </main>
             <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
               <div class="border rounded bg-white mb-3">
@@ -269,4 +266,4 @@ export default async function Internship() {
       </div>
     </>
   );
-                  }
+}

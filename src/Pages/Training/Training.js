@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import "../../App.css";
 import { Link } from "react-router-dom";
 import Select from "react-select";
@@ -9,11 +9,13 @@ export default function Training(props) {
   useEffect(() => {
     document.title = "Training";
   });
-  const [data,SetData] =useState([]);
-  useEffect(()=>{axios.get("https://dummyjson.com/products").then((res) => {
-    SetData(res.data.products);})
-    // console.log(res.data.products[0]);})
-})
+  const [data, SetData] = useState([]);
+  useEffect(() => {
+    axios.get("https://dummyjson.com/products").then((res) => {
+      SetData(res.data.products);
+    });
+    // console.log(data.products[0]);})
+  });
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -38,11 +40,11 @@ export default function Training(props) {
                     </div>
                     <div>
                       <Link to="/Setting">
-                      <span class="font-weight-bold">Settings</span>
+                        <span class="font-weight-bold">Settings</span>
                       </Link>
                     </div>
                   </a>
-                  
+
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
@@ -50,8 +52,8 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/SampleResume">
-                      <span class="font-weight-bold">Simple Resume</span>
+                      <Link to="/SampleResume">
+                        <span class="font-weight-bold">Simple Resume</span>
                       </Link>
                     </div>
                   </a>
@@ -66,8 +68,8 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Training">
-                      <span class="font-weight-bold">Trainings</span>
+                      <Link to="/Training">
+                        <span class="font-weight-bold">Trainings</span>
                       </Link>
                     </div>
                   </a>
@@ -83,7 +85,7 @@ export default function Training(props) {
                     </div>
                     <div>
                       <Link to="/FresherJob">
-                      <span class="font-weight-bold">Fresher Jobs</span>
+                        <span class="font-weight-bold">Fresher Jobs</span>
                       </Link>
                     </div>
                   </a>
@@ -98,9 +100,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Internship">
-                      <span class="font-weight-bold">Internship</span>
-                    </Link>
+                      <Link to="/Internship">
+                        <span class="font-weight-bold">Internship</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -111,7 +113,7 @@ export default function Training(props) {
                     </div>
                     <div>
                       <Link to="/">
-                      <span class="font-weight-bold">Sign Out</span>
+                        <span class="font-weight-bold">Sign Out</span>
                       </Link>
                     </div>
                   </a>
@@ -243,8 +245,10 @@ export default function Training(props) {
                     <Select
                       placeholder={"Search Trainings...."}
                       styles={{
-                        control:(baseStyles, state) => ({
-                          ...baseStyles,borderRadius:"50px"}),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          borderRadius: "50px",
+                        }),
                         option: (baseStyles, state) => ({
                           ...baseStyles,
 
@@ -266,37 +270,35 @@ export default function Training(props) {
                 <div
                   className="row mt-4 p-4 rounded"
                   style={{ border: "1px solid black" }}
-                > {data.map((item,id)=>{
-                  return (
-                  <div className="col-md-4 mb-4" key={id}>
-                    <div className="card">
-                      <img
-                        src={item.images[0]}
-                        className="card-img-top crdimg"
-                        alt="..."
-                      />
-                      {/* <img
+                >
+                  {" "}
+                  {data.map((item, id) => {
+                    return (
+                      <div className="col-md-4 mb-4" key={id}>
+                        <div className="card">
+                          <img
+                            src={item.images[0]}
+                            className="card-img-top crdimg"
+                            alt="..."
+                          />
+                          {/* <img
                         src="https://www.redprismgroup.com/img/digita.jpg"
                         className="card-img-top crdimg"
                         alt="..."
                       /> */}
-                      <div className="card-body">
-                       
-                         
-                        <h5 className="card-title">{item.title}</h5>
-                        <p className="card-text">
-                          {item.description}
-                        </p>
+                          <div className="card-body">
+                            <h5 className="card-title">{item.title}</h5>
+                            <p className="card-text">{item.description}</p>
+                          </div>
+                          <div className="card-footer">
+                            <Link to="#" className="btn btn-block apply-btn">
+                              View Details
+                            </Link>
+                          </div>
+                        </div>
                       </div>
-                      <div className="card-footer">
-                        <Link to="#" className="btn btn-block apply-btn">
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  </div> )
-
-})}
+                    );
+                  })}
                   {/* <div className="col-md-4 mb-4">
                     <div className="card">
                       <img
