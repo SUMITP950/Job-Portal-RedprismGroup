@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-// import axios from "axios";
+import axios from "axios";
 
-export default function RegistrationCreate() {
+export default function RegistrationCreateHR() {
   useEffect(() => {
     document.title = "Registration";
   }, []);
@@ -34,8 +34,16 @@ export default function RegistrationCreate() {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
-      navigate("/RegistrationTechSkills");
+      // console.log(values); // In this section data send to backend
+      axios
+      .post("http://localhost:3030/users_registration_hr", values)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      navigate("/RegistrationTechSkillsHR");
     },
   });
 

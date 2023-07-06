@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-// import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function RegistrationStatus() {
   useEffect(() => {
@@ -24,7 +25,18 @@ export default function RegistrationStatus() {
       immediateJoiner: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
+      // console.log(values); // In this section data send to backend
+      axios
+      .post("http://localhost:3030/users_registration_jobseeker", values)
+      .then((response) => {
+        const data= response.data;
+        console.log(data);
+        toast.success(`Registered successfully.`);
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.success(`Failed : ${error.message}`);
+      });
       navigate("/Signin");
     },
   });
