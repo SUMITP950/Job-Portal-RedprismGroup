@@ -8,25 +8,31 @@ export default async function Internship() {
   }, []);
 
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  try {
-    const { data } = await axios({
-      method: "put",
-      url: "https://fakestoreapi.com/products/",
-      data: {
-        title: "Making PUT Requests with Axios",
-        status: "published",
-      },
-    });
-
-    console.log(data);
-  } catch (err) {
-    if (err.response.status === 404) {
-      console.log("Resource could not be found!");
-    } else {
-      console.log(err.message);
-    }
+  useEffect(()=>{axios.get("https://dummyjson.com/products").then((res) => {
+    setData(res.data.products);})
+    // console.log(res.data.products);
   }
+    )
+
+  // const [isLoading, setIsLoading] = useState(true);
+  // try {
+  //   const { data } = await axios({
+  //     method: "put",
+  //     url: "https://fakestoreapi.com/products/",
+  //     data: {
+  //       title: "Making PUT Requests with Axios",
+  //       status: "published",
+  //     },
+  //   });
+
+  //   console.log(data);
+  // } catch (err) {
+  //   if (err.response.status === 404) {
+  //     console.log("Resource could not be found!");
+  //   } else {
+  //     console.log(err.message);
+  //   }
+  // }
   // useEffect(() => {
   //   const url = "https://fakestoreapi.com/products/";
   //   const fetchData = async () => {
@@ -42,6 +48,7 @@ export default async function Internship() {
 
   //   fetchData();
   // }, []);
+
 
   return (
     <>
@@ -116,27 +123,28 @@ export default async function Internship() {
             </aside>
             <Skeleton count={5} baseColor="#202020" highlightColor="#444" />
             <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-              {
+              
                 <div class="row">
-                  {data.map((data, i) => (
+                  {data.map((item,id)=>{
+                  return (
                     <>
-                      <div class="col-md-3">
+                      <div class="col-md-3" key={id}>
                         <a href="#">
                           <div class="border-i network-item rounded mb-3">
                             <div class="p-3 d-flex align-items-center network-item-header">
                               <div class="dropdown-list-image mr-3">
                                 <img
                                   class="rounded-circle"
-                                  src={data.image}
+                                  src={item.image}
                                   alt=""
                                 />
                               </div>
                               <div class="font-weight-bold">
                                 <h6
                                   class="font-weight-bold text-dark mb-0 dataoveri"
-                                  title={data.title}
+                                  title={item.title}
                                 >
-                                  {data.title}
+                                  {item.title}
                                 </h6>
                                 <div class="small text-black-50">
                                   Photographer at Photography
@@ -173,9 +181,9 @@ export default async function Internship() {
                         </a>
                       </div>
                     </>
-                  ))}
+                  )})}
                 </div>
-              }
+              
             </main>
             <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
               <div class="border rounded bg-white mb-3">
@@ -261,4 +269,4 @@ export default async function Internship() {
       </div>
     </>
   );
-}
+                  }
