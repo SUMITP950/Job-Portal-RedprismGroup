@@ -280,12 +280,14 @@ export default function Nav() {
                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
+                <Link to="/Message">
                 <a
                   class="dropdown-item text-center small text-gray-500"
                   href="#"
                 >
                   Read More Messages
                 </a>
+                </Link>
               </div>
             </li>
             <li class="nav-item dropdown no-arrow mx-1 osahan-list-dropdown">
@@ -349,12 +351,14 @@ export default function Nav() {
                     your account.
                   </div>
                 </a>
+                <Link to="/Notifications">
                 <a
                   class="dropdown-item text-center small text-gray-500"
                   href="notifications.html"
                 >
                   Show All Alerts
                 </a>
+                </Link>
               </div>
             </li>
 
