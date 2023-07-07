@@ -7,6 +7,12 @@
 .mobile-view-menu {
   display: none;
 }
+.mobile-view-filter {
+  display: none;
+}
+.justify-c-center {
+  justify-content: center;
+}
 @media screen and (max-width: 480px) {
   .body-padding {
     margin-top: 0px !important;
@@ -110,6 +116,25 @@
   }
   .padding-bottom {
     padding-bottom: 20px;
+  }
+  .dropdown-m-hide {
+    display: none;
+  }
+  .table-m-view {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  .mobile-view-filter {
+    display: block;
+  }
+  .justify-c-center {
+    justify-content: left;
+  }
+  .filter-dropdown-menu {
+    padding: 50px;
   }
 }
 @media screen and (max-width: 1200px) {
