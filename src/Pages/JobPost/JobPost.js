@@ -89,40 +89,7 @@ const EmployerJobPost = () => {
                   />
                 </div>
 
-                {/* <div className="form-group">
-                  <Select
-                    styles={{
-                      container: (baseStyles, state) => ({
-                        ...baseStyles,
-
-                        display: "inherit",
-                      }),
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
-
-                        border: "none",
-                        backgroundColor: "#fff",
-                      }),
-                      placeholder: (baseStyles, state) => ({
-                        ...baseStyles,
-                        color: "Black",
-                        fontWeight: "bold",
-                      }),
-                      indicatorSeparator: (baseStyles, state) => ({
-                        ...baseStyles,
-                        display: "none",
-                      }),
-                    }}
-                    options={options}
-                    isMulti
-                    placeholder="Select skills"
-                    value={options.filter((option) =>
-                      technicalSkills.includes(option.value)
-                    )}
-                    onChange={handleTechnicalSkillsChange}
-                    required
-                  />
-                </div> */}
+               
 
                 <div className="form-group">
                   <label htmlFor="salaryRange">Salary Range</label>
@@ -142,19 +109,88 @@ const EmployerJobPost = () => {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="salaryRange">Location</label>
-                  <div className="search-bar-container">
-                    <SearchBar setResults={setResults} name="Type City" />
-                    {results &&
-                      results.length > 0 && ( //result is not display in input
-                        <SearchResultsList results={results} />
-                      )}
+                  <b htmlFor="description" style={{paddingLeft:"8px"}}>Location</b>
+             <div className="form-control">
+     
+                  <Select
+                   
+                    styles={{
+                      container: (baseStyles, state) => ({
+                        ...baseStyles,
+
+                        display: "inherit",
+                       
+                      }),
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+
+                        border:  'none',
+                        
+                        backgroundColor: "#fff",
+                      }),
+                      
+                      indicatorSeparator: (baseStyles, state) => ({
+                        ...baseStyles,
+                        display: "none",
+                      }),
+                    }}
+                    options={options}
+                    isMulti
+                    placeholder="Select Your Location"
+                    value={options.filter((option) =>
+                      technicalSkills.includes(option.value)
+                    )}
+                    onChange={handleTechnicalSkillsChange}
+                    required
+                  />
                   </div>
                 </div>
                 <div className="form-group">
+                  <b htmlFor="description" style={{paddingLeft:"8px"}}>Technology</b>
+             <div className="form-control">
+     
+                  <Select
+                   
+                    styles={{
+                      container: (baseStyles, state) => ({
+                        ...baseStyles,
+
+                        display: "inherit",
+                       
+                      }),
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+
+                        border:  'none',
+                        
+                        backgroundColor: "#fff",
+                      }),
+                      
+                      indicatorSeparator: (baseStyles, state) => ({
+                        ...baseStyles,
+                        display: "none",
+                      }),
+                    }}
+                    options={options}
+                    isMulti
+                    placeholder="Select Your Technology"
+                    value={options.filter((option) =>
+                      technicalSkills.includes(option.value)
+                    )}
+                    onChange={handleTechnicalSkillsChange}
+                    required
+                  />
+                  </div>
+                </div>
+               {/* <div className="form-group">
+                  <label htmlFor="salaryRange">Location</label>
+                  <div className="search-bar-container">
+                  
+                  </div>
+                </div>
+                 <div className="form-group">
                   <label htmlFor="salaryRange">Technology</label>
-                  <br />
-                  <div className="form-control">
+                  
                     <Select
                       styles={{
                         container: (baseStyles, state) => ({
@@ -193,7 +229,7 @@ const EmployerJobPost = () => {
                       onChange={handleTechnicalSkillsChange}
                       required
                     />
-                  </div>
+                  
                 </div>
                 <div className="form-group">
                   <label htmlFor="experienceYear">Experience in Year</label>
@@ -215,7 +251,7 @@ const EmployerJobPost = () => {
                     <option value="6-7 Year">6-7 Year</option>
                     <option value="7-8 Year">7-8 Year</option>
                   </select>
-                </div>
+                </div> */}
 
                 <div className="form-group">
                   <label htmlFor="description">Job Description</label>
