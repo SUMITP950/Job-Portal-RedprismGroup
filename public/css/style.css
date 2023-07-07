@@ -1303,3 +1303,14 @@ input.radio {
   display: none;
   background: linear-gradient(90deg, #fff 70%, transparent);
 }
+/* reg icon font size and border */
+.icon-reg {
+  width: 45px;
+  border: 2px solid #e83e8c;
+  border-radius: 3px;
+  padding: 5px;
+  height: 45px;
+}
+.icon-font {
+  font-size: 13px;
+}
