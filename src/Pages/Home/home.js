@@ -1,6 +1,7 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -74,21 +75,26 @@ export default function Home() {
     }
   }, []);
   const [thoughts, setThoughts] = useState("");
+  const [listdata, setListdata] = useState([]);
 
   const handleThoughtsChange = (e) => {
     setThoughts(e.target.value);
   };
 
   const handlePost = () => {
+    setListdata((listdata) => {
+      const updatedList = [...listdata, thoughts];
+      setThoughts("");
+      return updatedList;
+    });
+
     // Make a POST request to the backend with the thoughts data
     axios
-      .post("https://fakestoreapi.com/products", { thoughts })
+      .post("http://localhost:3030/post_your_thoughts", { thoughts })
       .then((response) => {
-        // Handle the response if needed
         console.log(response.data);
       })
       .catch((error) => {
-        // Handle the error if needed
         console.error(error);
       });
   };
@@ -144,7 +150,7 @@ export default function Home() {
                       <div className="w-100">
                         <textarea
                           placeholder="Write your thoughts..."
-                          className="form-control shadow-none" 
+                          className="form-control shadow-none"
                           value={thoughts}
                           onChange={handleThoughtsChange}
                         ></textarea>
@@ -169,48 +175,57 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div class="box shadow-sm border rounded bg-white mb-3 osahan-post">
-                <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
-                  <div class="dropdown-list-image mr-3">
-                    <img
-                      class="rounded-circle"
-                      src="img/icon/smile.svg"
-                      alt=""
-                    />
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Tobia Crivellari</div>
-                    <div class="small text-gray-500">
-                      Product Designer at askbootstrap
-                    </div>
-                  </div>
-                  <span class="ml-auto small">3 hours</span>
-                </div>
-                <div class="p-3 border-bottom osahan-post-body">
-                  <p class="mb-0">
-                    Tmpo incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco{" "}
-                    <a href="#">laboris consequat.</a>
-                  </p>
-                </div>
-                <div class="p-3 osahan-post-footer text-center d-flex jcc">
-                  <a href="#" class="mr-3 text-secondary">
-                    <i class="feather-heart text-danger icon-font"></i>
-                    16
-                  </a>
-                  <a href="#" class="mr-3 text-secondary">
-                    <i class="feather-message-square icon-font"></i>8
-                  </a>
-                  <a href="#" class="mr-3 text-secondary">
-                    <img
-                      src="img/icon/whatsapp.png"
-                      alt=""
-                      class="icon-image"
-                    />
-                  </a>
-                </div>
-              </div>
+              {listdata != [] &&
+                listdata.map((data, i) => {
+                  return (
+                    <>
+                      <div class="box shadow-sm border rounded bg-white mb-3 osahan-post">
+                        <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
+                          <div class="dropdown-list-image mr-3">
+                            <img
+                              class="rounded-circle"
+                              src="img/icon/smile.svg"
+                              alt=""
+                            />
+                            <div class="status-indicator bg-success"></div>
+                          </div>
+                          <div class="font-weight-bold">
+                            <div class="text-truncate">Anirban Mukherjee</div>
+                            <div class="small text-gray-500">
+                              Frontend Developer at TP Digital Technology
+                            </div>
+                          </div>
+                          <span class="ml-auto small">3 hours</span>
+                        </div>
+                        <div class="p-3 border-bottom osahan-post-body">
+                          <p
+                            class="mb-0"
+                            key={i}
+                            style={{ fontWeight: "bold", fontSize: 20}}
+                          >
+                            <div>{data}</div>
+                          </p>
+                        </div>
+                        <div class="p-3 osahan-post-footer text-center d-flex jcc">
+                          <a href="#" class="mr-3 text-secondary">
+                            <i class="feather-heart text-danger icon-font"></i>
+                            16
+                          </a>
+                          <a href="#" class="mr-3 text-secondary">
+                            <i class="feather-message-square icon-font"></i>8
+                          </a>
+                          <a href="#" class="mr-3 text-secondary">
+                            <img
+                              src="img/icon/whatsapp.png"
+                              alt=""
+                              class="icon-image"
+                            />
+                          </a>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
             </main>
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
@@ -222,9 +237,9 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Profile">
-                      <span class="font-weight-bold">User Name</span>
-                    </Link>
+                      <Link to="/Profile">
+                        <span class="font-weight-bold">User Name</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -234,9 +249,9 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Editprofile">
-                      <span class="font-weight-bold">Edit Profile</span>
-                    </Link>
+                      <Link to="/ProfileEdit">
+                        <span class="font-weight-bold">Edit Profile</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -246,8 +261,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Profile">
-                      <span class="font-weight-bold">User Profile</span>
+                      <Link to="/Profile">
+                        <span class="font-weight-bold">User Profile</span>
                       </Link>
                     </div>
                   </a>
@@ -258,8 +273,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/MyBuddies">
-                      <span class="font-weight-bold">My Buddies</span>
+                      <Link to="/MyBuddies">
+                        <span class="font-weight-bold">My Buddies</span>
                       </Link>
                     </div>
                   </a>
@@ -270,9 +285,9 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Jobs">
-                      <span class="font-weight-bold">Jobs</span>
-                    </Link>
+                      <Link to="/Jobs">
+                        <span class="font-weight-bold">Jobs</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -282,9 +297,9 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Jobprofile">
-                      <span class="font-weight-bold">My Jobs</span>
-                     </Link>
+                      <Link to="/Jobprofile">
+                        <span class="font-weight-bold">My Jobs</span>
+                      </Link>
                     </div>
                   </a>
                 </div>
@@ -301,8 +316,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Setting">
-                      <span class="font-weight-bold">Settings</span>
+                      <Link to="/Setting">
+                        <span class="font-weight-bold">Settings</span>
                       </Link>
                     </div>
                   </a>
@@ -313,8 +328,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/SampleResume">
-                      <span class="font-weight-bold">Simple Resume</span>
+                      <Link to="/SampleResume">
+                        <span class="font-weight-bold">Simple Resume</span>
                       </Link>
                     </div>
                   </a>
@@ -325,8 +340,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Training">
-                      <span class="font-weight-bold">Trainings</span>
+                      <Link to="/Training">
+                        <span class="font-weight-bold">Trainings</span>
                       </Link>
                     </div>
                   </a>
@@ -341,8 +356,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/FresherJob">
-                      <span class="font-weight-bold">Fresher Jobs</span>
+                      <Link to="/FresherJob">
+                        <span class="font-weight-bold">Fresher Jobs</span>
                       </Link>
                     </div>
                   </a>
@@ -357,9 +372,9 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Internship">
-                      <span class="font-weight-bold">Internship</span>
-                    </Link>
+                      <Link to="/Internship">
+                        <span class="font-weight-bold">Internship</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -373,8 +388,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                    <Link to="/">
-                      <span class="font-weight-bold">Sign Out</span>
+                      <Link to="/">
+                        <span class="font-weight-bold">Sign Out</span>
                       </Link>
                     </div>
                   </a>
