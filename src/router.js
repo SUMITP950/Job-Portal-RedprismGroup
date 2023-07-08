@@ -10,7 +10,7 @@ import Signin from "./Pages/Signin/Signin";
 import Signup from "./Pages/Signup/Signup";
 import Message from "./Pages/Message/Message";
 import Notifications from "./Pages/Notifications/Notifications";
-import EditProfile from "./Pages/EditProfile/EditProfile";
+// import EditProfile from "./Pages/EditProfile/EditProfile";
 import Connection from "./Pages/connection/connection";
 import CompanyProfile from "./Pages/CompanyProfile/CompanyProfile";
 import JobProfile from "./Pages/JobProfile/JobProfile";
@@ -84,7 +84,7 @@ export default function Router() {
               </>
             }
           />
-          <Route
+          {/* <Route
             path="/EditProfile"
             element={
               <>
@@ -92,7 +92,7 @@ export default function Router() {
                 <EditProfile />
               </>
             }
-          />
+          /> */}
           <Route
             path="/Connection"
             element={
