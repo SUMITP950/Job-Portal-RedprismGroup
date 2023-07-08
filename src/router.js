@@ -1,10 +1,10 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "./Component/Nav";
-import Timeline from "./Component/Timeline";
+
 import Home from "./Pages/Home/home";
-import Jobs from "./Pages/jobs/jobs";
+
 import Profile from "./Pages/profile/profile";
 import Signin from "./Pages/Signin/Signin";
 import Signup from "./Pages/Signup/Signup";
@@ -16,7 +16,7 @@ import CompanyProfile from "./Pages/CompanyProfile/CompanyProfile";
 import JobProfile from "./Pages/JobProfile/JobProfile";
 import SigninAsHr from "./Pages/SigninAsHr/SigninAsHr";
 import LandingPage from "./Pages/LandingPage/LandingPage";
-import SideBar from "./Component/SideBar";
+
 import RegistrationBasic from "./Pages/RegistrationBasic/RegistrationBasic";
 import RegistrationVarify from "./Pages/RegistrationVarify/RegistrationVarify";
 import RegistrationTechSkills from "./Pages/RegistrationTechSkills/RegistrationTechSkills";
@@ -54,14 +54,7 @@ export default function Router() {
               </>
             }
           />
-          <Route
-            path="/jobs"
-            element={
-              <>
-                <Nav /> <Jobs />
-              </>
-            }
-          />
+          
           <Route
             path="/profile"
             element={

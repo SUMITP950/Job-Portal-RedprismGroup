@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Skeleton from "react-loading-skeleton";
+import Skeleton ,{ SkeletonTheme }  from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function Internship() {
   useEffect(() => {
@@ -8,12 +9,17 @@ export default function Internship() {
   }, []);
 
   const [data1, SetData] = useState([]);
+  const [load, SetLoad] = useState(true);
   useEffect(() => {
+    
     axios.get("https://dummyjson.com/products").then((res) => {
       SetData(res.data.products);
     });
     // console.log(data.products[0]);})
   });
+  const trial=()=>{
+    
+  }
 
   // const [isLoading, setIsLoading] = useState(true);
   // try {
@@ -52,8 +58,11 @@ export default function Internship() {
 
   return (
     <>
+        {/* <Skeleton count={3} /> */}
       <div class="py-4">
         <div class="container-fluid body-padding">
+
+
           <div class="row justify-content-around">
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 ">
               <div class="border rounded bg-white mb-3">
@@ -121,7 +130,8 @@ export default function Internship() {
                 </div>
               </div>
             </aside>
-            {/* <Skeleton count={5} baseColor="#202020" highlightColor="#444" /> */}
+   
+    
             <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
               <div class="row">
                 {data1.map((item, id) => {
@@ -133,16 +143,16 @@ export default function Internship() {
                             <div class="dropdown-list-image mr-3">
                               <img
                                 class="rounded-circle"
-                                src={item.image[0]}
+                                src={item.images[0]}
                                 alt=""
                               />
                             </div>
                             <div class="font-weight-bold">
                               <h6
                                 class="font-weight-bold text-dark mb-0 dataoveri"
-                                title={item.title}
+                                title={item.title }
                               >
-                                {item.title}
+                                {item.title }
                               </h6>
                               <div class="small text-black-50">
                                 Photographer at Photography
