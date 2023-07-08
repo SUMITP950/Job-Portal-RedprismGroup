@@ -54,7 +54,7 @@ export default function Router() {
               </>
             }
           />
-          
+
           <Route
             path="/profile"
             element={
@@ -261,7 +261,7 @@ export default function Router() {
             element={
               <>
                 <Nav />
-                <EmployerJobPost  />
+                <EmployerJobPost />
               </>
             }
           />
@@ -270,7 +270,7 @@ export default function Router() {
             element={
               <>
                 <Nav />
-                <EmployerJobPostHR  />
+                <EmployerJobPostHR />
               </>
             }
           />
