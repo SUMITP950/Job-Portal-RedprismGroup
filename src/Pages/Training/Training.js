@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import "../../App.css";
@@ -9,7 +10,11 @@ export default function Training(props) {
   useEffect(() => {
     document.title = "Training";
   });
+  const [text,setText]= useState('');
   const [data, SetData] = useState([]);
+  const changeHandler=(e)=>{
+    setText(e.target.value);
+  }
   useEffect(() => {
     axios.get("https://dummyjson.com/products").then((res) => {
       SetData(res.data.products);
@@ -238,11 +243,12 @@ export default function Training(props) {
 
               <div className="container-fluid mt-4">
                 <div className="row">
-                  <div className="col-md-8">
+                  <div className="col-md-8 my-3">
                     <h5>Recommended Training</h5>
                   </div>
                   <div className="col-md-4">
-                    <Select
+                    <input type="text" placeholder="Search Trainings..." className="form-control my-1" value={text} onChange={changeHandler}/>
+                    {/* <Select
                       placeholder={"Search Trainings...."}
                       styles={{
                         control: (baseStyles, state) => ({
@@ -264,7 +270,7 @@ export default function Training(props) {
                           display: "none",
                         }),
                       }}
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div
@@ -272,7 +278,13 @@ export default function Training(props) {
                   style={{ border: "1px solid black" }}
                 >
                   {" "}
-                  {data.map((item, id) => {
+                  {data.filter((value) => {
+                    if(text===""){
+                      return value;
+                    }else if(value.title.toLowerCase().trim().startsWith(text.toLowerCase())){
+                      return value;
+                    }
+                  }).map((item, id) => {
                     return (
                       <div className="col-md-4 mb-4" key={id}>
                         <div className="card">
@@ -435,7 +447,7 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Editprofile">
+                    <Link to="/ProfileEdit">
                       <span class="font-weight-bold">Edit Profile</span>
                     </Link>
                     </div>

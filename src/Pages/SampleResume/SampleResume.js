@@ -92,7 +92,7 @@ export default function SampleResume(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Editprofile">
+                    <Link to="/ProfileEdit">
                       <span class="font-weight-bold">Edit Profile</span>
                     </Link>
                     </div>

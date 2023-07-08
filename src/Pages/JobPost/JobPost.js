@@ -55,7 +55,7 @@ const EmployerJobPost = () => {
     };
 
     try {
-      await axios.post("https://jsonplaceholder.typicode.com/posts", formData);
+      await axios.post("http://localhost:3030/job_post", formData);
       // Handle success or display a success message
       console.log("Form submitted successfully");
     } catch (error) {

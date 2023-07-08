@@ -86,5 +86,81 @@
       "mobile": 9038359297,
       "id": 1
     }
+  ],
+  "job_post": [
+    {
+      "title": "kol",
+      "description": "ergfrgrsgrsf",
+      "technicalSkills": [
+        "strawberry"
+      ],
+      "salaryRange": "60k-1LPA",
+      "experienceYear": "2-3 Year",
+      "id": 1
+    },
+    {
+      "title": "Frontend developer",
+      "description": "Frontend developer",
+      "technicalSkills": [
+        "chocolate"
+      ],
+      "salaryRange": "60k-1LPA",
+      "experienceYear": "0-1 Year",
+      "id": 2
+    },
+    {
+      "title": "Frontend developer",
+      "description": "Frontend developer",
+      "technicalSkills": [
+        "chocolate",
+        "strawberry",
+        "vanilla"
+      ],
+      "salaryRange": "60k-1LPA",
+      "experienceYear": "0-1 Year",
+      "id": 3
+    }
+  ],
+  "post_your_thoughts": [
+    {
+      "thoughts": "Hello ",
+      "id": 1
+    },
+    {
+      "thoughts": "Hello testing ",
+      "id": 2
+    },
+    {
+      "thoughts": "Hello, This is Anirban",
+      "id": 3
+    },
+    {
+      "thoughts": "I am Anirban",
+      "id": 4
+    },
+    {
+      "thoughts": "Hello world",
+      "id": 5
+    },
+    {
+      "thoughts": "hello world",
+      "id": 6
+    },
+    {
+      "thoughts": "hi abhijit",
+      "id": 7
+    },
+    {
+      "thoughts": "hello sumit",
+      "id": 8
+    },
+    {
+      "thoughts": "hello imran",
+      "id": 9
+    },
+    {
+      "thoughts": "hello anirban",
+      "id": 10
+    }
   ]
 }
