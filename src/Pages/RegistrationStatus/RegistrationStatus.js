@@ -11,9 +11,9 @@ export default function RegistrationStatus() {
   }, []);
   const navigate = useNavigate();
 
-   // form validation
+  // form validation
 
-   const formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       lookingForJob: "",
       noticePeriod: "",
@@ -27,16 +27,16 @@ export default function RegistrationStatus() {
     onSubmit: (values) => {
       // console.log(values); // In this section data send to backend
       axios
-      .post("http://localhost:3030/users_registration_jobseeker", values)
-      .then((response) => {
-        const data= response.data;
-        console.log(data);
-        toast.success(`Registered successfully.`);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.success(`Failed : ${error.message}`);
-      });
+        .post("http://localhost:3030/users_registration_jobseeker", values)
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          toast.success(`Registered successfully.`);
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.success(`Failed : ${error.message}`);
+        });
       navigate("/Signin");
     },
   });
@@ -48,26 +48,22 @@ export default function RegistrationStatus() {
           <div className="col-md-4 dn">
             <div className="pindicator">
               <div className="bullet current ">
-                <Link to="/RegistrationStatus"
-                  onClick={formik.handleSubmit}>
+                <Link to="/RegistrationStatus" onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">1</span>
                 </Link>
               </div>
               <div className="bullet current">
-                <Link to="/RegistrationStatus"
-                  onClick={formik.handleSubmit}>
+                <Link to="/RegistrationStatus" onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">2</span>
                 </Link>
               </div>
               <div className="bullet next current">
-                <Link to="/RegistrationStatus"
-                  onClick={formik.handleSubmit}>
+                <Link to="/RegistrationStatus" onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">3</span>
                 </Link>
               </div>
               <div className="bullet current">
-                <Link to="/RegistrationStatus"
-                  onClick={formik.handleSubmit}>
+                <Link to="/RegistrationStatus" onClick={formik.handleSubmit}>
                   <span className="icon1 tns90">4</span>
                 </Link>
               </div>
@@ -130,11 +126,12 @@ export default function RegistrationStatus() {
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
-                    {formik.errors.noticePeriod && formik.values.lookingForJob==="Yes" && (
-                      <em style={{ color: "red" }}>
-                        {formik.errors.noticePeriod}
-                      </em>
-                    )}
+                    {formik.errors.noticePeriod &&
+                      formik.values.lookingForJob === "Yes" && (
+                        <em style={{ color: "red" }}>
+                          {formik.errors.noticePeriod}
+                        </em>
+                      )}
                   </div>
                   <div className="col-md-8 mb-3">
                     <label htmlFor="immediateJoiner">Immediate Joiner</label>
@@ -150,29 +147,34 @@ export default function RegistrationStatus() {
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
-                    {formik.errors.immediateJoiner && formik.values.lookingForJob==="Yes" &&(
-                      <em style={{ color: "red" }}>
-                        {formik.errors.immediateJoiner}
-                      </em>
-                    )}
+                    {formik.errors.immediateJoiner &&
+                      formik.values.lookingForJob === "Yes" && (
+                        <em style={{ color: "red" }}>
+                          {formik.errors.immediateJoiner}
+                        </em>
+                      )}
                   </div>
-                  <div className="col-md-8 d-flex justify-content-center">
-                    <i
-                      className="feather-sun"
-                      style={{ color: "#000", border: "2px solid pink"}}
-                    ></i>
-                    <i
-                      className="feather-umbrella"
-                      style={{ color: "#000", border: "2px solid pink" }}
-                    ></i>
-                    <i
-                      className="feather-sunrise"
-                      style={{ color: "#000", border: "2px solid pink" }}
-                    ></i>
-                    <i
-                      className="feather-sunrise"
-                      style={{ color: "#000", border: "2px solid pink" }}
-                    ></i>
+                  <div
+                    className="col-md-8 d-flex"
+                    style={{ justifyContent: "space-around" }}
+                  >
+                    <img src="img/icon/status.png" className="icon-reg"></img>
+                    <img src="img/icon/icon2.png" className="icon-reg"></img>
+                    <img src="img/icon/icon3.png" className="icon-reg"></img>
+                    <img src="img/icon/icon4.png" className="icon-reg"></img>
+                  </div>
+                  <div
+                    className="col-md-8 d-flex"
+                    style={{ justifyContent: "space-around" }}
+                  >
+                    <center>
+                      <p className="icon-font"> 1Year Jobless</p>
+                    </center>
+                    <center>
+                      <p className="icon-font"> Saving Notice Period</p>
+                    </center>
+                    <p className="icon-font"> Looking Job</p>
+                    <p className="icon-font"> Immediate Joiner</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center justify-content-center mt-5">
