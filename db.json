@@ -119,6 +119,96 @@
       "salaryRange": "60k-1LPA",
       "experienceYear": "0-1 Year",
       "id": 3
+    },
+    {
+      "title": "BACKEND DEVELOPER",
+      "description": "BACKEND DEVELOPER",
+      "technicalSkills": [
+        "React js",
+        "Python",
+        "Java"
+      ],
+      "salaryRange": "2LPA-6LPA",
+      "experienceYear": "",
+      "id": 4
+    },
+    {
+      "title": "Full stack developer",
+      "description": "Full stack developer",
+      "location": [
+        "Kolkata",
+        "Delhi",
+        "Mumbai"
+      ],
+      "technicalSkills": [
+        "React js",
+        "Python",
+        "Java"
+      ],
+      "salaryRange": "2LPA-6LPA",
+      "experienceYear": "1-2 Year",
+      "id": 5
+    },
+    {
+      "title": "Frontend developer",
+      "description": "React developer",
+      "location": [
+        "Kolkata"
+      ],
+      "technicalSkills": [
+        "React js"
+      ],
+      "salaryRange": "1LPA-2LPA",
+      "experienceYear": "0-1 Year",
+      "id": 6
+    },
+    {
+      "title": "",
+      "description": "",
+      "location": "",
+      "technicalSkills": "",
+      "salaryRange": "",
+      "experienceYear": "",
+      "id": 7
+    },
+    {
+      "title": "",
+      "description": "",
+      "location": "",
+      "technicalSkills": "",
+      "salaryRange": "",
+      "experienceYear": "",
+      "id": 8
+    },
+    {
+      "title": "ddtt",
+      "description": "sss",
+      "location": [
+        "Kolkata"
+      ],
+      "technicalSkills": [
+        "React js"
+      ],
+      "salaryRange": "60k-1LPA",
+      "experienceYear": "1-2 Year",
+      "id": 9
+    },
+    {
+      "title": "data analysist",
+      "description": "Python and data analysist",
+      "location": [
+        "Kolkata",
+        "Mumbai",
+        "Delhi"
+      ],
+      "technicalSkills": [
+        "React js",
+        "Java",
+        "Python"
+      ],
+      "salaryRange": "6LPA-12LPA",
+      "experienceYear": "0-1 Year",
+      "id": 10
     }
   ],
   "post_your_thoughts": [
@@ -161,6 +251,10 @@
     {
       "thoughts": "hello anirban",
       "id": 10
+    },
+    {
+      "thoughts": "hello",
+      "id": 11
     }
   ]
 }

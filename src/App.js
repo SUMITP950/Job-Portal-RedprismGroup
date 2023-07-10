@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 export default function App() {
   return (
     <>
-    <ToastContainer theme='colored'></ToastContainer>
+    <ToastContainer theme='colored' style={{marginTop:"10%"}}></ToastContainer>
      <Router/>  </>
     );
   }

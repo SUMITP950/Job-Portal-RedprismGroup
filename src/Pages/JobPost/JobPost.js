@@ -3,20 +3,28 @@ import axios from "axios";
 import Select from "react-select";
 import { SearchBar } from "../../Component/SearchBar/SearchBar";
 import { SearchResultsList } from "../../Component/SearchBar/SearchResultList";
+import { toast } from "react-toastify";
+
 
 const EmployerJobPost = () => {
   useEffect(() => {
     document.title = "Job Post";
   }, []);
-  const [results, setResults] = useState([]);
+  // const [results, setResults] = useState([]);
   const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+    { value: "Kolkata", label: "Kolkata" },
+    { value: "Delhi", label: "Delhi" },
+    { value: "Mumbai", label: "Mumbai" },
+  ];
+  const options1 = [
+    { value: "React js", label: "React js" },
+    { value: "Python", label: "Python" },
+    { value: "Java", label: "Java" },
   ];
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [location, setLoctions] = useState("");
   const [technicalSkills, setTechnicalSkills] = useState("");
   const [salaryRange, setSalaryRange] = useState("");
   const [experienceYear, setExperienceYear] = useState("");
@@ -27,6 +35,10 @@ const EmployerJobPost = () => {
 
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
+  };
+  const handleLocationsChange = (selectedOptions) => {
+    const locations = selectedOptions.map((option) => option.value);
+    setLoctions(locations);
   };
 
   const handleTechnicalSkillsChange = (selectedOptions) => {
@@ -49,6 +61,7 @@ const EmployerJobPost = () => {
     const formData = {
       title: title,
       description: description,
+      location: location,
       technicalSkills: technicalSkills,
       salaryRange: salaryRange,
       experienceYear: experienceYear,
@@ -56,14 +69,19 @@ const EmployerJobPost = () => {
 
     try {
       await axios.post("http://localhost:3030/job_post", formData);
-      // Handle success or display a success message
-      console.log("Form submitted successfully");
+      // console.log("Form submitted successfully");
+      toast.success(`Form submitted successfully`);
     } catch (error) {
-      // Handle error or display an error message
-      console.error("Form submission error:", error);
+      // console.error("Form submission error:", error);
+      toast.success(`Failed : ${error.message}`);
     }
-
     setSubmitting(false);
+    setTitle("");
+    setDescription("");
+    setLoctions("");
+    setTechnicalSkills("");
+    setSalaryRange("");
+    setExperienceYear("");
   };
 
   return (
@@ -138,9 +156,9 @@ const EmployerJobPost = () => {
                     isMulti
                     placeholder="Select Your Location"
                     value={options.filter((option) =>
-                      technicalSkills.includes(option.value)
+                      location.includes(option.value)
                     )}
-                    onChange={handleTechnicalSkillsChange}
+                    onChange={handleLocationsChange}
                     required
                   />
                   </div>
@@ -171,10 +189,10 @@ const EmployerJobPost = () => {
                         display: "none",
                       }),
                     }}
-                    options={options}
+                    options={options1}
                     isMulti
                     placeholder="Select Your Technology"
-                    value={options.filter((option) =>
+                    value={options1.filter((option) =>
                       technicalSkills.includes(option.value)
                     )}
                     onChange={handleTechnicalSkillsChange}
@@ -230,7 +248,7 @@ const EmployerJobPost = () => {
                       required
                     />
                   
-                </div>
+                </div>*/}
                 <div className="form-group">
                   <label htmlFor="experienceYear">Experience in Year</label>
                   <select
@@ -251,7 +269,7 @@ const EmployerJobPost = () => {
                     <option value="6-7 Year">6-7 Year</option>
                     <option value="7-8 Year">7-8 Year</option>
                   </select>
-                </div> */}
+                </div> 
 
                 <div className="form-group">
                   <label htmlFor="description">Job Description</label>
