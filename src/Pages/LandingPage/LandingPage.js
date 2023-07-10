@@ -8,7 +8,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div>
+    <div >
       <div class="container-fluid page-set">
         <div class="row dn" style={{ height: "100vh" }}>
           <div class="col-md-6 py-5">
@@ -26,7 +26,7 @@ export default function LandingPage() {
               "The harder you work , The luckier you get."
             </div>
             <div class="d-flex align-items-center justify-content-center mt-5">
-              <Link to="/RegistrationBasic" class="btn border shadow btn-landing">
+              <Link to="/RegisterJobSheeker" class="btn border shadow btn-landing">
                 Register as job Seeker
               </Link>
             </div>

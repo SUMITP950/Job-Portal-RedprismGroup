@@ -11,38 +11,38 @@ export default function RegistrationVarify() {
     document.title = "Registration";
   }, []);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  // form validation
-  const formik = useFormik({
-    initialValues: {
-      otp: "",
-    },
-    validationSchema: yup.object({
-      otp: yup
-        .string()
-        .required("*Required")
-        .min(6, "Minimum 6 digits")
-        .matches(/^[0-9]+$/, "This field  must be a number")
-        .max(6, "Maximum 6 digits"),
-    }),
-    onSubmit: (values) => {
-      // console.log(values); // In this section data send to backend
-      axios
-      .post("http://localhost:3030/users_registration_jobseeker", values)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-      navigate("/RegistrationCreate");
-    },
-  });
+  // // form validation
+  // const formik = useFormik({
+  //   initialValues: {
+  //     otp: "",
+  //   },
+  //   validationSchema: yup.object({
+  //     otp: yup
+  //       .string()
+  //       .required("*Required")
+  //       .min(6, "Minimum 6 digits")
+  //       .matches(/^[0-9]+$/, "This field  must be a number")
+  //       .max(6, "Maximum 6 digits"),
+  //   }),
+  //   onSubmit: (values) => {
+  //     // console.log(values); // In this section data send to backend
+  //     axios
+  //     .post("http://localhost:3030/users_registration_jobseeker", values)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  //     navigate("/RegistrationCreate");
+  //   },
+  // });
 
   return (
     <>
-      <div className="container">
+      {/* <div className="container">
         <div className="row">
           <div className="col-md-4 dn ">
             <div class="pindicator">
@@ -130,7 +130,7 @@ export default function RegistrationVarify() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
