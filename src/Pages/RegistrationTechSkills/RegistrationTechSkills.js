@@ -1,47 +1,47 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
+import { useformik } from "formik";
 import * as yup from "yup";
 // import axios from "axios";
 
 const RegistrationTechSkills = () => {
-  useEffect(() => {
-    document.title = "Registration";
-  }, []);
+//   useEffect(() => {
+//     document.title = "Registration";
+//   }, []);
 
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
-  // form validation
+//   // form validation
 
-  const formik = useFormik({
-    initialValues: {
-      currentCompany: "",
-      technicalSkills: "",
-      ExperienceInYear: "",
-    },
-    validationSchema: yup.object({
-      currentCompany: yup.string().required("*Required"),
-      technicalSkills: yup.string().required("*Required"),
-      ExperienceInYear: yup.string().required("*Required"),
-    }),
-    onSubmit: (values) => {
-      // console.log(values); // In this section data send to backend
-      axios
-      .post("http://localhost:3030/users_registration_jobseeker", values)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-      navigate("/RegistrationStatus");
-    },
-  });
+//   const formik = useformik({
+//     initialValues: {
+//       currentCompany: "",
+//       technicalSkills: "",
+//       ExperienceInYear: "",
+//     },
+//     validationSchema: yup.object({
+//       currentCompany: yup.string().required("*Required"),
+//       technicalSkills: yup.string().required("*Required"),
+//       ExperienceInYear: yup.string().required("*Required"),
+//     }),
+//     onSubmit: (values) => {
+//       // console.log(values); // In this section data send to backend
+//       axios
+//       .post("http://localhost:3030/users_registration_jobseeker", values)
+//       .then((response) => {
+//         console.log(response.data);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//       navigate("/RegistrationStatus");
+//     },
+//   });
 
   return (
     <>
-      <div className="container">
+      {/* <div className="container">
         <div className="row">
           <div className="col-md-4 dn">
             <div class="pindicator">
@@ -187,7 +187,7 @@ const RegistrationTechSkills = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

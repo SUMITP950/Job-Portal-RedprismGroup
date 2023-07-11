@@ -10,47 +10,47 @@ export default function RegistrationCreate() {
     document.title = "Registration";
   }, []);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  // form validation
+  // // form validation
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-    validationSchema: yup.object({
-      username: yup
-        .string()
-        .required("*Required")
-        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
-        .min(3, "Minimum 3 characters length")
-        .max(10, "Maximum 10 characters length"),
-      password: yup
-        .string()
-        .required("*Required")
-        .matches(/[^\w]/, "One Special character Required")
-        .matches(/[0-9]/, "One Number Required")
-        .min(3, "Minimum 3 characters length")
-        .max(10, "Maximum 10 characters length"),
-    }),
-    onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
-      axios
-      .post("http://localhost:3030/users_registration_jobseeker", values)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-      navigate("/RegistrationTechSkills");
-    },
-  });
+  // const formik = useFormik({
+  //   initialValues: {
+  //     username: "",
+  //     password: "",
+  //   },
+  //   validationSchema: yup.object({
+  //     username: yup
+  //       .string()
+  //       .required("*Required")
+  //       .matches(/^[A-Za-z]+$/, "This field  must be a letter")
+  //       .min(3, "Minimum 3 characters length")
+  //       .max(10, "Maximum 10 characters length"),
+  //     password: yup
+  //       .string()
+  //       .required("*Required")
+  //       .matches(/[^\w]/, "One Special character Required")
+  //       .matches(/[0-9]/, "One Number Required")
+  //       .min(3, "Minimum 3 characters length")
+  //       .max(10, "Maximum 10 characters length"),
+  //   }),
+  //   onSubmit: (values) => {
+  //     console.log(values); // In this section data send to backend
+  //     axios
+  //     .post("http://localhost:3030/users_registration_jobseeker", values)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  //     navigate("/RegistrationTechSkills");
+  //   },
+  // });
 
   return (
     <>
-      <div className="container">
+      {/* <div className="container">
         <div className="row">
           <div className="col-md-4 dn">
             <div className="pindicator">
@@ -146,7 +146,7 @@ export default function RegistrationCreate() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

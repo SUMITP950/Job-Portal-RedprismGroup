@@ -17,7 +17,8 @@ import JobProfile from "./Pages/JobProfile/JobProfile";
 import SigninAsHr from "./Pages/SigninAsHr/SigninAsHr";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 
-import RegistrationBasic from "./Pages/RegistrationBasic/RegistrationBasic";
+// import RegistrationBasic from "./Pages/RegistrationBasic/RegistrationBasic";
+import RegisterJobSheeker from "./Pages/RegisterJobSheeker/RegisterJobSheeker";
 import RegistrationVarify from "./Pages/RegistrationVarify/RegistrationVarify";
 import RegistrationTechSkills from "./Pages/RegistrationTechSkills/RegistrationTechSkills";
 import RegistrationStatus from "./Pages/RegistrationStatus/RegistrationStatus";
@@ -147,12 +148,12 @@ export default function Router() {
           />
 
           <Route
-            path="/RegistrationBasic"
+            path="/RegisterJobSheeker"
             element={
               <>
                 <Rnav />
 
-                <RegistrationBasic />
+                <RegisterJobSheeker />
               </>
             }
           />
