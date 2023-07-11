@@ -63,7 +63,7 @@ export default function LandingPage() {
             </div>
             <div class="d-flex align-items-center justify-content-center my-3 ">
               <Link
-                to="/RegistrationBasicHR"
+                to="/Registerhr"
                 class="btn btn-outline-warning bg-light shadow"
                 style={{
                   border: "2px solid gray",

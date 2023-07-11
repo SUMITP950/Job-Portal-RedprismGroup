@@ -31,40 +31,84 @@
       "noticePeriod": "Yes",
       "immediateJoiner": "Yes",
       "id": 5
+    },
+    {
+      "lookingForJob": "Yes",
+      "noticePeriod": "No",
+      "immediateJoiner": "Yes",
+      "id": 6
+    },
+    {
+      "firstName": "Anirban",
+      "lastName": "Mukherjee",
+      "email": "ani.mukherjee93@gmail.com",
+      "mobile": 9038359297,
+      "city": "kolkata",
+      "state": "westbengal",
+      "zip": 700092,
+      "gender": "Male",
+      "id": 7
+    },
+    {
+      "otp": 123456,
+      "id": 8
+    },
+    {
+      "username": "Anirban",
+      "password": "ani@93",
+      "id": 9
+    },
+    {
+      "currentCompany": "Cognizant",
+      "technicalSkills": "React JS",
+      "ExperienceInYear": "4",
+      "id": 10
     }
   ],
   "users_registration_hr": [
     {
-      "firstName": "Arghya",
-      "lastName": "Goswami",
-      "email": "arghya@gmail.com",
-      "mobile": 1234567890,
-      "city": "kolkata",
-      "state": "westbengal",
-      "zip": 700001,
-      "gender": "Male",
+      "lookingForJob": "Yes",
+      "noticePeriod": "Yes",
+      "immediateJoiner": "No",
       "id": 1
     },
     {
-      "otp": 123456,
+      "lookingForJob": "No",
+      "noticePeriod": "No",
+      "immediateJoiner": "Yes",
       "id": 2
     },
     {
-      "username": "Argya",
-      "password": "argya@93",
+      "firstName": "Anirban",
+      "lastName": "Mukherjee",
+      "email": "ani.mukherjee93@gmail.com",
+      "mobile": 9038359297,
+      "city": "kolkata",
+      "state": "westbengal",
+      "zip": 70092,
+      "gender": "Male",
       "id": 3
+    },
+    {
+      "otp": 123456,
+      "id": 4
+    },
+    {
+      "username": "Anirban",
+      "password": "ani@93",
+      "id": 5
     },
     {
       "currentCompany": "CTS",
       "technicalSkills": "React JS",
-      "ExperienceInYear": "1",
-      "id": 4
+      "ExperienceInYear": "2",
+      "id": 6
     },
     {
       "lookingForJob": "Yes",
       "noticePeriod": "Yes",
       "immediateJoiner": "Yes",
-      "id": 5
+      "id": 7
     }
   ],
   "sign_in_jobseeker": [

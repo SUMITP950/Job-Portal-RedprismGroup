@@ -23,7 +23,8 @@ import RegistrationVarify from "./Pages/RegistrationVarify/RegistrationVarify";
 import RegistrationTechSkills from "./Pages/RegistrationTechSkills/RegistrationTechSkills";
 import RegistrationStatus from "./Pages/RegistrationStatus/RegistrationStatus";
 import RegistrationCreate from "./Pages/RegistrationCreate/RegistrationCreate";
-import RegistrationBasicHR from "./Pages/RegisterAsHR/RegistrationBasic/RegistrationBasic";
+// import RegistrationBasicHR from "./Pages/RegisterAsHR/RegistrationBasic/RegistrationBasic";
+// import Registerhr from "./RegisterHR/Registerhr"
 import RegistrationVarifyHR from "./Pages/RegisterAsHR/RegistrationVarify/RegistrationVarify";
 import RegistrationTechSkillsHR from "./Pages/RegisterAsHR/RegistrationTechSkills/RegistrationTechSkills";
 import RegistrationStatusHR from "./Pages/RegisterAsHR/RegistrationStatus/RegistrationStatus";
@@ -42,6 +43,7 @@ import SampleResume from "./Pages/SampleResume/SampleResume";
 import Sendotp from "./Pages/Send-otp/Sendotp";
 import JobDetails from "./Pages/JobDetails/JobDetails";
 import ProfileEdit from "./Pages/ProfileEdit/ProfileEdit";
+import Registerhr from "./Pages/RegisterHR/Registerhr";
 export default function Router() {
   return (
     <>
@@ -194,12 +196,12 @@ export default function Router() {
             }
           />
           <Route
-            path="/RegistrationBasicHR"
+            path="/Registerhr"
             element={
               <>
                 <RnavHR />
 
-                <RegistrationBasicHR />
+                <Registerhr />
               </>
             }
           />
