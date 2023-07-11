@@ -7,108 +7,57 @@
       "mobile": 9038359297,
       "city": "kolkata",
       "state": "westbengal",
-      "zip": 700092,
-      "gender": "Male",
+      "zip": 70092,
+      "otp": 123456,
+      "username": "Anirban",
+      "password": "ani@93",
+      "currentCompany": "Wipro",
+      "technicalSkills": "Python",
+      "ExperienceInYear": "5",
+      "lookingForJob": "No",
+      "noticePeriod": "",
+      "immediateJoiner": "",
       "id": 1
-    },
-    {
-      "otp": 123456,
-      "id": 2
-    },
-    {
-      "username": "Anirban",
-      "password": "ani@93",
-      "id": 3
-    },
-    {
-      "currentCompany": "Cognizant",
-      "technicalSkills": "React JS",
-      "ExperienceInYear": "1",
-      "id": 4
-    },
-    {
-      "lookingForJob": "Yes",
-      "noticePeriod": "Yes",
-      "immediateJoiner": "Yes",
-      "id": 5
-    },
-    {
-      "lookingForJob": "Yes",
-      "noticePeriod": "No",
-      "immediateJoiner": "Yes",
-      "id": 6
-    },
-    {
-      "firstName": "Anirban",
-      "lastName": "Mukherjee",
-      "email": "ani.mukherjee93@gmail.com",
-      "mobile": 9038359297,
-      "city": "kolkata",
-      "state": "westbengal",
-      "zip": 700092,
-      "gender": "Male",
-      "id": 7
-    },
-    {
-      "otp": 123456,
-      "id": 8
-    },
-    {
-      "username": "Anirban",
-      "password": "ani@93",
-      "id": 9
-    },
-    {
-      "currentCompany": "Cognizant",
-      "technicalSkills": "React JS",
-      "ExperienceInYear": "4",
-      "id": 10
     }
   ],
   "users_registration_hr": [
     {
-      "lookingForJob": "Yes",
-      "noticePeriod": "Yes",
-      "immediateJoiner": "No",
-      "id": 1
-    },
-    {
-      "lookingForJob": "No",
-      "noticePeriod": "No",
-      "immediateJoiner": "Yes",
-      "id": 2
-    },
-    {
       "firstName": "Anirban",
       "lastName": "Mukherjee",
       "email": "ani.mukherjee93@gmail.com",
       "mobile": 9038359297,
       "city": "kolkata",
       "state": "westbengal",
-      "zip": 70092,
-      "gender": "Male",
-      "id": 3
-    },
-    {
+      "zip": 700092,
       "otp": 123456,
-      "id": 4
-    },
-    {
       "username": "Anirban",
       "password": "ani@93",
-      "id": 5
-    },
-    {
       "currentCompany": "CTS",
-      "technicalSkills": "React JS",
-      "ExperienceInYear": "2",
-      "id": 6
-    },
-    {
+      "technicalSkills": "JAVA",
+      "ExperienceInYear": "3",
       "lookingForJob": "Yes",
       "noticePeriod": "Yes",
       "immediateJoiner": "Yes",
-      "id": 7
+      "id": 1
+    },
+    {
+      "firstName": "Arghya",
+      "lastName": "Goswami",
+      "email": "arghya@gmail.com",
+      "mobile": 3098095357,
+      "city": "kolkata",
+      "state": "westbengal",
+      "zip": 70092,
+      "otp": 123456,
+      "username": "Argya",
+      "password": "arghya@93",
+      "currentCompany": "Wipro",
+      "technicalSkills": "JAVA",
+      "ExperienceInYear": "3",
+      "lookingForJob": "No",
+      "noticePeriod": "",
+      "immediateJoiner": "",
+      "id": 2
     }
   ],
   "sign_in_jobseeker": [
@@ -123,6 +72,11 @@
       "username": "Argya",
       "password": "argya@93",
       "id": 1
+    },
+    {
+      "username": "abhijt",
+      "password": "ani@93",
+      "id": 2
     }
   ],
   "send_otp": [

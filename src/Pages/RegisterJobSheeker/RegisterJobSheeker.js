@@ -7,13 +7,13 @@ import { toast } from "react-toastify";
 
 
 function RegisterJobSheeker () {
-    // useEffect(() => {
-    //     document.title = "Registration";
-    //   }, []);
+    useEffect(() => {
+        document.title = "Registration";
+      }, []);
 
-      const [count, setCount] = useState('');
-      setCount('Abhijit');
-      console.log(count);
+      // const [count, setCount] = useState('');
+      // setCount('Abhijit');
+      // console.log(count);
       
       // const navigate = useNavigate();
     
@@ -67,7 +67,7 @@ function RegisterJobSheeker () {
         }),
         onSubmit: (values) => {
           console.log(values); // In this section data send to backend
-          changeForm('verify',values);
+          
           // axios
           // .post("http://localhost:3030/users_registration_jobseeker", values)
           // .then((response) => {
@@ -76,6 +76,7 @@ function RegisterJobSheeker () {
           // .catch((error) => {
           //   console.error(error);
           // });
+          changeForm('verify');
           // navigate("/RegistrationVarify");
         },
       });
@@ -153,7 +154,7 @@ function RegisterJobSheeker () {
         //   console.error(error);
         // });
         // navigate2("/RegistrationTechSkills");
-        changeForm('skill',values);
+        changeForm('skill');
       },
     });
 
@@ -193,7 +194,7 @@ function RegisterJobSheeker () {
         //   console.error(error);
         // });
         // navigate("/RegistrationStatus");
-        changeForm('status',values);
+        changeForm('status');
       },
     });
 
@@ -217,13 +218,45 @@ function RegisterJobSheeker () {
       },
       validationSchema: yup.object({
         lookingForJob: yup.string().required("*Required"),
-        noticePeriod: yup.string().required("*Required"),
-        immediateJoiner: yup.string().required("*Required"),
+        // noticePeriod: yup.string().required("*Required"),
+        // immediateJoiner: yup.string().required("*Required"),
       }),
       onSubmit: (values) => {
         console.log(values); // In this section data send to backend
-        axios
-          .post("http://localhost:3030/users_registration_jobseeker", values)
+      //   axios
+      //     .post("http://localhost:3030/users_registration_jobseeker", values)
+      //     .then((response) => {
+      //       const data = response.data;
+      //       console.log(data);
+      //       toast.success(`Registered successfully.`);
+      //     })
+      //     .catch((error) => {
+      //       console.error(error);
+      //       toast.success(`Failed : ${error.message}`);
+      //     });
+      //   navigate4("/Signin");
+      },
+    });
+    const handleApi=()=>{
+      axios
+          .post(" http://localhost:3030/users_registration_jobseeker", {
+            firstName:formik.values.firstName,
+            lastName:formik.values.lastName,
+            email: formik.values.email,
+            mobile:formik.values.mobile,
+            city: formik.values.city,
+            state: formik.values.state,
+            zip: formik.values.zip,
+            otp: formik1.values.otp,
+            username: formik2.values.username,
+            password: formik2.values.password,
+            currentCompany: formik3.values.currentCompany,
+            technicalSkills: formik3.values.technicalSkills,
+            ExperienceInYear: formik3.values.ExperienceInYear,
+            lookingForJob: formik4.values.lookingForJob,
+            noticePeriod: formik4.values.noticePeriod,
+            immediateJoiner: formik4.values.immediateJoiner,
+          })
           .then((response) => {
             const data = response.data;
             console.log(data);
@@ -234,18 +267,15 @@ function RegisterJobSheeker () {
             toast.success(`Failed : ${error.message}`);
           });
         navigate4("/Signin");
-      },
-    });
-    let demo = '';
-    const changeForm = (formName,values) =>{
+    }
+
+    const changeForm = (formName) =>{
         document.getElementById("basic").style.display = 'none';
         document.getElementById("verify").style.display = 'none';
         document.getElementById("create").style.display = 'none';
         document.getElementById("skill").style.display = 'none';
         document.getElementById("status").style.display = 'none';
         document.getElementById(formName).style.display = 'block';
-        demo += values;
-        console.log(demo);
     }
     // registration status End
 
@@ -983,6 +1013,7 @@ function RegisterJobSheeker () {
                 </div>
                 <div className="d-flex align-items-center justify-content-center mt-5">
                   <button
+                    onClick={handleApi}
                     className="btn btn-pink mb-5 px-5"
                     style={{ fontWeight: "600", fontSize: "16px" }}
                     type="submit"
