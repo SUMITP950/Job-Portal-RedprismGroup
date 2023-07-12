@@ -38,18 +38,18 @@ export default function SigninAsHr() {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      // console.log(values); // In this section data send to backend
-      axios
-      .post("http://localhost:3030/sign_in_hr", values)
-      .then((response) => {
-        console.log(response.data);
-        toast.success(`login successfully.`);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Failed : ${error.message}`);
-      });
-      navigate("/Home");
+      console.log(values); // In this section data send to backend
+      // axios
+      // .post("http://localhost:3030/sign_in_hr", values)
+      // .then((response) => {
+      //   console.log(response.data);
+      //   toast.success(`login successfully.`);
+      // })
+      // .catch((error) => {
+      //   console.error(error);
+      //   toast.error(`Failed : ${error.message}`);
+      // });
+      // navigate("/Home");
     },
   });
   const formik1 = useFormik({
@@ -72,9 +72,28 @@ export default function SigninAsHr() {
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      // console.log(values); // In this section data send to backend
-      axios
-      .post("http://localhost:3030/sign_in_hr", values)
+      console.log(values); // In this section data send to backend
+      // axios
+      // .post("http://localhost:3030/sign_in_hr", values)
+      // .then((response) => {
+      //   console.log(response.data);
+      //   toast.success(`login successfully.`);
+      // })
+      // .catch((error) => {
+      //   console.error(error);
+      //   toast.error(`Failed : ${error.message}`);
+      // });
+      // navigate("/Home");
+    },
+  });
+
+
+  const handleApi=()=>{
+    axios
+      .post("http://localhost:5000/api/employee/hr/login/username", {
+        user_name : formik.values.username ,
+        password : formik.values.password,
+      })
       .then((response) => {
         console.log(response.data);
         toast.success(`login successfully.`);
@@ -84,8 +103,7 @@ export default function SigninAsHr() {
         toast.error(`Failed : ${error.message}`);
       });
       navigate("/Home");
-    },
-  });
+  }
   return (
     <div>
       <div class="d-lg-flex half">
@@ -242,7 +260,7 @@ export default function SigninAsHr() {
                           )}
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-primary">
+                        <button type="submit" class="btn btn-block btn-primary" onClick={handleApi}>
                           <strong>SIGN IN</strong>
                         </button>
 
