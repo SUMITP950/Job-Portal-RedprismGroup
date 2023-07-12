@@ -9,10 +9,13 @@ body {
   --head: #e8e942;
   --color-black: #000;
 }
+a {
+  color: var(--color-black) !important;
+}
 .dropdown-item:active {
-  color: #000;
+  color: var(--color-black);
   text-decoration: none;
-  background-color: #e8e942;
+  background-color: var(--head);
 }
 .osahan-nav-top .navbar-search .btn {
   background: #f0f0f0 !important;
@@ -1313,4 +1316,21 @@ input.radio {
 }
 .icon-font {
   font-size: 13px;
+}
+.icon-radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+/* IMAGE STYLES */
+[type="radio"] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type="radio"]:checked + img {
+  outline: 1px solid var(--pink);
+  box-shadow: 0px 1px 2px 0px rgb(255 192 203), 1px 2px 4px 0px rgb(255 192 203),
+    2px 4px 8px 0px rgb(255 192 203), 2px 4px 16px 0px rgb(255 192 203);
 }

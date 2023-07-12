@@ -5,7 +5,6 @@ import { SearchBar } from "../../Component/SearchBar/SearchBar";
 import { SearchResultsList } from "../../Component/SearchBar/SearchResultList";
 import { toast } from "react-toastify";
 
-
 const EmployerJobPost = () => {
   useEffect(() => {
     document.title = "Job Post";
@@ -107,8 +106,6 @@ const EmployerJobPost = () => {
                   />
                 </div>
 
-               
-
                 <div className="form-group">
                   <label htmlFor="salaryRange">Salary Range</label>
                   <select
@@ -127,80 +124,78 @@ const EmployerJobPost = () => {
                   </select>
                 </div>
                 <div className="form-group">
-                  <b htmlFor="description" style={{paddingLeft:"8px"}}>Location</b>
-             <div className="form-control">
-     
-                  <Select
-                   
-                    styles={{
-                      container: (baseStyles, state) => ({
-                        ...baseStyles,
+                  <b htmlFor="description" style={{ paddingLeft: "8px" }}>
+                    Location
+                  </b>
+                  <div className="form-control">
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
 
-                        display: "inherit",
-                       
-                      }),
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
+                          display: "inherit",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
 
-                        border:  'none',
-                        
-                        backgroundColor: "#fff",
-                      }),
-                      
-                      indicatorSeparator: (baseStyles, state) => ({
-                        ...baseStyles,
-                        display: "none",
-                      }),
-                    }}
-                    options={options}
-                    isMulti
-                    placeholder="Select Your Location"
-                    value={options.filter((option) =>
-                      location.includes(option.value)
-                    )}
-                    onChange={handleLocationsChange}
-                    required
-                  />
+                          border: "none",
+
+                          backgroundColor: "#fff",
+                        }),
+
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options}
+                      isMulti
+                      placeholder="Select Your Location"
+                      value={options.filter((option) =>
+                        location.includes(option.value)
+                      )}
+                      onChange={handleLocationsChange}
+                      required
+                    />
                   </div>
                 </div>
                 <div className="form-group">
-                  <b htmlFor="description" style={{paddingLeft:"8px"}}>Technology</b>
-             <div className="form-control">
-     
-                  <Select
-                   
-                    styles={{
-                      container: (baseStyles, state) => ({
-                        ...baseStyles,
+                  <b htmlFor="description" style={{ paddingLeft: "8px" }}>
+                    Technology
+                  </b>
+                  <div className="form-control">
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
 
-                        display: "inherit",
-                       
-                      }),
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
+                          display: "inherit",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
 
-                        border:  'none',
-                        
-                        backgroundColor: "#fff",
-                      }),
-                      
-                      indicatorSeparator: (baseStyles, state) => ({
-                        ...baseStyles,
-                        display: "none",
-                      }),
-                    }}
-                    options={options1}
-                    isMulti
-                    placeholder="Select Your Technology"
-                    value={options1.filter((option) =>
-                      technicalSkills.includes(option.value)
-                    )}
-                    onChange={handleTechnicalSkillsChange}
-                    required
-                  />
+                          border: "none",
+
+                          backgroundColor: "#fff",
+                        }),
+
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options1}
+                      isMulti
+                      placeholder="Select Your Technology"
+                      value={options1.filter((option) =>
+                        technicalSkills.includes(option.value)
+                      )}
+                      onChange={handleTechnicalSkillsChange}
+                      required
+                    />
                   </div>
                 </div>
-               {/* <div className="form-group">
+                {/* <div className="form-group">
                   <label htmlFor="salaryRange">Location</label>
                   <div className="search-bar-container">
                   
@@ -269,7 +264,7 @@ const EmployerJobPost = () => {
                     <option value="6-7 Year">6-7 Year</option>
                     <option value="7-8 Year">7-8 Year</option>
                   </select>
-                </div> 
+                </div>
 
                 <div className="form-group">
                   <label htmlFor="description">Job Description</label>

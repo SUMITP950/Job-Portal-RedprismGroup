@@ -8,7 +8,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div >
+    <div>
       <div class="container-fluid page-set">
         <div class="row dn" style={{ height: "100vh" }}>
           <div class="col-md-6 py-5">
@@ -20,13 +20,24 @@ export default function LandingPage() {
               />
             </div>
             <h2 class=" text-center font-jav">
-              <span style={{ color: "#35b71d" }}>Are</span> you a job Seeker ?
+              <span class="h1" style={{ color: "#35b71d" }}>
+                Are
+              </span>{" "}
+              <b>you a job</b>
+              <span class="h1" style={{ color: "#35b71d" }}>
+                {" "}
+                Seeker
+              </span>
+              ?
             </h2>
             <div class="font-19 text-center font-myr">
               "The harder you work , The luckier you get."
             </div>
             <div class="d-flex align-items-center justify-content-center mt-5">
-              <Link to="/RegisterJobSheeker" class="btn border shadow btn-landing">
+              <Link
+                to="/RegisterJobSheeker"
+                class="btn border shadow btn-landing"
+              >
                 Register as job Seeker
               </Link>
             </div>
@@ -70,7 +81,7 @@ export default function LandingPage() {
                   padding: " 10px 90px",
                   fontSize: "20px",
                   color: "#000",
-                  fontWeight: "500;",
+                  fontWeight: "600",
                 }}
               >
                 Register as a HR
@@ -91,34 +102,59 @@ export default function LandingPage() {
         </div>
         {/* <!-- mobile view Start --> */}
         <div class="row dnm">
-            <div class="col-md-6">
-                <div class="d-flex align-items-center justify-content-center my-5"><img src="img/fav.png" alt=""/> </div>
-                <div class="row m-5 p-3">
-                    <div class="col-md-6" style={{border: "1px solid gray",borderRadius: "5px", backgroundColor: "#fff"}}>
-                        <div class="d-flex">
-                            <img src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
-                                style={{height:"50px"}} alt=""/>
-                            <h4 class="  mt-2"><Link to="/RegistrationBasic" class="text-dark">Job Seekers</Link></h4>
-                        </div>
-                        <p class="pl-5">Make your dream journey begins here</p>
-                    </div>
-                    <div class="col-md-6 mt-5"
-                        style={{border: "1px solid gray",borderRadius: "5px", backgroundColor: "#fff"}}>
-                        <div class="d-flex">
-                            <img src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
-                                style={{height:"50px"}} alt=""/>
-                            <h4 class="  mt-2"><a href="#" class="text-dark">HR Register</a></h4>
-                        </div>
-                        <p class="pl-5">Make your dream journey begins here</p>
-                    </div>
-                </div>
+          <div class="col-md-6">
+            <div class="d-flex align-items-center justify-content-center my-5">
+              <img src="img/fav.png" alt="" />{" "}
             </div>
-          
+            <div class="row m-5 p-3">
+              <div
+                class="col-md-6"
+                style={{
+                  border: "1px solid gray",
+                  borderRadius: "5px",
+                  backgroundColor: "#fff",
+                }}
+              >
+                <div class="d-flex">
+                  <img
+                    src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
+                    style={{ height: "50px" }}
+                    alt=""
+                  />
+                  <h4 class="  mt-2">
+                    <Link to="/RegistrationBasic" class="text-dark">
+                      Job Seekers
+                    </Link>
+                  </h4>
+                </div>
+                <p class="pl-5">Make your dream journey begins here</p>
+              </div>
+              <div
+                class="col-md-6 mt-5"
+                style={{
+                  border: "1px solid gray",
+                  borderRadius: "5px",
+                  backgroundColor: "#fff",
+                }}
+              >
+                <div class="d-flex">
+                  <img
+                    src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
+                    style={{ height: "50px" }}
+                    alt=""
+                  />
+                  <h4 class="  mt-2">
+                    <a href="#" class="text-dark">
+                      HR Register
+                    </a>
+                  </h4>
+                </div>
+                <p class="pl-5">Make your dream journey begins here</p>
+              </div>
+            </div>
           </div>
         </div>
-       
       </div>
-    
-    
+    </div>
   );
 }

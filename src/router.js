@@ -44,6 +44,7 @@ import Sendotp from "./Pages/Send-otp/Sendotp";
 import JobDetails from "./Pages/JobDetails/JobDetails";
 import ProfileEdit from "./Pages/ProfileEdit/ProfileEdit";
 import Registerhr from "./Pages/RegisterHR/Registerhr";
+import CompanyAddDetails from "./Pages/Companyadd/CompanyAddDetails";
 export default function Router() {
   return (
     <>
@@ -159,6 +160,15 @@ export default function Router() {
               </>
             }
           />
+          <Route
+            path="/companyadddetails"
+            element={
+              <>
+                <CompanyAddDetails />
+              </>
+            }
+          />
+
           <Route
             path="/RegistrationVarify"
             element={
