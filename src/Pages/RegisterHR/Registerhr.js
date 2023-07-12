@@ -130,9 +130,9 @@ const Registerhr = () => {
       username: yup
         .string()
         .required("*Required")
-        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
-        .min(3, "Minimum 3 characters length")
-        .max(10, "Maximum 10 characters length"),
+        // .matches(/^[A-Za-z]+$/, "This field  must be a letter")
+        // .min(3, "Minimum 3 characters length")
+        .max(50, "Maximum 50 characters length"),
       password: yup
         .string()
         .required("*Required")
@@ -257,15 +257,19 @@ const Registerhr = () => {
           // immediateJoiner: formik4.values.immediateJoiner,
         })
         .then((response) => {
-          const data = response.data;
-          console.log(data);
-          toast.success(`Registered successfully.`);
+          console.log(response.data);
+          if(response.data.status==="data exist"){
+            toast.error(`Failed : ${response.data.mssg}`);
+          }
+          if(response.data.status==="success"){
+            toast.success(`${response.data.mssg}`);
+            navigate4("/SigninAsHr");
+          }
         })
         .catch((error) => {
           console.error(error);
-          toast.success(`Failed : ${error.message}`);
+          toast.error(`Failed : ${error.message}`);
         });
-      navigate4("/SigninAsHr");
   }
 
   const changeForm = (formName) => {

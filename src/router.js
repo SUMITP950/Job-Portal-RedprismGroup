@@ -45,6 +45,7 @@ import JobDetails from "./Pages/JobDetails/JobDetails";
 import ProfileEdit from "./Pages/ProfileEdit/ProfileEdit";
 import Registerhr from "./Pages/RegisterHR/Registerhr";
 export default function Router() {
+  const login="yes";
   return (
     <>
       <BrowserRouter>

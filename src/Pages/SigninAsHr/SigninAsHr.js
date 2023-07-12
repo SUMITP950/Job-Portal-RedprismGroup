@@ -26,9 +26,8 @@ export default function SigninAsHr() {
       username: yup
         .string()
         .required("*Required")
-        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
-        .min(4, "Minimum 4 characters length")
-        .max(10, "Maximum 10 characters length"),
+        // .matches(/^[A-Za-z]+$/, "This field  must be a letter")
+        .max(50, "Maximum 50 characters length"),
       password: yup
         .string()
         .required("*Required")
@@ -62,12 +61,12 @@ export default function SigninAsHr() {
         .string()
         .required("*Required")
         .matches(/^[0-9]+$/, "This field  must be a number")
-        // .min(10, "Minimum 10 digits")
+        .min(10, "Minimum 10 digits")
         .max(10, "Maximum 10 digits"),
       otp: yup
         .string()
         .required("*Required")
-        // .min(6, "Minimum 6 digits")
+        .min(6, "Minimum 6 digits")
         .matches(/^[0-9]+$/, "This field  must be a number")
         .max(6, "Maximum 6 digits"),
     }),
@@ -86,7 +85,30 @@ export default function SigninAsHr() {
       // navigate("/Home");
     },
   });
-
+  const handleApiMobile=()=>{
+    axios
+      .post("http://localhost:5000/api/employee/hr/login/phnum", {
+        ph_num : formik1.values.mobile ,
+        otp : formik1.values.otp,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if(response.data.status==="validation error"){
+          toast.error(`Failed : ${response.data.mssg}`);
+        }else if(response.data.status==="not match"){
+          toast.error(`Failed : ${response.data.mssg}`);
+        }
+        else{
+          localStorage.setItem('authToken',response.data.authToken)
+          toast.success(`${response.data.mssg}`);
+          navigate("/Home");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
+  }
 
   const handleApi=()=>{
     axios
@@ -96,13 +118,18 @@ export default function SigninAsHr() {
       })
       .then((response) => {
         console.log(response.data);
-        toast.success(`login successfully.`);
+        if(response.data.status==="not found"){
+          toast.error(`Failed : ${response.data.mssg}`);
+        }else{
+          localStorage.setItem('authToken',response.data.authToken)
+          toast.success(`${response.data.mssg}`);
+          navigate("/Home");
+        }
       })
       .catch((error) => {
         console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
-      navigate("/Home");
   }
   return (
     <div>
@@ -200,7 +227,7 @@ export default function SigninAsHr() {
                           )}
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-primary">
+                        <button type="submit" class="btn btn-block btn-primary" onClick={handleApiMobile}>
                           <strong>SIGN IN</strong>
                         </button>
 
@@ -211,7 +238,7 @@ export default function SigninAsHr() {
                             </Link>
                           </span>
                           <span class="ml-auto">
-                            <Link to="/RegistrationBasic" class="forgot-pass">
+                            <Link to="/Registerhr" class="forgot-pass">
                               Creat a new account
                             </Link>
                           </span>
@@ -271,7 +298,7 @@ export default function SigninAsHr() {
                             </Link>
                           </span>
                           <span class="ml-auto">
-                          <Link to="/RegistrationBasic" class="forgot-pass">
+                          <Link to="/Registerhr" class="forgot-pass">
                               Creat a new account
                             </Link>
                           </span>
