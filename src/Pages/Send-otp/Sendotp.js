@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export default function Sendotp(props) {
   useEffect(() => {
@@ -21,25 +21,46 @@ export default function Sendotp(props) {
         .string()
         .required("*Required")
         .matches(/^[0-9]+$/, "This field  must be a number")
-        // .min(10, "Minimum 10 digits")
+        .min(10, "Minimum 10 digits")
         .max(10, "Maximum 10 digits"),
     }),
     onSubmit: (values) => {
       console.log(values);
-      axios
-      .post("http://localhost:3030/send_otp", values)
+      // axios
+      // .post("http://localhost:3030/send_otp", values)
+      // .then((response) => {
+      //   const data= response.data;
+      //   console.log(data);
+      //   // toast.success(`login successfully.`);
+      // })
+      // .catch((error) => {
+      //   console.error(error);
+      //   // toast.success(`Failed : ${error.message}`);
+      // });
+      // navigate("/Signin"); 
+    },
+  });
+
+  const handleApi=()=>{
+    axios
+      .post("http://localhost:5000/api/employee/hr/sendotp/phnum", {
+        ph_num : formik.values.mobile ,
+      })
       .then((response) => {
-        const data= response.data;
-        console.log(data);
-        // toast.success(`login successfully.`);
+        console.log(response.data);
+        if(response.data.status==="not found"){
+          toast.error(`Failed : ${response.data.mssg}`);
+        }
+        if(response.data.status==="success"){
+          toast.success(`${response.data.mssg}`);
+          navigate("/SigninAsHr");
+        }
       })
       .catch((error) => {
         console.error(error);
-        // toast.success(`Failed : ${error.message}`);
+        toast.error(`Failed : ${error.message}`);
       });
-      navigate("/Signin"); 
-    },
-  });
+  }
   
   return (
     <>
@@ -84,13 +105,13 @@ export default function Sendotp(props) {
                           )}
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-primary">
+                        <button type="submit" class="btn btn-block btn-primary" onClick={handleApi}>
                           <strong>Send OTP</strong>
                         </button>
 
                         <div class="d-flex mb-3 align-items-center mt-3">
                           <span class="ml-auto">
-                            <Link to="/Signin">
+                            <Link to="/SigninAsHr">
                               Back to Login
                               </Link>
                           </span>

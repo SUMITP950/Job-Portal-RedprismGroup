@@ -46,6 +46,7 @@ import ProfileEdit from "./Pages/ProfileEdit/ProfileEdit";
 import Registerhr from "./Pages/RegisterHR/Registerhr";
 import CompanyAddDetails from "./Pages/Companyadd/CompanyAddDetails";
 export default function Router() {
+  const login="yes";
   return (
     <>
       <BrowserRouter>
