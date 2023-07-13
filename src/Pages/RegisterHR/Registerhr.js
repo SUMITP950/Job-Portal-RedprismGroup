@@ -196,7 +196,7 @@ const Registerhr = () => {
 
   // registration  status start
 
-  const navigate4 = useNavigate();
+  const navigate = useNavigate();
 
   // form validation
 
@@ -263,7 +263,7 @@ const Registerhr = () => {
           }
           if(response.data.status==="success"){
             toast.success(`${response.data.mssg}`);
-            navigate4("/SigninAsHr");
+            navigate("/SigninAsHr");
           }
         })
         .catch((error) => {

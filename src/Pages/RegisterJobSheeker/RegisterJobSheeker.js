@@ -193,7 +193,7 @@ function RegisterJobSheeker() {
 
   // registration  status start
 
-  const navigate4 = useNavigate();
+  const navigate = useNavigate();
 
   // form validation
 
@@ -224,36 +224,69 @@ function RegisterJobSheeker() {
       //   navigate4("/Signin");
     },
   });
-  const handleApi = () => {
+
+  const handleContact=()=>{
     axios
-      .post(" http://localhost:3030/users_registration_jobseeker", {
-        firstName: formik.values.firstName,
-        lastName: formik.values.lastName,
-        email: formik.values.email,
-        mobile: formik.values.mobile,
-        city: formik.values.city,
-        state: formik.values.state,
-        zip: formik.values.zip,
-        otp: formik1.values.otp,
-        username: formik2.values.username,
-        password: formik2.values.password,
-        currentCompany: formik3.values.currentCompany,
-        technicalSkills: formik3.values.technicalSkills,
-        ExperienceInYear: formik3.values.ExperienceInYear,
-        lookingForJob: formik4.values.lookingForJob,
-        noticePeriod: formik4.values.noticePeriod,
-        immediateJoiner: formik4.values.immediateJoiner,
+      .post("http://localhost:5000/api/employee/hr/login/phnum", {
+        ph_num : formik1.values.mobile ,
       })
       .then((response) => {
-        const data = response.data;
-        console.log(data);
-        toast.success(`Registered successfully.`);
+        console.log(response.data);
+       if(response.data.status==="not match"){
+          toast.error(`Failed : ${response.data.mssg}`);
+        }
+        else{
+          changeForm("verify");
+        }
       })
       .catch((error) => {
         console.error(error);
-        toast.success(`Failed : ${error.message}`);
+        toast.error(`Failed : ${error.message}`);
       });
-    navigate4("/Signin");
+  }
+  const handleApi = () => {
+    axios
+        .post("http://localhost:5000/api/employee/hr/register", {
+          employee_status: "Status",
+          status_icon: "Icon",
+          first_name: formik.values.firstName,
+          last_name: formik.values.lastName,
+          user_name: formik2.values.username,
+          password: formik2.values.password,
+          ph_num: formik.values.mobile,
+          email_id: formik.values.email,
+          company_code: formik3.values.currentCompany,
+          // firstName:formik.values.firstName,
+          // lastName:formik.values.lastName,
+          // email: formik.values.email,
+          // mobile:formik.values.mobile,
+          // city: formik.values.city,
+          // state: formik.values.state,
+          // zip: formik.values.zip,
+          // otp: formik1.values.otp,
+          // username: formik2.values.username,
+          // password: formik2.values.password,
+          // currentCompany: formik3.values.currentCompany,
+          // technicalSkills: formik3.values.technicalSkills,
+          // ExperienceInYear: formik3.values.ExperienceInYear,
+          // lookingForJob: formik4.values.lookingForJob,
+          // noticePeriod: formik4.values.noticePeriod,
+          // immediateJoiner: formik4.values.immediateJoiner,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if(response.data.status==="data exist"){
+            toast.error(`Failed : ${response.data.mssg}`);
+          }
+          if(response.data.status==="success"){
+            toast.success(`${response.data.mssg}`);
+            navigate("/Signin");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error(`Failed : ${error.message}`);
+        });
   };
 
   const changeForm = (formName) => {
@@ -489,6 +522,7 @@ function RegisterJobSheeker() {
                     className="btn btn-pink mb-5 px-5"
                     type="submit"
                     style={{ fontWeight: "600", fontSize: "16px" }}
+                    onClick={handleContact}
                   >
                     Continue
                   </button>

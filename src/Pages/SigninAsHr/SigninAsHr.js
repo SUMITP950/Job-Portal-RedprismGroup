@@ -37,7 +37,7 @@ export default function SigninAsHr() {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
+      console.log(values); 
       // axios
       // .post("http://localhost:3030/sign_in_hr", values)
       // .then((response) => {
@@ -71,7 +71,7 @@ export default function SigninAsHr() {
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
+      console.log(values); 
       // axios
       // .post("http://localhost:3030/sign_in_hr", values)
       // .then((response) => {
@@ -85,6 +85,8 @@ export default function SigninAsHr() {
       // navigate("/Home");
     },
   });
+
+  // In this section data send to backend
   const handleApiMobile=()=>{
     axios
       .post("http://localhost:5000/api/employee/hr/login/phnum", {
@@ -110,6 +112,7 @@ export default function SigninAsHr() {
       });
   }
 
+// In this section data send to backend
   const handleApi=()=>{
     axios
       .post("http://localhost:5000/api/employee/hr/login/username", {
@@ -131,6 +134,7 @@ export default function SigninAsHr() {
         toast.error(`Failed : ${error.message}`);
       });
   }
+
   return (
     <div>
       <div class="d-lg-flex half">

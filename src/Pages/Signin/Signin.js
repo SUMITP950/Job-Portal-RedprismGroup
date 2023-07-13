@@ -26,9 +26,9 @@ export default function Signin() {
       username: yup
         .string()
         .required("*Required")
-        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
-        .min(4, "Minimum 4 characters length")
-        .max(10, "Maximum 10 characters length"),
+        // .matches(/^[A-Za-z]+$/, "This field  must be a letter")
+        // .min(4, "Minimum 4 characters length")
+        .max(50, "Maximum 50 characters length"),
       password: yup
         .string()
         .required("*Required")
@@ -38,18 +38,18 @@ export default function Signin() {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      // console.log(values); // In this section data send to backend
-      axios
-      .post("http://localhost:3030/sign_in_jobseeker", values)
-      .then((response) => {
-        console.log(response.data);
-        toast.success(`login successfully.`);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Failed : ${error.message}`);
-      });
-      navigate("/Home");
+      console.log(values); 
+      // axios
+      // .post("http://localhost:3030/sign_in_jobseeker", values)
+      // .then((response) => {
+      //   console.log(response.data);
+      //   toast.success(`login successfully.`);
+      // })
+      // .catch((error) => {
+      //   console.error(error);
+      //   toast.error(`Failed : ${error.message}`);
+      // });
+      // navigate("/Home");
     },
   });
   const formik1 = useFormik({
@@ -62,30 +62,82 @@ export default function Signin() {
         .string()
         .required("*Required")
         .matches(/^[0-9]+$/, "This field  must be a number")
-        // .min(10, "Minimum 10 digits")
+        .min(10, "Minimum 10 digits")
         .max(10, "Maximum 10 digits"),
       otp: yup
         .string()
         .required("*Required")
-        // .min(6, "Minimum 6 digits")
+        .min(6, "Minimum 6 digits")
         .matches(/^[0-9]+$/, "This field  must be a number")
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      // console.log(values); // In this section data send to backend
-      axios
-      .post("http://localhost:3030/sign_in_jobseeker", values)
+      console.log(values); 
+      // axios
+      // .post("http://localhost:3030/sign_in_jobseeker", values)
+      // .then((response) => {
+      //   console.log(response.data);
+      //   toast.success(`login successfully.`);
+      // })
+      // .catch((error) => {
+      //   console.error(error);
+      //   toast.error(`Failed : ${error.message}`);
+      // });
+      // navigate("/Home");
+    },
+  });
+
+
+  // In this section data send to backend
+  const handleApiMobile=()=>{
+    axios
+      .post("http://localhost:5000/api/employee/hr/login/phnum", {
+        ph_num : formik1.values.mobile ,
+        otp : formik1.values.otp,
+      })
       .then((response) => {
         console.log(response.data);
-        toast.success(`login successfully.`);
+        if(response.data.status==="validation error"){
+          toast.error(`Failed : ${response.data.mssg}`);
+        }else if(response.data.status==="not match"){
+          toast.error(`Failed : ${response.data.mssg}`);
+        }
+        else{
+          localStorage.setItem('authToken',response.data.authToken)
+          toast.success(`${response.data.mssg}`);
+          navigate("/Home");
+        }
       })
       .catch((error) => {
         console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
-      navigate("/Home");
-    },
-  });
+  }
+
+// In this section data send to backend
+  const handleApi=()=>{
+    axios
+      .post("http://localhost:5000/api/employee/hr/login/username", {
+        user_name : formik.values.username ,
+        password : formik.values.password,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if(response.data.status==="not found"){
+          toast.error(`Failed : ${response.data.mssg}`);
+        }else{
+          localStorage.setItem('authToken',response.data.authToken)
+          toast.success(`${response.data.mssg}`);
+          navigate("/Home");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
+  }
+
+
   return (
     <div>
       <div class="d-lg-flex half">
@@ -182,18 +234,18 @@ export default function Signin() {
                           )}
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-primary">
+                        <button type="submit" class="btn btn-block btn-primary"  onClick={handleApiMobile}>
                           <strong>SIGN IN</strong>
                         </button>
 
                         <div class="d-flex mb-3 align-items-center mt-3">
                           <span class="mr-auto">
-                            <Link to="/Sendotp" class="forgot-pass">
+                            <Link to="/sendotpjobseeker" class="forgot-pass">
                               Forgot Password ?
                             </Link>
                           </span>
                           <span class="ml-auto">
-                            <Link to="/RegistrationBasic" class="forgot-pass">
+                            <Link to="/RegisterJobSheeker" class="forgot-pass">
                               Creat a new account
                             </Link>
                           </span>
@@ -242,7 +294,7 @@ export default function Signin() {
                           )}
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-primary">
+                        <button type="submit" class="btn btn-block btn-primary" onClick={handleApi}>
                           <strong>SIGN IN</strong>
                         </button>
 
@@ -253,7 +305,7 @@ export default function Signin() {
                             </Link>
                           </span>
                           <span class="ml-auto">
-                          <Link to="/RegistrationBasic" class="forgot-pass">
+                          <Link to="/RegisterJobSheeker" class="forgot-pass">
                               Creat a new account
                             </Link>
                           </span>

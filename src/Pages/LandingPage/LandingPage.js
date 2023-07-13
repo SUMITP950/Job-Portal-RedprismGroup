@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function LandingPage() {
   useEffect(() => {
-    document.title = "Red Prisom";
+    document.title = "Red Prism";
   }, []);
 
   return (
