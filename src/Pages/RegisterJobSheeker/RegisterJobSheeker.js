@@ -11,11 +11,15 @@ function RegisterJobSheeker() {
     document.title = "Registration";
   }, []);
 
-  // const [count, setCount] = useState('');
-  // setCount('Abhijit');
-  // console.log(count);
+  const [data, SetData] = useState([]);
 
-  // const navigate = useNavigate();
+  useEffect(() => {
+    axios
+      .get("https://saijeweller.com/api/jobseekerRegister/getCompanyList")
+      .then((res) => {
+        SetData(res.data.companyList);
+      });
+  });
 
   // form validation
 
@@ -66,23 +70,10 @@ function RegisterJobSheeker() {
         .max(10, "Maximum 10 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
-
-      // axios
-      // .post("http://localhost:3030/users_registration_jobseeker", values)
-      // .then((response) => {
-      //   console.log(response.data);
-      // })
-      // .catch((error) => {
-      //   console.error(error);
-      // });
-      changeForm("verify");
-      // navigate("/RegistrationVarify");
+      console.log(values);
     },
   });
   // registration varify Start
-
-  // const navigate1 = useNavigate();
 
   // form validation
   const formik1 = useFormik({
@@ -93,30 +84,18 @@ function RegisterJobSheeker() {
       otp: yup
         .string()
         .required("*Required")
-        .min(6, "Minimum 6 digits")
+        // .min(6, "Minimum 6 digits")
         .matches(/^[0-9]+$/, "This field  must be a number")
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
-      // axios
-      // .post("http://localhost:3030/users_registration_jobseeker", values)
-      // .then((response) => {
-      //   console.log(response.data);
-      // })
-      // .catch((error) => {
-      //   console.error(error);
-      // });
-      // navigate1("/RegistrationCreate");
-      changeForm("create", values);
+      console.log(values);
     },
   });
 
   // registration varify End
 
   // registration create start
-
-  // const navigate2 = useNavigate();
 
   // form validation
 
@@ -141,17 +120,7 @@ function RegisterJobSheeker() {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
-      // axios
-      // .post("http://localhost:3030/users_registration_jobseeker", values)
-      // .then((response) => {
-      //   console.log(response.data);
-      // })
-      // .catch((error) => {
-      //   console.error(error);
-      // });
-      // navigate2("/RegistrationTechSkills");
-      changeForm("skill");
+      console.log(values);
     },
   });
 
@@ -159,34 +128,24 @@ function RegisterJobSheeker() {
 
   // registration tech skills start
 
-  // const navigate3 = useNavigate();
-
   // form validation
 
   const formik3 = useFormik({
     initialValues: {
       currentCompany: "",
       technicalSkills: "",
+      fresher: "",
       ExperienceInYear: "",
     },
     validationSchema: yup.object({
       currentCompany: yup.string().required("*Required"),
       technicalSkills: yup.string().required("*Required"),
-      ExperienceInYear: yup.string().required("*Required"),
+      // fresher: yup.string().required("*Required"),
+      // ExperienceInYear: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
       console.log(values);
-      // console.log(values); // In this section data send to backend
-      // axios
-      // .post("http://localhost:3030/users_registration_jobseeker", values)
-      // .then((response) => {
-      //   console.log(response.data);
-      // })
-      // .catch((error) => {
-      //   console.error(error);
-      // });
-      // navigate("/RegistrationStatus");
-      changeForm("status");
+      changeForm("status"); // will be deleted after service call
     },
   });
 
@@ -210,58 +169,43 @@ function RegisterJobSheeker() {
       // immediateJoiner: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
-      //   axios
-      //     .post("http://localhost:3030/users_registration_jobseeker", values)
-      //     .then((response) => {
-      //       const data = response.data;
-      //       console.log(data);
-      //       toast.success(`Registered successfully.`);
-      //     })
-      //     .catch((error) => {
-      //       console.error(error);
-      //       toast.success(`Failed : ${error.message}`);
-      //     });
-      //   navigate4("/Signin");
+      console.log(values);
     },
   });
 
-  const handleContact=()=>{
+  const handleContact = () => {
     axios
       .post("https://saijeweller.com/api/jobseekerRegister/emailCheck", {
-        email_id : formik.values.email ,
+        email_id: formik.values.email,
       })
       .then((response) => {
         console.log(response.data);
-      if(response.data.status==="success"){
+        if (response.data.status === "success") {
           sendOtp();
         }
-      if(response.data.status==="error"){
+        if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
-          // changeForm("verify");
         }
       })
       .catch((error) => {
         console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
-  }
+  };
 
-
-
-  const sendOtp=()=>{
+  const sendOtp = () => {
     axios
       .post("https://saijeweller.com/api/jobseekerRegister/registerSendOtp", {
-        ph_num : formik.values.mobile ,
+        ph_num: formik.values.mobile,
       })
       .then((response) => {
         console.log(response.data);
-      if(response.data.status==="success"){
-        toast.success(`${response.data.mssg}`)
-        formik1.values.otpId = response.data.otp_id;
-        changeForm("verify");
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          formik1.values.otpId = response.data.otp_id;
+          changeForm("verify");
         }
-      if(response.data.status==="error"){
+        if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
         }
       })
@@ -269,43 +213,22 @@ function RegisterJobSheeker() {
         console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
-  }
+  };
 
-  const otpSuccess=()=>{
-    // console.log(formik.values.otpId);
+  const otpSuccess = () => {
     axios
-    .post("https://saijeweller.com/api/jobseekerRegister/registerOtpCheck", {
-      ph_num : formik.values.mobile ,
-      otp : formik1.values.otp ,
-      otp_id : formik1.values.otpId ,
-    })
-    .then((response) => {
-      console.log(response.data);
-    if(response.data.status==="success"){
-      toast.success(`${response.data.mssg}`)
-      changeForm("create");
-      }
-    if(response.data.status==="error"){
-        toast.error(`${response.data.mssg}`);
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      toast.error(`Failed : ${error.message}`);
-    });
-  }
-
-const handleUsername=()=>{
-  axios
-      .post("https://saijeweller.com/api/jobseekerRegister/usernameCheck", {
-        user_name: formik2.values.username
+      .post("https://saijeweller.com/api/jobseekerRegister/registerOtpCheck", {
+        ph_num: formik.values.mobile,
+        otp: formik1.values.otp,
+        otp_id: formik1.values.otpId,
       })
       .then((response) => {
         console.log(response.data);
-      if(response.data.status==="success"){
-        changeForm("skill");
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          changeForm("create");
         }
-      if(response.data.status==="error"){
+        if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
         }
       })
@@ -313,51 +236,62 @@ const handleUsername=()=>{
         console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
-}
+  };
+
+  const handleUsername = () => {
+    axios
+      .post("https://saijeweller.com/api/jobseekerRegister/usernameCheck", {
+        user_name: formik2.values.username,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status === "success") {
+          changeForm("skill");
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
+  };
 
   const handleApi = () => {
     axios
-        .post("http://localhost:5000/api/employee/hr/register", {
-          employee_status: "Status",
-          status_icon: "Icon",
-          first_name: formik.values.firstName,
-          last_name: formik.values.lastName,
-          user_name: formik2.values.username,
-          password: formik2.values.password,
-          ph_num: formik.values.mobile,
-          email_id: formik.values.email,
-          company_code: formik3.values.currentCompany,
-          // firstName:formik.values.firstName,
-          // lastName:formik.values.lastName,
-          // email: formik.values.email,
-          // mobile:formik.values.mobile,
-          // city: formik.values.city,
-          // state: formik.values.state,
-          // zip: formik.values.zip,
-          // otp: formik1.values.otp,
-          // username: formik2.values.username,
-          // password: formik2.values.password,
-          // currentCompany: formik3.values.currentCompany,
-          // technicalSkills: formik3.values.technicalSkills,
-          // ExperienceInYear: formik3.values.ExperienceInYear,
-          // lookingForJob: formik4.values.lookingForJob,
-          // noticePeriod: formik4.values.noticePeriod,
-          // immediateJoiner: formik4.values.immediateJoiner,
-        })
-        .then((response) => {
-          console.log(response.data);
-          if(response.data.status==="data exist"){
-            toast.error(`Failed : ${response.data.mssg}`);
-          }
-          if(response.data.status==="success"){
-            toast.success(`${response.data.mssg}`);
-            navigate("/Signin");
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-          toast.error(`Failed : ${error.message}`);
-        });
+      .post("http://localhost:5000/api/employee/hr/register", {
+        employee_status: "Status",
+        status_icon: "Icon",
+        first_name: formik.values.firstName,
+        last_name: formik.values.lastName,
+        user_name: formik2.values.username,
+        password: formik2.values.password,
+        ph_num: formik.values.mobile,
+        email_id: formik.values.email,
+        company_code: formik3.values.currentCompany,
+
+        // currentCompany: formik3.values.currentCompany,
+        // technicalSkills: formik3.values.technicalSkills,
+        // ExperienceInYear: formik3.values.ExperienceInYear,
+        // lookingForJob: formik4.values.lookingForJob,
+        // noticePeriod: formik4.values.noticePeriod,
+        // immediateJoiner: formik4.values.immediateJoiner,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status === "data exist") {
+          toast.error(`Failed : ${response.data.mssg}`);
+        }
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          navigate("/Signin");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
   };
 
   const changeForm = (formName) => {
@@ -883,10 +817,15 @@ const handleUsername=()=>{
                       value={formik3.values.currentCompany}
                     >
                       <option>--Select--</option>
-                      <option>Cognizant</option>
-                      <option>CTS</option>
-                      <option>Wipro</option>
-                      <option>Tech Mahindra</option>
+                      {data.map((item, id) => {
+                        return (
+                          <>
+                            <option value={item.currentCompany} key={id}>
+                              {item.company_name}
+                            </option>
+                          </>
+                        );
+                      })}
                     </select>
                     {formik3.errors.currentCompany && (
                       <em style={{ color: "red" }}>
@@ -918,6 +857,24 @@ const handleUsername=()=>{
                       </em>
                     )}
                   </div>
+
+                  <div class="col-md-8 mb-3">
+                    <label htmlFor="technicalSkills">Fresher</label>
+                    <select
+                      class="form-control form-control-lg"
+                      name="fresher"
+                      id="fresher"
+                      onChange={formik3.handleChange}
+                      value={formik3.values.fresher}
+                    >
+                      {/* <option>--Select--</option> */}
+                      <option>No</option>
+                      <option>Yes</option>
+                    </select>
+                    {formik3.errors.fresher && (
+                      <em style={{ color: "red" }}>{formik3.errors.fresher}</em>
+                    )}
+                  </div>
                   <div class="col-md-8 mb-3">
                     <label htmlFor="experienceYear">Experience In Year</label>
                     <select
@@ -925,7 +882,13 @@ const handleUsername=()=>{
                       name="ExperienceInYear"
                       id="experienceYear"
                       onChange={formik3.handleChange}
-                      value={formik3.values.ExperienceInYear}
+                      value={
+                        (formik3.values.ExperienceInYear =
+                          formik3.values.fresher === "Yes"
+                            ? ""
+                            : formik3.values.ExperienceInYear)
+                      }
+                      disabled={formik3.values.fresher === "Yes"}
                     >
                       <option>--Select--</option>
                       <option>1</option>
