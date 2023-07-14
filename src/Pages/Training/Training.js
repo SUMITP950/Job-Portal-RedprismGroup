@@ -3,31 +3,22 @@
 import React, { useEffect, useState } from "react";
 import "../../App.css";
 import { Link } from "react-router-dom";
-import Select from "react-select";
 import axios from "axios";
 
 export default function Training(props) {
   useEffect(() => {
     document.title = "Training";
   });
-  const [text,setText]= useState('');
+  const [text, setText] = useState("");
   const [data, SetData] = useState([]);
-  const changeHandler=(e)=>{
+  const changeHandler = (e) => {
     setText(e.target.value);
-  }
+  };
   useEffect(() => {
-    axios.get("https://dummyjson.com/products").then((res) => {
-      SetData(res.data.products);
+    axios.get("http://localhost:5000/training/get").then((res) => {
+      SetData(res.data.trainingsList);
     });
-    // console.log(data.products[0]);})
   });
-
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
-
   return (
     <>
       <div className="py-4">
@@ -117,7 +108,7 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/">
+                      <Link to="/Signin">
                         <span class="font-weight-bold">Sign Out</span>
                       </Link>
                     </div>
@@ -126,151 +117,19 @@ export default function Training(props) {
               </div>
             </aside>
             <main className="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-              <div className="pt-3" style={{ backgroundColor: "#edf2f6" }}>
-                <div className="container-fluid">
-                  <div className="row justify-content-center">
-                    <div className="col-md-12">
-                      <div className="d-flex justify-content-around">
-                        <div className="dropdown">
-                          <div className="d-flex align-items-center">
-                            <img
-                              className="dropdown-menu-img"
-                              src="https://img.icons8.com/ios/50/000000/circuit.png"
-                              alt=""
-                            />
-                            <Select
-                              styles={{
-                                container: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  display: "inherit",
-                                }),
-                                control: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  border: "none",
-                                  backgroundColor: "#edf2f6",
-                                }),
-                                placeholder: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  color: "Black",
-                                  fontWeight: "bold",
-                                }),
-                                indicatorSeparator: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  display: "none",
-                                }),
-                              }}
-                              options={options}
-                              isMulti
-                              placeholder={"Technology"}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="dropdown">
-                          <div className="d-flex align-items-center">
-                            <img
-                              className="dropdown-menu-img"
-                              src="https://img.icons8.com/ios/50/popular-man.png"
-                              alt=""
-                            />
-                            <Select
-                              styles={{
-                                container: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  display: "inherit",
-                                }),
-                                control: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  border: "none",
-                                  backgroundColor: "#edf2f6",
-                                }),
-                                placeholder: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  color: "Black",
-                                  fontWeight: "bold",
-                                }),
-                                indicatorSeparator: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  display: "none",
-                                }),
-                              }}
-                              options={options}
-                              isMulti
-                              placeholder={"Type"}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="dropdown">
-                          <div className="d-flex align-items-center">
-                            <img
-                              className="dropdown-menu-img"
-                              src="https://img.icons8.com/ios/50/popular-man.png"
-                              alt=""
-                            />
-                            <Select
-                              styles={{
-                                container: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  display: "inherit",
-                                }),
-                                control: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  border: "none",
-                                  backgroundColor: "#edf2f6",
-                                }),
-                                placeholder: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  color: "Black",
-                                  fontWeight: "bold",
-                                }),
-                                indicatorSeparator: (baseStyles, state) => ({
-                                  ...baseStyles,
-                                  display: "none",
-                                }),
-                              }}
-                              options={options}
-                              isMulti
-                              placeholder={"Location"}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <div className="container-fluid mt-4">
                 <div className="row">
                   <div className="col-md-8 my-3">
                     <h5>Recommended Training</h5>
                   </div>
                   <div className="col-md-4">
-                    <input type="text" placeholder="Search Trainings..." className="form-control my-1" value={text} onChange={changeHandler}/>
-                    {/* <Select
-                      placeholder={"Search Trainings...."}
-                      styles={{
-                        control: (baseStyles, state) => ({
-                          ...baseStyles,
-                          borderRadius: "50px",
-                        }),
-                        option: (baseStyles, state) => ({
-                          ...baseStyles,
-
-                          display: "none",
-                        }),
-                        indicatorsContainer: (baseStyles, state) => ({
-                          ...baseStyles,
-                          display: "none",
-                        }),
-
-                        indicatorSeparator: (baseStyles, state) => ({
-                          ...baseStyles,
-                          display: "none",
-                        }),
-                      }}
-                    /> */}
+                    <input
+                      type="text"
+                      placeholder="Search Trainings..."
+                      className="form-control my-1"
+                      value={text}
+                      onChange={changeHandler}
+                    />
                   </div>
                 </div>
                 <div
@@ -278,149 +137,42 @@ export default function Training(props) {
                   style={{ border: "1px solid black" }}
                 >
                   {" "}
-                  {data.filter((value) => {
-                    if(text===""){
-                      return value;
-                    }else if(value.title.toLowerCase().trim().startsWith(text.toLowerCase())){
-                      return value;
-                    }
-                  }).map((item, id) => {
-                    return (
-                      <div className="col-md-4 mb-4" key={id}>
-                        <div className="card">
-                          <img
-                            src={item.images[0]}
-                            className="card-img-top crdimg"
-                            alt="..."
-                          />
-                          {/* <img
-                        src="https://www.redprismgroup.com/img/digita.jpg"
-                        className="card-img-top crdimg"
-                        alt="..."
-                      /> */}
-                          <div className="card-body">
-                            <h5 className="card-title">{item.title}</h5>
-                            <p className="card-text">{item.description}</p>
-                          </div>
-                          <div className="card-footer">
-                            <Link to="#" className="btn btn-block apply-btn">
-                              View Details
-                            </Link>
+                  {data
+                    .filter((value) => {
+                      if (text === "") {
+                        return value;
+                      } else if (
+                        value.title
+                          .toLowerCase()
+                          .trim()
+                          .startsWith(text.toLowerCase())
+                      ) {
+                        return value;
+                      }
+                    })
+                    .map((item, id) => {
+                      return (
+                        <div className="col-md-4 mb-4" key={id}>
+                          <div className="card">
+                            <img
+                              src={item.trainings_poster}
+                              className="card-img-top crdimg"
+                              alt="..."
+                            />
+
+                            <div className="card-body">
+                              <h5 className="card-title">{item.title}</h5>
+                              <p className="card-text">{item.details.substring(0,150)}...</p>
+                            </div>
+                            <div className="card-footer">
+                              <Link to="#" className="btn btn-block apply-btn">
+                                View Details
+                              </Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                  {/* <div className="col-md-4 mb-4">
-                    <div className="card">
-                      <img
-                        src="https://www.redprismgroup.com/img/hadoop.jpg"
-                        className="card-img-top crdimg"
-                        alt="..."
-                      />
-                      <div className="card-body">
-                        <h5 className="card-title">Big Data Hadoop</h5>
-                        <p className="card-text">
-                          What is Hadoop? Hadoop is an open source, Java based
-                          framework used for storing..
-                        </p>
-                      </div>
-                      <div className="card-footer">
-                        <Link to="#" className="btn btn-block apply-btn">
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4 mb-4">
-                    <div className="card">
-                      <img
-                        src="https://www.redprismgroup.com/img/machine_learning.jpg"
-                        className="card-img-top crdimg"
-                        alt="..."
-                      />
-                      <div className="card-body">
-                        <h5 className="card-title">Machine Learning</h5>
-                        <p className="card-text">
-                          Machine learning is not something that you have to
-                          wait for a specific time or a..
-                        </p>
-                      </div>
-                      <div className="card-footer">
-                        <Link to="#" className="btn btn-block apply-btn">
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="row mt-4 p-4 rounded"
-                  style={{ border: "1px solid black" }}
-                >
-                  <div className="col-md-4 mb-4">
-                    <div className="card">
-                      <img
-                        src="https://www.redprismgroup.com/img/django-3.jpeg"
-                        className="card-img-top crdimg"
-                        alt="..."
-                      />
-                      <div className="card-body">
-                        <h5 className="card-title">Django Python</h5>
-                        <p className="card-text">
-                          Are you on the lookout for the Django institute? You
-                          can count
-                        </p>
-                      </div>
-                      <div className="card-footer">
-                        <Link to="#" className="btn btn-block apply-btn">
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4 mb-4">
-                    <div className="card">
-                      <img
-                        src="https://www.redprismgroup.com/img/iot.jpg"
-                        className="card-img-top crdimg"
-                        alt="..."
-                      />
-                      <div className="card-body">
-                        <h5 className="card-title">IOT</h5>
-                        <p className="card-text">
-                          What is IOT(Internet of Things) The Internet of things
-                          (IoT) is a sys..
-                        </p>
-                      </div>
-                      <div className="card-footer">
-                        <Link to="#" className="btn btn-block apply-btn">
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4 mb-4">
-                    <div className="card">
-                      <img
-                        src="https://www.redprismgroup.com/img/uipath.jpg"
-                        className="card-img-top crdimg"
-                        alt="..."
-                      />
-                      <div className="card-body">
-                        <h5 className="card-title">UI Path</h5>
-                        <p className="card-text">
-                          What is RPA? Robotic Process Automation is the
-                          technology that
-                        </p>
-                      </div>
-                      <div className="card-footer">
-                        <Link to="#" className="btn btn-block apply-btn">
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  </div> */}
+                      );
+                    })}
                 </div>
               </div>
             </main>
@@ -435,9 +187,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Profile">
-                      <span class="font-weight-bold">User Name</span>
-                    </Link>
+                      <Link to="/Profile">
+                        <span class="font-weight-bold">User Name</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -447,9 +199,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/ProfileEdit">
-                      <span class="font-weight-bold">Edit Profile</span>
-                    </Link>
+                      <Link to="/ProfileEdit">
+                        <span class="font-weight-bold">Edit Profile</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -459,8 +211,8 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Profile">
-                      <span class="font-weight-bold">User Profile</span>
+                      <Link to="/Profile">
+                        <span class="font-weight-bold">User Profile</span>
                       </Link>
                     </div>
                   </a>
@@ -471,8 +223,8 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/MyBuddies">
-                      <span class="font-weight-bold">My Buddies</span>
+                      <Link to="/MyBuddies">
+                        <span class="font-weight-bold">My Buddies</span>
                       </Link>
                     </div>
                   </a>
@@ -483,9 +235,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Jobs">
-                      <span class="font-weight-bold">Jobs</span>
-                    </Link>
+                      <Link to="/Jobs">
+                        <span class="font-weight-bold">Jobs</span>
+                      </Link>
                     </div>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -495,9 +247,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Jobprofile">
-                      <span class="font-weight-bold">My Jobs</span>
-                     </Link>
+                      <Link to="/Jobprofile">
+                        <span class="font-weight-bold">My Jobs</span>
+                      </Link>
                     </div>
                   </a>
                 </div>

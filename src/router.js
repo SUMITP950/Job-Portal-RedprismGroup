@@ -45,8 +45,10 @@ import JobDetails from "./Pages/JobDetails/JobDetails";
 import ProfileEdit from "./Pages/ProfileEdit/ProfileEdit";
 import Registerhr from "./Pages/RegisterHR/Registerhr";
 import CompanyAddDetails from "./Pages/Companyadd/CompanyAddDetails";
+import Sendotpjobseeker from "./Pages/Send-otp/Sendotpjobseeker";
+
+
 export default function Router() {
-  const login="yes";
   return (
     <>
       <BrowserRouter>
@@ -347,6 +349,14 @@ export default function Router() {
             element={
               <>
                 <Sendotp />
+              </>
+            }
+          />
+          <Route
+            path="/sendotpjobseeker"
+            element={
+              <>
+                <Sendotpjobseeker />
               </>
             }
           />
