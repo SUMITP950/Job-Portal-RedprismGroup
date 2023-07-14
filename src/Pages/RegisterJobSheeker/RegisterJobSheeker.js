@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { toast } from "react-toastify";
+import Sendotp from "../Send-otp/Sendotp";
 
 function RegisterJobSheeker() {
   useEffect(() => {
@@ -227,16 +228,17 @@ function RegisterJobSheeker() {
 
   const handleContact=()=>{
     axios
-      .post("http://localhost:5000/api/employee/hr/login/phnum", {
-        ph_num : formik1.values.mobile ,
+      .post("https://saijeweller.com/api/jobseekerRegister/emailCheck", {
+        email_id : formik.values.email ,
       })
       .then((response) => {
         console.log(response.data);
-       if(response.data.status==="not match"){
-          toast.error(`Failed : ${response.data.mssg}`);
+      if(response.data.status==="success"){
+          sendOtp();
         }
-        else{
-          changeForm("verify");
+      if(response.data.status==="error"){
+          toast.error(`${response.data.mssg}`);
+          // changeForm("verify");
         }
       })
       .catch((error) => {
@@ -244,6 +246,75 @@ function RegisterJobSheeker() {
         toast.error(`Failed : ${error.message}`);
       });
   }
+
+
+
+  const sendOtp=()=>{
+    axios
+      .post("https://saijeweller.com/api/jobseekerRegister/registerSendOtp", {
+        ph_num : formik.values.mobile ,
+      })
+      .then((response) => {
+        console.log(response.data);
+      if(response.data.status==="success"){
+        toast.success(`${response.data.mssg}`)
+        formik1.values.otpId = response.data.otp_id;
+        changeForm("verify");
+        }
+      if(response.data.status==="error"){
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
+  }
+
+  const otpSuccess=()=>{
+    // console.log(formik.values.otpId);
+    axios
+    .post("https://saijeweller.com/api/jobseekerRegister/registerOtpCheck", {
+      ph_num : formik.values.mobile ,
+      otp : formik1.values.otp ,
+      otp_id : formik1.values.otpId ,
+    })
+    .then((response) => {
+      console.log(response.data);
+    if(response.data.status==="success"){
+      toast.success(`${response.data.mssg}`)
+      changeForm("create");
+      }
+    if(response.data.status==="error"){
+        toast.error(`${response.data.mssg}`);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      toast.error(`Failed : ${error.message}`);
+    });
+  }
+
+const handleUsername=()=>{
+  axios
+      .post("https://saijeweller.com/api/jobseekerRegister/usernameCheck", {
+        user_name: formik2.values.username
+      })
+      .then((response) => {
+        console.log(response.data);
+      if(response.data.status==="success"){
+        changeForm("skill");
+        }
+      if(response.data.status==="error"){
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
+}
+
   const handleApi = () => {
     axios
         .post("http://localhost:5000/api/employee/hr/register", {
@@ -610,6 +681,7 @@ function RegisterJobSheeker() {
                     class="btn btn-pink mb-5 px-5"
                     type="submit"
                     style={{ fontWeight: "600", fontSize: "16px" }}
+                    onClick={otpSuccess}
                   >
                     Continue
                   </button>
@@ -716,6 +788,7 @@ function RegisterJobSheeker() {
                     className="btn btn-pink mb-5 px-5"
                     type="submit"
                     style={{ fontWeight: "600", fontSize: "16px" }}
+                    onClick={handleUsername}
                   >
                     Continue
                   </button>

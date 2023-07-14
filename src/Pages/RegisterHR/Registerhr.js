@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 
 const Registerhr = () => {
-  // const [formData, setFormData] = useState('');
+
 
   useEffect(() => {
     document.title = "Registration";
@@ -25,6 +25,7 @@ const Registerhr = () => {
       city: "",
       state: "",
       zip: "",
+      
     },
 
     validationSchema: yup.object({
@@ -87,6 +88,8 @@ const Registerhr = () => {
   const formik1 = useFormik({
     initialValues: {
       otp: "",
+      otpId:"",
+      
     },
     validationSchema: yup.object({
       otp: yup
@@ -227,6 +230,99 @@ const Registerhr = () => {
       // navigate4("/SigninAsHr");
     },
   });
+
+
+  
+  const handleContact=()=>{
+    axios
+      .post("https://saijeweller.com/api/hrRegister/emailCheck", {
+        email_id : formik.values.email ,
+      })
+      .then((response) => {
+        console.log(response.data);
+      if(response.data.status==="success"){
+          sendOtp();
+        }
+      if(response.data.status==="error"){
+          toast.error(`${response.data.mssg}`);
+          // changeForm("verify");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
+  }
+
+
+
+  const sendOtp=()=>{
+    axios
+      .post("https://saijeweller.com/api/hrRegister/registerSendOtp", {
+        ph_num : formik.values.mobile ,
+      })
+      .then((response) => {
+        console.log(response.data);
+      if(response.data.status==="success"){
+        toast.success(`${response.data.mssg}`)
+        formik1.values.otpId = response.data.otp_id;
+        changeForm("verify");
+        }
+      if(response.data.status==="error"){
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
+  }
+
+  const otpSuccess=()=>{
+    // console.log(formik.values.otpId);
+    axios
+    .post("https://saijeweller.com/api/hrRegister/registerOtpCheck", {
+      ph_num : formik.values.mobile ,
+      otp : formik1.values.otp ,
+      otp_id : formik1.values.otpId ,
+    })
+    .then((response) => {
+      console.log(response.data);
+    if(response.data.status==="success"){
+      toast.success(`${response.data.mssg}`)
+      changeForm("create");
+      }
+    if(response.data.status==="error"){
+        toast.error(`${response.data.mssg}`);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      toast.error(`Failed : ${error.message}`);
+    });
+  }
+
+const handleUsername=()=>{
+  axios
+      .post("https://saijeweller.com/api/hrRegister/usernameCheck", {
+        user_name: formik2.values.username
+      })
+      .then((response) => {
+        console.log(response.data);
+      if(response.data.status==="success"){
+        changeForm("skill");
+        }
+      if(response.data.status==="error"){
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
+}
+
+
   const handleApi=()=>{
     axios
         .post("http://localhost:5000/api/employee/hr/register", {
@@ -507,7 +603,8 @@ const Registerhr = () => {
                   <button
                     className="btn btn-pink mb-5 px-5"
                     type="submit"
-                    style={{ fontWeight: "600", fontSize: "16px" }}
+                    style={{fontWeight: "600", fontSize: "16px" }}
+                    onClick={handleContact}
                   >
                     Continue
                   </button>
@@ -595,6 +692,7 @@ const Registerhr = () => {
                     class="btn btn-pink mb-5 px-5"
                     type="submit"
                     style={{ fontWeight: "600", fontSize: "16px" }}
+                    onClick={otpSuccess}
                   >
                     Continue
                   </button>
@@ -701,6 +799,7 @@ const Registerhr = () => {
                     className="btn btn-pink mb-5 px-5"
                     type="submit"
                     style={{ fontWeight: "600", fontSize: "16px" }}
+                    onClick={handleUsername}
                   >
                     Continue
                   </button>
