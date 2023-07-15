@@ -12,14 +12,60 @@ function RegisterJobSheeker() {
   }, []);
 
   const [data, SetData] = useState([]);
+  const [data1, SetData1] = useState([]);
+  const [data2, SetData2] = useState([]);
+  const [data3, SetData3] = useState([]);
+  const [data4, SetData4] = useState([]);
+  const [data5, SetData5] = useState([]);
+
 
   useEffect(() => {
     axios
-      .get("https://saijeweller.com/api/jobseekerRegister/getCompanyList")
+      .get("http://testredprism.co/api/jobseekerRegister/getCompanyList")
       .then((res) => {
         SetData(res.data.companyList);
       });
-  });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobseekerRegister/getTechList")
+      .then((res) => {
+        SetData1(res.data.techList);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobseekerRegister/getExpList")
+      .then((res) => {
+        SetData2(res.data.expList);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobseekerRegister/getLocationList")
+      .then((res) => {
+        SetData3(res.data.locationList);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobseekerRegister/getLocationList")
+      .then((res) => {
+        SetData4(res.data.locationList);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobseekerRegister/getLocationList")
+      .then((res) => {
+        SetData5(res.data.locationList);
+      });
+  }, []);
+  
 
   // form validation
 
@@ -31,7 +77,8 @@ function RegisterJobSheeker() {
       mobile: "",
       city: "",
       state: "",
-      zip: "",
+      area: "",
+      term: "",
     },
     validationSchema: yup.object({
       firstName: yup
@@ -56,18 +103,20 @@ function RegisterJobSheeker() {
         .max(10, "Maximum 10 digits"),
       city: yup
         .string()
-        .required("*Required")
-        .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
+        .required("*Required"),
+        // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
       state: yup
         .string()
-        .required("*Required")
-        .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
-      zip: yup
+        .required("*Required"),
+        // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
+      area: yup
         .string()
-        .required("*Required")
-        .matches(/^[0-9]+$/, "This field  must be a number")
-        .min(5, "Minimum 5 digits")
-        .max(10, "Maximum 10 digits"),
+        .required("*Required"),
+        // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
+      // .matches(/^[0-9]+$/, "This field  must be a number")
+      // .min(5, "Minimum 5 digits")
+      // .max(10, "Maximum 10 digits"),
+      term: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -79,6 +128,7 @@ function RegisterJobSheeker() {
   const formik1 = useFormik({
     initialValues: {
       otp: "",
+      otpId:"",
     },
     validationSchema: yup.object({
       otp: yup
@@ -108,9 +158,9 @@ function RegisterJobSheeker() {
       username: yup
         .string()
         .required("*Required")
-        .matches(/^[A-Za-z]+$/, "This field  must be a letter")
-        .min(3, "Minimum 3 characters length")
-        .max(10, "Maximum 10 characters length"),
+        // .matches(/^[A-Za-z]+$/, "This field  must be a letter")
+        // .min(3, "Minimum 3 characters length")
+        .max(50, "Maximum 50 characters length"),
       password: yup
         .string()
         .required("*Required")
@@ -162,6 +212,7 @@ function RegisterJobSheeker() {
       lookingForJob: "",
       noticePeriod: "",
       immediateJoiner: "",
+
     },
     validationSchema: yup.object({
       lookingForJob: yup.string().required("*Required"),
@@ -174,28 +225,36 @@ function RegisterJobSheeker() {
   });
 
   const handleContact = () => {
-    axios
-      .post("https://saijeweller.com/api/jobseekerRegister/emailCheck", {
-        email_id: formik.values.email,
-      })
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.status === "success") {
-          sendOtp();
-        }
-        if (response.data.status === "error") {
-          toast.error(`${response.data.mssg}`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Failed : ${error.message}`);
-      });
+    if (
+      formik.values.firstName &&
+      formik.values.lastName &&
+      formik.values.email &&
+      formik.values.mobile &&
+      formik.values.term
+    ) {
+      axios
+        .post("http://testredprism.co/api/jobseekerRegister/emailCheck", {
+          email_id: formik.values.email,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.status === "success") {
+            sendOtp();
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error(`Failed : ${error.message}`);
+        });
+    }
   };
 
   const sendOtp = () => {
     axios
-      .post("https://saijeweller.com/api/jobseekerRegister/registerSendOtp", {
+      .post("http://testredprism.co/api/jobseekerRegister/registerSendOtp", {
         ph_num: formik.values.mobile,
       })
       .then((response) => {
@@ -216,51 +275,55 @@ function RegisterJobSheeker() {
   };
 
   const otpSuccess = () => {
-    axios
-      .post("https://saijeweller.com/api/jobseekerRegister/registerOtpCheck", {
-        ph_num: formik.values.mobile,
-        otp: formik1.values.otp,
-        otp_id: formik1.values.otpId,
-      })
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.status === "success") {
-          toast.success(`${response.data.mssg}`);
-          changeForm("create");
-        }
-        if (response.data.status === "error") {
-          toast.error(`${response.data.mssg}`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Failed : ${error.message}`);
-      });
+    if (formik1.values.otp) {
+      axios
+        .post("http://testredprism.co/api/jobseekerRegister/registerOtpCheck", {
+          ph_num: formik.values.mobile,
+          otp: formik1.values.otp,
+          otp_id: formik1.values.otpId,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.status === "success") {
+            toast.success(`${response.data.mssg}`);
+            changeForm("create");
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error(`Failed : ${error.message}`);
+        });
+    }
   };
 
   const handleUsername = () => {
-    axios
-      .post("https://saijeweller.com/api/jobseekerRegister/usernameCheck", {
-        user_name: formik2.values.username,
-      })
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.status === "success") {
-          changeForm("skill");
-        }
-        if (response.data.status === "error") {
-          toast.error(`${response.data.mssg}`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Failed : ${error.message}`);
-      });
+    if (formik2.values.username && formik2.values.password) {
+      axios
+        .post("http://testredprism.co/api/jobseekerRegister/usernameCheck", {
+          user_name: formik2.values.username,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.status === "success") {
+            changeForm("skill");
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error(`Failed : ${error.message}`);
+        });
+    }
   };
 
   const handleApi = () => {
     axios
-      .post("http://localhost:5000/api/employee/hr/register", {
+      .post("http://testredprism.co/api/jobseekerRegister/register", {
         employee_status: "Status",
         status_icon: "Icon",
         first_name: formik.values.firstName,
@@ -270,17 +333,17 @@ function RegisterJobSheeker() {
         ph_num: formik.values.mobile,
         email_id: formik.values.email,
         company_code: formik3.values.currentCompany,
-
-        // currentCompany: formik3.values.currentCompany,
-        // technicalSkills: formik3.values.technicalSkills,
-        // ExperienceInYear: formik3.values.ExperienceInYear,
-        // lookingForJob: formik4.values.lookingForJob,
-        // noticePeriod: formik4.values.noticePeriod,
-        // immediateJoiner: formik4.values.immediateJoiner,
+        tech_code: formik3.values.technicalSkills,
+        exp_code: formik3.values.ExperienceInYear,
+        location_code: formik.values.city,
+        looking_job: formik4.values.lookingForJob,
+        notice_period: formik4.values.noticePeriod,
+        immediate_joinner: formik4.values.immediateJoiner,
+        fresher: formik3.values.fresher,
       })
       .then((response) => {
         console.log(response.data);
-        if (response.data.status === "data exist") {
+        if (response.data.status === "error") {
           toast.error(`Failed : ${response.data.mssg}`);
         }
         if (response.data.status === "success") {
@@ -426,7 +489,7 @@ function RegisterJobSheeker() {
                       <em style={{ color: "red" }}>{formik.errors.mobile}</em>
                     )}
                   </div>
-                  <div className="col-md-8">
+                   {/* <div className="col-md-8">
                     <b>Gender:</b>
                     <div className="mb-4">
                       <br />
@@ -456,12 +519,37 @@ function RegisterJobSheeker() {
                       />
                       <label htmlFor="preferNotToSay">Prefer Not to Say</label>
                     </div>
-                  </div>
+                  </div>  */}
                 </div>
                 <div className="form-row d-flex align-items-center justify-content-center">
-                  <div className="col-md-4 mb-3">
+                   <div className="col-md-2 mb-3">
+                    <label htmlFor="validationDefault04">State</label>
+                    <select
+                      name="state"
+                      class="form-control form-control-lg"
+                      id="validationDefault04"
+                      onChange={formik.handleChange}
+                      value={formik.values.state}
+                    >
+                     <option>--Select--</option>
+                      {data3.map((item, id) => {
+                        return (
+                          <>
+                            <option value={item._id} key={id._id}>
+                              {item.state}
+                            </option>
+                          </>
+                        );
+                      })}
+                    </select>
+
+                    {formik.errors.state && (
+                      <em style={{ color: "red" }}>{formik.errors.state}</em>
+                    )}
+                  </div> 
+                   <div className="col-md-4 mb-3">
                     <label htmlFor="validationDefault03">City</label>
-                    <input
+                    <select
                       type="text"
                       name="city"
                       className="form-control"
@@ -469,58 +557,68 @@ function RegisterJobSheeker() {
                       placeholder="City"
                       onChange={formik.handleChange}
                       value={formik.values.city}
-                    />
+                    >
+                       <option>--Select--</option>
+                      {data4.map((item, id) => {
+                        return (
+                          <>
+                            <option value={item._id} key={id._id}>
+                              {item.city}
+                            </option>
+                          </>
+                        );
+                      })}
+                   </select>
 
                     {formik.errors.city && (
                       <em style={{ color: "red" }}>{formik.errors.city}</em>
                     )}
-                  </div>
-                  <div className="col-md-2 mb-3">
-                    <label htmlFor="validationDefault04">State</label>
-                    <input
-                      type="text"
-                      name="state"
-                      className="form-control"
-                      id="validationDefault04"
-                      placeholder="State"
-                      onChange={formik.handleChange}
-                      value={formik.values.state}
-                    />
+                  </div> 
 
-                    {formik.errors.state && (
-                      <em style={{ color: "red" }}>{formik.errors.state}</em>
-                    )}
-                  </div>
-                  <div className="col-md-2 mb-3">
-                    <label htmlFor="validationDefault05">Zip</label>
-                    <input
-                      type="number"
-                      name="zip"
+                   <div className="col-md-2 mb-3">
+                    <label htmlFor="validationDefault05">Area</label>
+                    <select
+                      type="text"
+                      name="area"
                       className="form-control"
                       id="validationDefault05"
-                      placeholder="Zip"
                       onChange={formik.handleChange}
-                      value={formik.values.zip}
-                    />
+                      value={formik.values.area}
+                    >
+                      <option>--Select--</option>
+                      {data5.map((item, id) => {
+                        return (
+                          <>
+                            <option value={item._id} key={id._id}>
+                              {item.area}
+                            </option>
+                          </>
+                        );
+                      })}
+                    </select>
 
-                    {formik.errors.zip && (
-                      <em style={{ color: "red" }}>{formik.errors.zip}</em>
+                    {formik.errors.area && (
+                      <em style={{ color: "red" }}>{formik.errors.area}</em>
                     )}
-                  </div>
+                  </div> 
                 </div>
                 <div className="form-group d-flex align-items-center justify-content-center">
                   <div className="form-check">
                     <input
                       className="form-check-input"
+                      name="term"
                       type="checkbox"
-                      value=""
+                      value={formik.values.term}
+                      onChange={formik.handleChange}
                       id="invalidCheck2"
-                      required
                     />
                     <label className="form-check-label" htmlFor="invalidCheck2">
                       Agree to terms and conditions
                     </label>
                   </div>
+                  {formik.errors.term && (
+                    <em style={{ color: "red" }}>{formik.errors.term}</em>
+                  )}
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
                   <button
@@ -820,7 +918,7 @@ function RegisterJobSheeker() {
                       {data.map((item, id) => {
                         return (
                           <>
-                            <option value={item.currentCompany} key={id}>
+                            <option value={item._id} key={id._id}>
                               {item.company_name}
                             </option>
                           </>
@@ -843,13 +941,15 @@ function RegisterJobSheeker() {
                       value={formik3.values.technicalSkills}
                     >
                       <option>--Select--</option>
-                      <option>JAVA</option>
-                      <option>Python</option>
-                      <option>JavaScript</option>
-                      <option>HTML</option>
-                      <option>CSS</option>
-                      <option>React JS</option>
-                      <option>React Native</option>
+                      {data1.map((item, id) => {
+                        return (
+                          <>
+                            <option value={item._id} key={id._id}>
+                              {item.tech_name}
+                            </option>
+                          </>
+                        );
+                      })}
                     </select>
                     {formik3.errors.technicalSkills && (
                       <em style={{ color: "red" }}>
@@ -867,7 +967,7 @@ function RegisterJobSheeker() {
                       onChange={formik3.handleChange}
                       value={formik3.values.fresher}
                     >
-                      {/* <option>--Select--</option> */}
+                      <option  >--Select--</option>
                       <option>No</option>
                       <option>Yes</option>
                     </select>
@@ -891,14 +991,15 @@ function RegisterJobSheeker() {
                       disabled={formik3.values.fresher === "Yes"}
                     >
                       <option>--Select--</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
+                      {data2.map((item, id) => {
+                        return (
+                          <>
+                            <option value={item._id} key={id._id}>
+                              {item.experience}
+                            </option>
+                          </>
+                        );
+                      })}
                     </select>
                     {formik3.errors.ExperienceInYear && (
                       <em style={{ color: "red" }}>
@@ -985,7 +1086,7 @@ function RegisterJobSheeker() {
                       onChange={formik4.handleChange}
                       value={formik4.values.lookingForJob}
                     >
-                      <option>--Select--</option>
+                      {/* <option>--Select--</option> */}
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
@@ -1002,10 +1103,15 @@ function RegisterJobSheeker() {
                       name="noticePeriod"
                       id="noticePeriod"
                       onChange={formik4.handleChange}
-                      value={formik4.values.noticePeriod}
+                      value={
+                        (formik4.values.noticePeriod =
+                          formik4.values.lookingForJob === "No"
+                            ? "No"
+                            : formik4.values.noticePeriod)
+                      }
                       disabled={formik4.values.lookingForJob === "No"}
                     >
-                      <option>--Select--</option>
+                      {/* <option>--Select--</option> */}
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
@@ -1023,10 +1129,15 @@ function RegisterJobSheeker() {
                       name="immediateJoiner"
                       id="immediateJoiner"
                       onChange={formik4.handleChange}
-                      value={formik4.values.immediateJoiner}
+                      value={
+                        (formik4.values.immediateJoiner =
+                          formik4.values.lookingForJob === "No"
+                            ? "No"
+                            : formik4.values.immediateJoiner)
+                      }
                       disabled={formik4.values.lookingForJob === "No"}
                     >
-                      <option>--Select--</option>
+                      {/* <option>--Select--</option> */}
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
