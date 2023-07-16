@@ -7,12 +7,19 @@ import { toast } from "react-toastify";
 
 const Registerhr = () => {
 
+  const [data, SetData] = useState([]);
 
   useEffect(() => {
     document.title = "Registration";
   }, []);
 
-  // const navigate = useNavigate();
+ useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/hrRegister/getCompanyList")
+      .then((res) => {
+        SetData(res.data.companyList);
+      });
+  }, []);
 
   // form validation
 
@@ -22,10 +29,7 @@ const Registerhr = () => {
       lastName: "",
       email: "",
       mobile: "",
-      city: "",
-      state: "",
-      zip: "",
-      
+      term: "",
     },
 
     validationSchema: yup.object({
@@ -41,7 +45,6 @@ const Registerhr = () => {
         .required("*Required")
         .min(3, "Minimum 3 characters length")
         .max(15, "Maximum 15 characters length"),
-
       email: yup.string().required("*Required").email("Invalid Email"),
       mobile: yup
         .string()
@@ -49,40 +52,14 @@ const Registerhr = () => {
         .matches(/^[0-9]+$/, "This field  must be a number")
         .min(10, "Minimum 10 digits")
         .max(10, "Maximum 10 digits"),
-      city: yup
-        .string()
-        .required("*Required")
-        .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
-      state: yup
-        .string()
-        .required("*Required")
-        .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
-      zip: yup
-        .string()
-        .required("*Required")
-        .matches(/^[0-9]+$/, "This field  must be a number")
-        .min(5, "Minimum 5 digits")
-        .max(10, "Maximum 10 digits"),
+      term: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      console.log(values)
-      // In this section data send to backend
-      // axios
-      // .post("http://localhost:3030/users_registration_hr", values)
-      // .then((response) => {
-      //   console.log(response.data);
-      // })
-      // .catch((error) => {
-      //   console.error(error);
-      // });
-
-      changeForm("verify");
-      // navigate("/RegistrationVarify");
+      console.log(values);
+      
     },
   });
   // registration varify Start
-
-  // const navigate1 = useNavigate();
 
   // form validation
   const formik1 = useFormik({
@@ -100,19 +77,7 @@ const Registerhr = () => {
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      // setFormData(values);
-      // console.log(formData);
-      console.log(values); // In this section data send to backend
-      // axios
-      // .post("http://localhost:3030/users_registration_hr", values)
-      // .then((response) => {
-      //   console.log(response.data);
-      // })
-      // .catch((error) => {
-      //   console.error(error);
-      // });
-      // navigate1("/RegistrationCreate");
-      changeForm("create");
+      console.log(values);
     },
   });
 
@@ -120,7 +85,6 @@ const Registerhr = () => {
 
   // registration create start
 
-  // const navigate2 = useNavigate();
 
   // form validation
 
@@ -145,18 +109,7 @@ const Registerhr = () => {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      // setFormData(...values);
-      console.log(values); // In this section data send to backend
-      // axios
-      // .post("http://localhost:3030/users_registration_hr", values)
-      // .then((response) => {
-      //   console.log(response.data);
-      // })
-      // .catch((error) => {
-      //   console.error(error);
-      // });
-      // navigate2("/RegistrationTechSkills");
-      changeForm("skill");
+      console.log(values);
     },
   });
 
@@ -164,33 +117,18 @@ const Registerhr = () => {
 
   // registration tech skills start
 
-  // const navigate3 = useNavigate();
 
   // form validation
 
   const formik3 = useFormik({
     initialValues: {
-      currentCompany: "",
-      technicalSkills: "",
-      ExperienceInYear: "",
+      currentCompany:"",
     },
     validationSchema: yup.object({
       currentCompany: yup.string().required("*Required"),
-      technicalSkills: yup.string().required("*Required"),
-      ExperienceInYear: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      // setFormData(...values);
-      console.log(values); // In this section data send to backend
-      // axios
-      // .post("http://localhost:3030/users_registration_hr", values)
-      // .then((response) => {
-      //   console.log(response.data);
-      // })
-      // .catch((error) => {
-      //   console.error(error);
-      // });
-      // navigate("/RegistrationStatus");
+      console.log(values);
       changeForm("status");
     },
   });
@@ -205,28 +143,18 @@ const Registerhr = () => {
 
   const formik4 = useFormik({
     initialValues: {
-      lookingForJob: "",
-      noticePeriod: "",
-      immediateJoiner: "",
+      // lookingForJob: "",
+      // noticePeriod: "",
+      // immediateJoiner: "",
+
     },
     validationSchema: yup.object({
-      lookingForJob: yup.string().required("*Required"),
+      // lookingForJob: yup.string().required("*Required"),
       // noticePeriod: yup.string().required("*Required"),
       // immediateJoiner: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      console.log(values); // In this section data send to backend
-      // axios
-      //   .post("http://localhost:3030/users_registration_hr", values)
-      //   .then((response) => {
-      //     const data = response.data;
-      //     console.log(data);
-      //     toast.success(`Registered successfully.`);
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //     toast.success(`Failed : ${error.message}`);
-      //   });
+      console.log(values);
       // navigate4("/SigninAsHr");
     },
   });
@@ -234,8 +162,15 @@ const Registerhr = () => {
 
   
   const handleContact=()=>{
+    if (
+      formik.values.firstName &&
+      formik.values.lastName &&
+      formik.values.email &&
+      formik.values.mobile &&
+      formik.values.term
+    ){
     axios
-      .post("https://saijeweller.com/api/hrRegister/emailCheck", {
+      .post("http://testredprism.co/api/hrRegister/emailCheck", {
         email_id : formik.values.email ,
       })
       .then((response) => {
@@ -245,20 +180,20 @@ const Registerhr = () => {
         }
       if(response.data.status==="error"){
           toast.error(`${response.data.mssg}`);
-          // changeForm("verify");
         }
       })
       .catch((error) => {
         console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
+    }
   }
 
 
 
   const sendOtp=()=>{
     axios
-      .post("https://saijeweller.com/api/hrRegister/registerSendOtp", {
+      .post("http://testredprism.co/api/hrRegister/registerSendOtp", {
         ph_num : formik.values.mobile ,
       })
       .then((response) => {
@@ -280,8 +215,9 @@ const Registerhr = () => {
 
   const otpSuccess=()=>{
     // console.log(formik.values.otpId);
+    if (formik1.values.otp) {
     axios
-    .post("https://saijeweller.com/api/hrRegister/registerOtpCheck", {
+    .post("http://testredprism.co/api/hrRegister/registerOtpCheck", {
       ph_num : formik.values.mobile ,
       otp : formik1.values.otp ,
       otp_id : formik1.values.otpId ,
@@ -301,10 +237,12 @@ const Registerhr = () => {
       toast.error(`Failed : ${error.message}`);
     });
   }
+  }
 
 const handleUsername=()=>{
+  if (formik2.values.username && formik2.values.password){
   axios
-      .post("https://saijeweller.com/api/hrRegister/usernameCheck", {
+      .post("http://testredprism.co/api/hrRegister/usernameCheck", {
         user_name: formik2.values.username
       })
       .then((response) => {
@@ -320,12 +258,13 @@ const handleUsername=()=>{
         console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
+    }
 }
 
 
   const handleApi=()=>{
     axios
-        .post("http://localhost:5000/api/employee/hr/register", {
+        .post("http://testredprism.co/api/hrRegister/register", {
           employee_status: "Status",
           status_icon: "Icon",
           first_name: formik.values.firstName,
@@ -335,26 +274,10 @@ const handleUsername=()=>{
           ph_num: formik.values.mobile,
           email_id: formik.values.email,
           company_code: formik3.values.currentCompany,
-          // firstName:formik.values.firstName,
-          // lastName:formik.values.lastName,
-          // email: formik.values.email,
-          // mobile:formik.values.mobile,
-          // city: formik.values.city,
-          // state: formik.values.state,
-          // zip: formik.values.zip,
-          // otp: formik1.values.otp,
-          // username: formik2.values.username,
-          // password: formik2.values.password,
-          // currentCompany: formik3.values.currentCompany,
-          // technicalSkills: formik3.values.technicalSkills,
-          // ExperienceInYear: formik3.values.ExperienceInYear,
-          // lookingForJob: formik4.values.lookingForJob,
-          // noticePeriod: formik4.values.noticePeriod,
-          // immediateJoiner: formik4.values.immediateJoiner,
         })
         .then((response) => {
           console.log(response.data);
-          if(response.data.status==="data exist"){
+          if(response.data.status==="error"){
             toast.error(`Failed : ${response.data.mssg}`);
           }
           if(response.data.status==="success"){
@@ -375,9 +298,6 @@ const handleUsername=()=>{
     document.getElementById("skill").style.display = "none";
     document.getElementById("status").style.display = "none";
     document.getElementById(formName).style.display = "block";
-    // console.log(typeof values);
-    // setFormData('adasdasdasds');
-    // console.log(formData);
   };
   // registration status End
 
@@ -419,7 +339,7 @@ const handleUsername=()=>{
             <div className="col-md-12 font-weight-bold text-center h1">
               Create an Account!
             </div>
-            <div className="col-md-12 text-center">( As a Job Seeker )</div>
+            <div className="col-md-12 text-center">( As a HR )</div>
             <div className="col-md-12 text-center">
               It only takes a couple of minutes to get started!
             </div>
@@ -503,7 +423,7 @@ const handleUsername=()=>{
                       <em style={{ color: "red" }}>{formik.errors.mobile}</em>
                     )}
                   </div>
-                  <div className="col-md-8">
+                  {/* <div className="col-md-8">
                     <b>Gender:</b>
                     <div className="mb-4">
                       <br />
@@ -583,21 +503,25 @@ const handleUsername=()=>{
                     {formik.errors.zip && (
                       <em style={{ color: "red" }}>{formik.errors.zip}</em>
                     )}
-                  </div>
+                  </div> */}
                 </div>
                 <div className="form-group d-flex align-items-center justify-content-center">
                   <div className="form-check">
-                    <input
+                  <input
                       className="form-check-input"
+                      name="term"
                       type="checkbox"
-                      value=""
+                      value={formik.values.term}
+                      onChange={formik.handleChange}
                       id="invalidCheck2"
-                      required
                     />
                     <label className="form-check-label" htmlFor="invalidCheck2">
                       Agree to terms and conditions
                     </label>
                   </div>
+                  {formik.errors.term && (
+                    <em style={{ color: "red" }}>{formik.errors.term}</em>
+                  )}
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
                   <button
@@ -653,7 +577,7 @@ const handleUsername=()=>{
             <div class="col-md-12 font-weight-bold text-center h1">
               Create an Account!
             </div>
-            <div class="col-md-12 text-center">( As a Job Seeker )</div>
+            <div class="col-md-12 text-center">( As a HR )</div>
             <div class="col-md-12 text-center">
               It only takes a couple of minutes to get started!
             </div>
@@ -742,7 +666,7 @@ const handleUsername=()=>{
             <div className="col-md-12 font-weight-bold text-center h1">
               Create an Account!
             </div>
-            <div className="col-md-12 text-center">( As a Job Seeker )</div>
+            <div className="col-md-12 text-center">( As a HR )</div>
             <div className="col-md-12 text-center">
               It only takes a couple of minutes to get started!
             </div>
@@ -861,14 +785,14 @@ const handleUsername=()=>{
             <div class="col-md-12 font-weight-bold text-center h1">
               Create an Account!
             </div>
-            <div class="col-md-12 text-center">( As a Job Seeker )</div>
+            <div class="col-md-12 text-center">( As a HR )</div>
             <div class="col-md-12 text-center">
               It only takes a couple of minutes to get started!
             </div>
             <div class="col-md-12 text-center">
               <span class="px-3 py-1 backcolor">It's free</span>
             </div>
-            <div class="col-md-12 mt-3 text-center d-flex align-items-center justify-content-center">
+            <div class="col-md-12 mt-3 mb-3 text-center d-flex align-items-center justify-content-center">
               <b className="midil backcolor px-3 py-1">
                 Please Enter Your Technical Skills
               </b>
@@ -886,10 +810,15 @@ const handleUsername=()=>{
                       value={formik3.values.currentCompany}
                     >
                       <option>--Select--</option>
-                      <option>Cognizant</option>
-                      <option>CTS</option>
-                      <option>Wipro</option>
-                      <option>Tech Mahindra</option>
+                      {data.map((item, id) => {
+                        return (
+                          <>
+                            <option value={item._id} key={id._id}>
+                              {item.company_name}
+                            </option>
+                          </>
+                        );
+                      })}
                     </select>
                     {formik3.errors.currentCompany && (
                       <em style={{ color: "red" }}>
@@ -897,7 +826,7 @@ const handleUsername=()=>{
                       </em>
                     )}
                   </div>
-                  <div class="col-md-8 mb-3">
+                  {/* <div class="col-md-8 mb-3">
                     <label htmlFor="technicalSkills">Technical Skills</label>
                     <select
                       class="form-control form-control-lg"
@@ -945,7 +874,7 @@ const handleUsername=()=>{
                         {formik3.errors.ExperienceInYear}
                       </em>
                     )}
-                  </div>
+                  </div> */}
                 </div>
                 <div class="d-flex align-items-center justify-content-center mt-3">
                   <button
@@ -1001,14 +930,14 @@ const handleUsername=()=>{
             <div className="col-md-12 font-weight-bold text-center h1">
               Create an Account!
             </div>
-            <div className="col-md-12 text-center">( As a Job Seeker )</div>
+            <div className="col-md-12 text-center">( As a HR )</div>
             <div className="col-md-12 text-center">
               It only takes a couple of minutes to get started!
             </div>
             <div className="col-md-12 text-center">
               <span className="px-3 py-1 backcolor">It's free</span>
             </div>
-            <div className="col-md-12 mt-3 text-center d-flex align-items-center justify-content-center">
+            <div className="col-md-12 mt-3 mb-5 text-center d-flex align-items-center justify-content-center">
               <b className="midil backcolor px-3 py-1">
                 Please Verify yourself
               </b>
@@ -1016,7 +945,7 @@ const handleUsername=()=>{
             <div className="container">
               <form onSubmit={formik4.handleSubmit}>
                 <div className="form-row d-flex align-items-center justify-content-center">
-                  <div className="col-md-8 mb-3">
+                  {/* <div className="col-md-8 mb-3">
                     <label htmlFor="lookingJob">Looking For Job</label>
                     <select
                       className="form-control form-control-lg"
@@ -1076,15 +1005,55 @@ const handleUsername=()=>{
                           {formik4.errors.immediateJoiner}
                         </em>
                       )}
-                  </div>
-                  <div
-                    className="col-md-8 d-flex"
+                  </div> */}
+                 <div
+                    className="col-md-8 d-flex "
                     style={{ justifyContent: "space-around" }}
                   >
-                    <img src="img/icon/status.png" className="icon-reg"></img>
-                    <img src="img/icon/icon2.png" className="icon-reg"></img>
-                    <img src="img/icon/icon3.png" className="icon-reg"></img>
-                    <img src="img/icon/icon4.png" className="icon-reg"></img>
+                    <label>
+                      <input
+                        className="icon-radio"
+                        type="radio"
+                        name="test"
+                        value="1YearJobless"
+                        onChange={formik.handleChange}
+                        checked
+                      />
+                      <img src="img/icon/status.png" className="icon-reg"></img>
+                    </label>
+                    <label>
+                      <input
+                        className="icon-radio"
+                        type="radio"
+                        name="test"
+                        value="SavingNoticePeriod"
+                        onChange={formik.handleChange}
+                        checked
+                      />
+                      <img src="img/icon/icon2.png" className="icon-reg"></img>
+                    </label>
+                    <label>
+                      <input
+                        className="icon-radio"
+                        type="radio"
+                        name="test"
+                        value="LookingJob"
+                        onChange={formik.handleChange}
+                        checked
+                      />
+                      <img src="img/icon/icon3.png" className="icon-reg"></img>
+                    </label>
+                    <label>
+                      <input
+                        className="icon-radio"
+                        type="radio"
+                        name="test"
+                        value="ImmediateJoiner"
+                        onChange={formik.handleChange}
+                        checked
+                      />
+                      <img src="img/icon/icon4.png" className="icon-reg"></img>
+                    </label>
                   </div>
                   <div
                     className="col-md-8 d-flex"
