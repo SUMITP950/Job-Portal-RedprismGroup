@@ -4,18 +4,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link,useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(!localStorage.getItem('authToken')){
-      navigate('/SigninAsHr')
-    }
-  },[]);
-
+  // useEffect(()=>{
+  //   if(!localStorage.getItem('authToken')){
+  //     navigate('/SigninAsHr')
+  //   }
+  // },[]);
 
   useEffect(() => {
     const tabsBox = document.querySelector(".tabs-box"),
@@ -86,10 +84,19 @@ export default function Home() {
     }
   }, []);
   const [thoughts, setThoughts] = useState("");
+  const [thought, setThought] = useState("");
   const [listdata, setListdata] = useState([]);
+  const [comentdata, setcomentdata] = useState([]);
+  const [like, setlike] = useState(0);
+  const handellike = () => {
+    setlike(like + 1);
+  };
 
   const handleThoughtsChange = (e) => {
     setThoughts(e.target.value);
+  };
+  const handleThoughtsChange1 = (e) => {
+    setThought(e.target.value);
   };
 
   const handlePost = () => {
@@ -100,14 +107,28 @@ export default function Home() {
     });
 
     // Make a POST request to the backend with the thoughts data
-    axios
-      .post("http://localhost:3030/post_your_thoughts", { thoughts })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    //   axios
+    //     .post("http://testredprism.co/post_your_thoughts", { thoughts })
+    //     .then((response) => {
+    //       console.log(response.data);
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+  };
+  // comment section function
+  const disblk = () => {
+    document.getElementById("open").style.display = "block";
+  };
+  const disnan = () => {
+    document.getElementById("open").style.display = "none";
+  };
+  const handleComent = () => {
+    setcomentdata((comentdata) => {
+      const updatedComent = [...comentdata, thought];
+      setThought("");
+      return updatedComent;
+    });
   };
 
   return (
@@ -171,9 +192,9 @@ export default function Home() {
                 </div>
                 <div className="border-top p-3 d-flex align-items-center">
                   <div className="mr-auto">
-                    <a href="#" className="text-link">
+                    {/* <a href="#" className="text-link">
                       <i className="feather-users"></i> Tag Buddies
-                    </a>
+                    </a> */}
                   </div>
                   <div className="flex-shrink-1">
                     <button
@@ -212,20 +233,32 @@ export default function Home() {
                           <p
                             class="mb-0"
                             key={i}
-                            style={{ fontWeight: "bold", fontSize: 20}}
+                            style={{ fontWeight: "bold", fontSize: "20" }}
                           >
                             <div>{data}</div>
                           </p>
                         </div>
                         <div class="p-3 osahan-post-footer text-center d-flex jcc">
-                          <a href="#" class="mr-3 text-secondary">
+                          <button
+                            class="mr-3 text-secondary btn btn-link"
+                            onClick={handellike}
+                          >
                             <i class="feather-heart text-danger icon-font"></i>
-                            16
-                          </a>
-                          <a href="#" class="mr-3 text-secondary">
-                            <i class="feather-message-square icon-font"></i>8
-                          </a>
-                          <a href="#" class="mr-3 text-secondary">
+                            {like}
+                          </button>
+                          <button
+                            class="mr-3 text-secondary btn btn-link"
+                            onClick={disblk}
+                          >
+                            <i class="feather-message-square icon-font"></i>
+                            {}
+                          </button>
+                          <a
+                            href="whatsapp://send?text=This is WhatsApp sharing example using link"
+                            data-action="share/whatsapp/share"
+                            target="_blank"
+                            class="mr-3 text-secondary"
+                          >
                             <img
                               src="img/icon/whatsapp.png"
                               alt=""
@@ -233,6 +266,78 @@ export default function Home() {
                             />
                           </a>
                         </div>
+                        {/* comment section start */}
+                        <section
+                          id="open"
+                          style={{ backgroundColor: "#eee", display: "none" }}
+                        >
+                          <div class="container m-0 p-0">
+                            <div class="row d-flex justify-content-center">
+                              <div class="col-md-12">
+                                <div class="card">
+                                  <div
+                                    class="card-footer py-3 border-0"
+                                    style={{ backgroundColor: "#f8f9fa" }}
+                                  >
+                                    <div class="d-flex flex-start w-100">
+                                      <div class="form-outline w-100">
+                                        <textarea
+                                          class="form-control"
+                                          id="textAreaExample"
+                                          rows="4"
+                                          style={{ background: "#fff" }}
+                                          value={thought}
+                                          onChange={handleThoughtsChange1}
+                                        ></textarea>
+                                        <div>
+                                          {comentdata != [] &&
+                                            comentdata.map((data1, i2) => {
+                                              return (
+                                                <p
+                                                  class="my-3 px-2 py-1 border"
+                                                  key={i2}
+                                                  style={{
+                                                    fontWeight: "bold",
+                                                    fontSize: "20",
+                                                    backgroundColor: "#fff",
+                                                  }}
+                                                >
+                                                  <div>{data1}</div>
+                                                </p>
+                                              );
+                                            })}
+                                        </div>
+                                        <label
+                                          class="form-label"
+                                          for="textAreaExample"
+                                        >
+                                          Message
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="float-end mt-2 pt-1">
+                                      <button
+                                        type="button"
+                                        class="btn btn-primary btn-sm aply-btn mr-2"
+                                        onClick={handleComent}
+                                      >
+                                        Post comment
+                                      </button>
+                                      <button
+                                        type="button"
+                                        class="btn btn-outline-primary btn-sm"
+                                        onClick={disnan}
+                                      >
+                                        Cancel
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                        {/* comment section end */}
                       </div>
                     </>
                   );
