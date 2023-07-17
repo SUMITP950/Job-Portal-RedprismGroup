@@ -265,8 +265,8 @@ const handleUsername=()=>{
   const handleApi=()=>{
     axios
         .post("http://testredprism.co/api/hrRegister/register", {
-          employee_status: "Status",
-          status_icon: "Icon",
+          // employee_status: "Status",
+          // status_icon: "Icon",
           first_name: formik.values.firstName,
           last_name: formik.values.lastName,
           user_name: formik2.values.username,
