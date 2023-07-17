@@ -37,7 +37,7 @@ export default function SigninAsHr() {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      console.log(values); 
+      console.log(values);
       // axios
       // .post("http://localhost:3030/sign_in_hr", values)
       // .then((response) => {
@@ -55,6 +55,7 @@ export default function SigninAsHr() {
     initialValues: {
       mobile: "",
       otp: "",
+      otpid:"",
     },
     validationSchema: yup.object({
       mobile: yup
@@ -71,7 +72,7 @@ export default function SigninAsHr() {
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values); 
+      console.log(values);
       // axios
       // .post("http://localhost:3030/sign_in_hr", values)
       // .then((response) => {
@@ -87,23 +88,70 @@ export default function SigninAsHr() {
   });
 
   // In this section data send to backend
-  const handleApiMobile=()=>{
+  const handleApiMobile = () => {
+    if(formik1.values.mobile&&formik1.values.otp){
     axios
-      .post("http://localhost:5000/api/employee/hr/login/phnum", {
-        ph_num : formik1.values.mobile ,
-        otp : formik1.values.otp,
+    .post("http://testredprism.co/api/hrLogin/loginSendOtp", {
+      ph_num: formik1.values.mobile,
+    })
+    .then((response) => {
+      console.log(response.data);
+    if(response.data.status==="success"){
+      toast.success(`${response.data.mssg}`);
+        sendOtp();
+      }
+    if(response.data.status==="error"){
+        toast.error(`${response.data.mssg}`);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      toast.error(`Failed : ${error.message}`);
+    });
+  }
+
+
+
+
+    // axios
+    //   .post("http://testredprism.co/api/hrLogin/loginCheckOtp", {
+    //     ph_num: formik1.values.mobile,
+    //     otp: formik1.values.otp,
+    //     otp_id: formik1.values.otpid,
+    //   })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     if (response.data.status === "error") {
+    //       toast.error(`Failed : ${response.data.mssg}`);
+    //     } else {
+    //       localStorage.setItem("authToken", response.data.authToken);
+    //       toast.success(`${response.data.mssg}`);
+    //       navigate("/Home");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //     toast.error(`Failed : ${error.message}`);
+    //   });
+  };
+
+  const sendOtp=()=>{
+    axios
+      .post("http://testredprism.co/api/hrLogin/loginCheckOtp", {
+        ph_num : formik1.values.mobile,
+        otp: formik1.values.otp,
+        otp_id: formik1.values.otpid,
       })
       .then((response) => {
         console.log(response.data);
-        if(response.data.status==="validation error"){
-          toast.error(`Failed : ${response.data.mssg}`);
-        }else if(response.data.status==="not match"){
-          toast.error(`Failed : ${response.data.mssg}`);
+      if(response.data.status==="success"){
+        formik1.values.otpid = response.data.otp_id;
+        localStorage.setItem("authToken", response.data.authToken);
+        toast.success(`${response.data.mssg}`)
+        navigate("/Home");
         }
-        else{
-          localStorage.setItem('authToken',response.data.authToken)
-          toast.success(`${response.data.mssg}`);
-          navigate("/Home");
+      if(response.data.status==="error"){
+          toast.error(`${response.data.mssg}`);
         }
       })
       .catch((error) => {
@@ -112,28 +160,36 @@ export default function SigninAsHr() {
       });
   }
 
-// In this section data send to backend
-  const handleApi=()=>{
+
+
+  // In this section data send to backend
+  const handleApi = () => {
+    if(formik.values.username&&formik.values.password){
     axios
-      .post("http://localhost:5000/api/employee/hr/login/username", {
-        user_name : formik.values.username ,
-        password : formik.values.password,
+      .post("http://testredprism.co/api/hrLogin/loginUsername", {
+        user_name: formik.values.username,
+        password: formik.values.password,
       })
       .then((response) => {
         console.log(response.data);
-        if(response.data.status==="not found"){
-          toast.error(`Failed : ${response.data.mssg}`);
-        }else{
-          localStorage.setItem('authToken',response.data.authToken)
+        if (response.data.status === "success") {
+          localStorage.setItem("authToken", response.data.authToken);
           toast.success(`${response.data.mssg}`);
           navigate("/Home");
+        }
+        if (response.data.status === "error") {
+          toast.error(`Failed : ${response.data.mssg}`);
+        }
+        if (response.data.status === "not found") {
+          toast.error(`Failed : ${response.data.mssg}`);
         }
       })
       .catch((error) => {
         console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
-  }
+    }
+  };
 
   return (
     <div>
@@ -231,13 +287,17 @@ export default function SigninAsHr() {
                           )}
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-primary" onClick={handleApiMobile}>
+                        <button
+                          type="submit"
+                          class="btn btn-block btn-primary"
+                          onClick={handleApiMobile}
+                        >
                           <strong>SIGN IN</strong>
                         </button>
 
                         <div class="d-flex mb-3 align-items-center mt-3">
                           <span class="mr-auto">
-                          <Link to="/Sendotp" class="forgot-pass">
+                            <Link to="/Sendotp" class="forgot-pass">
                               Forgot Password ?
                             </Link>
                           </span>
@@ -291,18 +351,22 @@ export default function SigninAsHr() {
                           )}
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-primary" onClick={handleApi}>
+                        <button
+                          type="submit"
+                          class="btn btn-block btn-primary"
+                          onClick={handleApi}
+                        >
                           <strong>SIGN IN</strong>
                         </button>
 
                         <div class="d-flex mb-3 align-items-center mt-3">
                           <span class="mr-auto">
-                          <Link to="/Sendotp" class="forgot-pass">
+                            <Link to="/Sendotp" class="forgot-pass">
                               Forgot Password ?
                             </Link>
                           </span>
                           <span class="ml-auto">
-                          <Link to="/Registerhr" class="forgot-pass">
+                            <Link to="/Registerhr" class="forgot-pass">
                               Creat a new account
                             </Link>
                           </span>

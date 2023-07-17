@@ -10,7 +10,7 @@ export default function RnavHR() {
    
   <div >
 Alrady registered as a HR? 
-  <Link to="/SigninAsHr"> Login</Link>
+  <Link to="/SigninAsHr"  style={{fontSize:20}}> Login</Link>
   </div>
 </div>
  );

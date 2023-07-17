@@ -10,7 +10,7 @@ export default function Rnav() {
    
   <div >
 Alrady registered as a Job Seeker? 
-  <Link to="/Signin"> Login</Link>
+  <Link to="/Signin" style={{fontSize:20}}> Login </Link>
   </div>
 </div>
  );

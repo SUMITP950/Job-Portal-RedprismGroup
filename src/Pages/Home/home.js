@@ -8,12 +8,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
-
-  // useEffect(()=>{
-  //   if(!localStorage.getItem('authToken')){
-  //     navigate('/SigninAsHr')
-  //   }
-  // },[]);
+  useEffect(()=>{
+    if(!localStorage.getItem('authToken')){
+      navigate('/SigninAsHr')
+    }
+  },[]);
 
   useEffect(() => {
     const tabsBox = document.querySelector(".tabs-box"),
@@ -87,11 +86,13 @@ export default function Home() {
   const [thought, setThought] = useState("");
   const [listdata, setListdata] = useState([]);
   const [comentdata, setcomentdata] = useState([]);
-  const [like, setlike] = useState(0);
+  const [like, setlike] = useState("");
   const handellike = () => {
-    setlike(like + 1);
+    setlike(like+1);
+    if(like>=1){
+      setlike("")
+    }
   };
-
   const handleThoughtsChange = (e) => {
     setThoughts(e.target.value);
   };
@@ -116,6 +117,7 @@ export default function Home() {
     //       console.error(error);
     //     });
   };
+
   // comment section function
   const disblk = () => {
     document.getElementById("open").style.display = "block";
@@ -129,6 +131,13 @@ export default function Home() {
       setThought("");
       return updatedComent;
     });
+    disnan();
+  };
+  const removeActivity = (i) => {
+    const deleteListData = comentdata.filter((item, id) => {
+      return i != id;
+    });
+    setcomentdata(deleteListData);
   };
 
   return (
@@ -185,6 +194,7 @@ export default function Home() {
                           className="form-control shadow-none"
                           value={thoughts}
                           onChange={handleThoughtsChange}
+                          style={{fontSize:25}}
                         ></textarea>
                       </div>
                     </div>
@@ -233,14 +243,14 @@ export default function Home() {
                           <p
                             class="mb-0"
                             key={i}
-                            style={{ fontWeight: "bold", fontSize: "20" }}
+                            style={{ fontWeight: "bold", fontSize: 20 }}
                           >
                             <div>{data}</div>
                           </p>
                         </div>
                         <div class="p-3 osahan-post-footer text-center d-flex jcc">
                           <button
-                            class="mr-3 text-secondary btn btn-link"
+                            class="mr-3 text-secondary btn btn-link "
                             onClick={handellike}
                           >
                             <i class="feather-heart text-danger icon-font"></i>
@@ -267,6 +277,45 @@ export default function Home() {
                           </a>
                         </div>
                         {/* comment section start */}
+                        <div>
+                          {comentdata != [] &&
+                            comentdata.map((data1, i2) => {
+                              return (
+                                <>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                      alignItems: "center",
+                                      paddingLeft:20,
+                                      paddingRight:20
+                                    }}
+                                  >
+                                    <p
+                                      class="my-3 px-2 py-1"
+                                      key={i2}
+                                      style={{
+                                        fontWeight: "bold",
+                                        fontSize: 15,
+                                      }}
+                                    >
+                                      {data1}
+                                    </p>
+                                    <button
+                                      style={{
+                                        fontWeight: "bold",
+                                        fontSize: "25",
+                                        border:'none'
+                                      }}
+                                      onClick={() => removeActivity(i)}
+                                    >
+                                      X
+                                    </button>
+                                  </div>
+                                </>
+                              );
+                            })}
+                        </div>
                         <section
                           id="open"
                           style={{ backgroundColor: "#eee", display: "none" }}
@@ -289,24 +338,7 @@ export default function Home() {
                                           value={thought}
                                           onChange={handleThoughtsChange1}
                                         ></textarea>
-                                        <div>
-                                          {comentdata != [] &&
-                                            comentdata.map((data1, i2) => {
-                                              return (
-                                                <p
-                                                  class="my-3 px-2 py-1 border"
-                                                  key={i2}
-                                                  style={{
-                                                    fontWeight: "bold",
-                                                    fontSize: "20",
-                                                    backgroundColor: "#fff",
-                                                  }}
-                                                >
-                                                  <div>{data1}</div>
-                                                </p>
-                                              );
-                                            })}
-                                        </div>
+
                                         <label
                                           class="form-label"
                                           for="textAreaExample"
@@ -328,7 +360,7 @@ export default function Home() {
                                         class="btn btn-outline-primary btn-sm"
                                         onClick={disnan}
                                       >
-                                        Cancel
+                                        Close
                                       </button>
                                     </div>
                                   </div>
