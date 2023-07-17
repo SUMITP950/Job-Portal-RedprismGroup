@@ -1,7 +1,22 @@
-import React from "react";
+import React ,{useEffect,useState}from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-export default function profile() {
+export default function Profile() {
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+  const [Data, SetData] = useState()
+  useEffect(() => {
+    console.log(process.env)
+    axios
+      .get("${process.env.REACT_APP_API_URL}")
+      .then((res) => {
+        SetData(res.data.companyList);
+      });
+  }, []);
   return (
     <div class="py-4">
       <div class="container-fluid body-padding">
