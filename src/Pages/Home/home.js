@@ -5,92 +5,122 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 export default function Home() {
+  let options = [
+  
+  ];
+
+  const [data, SetData] = useState([]);
+  
   const navigate = useNavigate();
-  useEffect(()=>{
-    if(!localStorage.getItem('authToken')){
-      navigate('/SigninAsHr')
-    }
-  },[]);
-
   useEffect(() => {
-    const tabsBox = document.querySelector(".tabs-box"),
-      allTabs = tabsBox.querySelectorAll(".tab"),
-      arrowIcons = document.querySelectorAll(".icon i");
-
-    let isDragging = false;
-
-    const handleIcons = (scrollVal) => {
-      let maxScrollableWidth = tabsBox.scrollWidth - tabsBox.clientWidth;
-      arrowIcons[0].parentElement.style.display =
-        scrollVal <= 0 ? "none" : "flex";
-      arrowIcons[1].parentElement.style.display =
-        maxScrollableWidth - scrollVal <= 1 ? "none" : "flex";
-    };
-
-    arrowIcons.forEach((icon) => {
-      icon.addEventListener("click", () => {
-        // if clicked icon is left, reduce 350 from tabsBox scrollLeft else add
-        let scrollWidth = (tabsBox.scrollLeft +=
-          icon.id === "left" ? -340 : 340);
-        handleIcons(scrollWidth);
-      });
-    });
-
-    allTabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        tabsBox.querySelector(".active").classList.remove("active");
-        tab.classList.add("active");
-      });
-    });
-
-    const dragging = (e) => {
-      if (!isDragging) return;
-      tabsBox.classList.add("dragging");
-      tabsBox.scrollLeft -= e.movementX;
-      handleIcons(tabsBox.scrollLeft);
-    };
-
-    const dragStop = () => {
-      isDragging = false;
-      tabsBox.classList.remove("dragging");
-    };
-
-    tabsBox.addEventListener("mousedown", () => (isDragging = true));
-    tabsBox.addEventListener("mousemove", dragging);
-    document.addEventListener("mouseup", dragStop);
-    function auto_grow(element) {
-      element.style.height = "5px";
-      element.style.height = element.scrollHeight + "px";
-    }
-    window.onscroll = function () {
-      myFunction();
-    };
-
-    var navbar = document.getElementById("navbar");
-    var sticky = navbar.offsetTop;
-
-    const myFunction = () => {
-      if (window.pageYOffset >= sticky) {
-        navbar.classList.add("sticky");
-      } else {
-        navbar.classList.remove("sticky");
-      }
-    };
-    if (!("boxShadow" in document.body.style)) {
-      document.body.setAttribute("class", "noBoxShadow");
+    if (!localStorage.getItem("authToken")) {
+      navigate("/SigninAsHr");
     }
   }, []);
+
+
+ 
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/home/getTechList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+       
+        let techList = res.data.techList;
+        for (let index = 0; index < techList.length; index++) {
+     
+          options.push({value:techList[index]['_id'], label: techList[index]['tech_name']});
+        }
+      
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+
+  // useEffect(() => {
+  //   const tabsBox = document.querySelector(".tabs-box"),
+  //     allTabs = tabsBox.querySelectorAll(".tab"),
+  //     arrowIcons = document.querySelectorAll(".icon i");
+
+  //   let isDragging = false;
+
+  //   const handleIcons = (scrollVal) => {
+  //     let maxScrollableWidth = tabsBox.scrollWidth - tabsBox.clientWidth;
+  //     arrowIcons[0].parentElement.style.display =
+  //       scrollVal <= 0 ? "none" : "flex";
+  //     arrowIcons[1].parentElement.style.display =
+  //       maxScrollableWidth - scrollVal <= 1 ? "none" : "flex";
+  //   };
+
+  //   arrowIcons.forEach((icon) => {
+  //     icon.addEventListener("click", () => {
+  //       // if clicked icon is left, reduce 350 from tabsBox scrollLeft else add
+  //       let scrollWidth = (tabsBox.scrollLeft +=
+  //         icon.id === "left" ? -340 : 340);
+  //       handleIcons(scrollWidth);
+  //     });
+  //   });
+
+  //   allTabs.forEach((tab) => {
+  //     tab.addEventListener("click", () => {
+  //       tabsBox.querySelector(".active").classList.remove("active");
+  //       tab.classList.add("active");
+  //     });
+  //   });
+
+  //   const dragging = (e) => {
+  //     if (!isDragging) return;
+  //     tabsBox.classList.add("dragging");
+  //     tabsBox.scrollLeft -= e.movementX;
+  //     handleIcons(tabsBox.scrollLeft);
+  //   };
+
+  //   const dragStop = () => {
+  //     isDragging = false;
+  //     tabsBox.classList.remove("dragging");
+  //   };
+
+  //   tabsBox.addEventListener("mousedown", () => (isDragging = true));
+  //   tabsBox.addEventListener("mousemove", dragging);
+  //   document.addEventListener("mouseup", dragStop);
+  //   function auto_grow(element) {
+  //     element.style.height = "5px";
+  //     element.style.height = element.scrollHeight + "px";
+  //   }
+  //   window.onscroll = function () {
+  //     myFunction();
+  //   };
+
+  //   var navbar = document.getElementById("navbar");
+  //   var sticky = navbar.offsetTop;
+
+  //   const myFunction = () => {
+  //     if (window.pageYOffset >= sticky) {
+  //       navbar.classList.add("sticky");
+  //     } else {
+  //       navbar.classList.remove("sticky");
+  //     }
+  //   };
+  //   if (!("boxShadow" in document.body.style)) {
+  //     document.body.setAttribute("class", "noBoxShadow");
+  //   }
+  // }, []);
   const [thoughts, setThoughts] = useState("");
   const [thought, setThought] = useState("");
   const [listdata, setListdata] = useState([]);
   const [comentdata, setcomentdata] = useState([]);
   const [like, setlike] = useState("");
   const handellike = () => {
-    setlike(like+1);
-    if(like>=1){
-      setlike("")
+    setlike(like + 1);
+    if (like >= 1) {
+      setlike("");
     }
   };
   const handleThoughtsChange = (e) => {
@@ -147,11 +177,128 @@ export default function Home() {
           <div className="row justify-content-around">
             <main className="col col-xl-7 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
               <div className="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
-                <div className="wrapper">
-                  <div className="icon">
+                <div className="wrapper" style={{ overflowX: "inherit" }}>
+                  {/* <div className="icon">
                     <i id="left" className="feather-arrow-left"></i>
+                  </div> */}
+                  <div class="col-lg-12 ">
+                    <div
+                      class="d-flex justify-content-around"
+                      style={{
+                        borderRadius: "50px",
+                        border: "1px solid rgb(6, 6, 6)",
+                        padding: "10px",
+                      }}
+                    >
+                      <div class="dropdown">
+                        <div className="d-flex align-items-center"><b>Choose Your Technology &nbsp;&nbsp;</b>
+                          <img
+                            class="dropdown-menu-img"
+                            src="https://img.icons8.com/ios/50/000000/circuit.png"
+                            alt=""
+                          /> 
+                          <Select
+                            styles={{
+                              container: (baseStyles, state) => ({
+                                ...baseStyles,
+
+                                display: "inherit",
+                              }),
+                              control: (baseStyles, state) => ({
+                                ...baseStyles,
+
+                                border: "none",
+                                backgroundColor: "#fff",
+                              }),
+                              placeholder: (baseStyles, state) => ({
+                                ...baseStyles,
+                                color: "Black",
+                                fontWeight: "bold",
+                              }),
+                              indicatorSeparator: (baseStyles, state) => ({
+                                ...baseStyles,
+                                display: "none",
+                              }),
+                            }}
+                            options={options}
+                            
+                            placeholder={"Technology"}
+                          />
+                        </div>
+                      </div>
+
+                      {/* <div class="dropdown">
+                  <div className="d-flex align-items-center">
+                    <img
+                      class="dropdown-menu-img"
+                      src="https://img.icons8.com/ios/50/popular-man.png"
+                      alt=""
+                    />
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          display: "inherit",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          border: "none",
+                          backgroundColor: "#fff",
+                        }),
+                        placeholder: (baseStyles, state) => ({
+                          ...baseStyles,
+                          color: "Black",
+                          fontWeight: "bold",
+                        }),
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options}
+                      isMulti
+                      placeholder={"Type"}
+                    />
                   </div>
-                  <ul className="tabs-box">
+                </div> */}
+
+                      {/* <div class="dropdown">
+                  <div className="d-flex align-items-center">
+                    <i class="feather-map-pin mr-2 menu-icon"></i>
+                    <Select
+                      styles={{
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          display: "inherit",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+
+                          border: "none",
+                          backgroundColor: "#fff",
+                        }),
+                        placeholder: (baseStyles, state) => ({
+                          ...baseStyles,
+                          color: "Black",
+                          fontWeight: "bold",
+                        }),
+                        indicatorSeparator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "none",
+                        }),
+                      }}
+                      options={options}
+                      isMulti
+                      placeholder={"Location"}
+                    />
+                  </div>
+                </div> */}
+                    </div>
+                  </div>
+                  {/* <ul className="tabs-box">
                     <li className="tab">Coding</li>
                     <li className="tab active">JavaScript</li>
                     <li class="tab">Podcasts</li>
@@ -167,12 +314,16 @@ export default function Home() {
                     <li class="tab">Share Market</li>
                     <li class="tab">Smartphones</li>
                     <li class="tab">Data Structure</li>
-                  </ul>
-                  <div className="icon">
+                  </ul> */}
+                  {/* <div className="icon">
                     <i id="right" className="feather-arrow-right"></i>
-                  </div>
+                  </div> */}
                 </div>
-                <div className="tab-content" id="myTabContent">
+                <div
+                  className="tab-content"
+                  id="myTabContent"
+                  style={{ zIndex: "9" }}
+                >
                   <div
                     className="tab-pane fade show active"
                     id="home"
@@ -194,7 +345,7 @@ export default function Home() {
                           className="form-control shadow-none"
                           value={thoughts}
                           onChange={handleThoughtsChange}
-                          style={{fontSize:25}}
+                          style={{ fontSize: 25 }}
                         ></textarea>
                       </div>
                     </div>
@@ -263,8 +414,8 @@ export default function Home() {
                             <i class="feather-message-square icon-font"></i>
                             {}
                           </button>
-                          <a
-                            href="whatsapp://send?text=This is WhatsApp sharing example using link"
+                          <Link
+                            to="#"
                             data-action="share/whatsapp/share"
                             target="_blank"
                             class="mr-3 text-secondary"
@@ -274,7 +425,7 @@ export default function Home() {
                               alt=""
                               class="icon-image"
                             />
-                          </a>
+                          </Link>
                         </div>
                         {/* comment section start */}
                         <div>
@@ -287,8 +438,8 @@ export default function Home() {
                                       display: "flex",
                                       justifyContent: "space-between",
                                       alignItems: "center",
-                                      paddingLeft:20,
-                                      paddingRight:20
+                                      paddingLeft: 20,
+                                      paddingRight: 20,
                                     }}
                                   >
                                     <p
@@ -305,7 +456,7 @@ export default function Home() {
                                       style={{
                                         fontWeight: "bold",
                                         fontSize: "25",
-                                        border:'none'
+                                        border: "none",
                                       }}
                                       onClick={() => removeActivity(i)}
                                     >
@@ -343,7 +494,7 @@ export default function Home() {
                                           class="form-label"
                                           for="textAreaExample"
                                         >
-                                          Message
+                                          Comment
                                         </label>
                                       </div>
                                     </div>

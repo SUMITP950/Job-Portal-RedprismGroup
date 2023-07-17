@@ -1,0 +1,914 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Redprism",
+    "dateExported": "2023-07-17T10:00:55.874Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "ca1d818d-0752-4d29-8043-8679e6220eab",
+            "name": "Demo Data Insert",
+            "containerId": "",
+            "created": "2023-07-17T07:54:50.102Z",
+            "sortNum": 15000
+        },
+        {
+            "_id": "c56b948d-9673-421c-b9bb-77f76f6c950c",
+            "name": "User Details",
+            "containerId": "",
+            "created": "2023-07-17T07:54:50.098Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "4c854f30-839f-41af-ad62-166b91bdd9f1",
+            "name": "HR Register",
+            "containerId": "",
+            "created": "2023-07-17T07:54:50.099Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "f1dfa89c-4b7c-4aa7-abdc-e513ee2de895",
+            "name": "Hr Login",
+            "containerId": "",
+            "created": "2023-07-17T07:54:50.100Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "3f60f6da-42d9-4d8d-9d6c-14dd1ecabd66",
+            "name": "Job Seeker Login",
+            "containerId": "",
+            "created": "2023-07-17T07:54:50.103Z",
+            "sortNum": 55000
+        },
+        {
+            "_id": "560c793c-d46f-4483-a689-d42b539c0364",
+            "name": "Job Seeker Register",
+            "containerId": "",
+            "created": "2023-07-17T07:54:50.101Z",
+            "sortNum": 60000
+        },
+        {
+            "_id": "7eee1965-c053-454d-9e4c-fb4f43bfc7a4",
+            "name": "Home",
+            "containerId": "",
+            "created": "2023-07-17T07:54:50.104Z",
+            "sortNum": 70000
+        },
+        {
+            "_id": "86a489eb-16c5-488b-a4d8-ca5a4b1f289f",
+            "name": "Trainings",
+            "containerId": "",
+            "created": "2023-07-17T07:54:50.105Z",
+            "sortNum": 80000
+        },
+        {
+            "_id": "6cda313c-3e65-4131-aab2-a822a76bebd4",
+            "name": "Hr Forgot Password",
+            "containerId": "",
+            "created": "2023-07-17T08:43:53.172Z",
+            "sortNum": 90000
+        },
+        {
+            "_id": "8e55f0c7-eaad-4cd4-8344-a98a6f089130",
+            "name": "Job Seeker Forgot Password",
+            "containerId": "",
+            "created": "2023-07-17T09:54:01.988Z",
+            "sortNum": 100000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "80d9866b-2d55-4801-b1a5-fce221788389",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "560c793c-d46f-4483-a689-d42b539c0364",
+            "name": "Email Check",
+            "url": "testredprism.co/api/jobseekerRegister/emailCheck",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2023-07-17T07:54:50.110Z",
+            "modified": "2023-07-17T07:54:50.110Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email_id\": \"aamaity535@gmail.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "edaba6c0-078e-4a2d-9f70-2abf21e6dce6",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "560c793c-d46f-4483-a689-d42b539c0364",
+            "name": "Register Send OTP",
+            "url": "localhost:5000/api/jobseekerRegister/registerSendOtp",
+            "method": "POST",
+            "sortNum": 7500,
+            "created": "2023-07-17T07:54:50.109Z",
+            "modified": "2023-07-17T07:54:50.109Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"ph_num\": 7240571679\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "75b20db1-1d15-464d-8aee-d40b701d47a9",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "560c793c-d46f-4483-a689-d42b539c0364",
+            "name": "Register Otp Check",
+            "url": "localhost:5000/api/jobseekerRegister/registerOtpCheck",
+            "method": "POST",
+            "sortNum": 8750,
+            "created": "2023-07-17T07:54:50.112Z",
+            "modified": "2023-07-17T07:54:50.112Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"otp_id\": \"64afdcc66e1c1c41eff30621\",\n  \"ph_num\": 7240571679,\n  \"otp\": 956923\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "0b479cdd-053e-41a5-98b4-0c1cd6e46e2e",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "c56b948d-9673-421c-b9bb-77f76f6c950c",
+            "name": "Get User Details",
+            "url": "localhost:5000/api/getUserDetails",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-07-17T07:54:50.099Z",
+            "modified": "2023-07-17T07:54:50.099Z",
+            "headers": [
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YWZlMGIxN2Y4NDNiNGZhODYxMDQ5NCIsImlhdCI6MTY4OTI1MDQwMn0.bm94yLjSoGNPI1_vpLnNoWFxWGvfNumKtgZA9oe0iW0"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "752bc15a-e70e-4d71-98b7-4082a9da9a47",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "560c793c-d46f-4483-a689-d42b539c0364",
+            "name": "Username Check",
+            "url": "localhost:5000/api/jobseekerRegister/usernameCheck",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-07-17T07:54:50.108Z",
+            "modified": "2023-07-17T07:54:50.108Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"user_name\": \"abhdfgi\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "0d31aa42-32c2-4b9f-88ee-5c0d3a655d3b",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "4c854f30-839f-41af-ad62-166b91bdd9f1",
+            "name": "Email Check",
+            "url": "testredprism.co/api/hrRegister/emailCheck",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-07-17T07:54:50.100Z",
+            "modified": "2023-07-17T07:54:50.100Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email_id\": \"aamaity535@gmail.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "7cad69f8-7b88-48e6-9f12-c0b6b4a540d9",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "4c854f30-839f-41af-ad62-166b91bdd9f1",
+            "name": "Register Send OTP",
+            "url": "localhost:5000/api/hrRegister/registerSendOtp",
+            "method": "POST",
+            "sortNum": 22500,
+            "created": "2023-07-17T07:54:50.101Z",
+            "modified": "2023-07-17T07:54:50.101Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"ph_num\": 7240571679\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "3beed590-005f-4b39-902f-5d3fbcc6cafc",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "4c854f30-839f-41af-ad62-166b91bdd9f1",
+            "name": "Register Otp Check",
+            "url": "localhost:5000/api/hrRegister/registerOtpCheck",
+            "method": "POST",
+            "sortNum": 23750,
+            "created": "2023-07-17T07:54:50.103Z",
+            "modified": "2023-07-17T07:54:50.103Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"otp_id\": \"64afdcc66e1c1c41eff30621\",\n  \"ph_num\": 7240571679,\n  \"otp\": 245789\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ee96fe60-4db9-46f2-83f3-cd0eea7824b5",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "4c854f30-839f-41af-ad62-166b91bdd9f1",
+            "name": "Username Check",
+            "url": "localhost:5000/api/hrRegister/usernameCheck",
+            "method": "POST",
+            "sortNum": 25000,
+            "created": "2023-07-17T07:54:50.102Z",
+            "modified": "2023-07-17T07:54:50.102Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"user_name\": \"abhdfgi\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "231c5c58-7eaf-4180-b0d1-52acf6391f2a",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "560c793c-d46f-4483-a689-d42b539c0364",
+            "name": "Get Company List",
+            "url": "localhost:5000/api/jobseekerRegister/getCompanyList",
+            "method": "GET",
+            "sortNum": 25000,
+            "created": "2023-07-17T07:54:50.114Z",
+            "modified": "2023-07-17T07:54:50.114Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "5e23e410-ed18-4b69-be7c-44bd7a0e3fdd",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "560c793c-d46f-4483-a689-d42b539c0364",
+            "name": "Location List",
+            "url": "localhost:5000/api/jobseekerRegister/getLocationList",
+            "method": "GET",
+            "sortNum": 32500,
+            "created": "2023-07-17T07:54:50.119Z",
+            "modified": "2023-07-17T07:54:50.119Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "6f3b446a-43fe-4335-a19e-166e1b82bae1",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "560c793c-d46f-4483-a689-d42b539c0364",
+            "name": "Tech List",
+            "url": "localhost:5000/api/jobseekerRegister/getTechList",
+            "method": "GET",
+            "sortNum": 36250,
+            "created": "2023-07-17T07:54:50.120Z",
+            "modified": "2023-07-17T07:54:50.120Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "2cb27181-cf3b-4c61-a07b-48531bbd4e3d",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "4c854f30-839f-41af-ad62-166b91bdd9f1",
+            "name": "Get Company List",
+            "url": "localhost:5000/api/hrRegister/getCompanyList",
+            "method": "GET",
+            "sortNum": 37500,
+            "created": "2023-07-17T07:54:50.104Z",
+            "modified": "2023-07-17T07:54:50.104Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "96c88861-c4f5-4de3-9b86-4bfeba2c69b1",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "560c793c-d46f-4483-a689-d42b539c0364",
+            "name": "Experience List",
+            "url": "localhost:5000/api/jobseekerRegister/getExpList",
+            "method": "GET",
+            "sortNum": 38125,
+            "created": "2023-07-17T07:54:50.121Z",
+            "modified": "2023-07-17T07:54:50.121Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "69b470b6-16ac-4dea-abaa-39c77b801673",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "560c793c-d46f-4483-a689-d42b539c0364",
+            "name": "Register",
+            "url": "localhost:5000/api/jobseekerRegister/register",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-07-17T07:54:50.111Z",
+            "modified": "2023-07-17T07:54:50.111Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"employee_status\": \"1 Year Job Less\",\n  \"status_icon\": \"status_icon\",\n  \"first_name\": \"Abhiji\",\n  \"last_name\": \"Maity\",\n  \"user_name\": \"abhiaa\",\n  \"password\": \"123\",\n  \"ph_num\": \"8240571672\",\n  \"email_id\": \"maaaity535@gmail.com\",\n  \"company_code\": \"64b0e37840345c6485403923\",\n  \"tech_code\": \"64b12c1fafadfdb3939b3fe6\",\n  \"exp_code\": \"64b12c5dafadfdb3939b3ff2\",\n  \"location_code\": \"64b12c55afadfdb3939b3fee\",\n  \"looking_job\": \"Yes\",\n  \"notice_period\": \"Yes\",\n  \"immediate_joinner\": \"Yes\",\n  \"fresher\": \"Yes\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "0145652d-66dd-4c00-9af0-c584bb9701c5",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "4c854f30-839f-41af-ad62-166b91bdd9f1",
+            "name": "Register",
+            "url": "localhost:5000/api/hrRegister/register",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-07-17T07:54:50.098Z",
+            "modified": "2023-07-17T07:54:50.098Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"first_name\": \"Abhijit\",\n  \"last_name\": \"Maity\",\n  \"user_name\": \"abhij\",\n  \"password\": \"123\",\n  \"ph_num\": 8245571679,\n  \"email_id\": \"amapty535@gmail.com\",\n  \"company_code\": \"64b0e37840345c6485403923\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ae15c3a6-2433-4324-b0de-90925f9f5d3d",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "f1dfa89c-4b7c-4aa7-abdc-e513ee2de895",
+            "name": "Login Send Otp",
+            "url": "localhost:5000/api/hrLogin/loginSendOtp",
+            "method": "POST",
+            "sortNum": 140000,
+            "created": "2023-07-17T07:54:50.105Z",
+            "modified": "2023-07-17T07:54:50.105Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"ph_num\": 8240571679\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "d95b7509-f9ae-487b-b7ac-78de1279533c",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "3f60f6da-42d9-4d8d-9d6c-14dd1ecabd66",
+            "name": "Login Send Otp",
+            "url": "localhost:5000/api/jobseekerLogin/loginSendOtp",
+            "method": "POST",
+            "sortNum": 140000,
+            "created": "2023-07-17T07:54:50.122Z",
+            "modified": "2023-07-17T07:54:50.122Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"ph_num\": 8240571679\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "1f343d71-954e-4e4c-ab17-47441ab73d9e",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "f1dfa89c-4b7c-4aa7-abdc-e513ee2de895",
+            "name": "Login Check Otp",
+            "url": "localhost:5000/api/hrLogin/loginCheckOtp",
+            "method": "POST",
+            "sortNum": 150000,
+            "created": "2023-07-17T07:54:50.106Z",
+            "modified": "2023-07-17T07:54:50.106Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"otp_id\": \"64afea13456918ed4dea0d38\",\n  \"ph_num\": 8240571679,\n  \"otp\": 107469\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "faee6396-20ca-4f9d-a407-00bf36cbe50f",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "3f60f6da-42d9-4d8d-9d6c-14dd1ecabd66",
+            "name": "Login Check Otp",
+            "url": "localhost:5000/api/jobseekerLogin/loginCheckOtp",
+            "method": "POST",
+            "sortNum": 150000,
+            "created": "2023-07-17T07:54:50.123Z",
+            "modified": "2023-07-17T07:54:50.123Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"otp_id\": \"64b0221497403891120b1bfb\",\n  \"ph_num\": 8240571679,\n  \"otp\": 445296\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "15fe76c6-0ea1-4ca2-9e24-55a10e4e2696",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "f1dfa89c-4b7c-4aa7-abdc-e513ee2de895",
+            "name": "Login via Username",
+            "url": "localhost:5000/api/hrLogin/loginUsername",
+            "method": "POST",
+            "sortNum": 160000,
+            "created": "2023-07-17T07:54:50.107Z",
+            "modified": "2023-07-17T08:51:30.463Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"user_name\": \"abhi\",\n  \"password\": \"1234\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "313e0863-5f38-47c3-a735-1a6dc3538c84",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "3f60f6da-42d9-4d8d-9d6c-14dd1ecabd66",
+            "name": "Login via Username",
+            "url": "localhost:5000/api/jobseekerLogin/loginUsername",
+            "method": "POST",
+            "sortNum": 160000,
+            "created": "2023-07-17T07:54:50.124Z",
+            "modified": "2023-07-17T07:54:50.124Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"user_name\": \"abhi\",\n  \"password\": \"123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "2ec92eb7-6b0e-47b4-8f54-c1854d9f6b54",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "ca1d818d-0752-4d29-8043-8679e6220eab",
+            "name": "Company",
+            "url": "localhost:5000/api/demoDataInsert/company",
+            "method": "POST",
+            "sortNum": 170000,
+            "created": "2023-07-17T07:54:50.115Z",
+            "modified": "2023-07-17T07:54:50.115Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"company_name\": \"CTS\",\n  \"ph_num\": \"295561230\",\n  \"logo\": \"\",\n  \"banner\": \"\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "3d92970e-67fb-48fd-b5ac-a72e0ee260cc",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "ca1d818d-0752-4d29-8043-8679e6220eab",
+            "name": "Technology",
+            "url": "localhost:5000/api/demoDataInsert/tech",
+            "method": "POST",
+            "sortNum": 180000,
+            "created": "2023-07-17T07:54:50.116Z",
+            "modified": "2023-07-17T07:54:50.116Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"tech_name\": \"Php\",\n  \"details\": \"\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "9232cf36-1a8d-43f8-8dd1-3b4f5df4390e",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "ca1d818d-0752-4d29-8043-8679e6220eab",
+            "name": "Location",
+            "url": "localhost:5000/api/demoDataInsert/location",
+            "method": "POST",
+            "sortNum": 190000,
+            "created": "2023-07-17T07:54:50.117Z",
+            "modified": "2023-07-17T07:54:50.117Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"state\": \"WB\",\n  \"city\": \"Kolkata\",\n  \"area\": \"Agarpara\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "d6d86a75-cc4a-4895-bdbe-43145ea585eb",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "ca1d818d-0752-4d29-8043-8679e6220eab",
+            "name": "Experience",
+            "url": "localhost:5000/api/demoDataInsert/exp",
+            "method": "POST",
+            "sortNum": 200000,
+            "created": "2023-07-17T07:54:50.118Z",
+            "modified": "2023-07-17T07:54:50.118Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"experience\": \"0 - 5 Year\",\n  \"details\": \"\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "bb918472-2ee3-4fee-896e-26bd206d857a",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "7eee1965-c053-454d-9e4c-fb4f43bfc7a4",
+            "name": "Tech List",
+            "url": "localhost:5000/api/home/getTechList",
+            "method": "GET",
+            "sortNum": 210000,
+            "created": "2023-07-17T07:54:50.125Z",
+            "modified": "2023-07-17T07:54:50.125Z",
+            "headers": [
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjAyMDc2NDA1Mzc4MmQyYjg4YTY5YyIsImlhdCI6MTY4OTM5NDkwOH0.BqQCxoI--2toiU1_8z_EhbQvfgg1ko6auWBfJYjQ0l8"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "81e011b4-cec6-43a7-b1e3-ec4e8e0251f1",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "ca1d818d-0752-4d29-8043-8679e6220eab",
+            "name": "Trainings",
+            "url": "localhost:5000/api/demoDataInsert/trainings",
+            "method": "POST",
+            "sortNum": 210000,
+            "created": "2023-07-17T07:54:50.130Z",
+            "modified": "2023-07-17T07:54:50.130Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"tidasdatle\",\n  \"details\": \"details\",\n  \"trainings_poster\": \"trainings_poster\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "a4b5e490-5ecb-4177-b276-af10d8bff456",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "7eee1965-c053-454d-9e4c-fb4f43bfc7a4",
+            "name": "Save Feeds Post",
+            "url": "localhost:5000/api/home/saveFeedsPost",
+            "method": "POST",
+            "sortNum": 220000,
+            "created": "2023-07-17T07:54:50.126Z",
+            "modified": "2023-07-17T07:54:50.126Z",
+            "headers": [
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjAyMDc2NDA1Mzc4MmQyYjg4YTY5YyIsImlhdCI6MTY4OTM5NDkwOH0.BqQCxoI--2toiU1_8z_EhbQvfgg1ko6auWBfJYjQ0l8"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"tech_code\": \"64b12c1fafadfdb3939b3fe6\",\n  \"post_details\": \"Poset Er Details\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "74734f60-cf7c-494e-81f5-775c1f1f76a3",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "7eee1965-c053-454d-9e4c-fb4f43bfc7a4",
+            "name": "Get Feeds Post List",
+            "url": "localhost:5000/api/home/getFeedsPost",
+            "method": "POST",
+            "sortNum": 230000,
+            "created": "2023-07-17T07:54:50.127Z",
+            "modified": "2023-07-17T07:54:50.127Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjAyMDc2NDA1Mzc4MmQyYjg4YTY5YyIsImlhdCI6MTY4OTM5NDkwOH0.BqQCxoI--2toiU1_8z_EhbQvfgg1ko6auWBfJYjQ0l8"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"tech_code\": \"64b12c1fafadfdb3939b3fe6\",\n  \"from_index\": 0\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "0ac0510e-cbf5-45eb-bab2-da9973b1e954",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "7eee1965-c053-454d-9e4c-fb4f43bfc7a4",
+            "name": "Save Feeds Post Like Dislike",
+            "url": "localhost:5000/api/home/saveFeedsPostLikeDislike",
+            "method": "POST",
+            "sortNum": 240000,
+            "created": "2023-07-17T07:54:50.128Z",
+            "modified": "2023-07-17T07:54:50.128Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjAyMDc2NDA1Mzc4MmQyYjg4YTY5YyIsImlhdCI6MTY4OTM5NDkwOH0.BqQCxoI--2toiU1_8z_EhbQvfgg1ko6auWBfJYjQ0l8"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"feeds_post_code\": \"64b3fa850660c507013160d6\",\n  \"type\": \"Like\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "38ee1ef2-17ac-4552-96cb-2bd5029b4e85",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "86a489eb-16c5-488b-a4d8-ca5a4b1f289f",
+            "name": "Get Training List",
+            "url": "localhost:5000/api/trainings/getTrainingList",
+            "method": "GET",
+            "sortNum": 240000,
+            "created": "2023-07-17T07:54:50.131Z",
+            "modified": "2023-07-17T07:54:50.131Z",
+            "headers": [
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjAyMDc2NDA1Mzc4MmQyYjg4YTY5YyIsImlhdCI6MTY4OTM5NDkwOH0.BqQCxoI--2toiU1_8z_EhbQvfgg1ko6auWBfJYjQ0l8"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b6832d19-b86e-4ae5-a6e3-5fc484c55ea9",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "7eee1965-c053-454d-9e4c-fb4f43bfc7a4",
+            "name": "Save Feeds Post Comment",
+            "url": "localhost:5000/api/home/saveFeedsComment",
+            "method": "POST",
+            "sortNum": 250000,
+            "created": "2023-07-17T07:54:50.129Z",
+            "modified": "2023-07-17T07:54:50.129Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjAyMDc2NDA1Mzc4MmQyYjg4YTY5YyIsImlhdCI6MTY4OTM5NDkwOH0.BqQCxoI--2toiU1_8z_EhbQvfgg1ko6auWBfJYjQ0l8"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"feeds_post_code\": \"64b3fa850660c507013160d6\",\n  \"comment\": \"Hello Dis is fe asd\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "99c985ea-fd57-4de6-89e5-fbe244e99d99",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "86a489eb-16c5-488b-a4d8-ca5a4b1f289f",
+            "name": "Get Training Details",
+            "url": "localhost:5000/api/trainings/getTrainingDetails",
+            "method": "POST",
+            "sortNum": 250000,
+            "created": "2023-07-17T07:54:50.132Z",
+            "modified": "2023-07-17T07:54:50.132Z",
+            "headers": [
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjAyMDc2NDA1Mzc4MmQyYjg4YTY5YyIsImlhdCI6MTY4OTM5NDkwOH0.BqQCxoI--2toiU1_8z_EhbQvfgg1ko6auWBfJYjQ0l8"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"train_code\": \"64b44f64e5144148fbf209d4\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "a65113bd-8356-4786-9dba-6d34a838e9f6",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "6cda313c-3e65-4131-aab2-a822a76bebd4",
+            "name": "Send OTP",
+            "url": "localhost:5000/api/hrForgotPassword/sendOtp",
+            "method": "POST",
+            "sortNum": 260000,
+            "created": "2023-07-17T08:44:01.597Z",
+            "modified": "2023-07-17T08:45:46.694Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"ph_num\": 8240571679\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "05db00f2-7522-4e68-8310-26bf7a906991",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "8e55f0c7-eaad-4cd4-8344-a98a6f089130",
+            "name": "Send OTP",
+            "url": "localhost:5000/api/jobseekerForgotPassword/sendOtp",
+            "method": "POST",
+            "sortNum": 260000,
+            "created": "2023-07-17T09:54:01.988Z",
+            "modified": "2023-07-17T09:57:43.379Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"ph_num\": 8240571679\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "263c34fd-5fd1-4534-b2dc-c254f81a6e11",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "6cda313c-3e65-4131-aab2-a822a76bebd4",
+            "name": "Save New Password",
+            "url": "localhost:5000/api/hrForgotPassword/savePassword",
+            "method": "POST",
+            "sortNum": 270000,
+            "created": "2023-07-17T08:49:21.563Z",
+            "modified": "2023-07-17T08:51:24.334Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"otp_id\": \"64b500fc0eb6b253469ae470\",\n  \"ph_num\": 8240571679,\n  \"otp\": 912103,\n  \"password\": \"1234\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "88805c36-6f22-47fc-8ebe-dbe0c2dd438e",
+            "colId": "85d89b89-938a-4560-b00e-5f894a96cdf8",
+            "containerId": "8e55f0c7-eaad-4cd4-8344-a98a6f089130",
+            "name": "Save New Password",
+            "url": "localhost:5000/api/jobseekerForgotPassword/savePassword",
+            "method": "POST",
+            "sortNum": 270000,
+            "created": "2023-07-17T09:54:01.989Z",
+            "modified": "2023-07-17T09:57:57.380Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"otp_id\": \"64b500fc0eb6b253469ae470\",\n  \"ph_num\": 8240571679,\n  \"otp\": 912103,\n  \"password\": \"1234\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
