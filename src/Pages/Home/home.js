@@ -6,14 +6,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { toast } from "react-toastify";
 
 export default function Home() {
-  let options = [
-  
-  ];
+  let options = [];
 
   const [data, SetData] = useState([]);
-  
+
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
@@ -21,8 +20,6 @@ export default function Home() {
     }
   }, []);
 
-
- 
   useEffect(() => {
     axios
       .get("http://testredprism.co/api/home/getTechList", {
@@ -31,13 +28,13 @@ export default function Home() {
         },
       })
       .then((res) => {
-       
         let techList = res.data.techList;
         for (let index = 0; index < techList.length; index++) {
-     
-          options.push({value:techList[index]['_id'], label: techList[index]['tech_name']});
+          options.push({
+            value: techList[index]["_id"],
+            label: techList[index]["tech_name"],
+          });
         }
-      
       })
       .catch((error) => {
         console.error(error);
@@ -112,6 +109,7 @@ export default function Home() {
   //     document.body.setAttribute("class", "noBoxShadow");
   //   }
   // }, []);
+  const [post, setPost] = useState("");
   const [thoughts, setThoughts] = useState("");
   const [thought, setThought] = useState("");
   const [listdata, setListdata] = useState([]);
@@ -134,18 +132,65 @@ export default function Home() {
     setListdata((listdata) => {
       const updatedList = [...listdata, thoughts];
       setThoughts("");
+
       return updatedList;
     });
 
     // Make a POST request to the backend with the thoughts data
-    //   axios
-    //     .post("http://testredprism.co/post_your_thoughts", { thoughts })
-    //     .then((response) => {
-    //       console.log(response.data);
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
+    axios
+      .post(
+        "http://testredprism.co/api/home/saveFeedsPost",
+        {
+          tech_code: post.value,
+          post_details: thoughts,
+        },
+
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        console.log(thoughts);
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+        }
+        if (response.data.status === "access denied") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  // get feed post
+  const getFeed = () => {
+    axios
+      .post(
+        "http://testredprism.co/api/home/getFeedsPost",
+        {
+          tech_code: post.value,
+          from_index: 0,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        console.log("vsahdjsaj", response.data);
+        if (response.data.limit <= 50) {
+          toast.success(`${response.data.mssg}`);
+        }
+        if (response.data.status === "access denied") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   // comment section function
@@ -191,12 +236,13 @@ export default function Home() {
                       }}
                     >
                       <div class="dropdown">
-                        <div className="d-flex align-items-center"><b>Choose Your Technology &nbsp;&nbsp;</b>
+                        <div className="d-flex align-items-center">
+                          <b>Choose Your Technology &nbsp;&nbsp;</b>
                           <img
                             class="dropdown-menu-img"
                             src="https://img.icons8.com/ios/50/000000/circuit.png"
                             alt=""
-                          /> 
+                          />
                           <Select
                             styles={{
                               container: (baseStyles, state) => ({
@@ -221,7 +267,8 @@ export default function Home() {
                               }),
                             }}
                             options={options}
-                            
+                            defaultValuevalue={post}
+                            onChange={(setPost, getFeed)}
                             placeholder={"Technology"}
                           />
                         </div>
