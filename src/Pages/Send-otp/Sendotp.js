@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 
-function Sendotp(props) {
+function Sendotp() {
   useEffect(() => {
     document.title = "Sendotp";
   }, []);
