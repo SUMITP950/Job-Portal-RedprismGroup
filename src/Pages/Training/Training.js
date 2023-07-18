@@ -1,23 +1,41 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import "../../App.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Training(props) {
   useEffect(() => {
     document.title = "Training";
   });
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      navigate("/SigninAsHr");
+    }
+  }, []);
+
   const [text, setText] = useState("");
   const [data, SetData] = useState([]);
   const changeHandler = (e) => {
     setText(e.target.value);
   };
   useEffect(() => {
-    axios.get("http://localhost:5000/training/get").then((res) => {
-      SetData(res.data.trainingsList);
-    });
+    axios
+      .get("http://testredprism.co/api/trainings/getTrainingList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        SetData(res.data.trainingList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   });
   return (
     <>
@@ -28,32 +46,32 @@ export default function Training(props) {
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm">
                   <h6 class="pt-3 text-center">Other Option</h6>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
+                  <Link to="/Setting" class="dropdown-item d-flex align-items-center">
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-settings left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      <Link to="/Setting">
+                      
                         <span class="font-weight-bold">Settings</span>
-                      </Link>
+                      
                     </div>
-                  </a>
+                  </Link>
 
-                  <a class="dropdown-item d-flex align-items-center" href="#">
+                  <Link to="/SampleResume" class="dropdown-item d-flex align-items-center" >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-file-text left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      <Link to="/SampleResume">
+                     
                         <span class="font-weight-bold">Simple Resume</span>
-                      </Link>
+                      
                     </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
+                  </Link>
+                  <Link to="/Training"class="dropdown-item d-flex align-items-center" >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <img
@@ -64,12 +82,12 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Training">
+                      
                         <span class="font-weight-bold">Trainings</span>
-                      </Link>
+                      
                     </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
+                  </Link>
+                  <Link to="/FresherJob" class="dropdown-item d-flex align-items-center" >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <img
@@ -80,12 +98,12 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/FresherJob">
+                     
                         <span class="font-weight-bold">Fresher Jobs</span>
-                      </Link>
+                      
                     </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
+                  </Link>
+                  <Link to="/Internship" class="dropdown-item d-flex align-items-center" >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <img
@@ -96,23 +114,27 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Internship">
+                      
                         <span class="font-weight-bold">Internship</span>
-                      </Link>
+                     
                     </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
+                  </Link>
+                  <Link
+                    to="/SigninAsHr"
+                    onClick={()=>{
+                      localStorage.removeItem('authToken')
+                    }}
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-log-out left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      <Link to="/Signin">
-                        <span class="font-weight-bold">Sign Out</span>
-                      </Link>
+                      <span class="font-weight-bold">Sign Out</span>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </aside>
@@ -162,7 +184,9 @@ export default function Training(props) {
 
                             <div className="card-body">
                               <h5 className="card-title">{item.title}</h5>
-                              <p className="card-text">{item.details.substring(0,150)}...</p>
+                              <p className="card-text">
+                                {item.details.substring(0, 100)}...
+                              </p>
                             </div>
                             <div className="card-footer">
                               <Link to="#" className="btn btn-block apply-btn">
