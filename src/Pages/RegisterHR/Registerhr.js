@@ -55,7 +55,7 @@ const Registerhr = () => {
       term: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       
     },
   });
@@ -77,7 +77,7 @@ const Registerhr = () => {
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
 
@@ -109,7 +109,7 @@ const Registerhr = () => {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
 
@@ -128,7 +128,7 @@ const Registerhr = () => {
       currentCompany: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       changeForm("status");
     },
   });
@@ -154,7 +154,7 @@ const Registerhr = () => {
       // immediateJoiner: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       // navigate4("/SigninAsHr");
     },
   });
@@ -174,7 +174,7 @@ const Registerhr = () => {
         email_id : formik.values.email ,
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
       if(response.data.status==="success"){
           sendOtp();
         }
@@ -197,18 +197,19 @@ const Registerhr = () => {
         ph_num : formik.values.mobile ,
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
       if(response.data.status==="success"){
-        toast.success(`${response.data.mssg}`)
+        // toast.success(`${response.data.mssg}`)
         formik1.values.otpId = response.data.otp_id;
         changeForm("verify");
+        alert(`Your otp is ${response.data.otp}`);
         }
       if(response.data.status==="error"){
           toast.error(`${response.data.mssg}`);
         }
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
   }
@@ -223,7 +224,7 @@ const Registerhr = () => {
       otp_id : formik1.values.otpId ,
     })
     .then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
     if(response.data.status==="success"){
       toast.success(`${response.data.mssg}`)
       changeForm("create");
@@ -233,7 +234,7 @@ const Registerhr = () => {
       }
     })
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
       toast.error(`Failed : ${error.message}`);
     });
   }
@@ -246,7 +247,7 @@ const handleUsername=()=>{
         user_name: formik2.values.username
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
       if(response.data.status==="success"){
         changeForm("skill");
         }
@@ -255,7 +256,7 @@ const handleUsername=()=>{
         }
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
     }
@@ -276,7 +277,7 @@ const handleUsername=()=>{
           company_code: formik3.values.currentCompany,
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           if(response.data.status==="error"){
             toast.error(`Failed : ${response.data.mssg}`);
           }
@@ -286,7 +287,7 @@ const handleUsername=()=>{
           }
         })
         .catch((error) => {
-          console.error(error);
+          // console.error(error);
           toast.error(`Failed : ${error.message}`);
         });
   }
@@ -598,7 +599,7 @@ const handleUsername=()=>{
                   <div class="col-md-8 mb-3">
                     <p className="d-flex h4 my-5 justify-content-center">OTP</p>
                     <input
-                      type="number"
+                      type="text"
                       name="otp"
                       class="form-control"
                       placeholder="Enter Your 6 Digit OTP"

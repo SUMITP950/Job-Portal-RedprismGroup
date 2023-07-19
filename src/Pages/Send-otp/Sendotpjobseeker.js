@@ -27,7 +27,7 @@ function Sendotpjobseeker() {
         .max(10, "Maximum 10 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
     
@@ -39,18 +39,19 @@ function Sendotpjobseeker() {
           ph_num: formik.values.mobile,
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
         if(response.data.status==="success"){
           formik.values.otpid = response.data.otp_id;
-          toast.success(`${response.data.mssg}`);
           setShowCreatePass(true)
+          alert(`Your otp is ${response.data.otp}`);
+           // toast.success(`${response.data.mssg}`);
           }
         if(response.data.status==="error"){
             toast.error(`${response.data.mssg}`);
           }
         })
         .catch((error) => {
-          console.error(error);
+          // console.error(error);
           toast.error(`Failed : ${error.message}`);
         });
     }
@@ -165,7 +166,7 @@ console.log(props.ph_num);
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
 
@@ -189,7 +190,7 @@ console.log(props.ph_num);
         }
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
     }
@@ -221,7 +222,7 @@ console.log(props.ph_num);
                     <div class="form-group last mb-3">
                       <label for="password">Enter Your OTP</label>
                       <input
-                        type="number"
+                        type="text"
                         name="otp"
                         class="form-control"
                         placeholder="Enter OTP"

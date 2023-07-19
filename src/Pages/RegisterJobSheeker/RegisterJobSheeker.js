@@ -18,7 +18,6 @@ function RegisterJobSheeker() {
   const [data4, SetData4] = useState([]);
   const [data5, SetData5] = useState([]);
 
-
   useEffect(() => {
     axios
       .get("http://testredprism.co/api/jobseekerRegister/getCompanyList")
@@ -65,7 +64,6 @@ function RegisterJobSheeker() {
         SetData5(res.data.locationList);
       });
   }, []);
-  
 
   // form validation
 
@@ -101,25 +99,19 @@ function RegisterJobSheeker() {
         .matches(/^[0-9]+$/, "This field  must be a number")
         .min(10, "Minimum 10 digits")
         .max(10, "Maximum 10 digits"),
-      city: yup
-        .string()
-        .required("*Required"),
-        // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
-      state: yup
-        .string()
-        .required("*Required"),
-        // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
-      area: yup
-        .string()
-        .required("*Required"),
-        // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
+      city: yup.string().required("*Required"),
+      // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
+      state: yup.string().required("*Required"),
+      // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
+      area: yup.string().required("*Required"),
+      // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
       // .matches(/^[0-9]+$/, "This field  must be a number")
       // .min(5, "Minimum 5 digits")
       // .max(10, "Maximum 10 digits"),
       term: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
   // registration varify Start
@@ -128,7 +120,7 @@ function RegisterJobSheeker() {
   const formik1 = useFormik({
     initialValues: {
       otp: "",
-      otpId:"",
+      otpId: "",
     },
     validationSchema: yup.object({
       otp: yup
@@ -139,7 +131,7 @@ function RegisterJobSheeker() {
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
 
@@ -170,7 +162,7 @@ function RegisterJobSheeker() {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
 
@@ -194,7 +186,7 @@ function RegisterJobSheeker() {
       // ExperienceInYear: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       changeForm("status"); // will be deleted after service call
     },
   });
@@ -212,7 +204,6 @@ function RegisterJobSheeker() {
       lookingForJob: "",
       noticePeriod: "",
       immediateJoiner: "",
-
     },
     validationSchema: yup.object({
       lookingForJob: yup.string().required("*Required"),
@@ -220,7 +211,7 @@ function RegisterJobSheeker() {
       // immediateJoiner: yup.string().required("*Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
 
@@ -237,7 +228,7 @@ function RegisterJobSheeker() {
           email_id: formik.values.email,
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.status === "success") {
             sendOtp();
           }
@@ -246,7 +237,7 @@ function RegisterJobSheeker() {
           }
         })
         .catch((error) => {
-          console.error(error);
+          // console.error(error);
           toast.error(`Failed : ${error.message}`);
         });
     }
@@ -258,18 +249,19 @@ function RegisterJobSheeker() {
         ph_num: formik.values.mobile,
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.status === "success") {
-          toast.success(`${response.data.mssg}`);
+          // toast.success(`${response.data.mssg}`);
           formik1.values.otpId = response.data.otp_id;
           changeForm("verify");
+          alert(`Your otp is ${response.data.otp}`);
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
         }
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
   };
@@ -283,7 +275,7 @@ function RegisterJobSheeker() {
           otp_id: formik1.values.otpId,
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.status === "success") {
             toast.success(`${response.data.mssg}`);
             changeForm("create");
@@ -293,7 +285,7 @@ function RegisterJobSheeker() {
           }
         })
         .catch((error) => {
-          console.error(error);
+          // console.error(error);
           toast.error(`Failed : ${error.message}`);
         });
     }
@@ -306,7 +298,7 @@ function RegisterJobSheeker() {
           user_name: formik2.values.username,
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.status === "success") {
             changeForm("skill");
           }
@@ -315,7 +307,7 @@ function RegisterJobSheeker() {
           }
         })
         .catch((error) => {
-          console.error(error);
+          // console.error(error);
           toast.error(`Failed : ${error.message}`);
         });
     }
@@ -323,26 +315,29 @@ function RegisterJobSheeker() {
 
   const handleApi = () => {
     axios
-      .post("http://testredprism.co/api/jobseekerRegister/register", {
-        employee_status: "Status",
-        status_icon: "Icon",
-        first_name: formik.values.firstName,
-        last_name: formik.values.lastName,
-        user_name: formik2.values.username,
-        password: formik2.values.password,
-        ph_num: formik.values.mobile,
-        email_id: formik.values.email,
-        company_code: formik3.values.currentCompany,
-        tech_code: formik3.values.technicalSkills,
-        exp_code: formik3.values.ExperienceInYear,
-        location_code: formik.values.city,
-        looking_job: formik4.values.lookingForJob,
-        notice_period: formik4.values.noticePeriod,
-        immediate_joinner: formik4.values.immediateJoiner,
-        fresher: formik3.values.fresher,
-      })
+      .post(
+        "http://testredprism.co/api/jobseekerRegister/register",
+        {
+          employee_status: "Status",
+          status_icon: "Icon",
+          first_name: formik.values.firstName,
+          last_name: formik.values.lastName,
+          user_name: formik2.values.username,
+          password: formik2.values.password,
+          ph_num: formik.values.mobile,
+          email_id: formik.values.email,
+          company_code: formik3.values.currentCompany,
+          tech_code: formik3.values.technicalSkills,
+          exp_code: formik3.values.ExperienceInYear,
+          location_code: formik.values.city,
+          looking_job: formik4.values.lookingForJob,
+          notice_period: formik4.values.noticePeriod,
+          immediate_joinner: formik4.values.immediateJoiner,
+          fresher: formik3.values.fresher,
+        }
+      )
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.status === "error") {
           toast.error(`Failed : ${response.data.mssg}`);
         }
@@ -352,7 +347,7 @@ function RegisterJobSheeker() {
         }
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
         toast.error(`Failed : ${error.message}`);
       });
   };
@@ -489,7 +484,7 @@ function RegisterJobSheeker() {
                       <em style={{ color: "red" }}>{formik.errors.mobile}</em>
                     )}
                   </div>
-                   {/* <div className="col-md-8">
+                  {/* <div className="col-md-8">
                     <b>Gender:</b>
                     <div className="mb-4">
                       <br />
@@ -522,7 +517,7 @@ function RegisterJobSheeker() {
                   </div>  */}
                 </div>
                 <div className="form-row d-flex align-items-center justify-content-center">
-                   <div className="col-md-2 mb-3">
+                  <div className="col-md-2 mb-3">
                     <label htmlFor="validationDefault04">State</label>
                     <select
                       name="state"
@@ -531,7 +526,7 @@ function RegisterJobSheeker() {
                       onChange={formik.handleChange}
                       value={formik.values.state}
                     >
-                     <option>--Select--</option>
+                      <option>--Select--</option>
                       {data3.map((item, id) => {
                         return (
                           <>
@@ -546,8 +541,8 @@ function RegisterJobSheeker() {
                     {formik.errors.state && (
                       <em style={{ color: "red" }}>{formik.errors.state}</em>
                     )}
-                  </div> 
-                   <div className="col-md-4 mb-3">
+                  </div>
+                  <div className="col-md-4 mb-3">
                     <label htmlFor="validationDefault03">City</label>
                     <select
                       type="text"
@@ -558,7 +553,7 @@ function RegisterJobSheeker() {
                       onChange={formik.handleChange}
                       value={formik.values.city}
                     >
-                       <option>--Select--</option>
+                      <option>--Select--</option>
                       {data4.map((item, id) => {
                         return (
                           <>
@@ -568,14 +563,14 @@ function RegisterJobSheeker() {
                           </>
                         );
                       })}
-                   </select>
+                    </select>
 
                     {formik.errors.city && (
                       <em style={{ color: "red" }}>{formik.errors.city}</em>
                     )}
-                  </div> 
+                  </div>
 
-                   <div className="col-md-2 mb-3">
+                  <div className="col-md-2 mb-3">
                     <label htmlFor="validationDefault05">Area</label>
                     <select
                       type="text"
@@ -600,7 +595,7 @@ function RegisterJobSheeker() {
                     {formik.errors.area && (
                       <em style={{ color: "red" }}>{formik.errors.area}</em>
                     )}
-                  </div> 
+                  </div>
                 </div>
                 <div className="form-group d-flex align-items-center justify-content-center">
                   <div className="form-check">
@@ -695,7 +690,7 @@ function RegisterJobSheeker() {
                   <div class="col-md-8 mb-3">
                     <p className="d-flex h4 my-5 justify-content-center">OTP</p>
                     <input
-                      type="number"
+                      type="text"
                       name="otp"
                       class="form-control"
                       placeholder="Enter Your 6 Digit OTP"
@@ -967,7 +962,7 @@ function RegisterJobSheeker() {
                       onChange={formik3.handleChange}
                       value={formik3.values.fresher}
                     >
-                      <option  >--Select--</option>
+                      <option>--Select--</option>
                       <option>No</option>
                       <option>Yes</option>
                     </select>

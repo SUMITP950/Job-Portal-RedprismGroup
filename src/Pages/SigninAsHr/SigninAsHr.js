@@ -37,14 +37,14 @@ export default function SigninAsHr() {
         .max(10, "Maximum 10 characters length"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
   const formik1 = useFormik({
     initialValues: {
       mobile: "",
       otp: "",
-      otpid:"",
+      otpid: "",
     },
     validationSchema: yup.object({
       mobile: yup
@@ -61,92 +61,87 @@ export default function SigninAsHr() {
         .max(6, "Maximum 6 digits"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
 
   // In this section data send to backend
-  const sendOtp=()=>{
-    if(formik1.values.mobile){
-    axios
-      .post("http://testredprism.co/api/hrLogin/loginSendOtp", {
-        ph_num: formik1.values.mobile,
-      })
-      .then((response) => {
-        console.log(response.data);
-      if(response.data.status==="success"){
-        formik1.values.otpid = response.data.otp_id;
-        toast.success(`${response.data.mssg}`);
-        }
-      if(response.data.status==="error"){
-          toast.error(`${response.data.mssg}`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Failed : ${error.message}`);
-      });
-  }
-}
-
-
-  const handleApiMobile = () => {
-    if(formik1.values.mobile&&formik1.values.otp){
-    axios
-    .post("http://testredprism.co/api/hrLogin/loginCheckOtp", {
-        ph_num: formik1.values.mobile,
-        otp: formik1.values.otp,
-        otp_id: formik1.values.otpid,
-    })
-    .then((response) => {
-      console.log(response.data);
-    if(response.data.status==="success"){
-      localStorage.setItem("authToken", response.data.authToken);
-      toast.success(`${response.data.mssg}`)
-      navigate("/Home");
-      }
-    if(response.data.status==="error"){
-        toast.error(`${response.data.mssg}`);
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      toast.error(`Failed : ${error.message}`);
-    });
-    
-  }
+  const sendOtp = () => {
+    if (formik1.values.mobile) {
+      axios
+        .post("http://testredprism.co/api/hrLogin/loginSendOtp", {
+          ph_num: formik1.values.mobile,
+        })
+        .then((response) => {
+          // console.log(response.data);
+          if (response.data.status === "success") {
+            formik1.values.otpid = response.data.otp_id;
+            // toast.success(`${response.data.mssg}`);
+            alert(`Your otp is ${response.data.otp}`);
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          // console.error(error);
+          toast.error(`Failed : ${error.message}`);
+        });
+    }
   };
 
-  
-
-
+  const handleApiMobile = () => {
+    if (formik1.values.mobile && formik1.values.otp) {
+      axios
+        .post("http://testredprism.co/api/hrLogin/loginCheckOtp", {
+          ph_num: formik1.values.mobile,
+          otp: formik1.values.otp,
+          otp_id: formik1.values.otpid,
+        })
+        .then((response) => {
+          // console.log(response.data);
+          if (response.data.status === "success") {
+            localStorage.setItem("authToken", response.data.authToken);
+            toast.success(`${response.data.mssg}`);
+            navigate("/Home");
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          // console.error(error);
+          toast.error(`Failed : ${error.message}`);
+        });
+    }
+  };
 
   // In this section data send to backend
   const handleApi = () => {
-    if(formik.values.username&&formik.values.password){
-    axios
-      .post("http://testredprism.co/api/hrLogin/loginUsername", {
-        user_name: formik.values.username,
-        password: formik.values.password,
-      })
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.status === "success") {
-          localStorage.setItem("authToken", response.data.authToken);
-          toast.success(`${response.data.mssg}`);
-          navigate("/Home");
-        }
-        if (response.data.status === "error") {
-          toast.error(`Failed : ${response.data.mssg}`);
-        }
-        if (response.data.status === "not found") {
-          toast.error(`Failed : ${response.data.mssg}`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Failed : ${error.message}`);
-      });
+    if (formik.values.username && formik.values.password) {
+      axios
+        .post("http://testredprism.co/api/hrLogin/loginUsername", {
+          user_name: formik.values.username,
+          password: formik.values.password,
+        })
+        .then((response) => {
+          // console.log(response.data);
+          if (response.data.status === "success") {
+            localStorage.setItem("authToken", response.data.authToken);
+            toast.success(`${response.data.mssg}`);
+            navigate("/Home");
+          }
+          if (response.data.status === "error") {
+            toast.error(`Failed : ${response.data.mssg}`);
+          }
+          if (response.data.status === "not found") {
+            toast.error(`Failed : ${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          // console.error(error);
+          toast.error(`Failed : ${error.message}`);
+        });
     }
   };
 
@@ -233,7 +228,7 @@ export default function SigninAsHr() {
                         <div class="form-group last mb-3">
                           <label htmlFor="otp">Enter Your OTP</label>
                           <input
-                            type="password"
+                            type="text"
                             name="otp"
                             class="form-control"
                             placeholder="Enter Your OTP"
