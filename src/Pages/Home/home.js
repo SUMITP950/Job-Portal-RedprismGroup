@@ -110,9 +110,11 @@ export default function Home() {
   //   }
   // }, []);
   const [post, setPost] = useState("");
+  const[getpost,setgetpost]=useState([])
   const [thoughts, setThoughts] = useState("");
   const [thought, setThought] = useState("");
   const [listdata, setListdata] = useState([]);
+  const[listdata1,setListdata1]=useState([]);
   const [comentdata, setcomentdata] = useState([]);
   const [like, setlike] = useState("");
   const handellike = () => {
@@ -128,13 +130,8 @@ export default function Home() {
     setThought(e.target.value);
   };
 
-  const handlePost = () => {
-    setListdata((listdata) => {
-      const updatedList = [...listdata, thoughts];
-      setThoughts("");
-
-      return updatedList;
-    });
+  const handlePost = (e) => {
+ 
 
     // Make a POST request to the backend with the thoughts data
     axios
@@ -152,8 +149,15 @@ export default function Home() {
         }
       )
       .then((response) => {
-        console.log(thoughts);
+        console.log(thoughts)
+        
         if (response.data.status === "success") {
+          setListdata((listdata) => {
+            const updatedList = [...listdata, thoughts];
+            setThoughts("");
+      
+            return updatedList;
+          });
           toast.success(`${response.data.mssg}`);
         }
         if (response.data.status === "access denied") {
@@ -162,15 +166,15 @@ export default function Home() {
       })
       .catch((error) => {
         console.error(error);
-      });
+      }); 
   };
   // get feed post
-  const getFeed = () => {
+  const getFeed = (e) => {
     axios
       .post(
         "http://testredprism.co/api/home/getFeedsPost",
         {
-          tech_code: post.value,
+          tech_code: e.value,
           from_index: 0,
         },
         {
@@ -180,9 +184,16 @@ export default function Home() {
         }
       )
       .then((response) => {
-        console.log("vsahdjsaj", response.data);
-        if (response.data.limit <= 50) {
-          toast.success(`${response.data.mssg}`);
+    
+      
+        if (response.data.status === "success") {
+          console.log(response.data.feedsList);
+          setgetpost(response.data.feedsList);
+          console.log(getpost);
+    //  setListdata1=response.data
+     console.log(e.value)
+     toast.success(`${response.data.mssg}`);
+      
         }
         if (response.data.status === "access denied") {
           toast.error(`${response.data.mssg}`);
@@ -191,6 +202,7 @@ export default function Home() {
       .catch((error) => {
         console.error(error);
       });
+      
   };
 
   // comment section function
@@ -268,7 +280,7 @@ export default function Home() {
                             }}
                             options={options}
                             defaultValuevalue={post}
-                            onChange={(setPost, getFeed)}
+                            onChange={e => { setPost(e); getFeed(e) }}
                             placeholder={"Technology"}
                           />
                         </div>
@@ -506,6 +518,166 @@ export default function Home() {
                                         border: "none",
                                       }}
                                       onClick={() => removeActivity(i)}
+                                    >
+                                      X
+                                    </button>
+                                  </div>
+                                </>
+                              );
+                            })}
+                        </div>
+                        <section
+                          id="open"
+                          style={{ backgroundColor: "#eee", display: "none" }}
+                        >
+                          <div class="container m-0 p-0">
+                            <div class="row d-flex justify-content-center">
+                              <div class="col-md-12">
+                                <div class="card">
+                                  <div
+                                    class="card-footer py-3 border-0"
+                                    style={{ backgroundColor: "#f8f9fa" }}
+                                  >
+                                    <div class="d-flex flex-start w-100">
+                                      <div class="form-outline w-100">
+                                        <textarea
+                                          class="form-control"
+                                          id="textAreaExample"
+                                          rows="4"
+                                          style={{ background: "#fff" }}
+                                          value={thought}
+                                          onChange={handleThoughtsChange1}
+                                        ></textarea>
+
+                                        <label
+                                          class="form-label"
+                                          for="textAreaExample"
+                                        >
+                                          Comment
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="float-end mt-2 pt-1">
+                                      <button
+                                        type="button"
+                                        class="btn btn-primary btn-sm aply-btn mr-2"
+                                        onClick={handleComent}
+                                      >
+                                        Post comment
+                                      </button>
+                                      <button
+                                        type="button"
+                                        class="btn btn-outline-primary btn-sm"
+                                        onClick={disnan}
+                                      >
+                                        Close
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                        {/* comment section end */}
+                      </div>
+                    </>
+                  );
+                })}
+
+
+
+                {getpost != [] &&
+                getpost.map((data, i2) => {
+                  return (
+                    <>
+                      <div class="box shadow-sm border rounded bg-white mb-3 osahan-post">
+                        <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
+                          <div class="dropdown-list-image mr-3">
+                            <img
+                              class="rounded-circle"
+                              src="img/icon/smile.svg"
+                              alt=""
+                            />
+                            <div class="status-indicator bg-success"></div>
+                          </div>
+                          <div class="font-weight-bold">
+                            <div class="text-truncate">{data}</div>
+                            <div class="small text-gray-500">
+                              Frontend Developer at TP Digital Technology
+                            </div>
+                          </div>
+                          <span class="ml-auto small">3 hours</span>
+                        </div>
+                        <div class="p-3 border-bottom osahan-post-body">
+                          <p
+                            class="mb-0"
+                            // key={i}
+                            style={{ fontWeight: "bold", fontSize: 20 }}
+                          >
+                            <div>{data}</div>
+                          </p>
+                        </div>
+                        <div class="p-3 osahan-post-footer text-center d-flex jcc">
+                          <button
+                            class="mr-3 text-secondary btn btn-link "
+                            onClick={handellike}
+                          >
+                            <i class="feather-heart text-danger icon-font"></i>
+                            {like}
+                          </button>
+                          <button
+                            class="mr-3 text-secondary btn btn-link"
+                            onClick={disblk}
+                          >
+                            <i class="feather-message-square icon-font"></i>
+                            {}
+                          </button>
+                          <Link
+                            to="#"
+                            data-action="share/whatsapp/share"
+                            target="_blank"
+                            class="mr-3 text-secondary"
+                          >
+                            <img
+                              src="img/icon/whatsapp.png"
+                              alt=""
+                              class="icon-image"
+                            />
+                          </Link>
+                        </div>
+                        {/* comment section start */}
+                        <div>
+                          {comentdata != [] &&
+                            comentdata.map((data1, i2) => {
+                              return (
+                                <>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                      alignItems: "center",
+                                      paddingLeft: 20,
+                                      paddingRight: 20,
+                                    }}
+                                  >
+                                    <p
+                                      class="my-3 px-2 py-1"
+                                      key={i2}
+                                      style={{
+                                        fontWeight: "bold",
+                                        fontSize: 15,
+                                      }}
+                                    >
+                                      {data1}
+                                    </p>
+                                    <button
+                                      style={{
+                                        fontWeight: "bold",
+                                        fontSize: "25",
+                                        border: "none",
+                                      }}
+                                      onClick={() => removeActivity(i2)}
                                     >
                                       X
                                     </button>

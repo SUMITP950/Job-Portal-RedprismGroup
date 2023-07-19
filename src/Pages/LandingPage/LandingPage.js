@@ -6,7 +6,7 @@ export default function LandingPage() {
   useEffect(() => {
     document.title = "Red Prism";
   }, []);
-
+  
   return (
     <div>
       <div class="container-fluid page-set">
