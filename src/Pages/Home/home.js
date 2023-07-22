@@ -11,14 +11,30 @@ import { toast } from "react-toastify";
 export default function Home() {
   let options = [];
 
-  const [data, SetData] = useState([]);
+  const [commentList, SetCommentList] = useState("");
 
+  const [userDetails, SetUserDetails] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
-      navigate("/SigninAsHr");
+      navigate("/");
     }
   }, []);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://testredprism.co/api/getUserDetails", {
+  //       headers: {
+  //         "auth-token": localStorage.getItem("authToken"),
+  //       },
+  //     })
+  //     .then((res) => {
+  //       SetUserDetails(res.data.userDetails);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   useEffect(() => {
     axios
@@ -28,6 +44,7 @@ export default function Home() {
         },
       })
       .then((res) => {
+        console.log(res.data);
         let techList = res.data.techList;
         for (let index = 0; index < techList.length; index++) {
           options.push({
@@ -39,7 +56,7 @@ export default function Home() {
       .catch((error) => {
         console.error(error);
       });
-  });
+  }, []);
 
   // useEffect(() => {
   //   const tabsBox = document.querySelector(".tabs-box"),
@@ -110,18 +127,45 @@ export default function Home() {
   //   }
   // }, []);
   const [post, setPost] = useState("");
-  const[getpost,setgetpost]=useState([])
+  const [getpost, setGetpost] = useState([]);
   const [thoughts, setThoughts] = useState("");
   const [thought, setThought] = useState("");
   const [listdata, setListdata] = useState([]);
-  const[listdata1,setListdata1]=useState([]);
+  const [listdata1, setListdata1] = useState("Like");
   const [comentdata, setcomentdata] = useState([]);
   const [like, setlike] = useState("");
+  // Like section with backend
   const handellike = () => {
     setlike(like + 1);
     if (like >= 1) {
       setlike("");
     }
+    if (like == 1) {
+      setListdata1("Like");
+    }
+
+    axios
+      .post(
+        "http://testredprism.co/api/home/saveFeedsPostLikeDislike",
+        { feeds_post_code: post.value, type: listdata1 },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          console.log(listdata1);
+        }
+        if (response.data.status === "access denied") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
   const handleThoughtsChange = (e) => {
     setThoughts(e.target.value);
@@ -131,8 +175,6 @@ export default function Home() {
   };
 
   const handlePost = (e) => {
- 
-
     // Make a POST request to the backend with the thoughts data
     axios
       .post(
@@ -149,15 +191,15 @@ export default function Home() {
         }
       )
       .then((response) => {
-        console.log(thoughts)
-        
+        console.log(post);
         if (response.data.status === "success") {
-          setListdata((listdata) => {
-            const updatedList = [...listdata, thoughts];
-            setThoughts("");
-      
-            return updatedList;
-          });
+          // setListdata((listdata) => {
+          //   const updatedList = [...listdata, thoughts];
+          //   setThoughts("");
+
+          //   return updatedList;
+          // });
+
           toast.success(`${response.data.mssg}`);
         }
         if (response.data.status === "access denied") {
@@ -166,7 +208,7 @@ export default function Home() {
       })
       .catch((error) => {
         console.error(error);
-      }); 
+      });
   };
   // get feed post
   const getFeed = (e) => {
@@ -184,16 +226,10 @@ export default function Home() {
         }
       )
       .then((response) => {
-    
-      
         if (response.data.status === "success") {
-          console.log(response.data.feedsList);
-          setgetpost(response.data.feedsList);
-          console.log(getpost);
-    //  setListdata1=response.data
-     console.log(e.value)
-     toast.success(`${response.data.mssg}`);
-      
+          setGetpost(response.data.feedsList);
+
+          toast.success(`${response.data.mssg}`);
         }
         if (response.data.status === "access denied") {
           toast.error(`${response.data.mssg}`);
@@ -202,10 +238,9 @@ export default function Home() {
       .catch((error) => {
         console.error(error);
       });
-      
   };
 
-  // comment section function
+  // comment section function with backend
   const disblk = () => {
     document.getElementById("open").style.display = "block";
   };
@@ -216,9 +251,62 @@ export default function Home() {
     setcomentdata((comentdata) => {
       const updatedComent = [...comentdata, thought];
       setThought("");
+
+      axios
+        .post(
+          "http://testredprism.co/api/home/saveFeedsComment",
+          {
+            feeds_post_code: post.value,
+            comment: thought,
+          },
+          {
+            headers: {
+              "auth-token": localStorage.getItem("authToken"),
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.status === "success") {
+            toast.success(`${response.data.mssg}`);
+          }
+          if (response.data.status === "access denied") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
       return updatedComent;
     });
     disnan();
+    getcomment();
+  };
+  const getcomment = () => {
+    axios
+      .post(
+        "http://testredprism.co/api/home/getFeedsPostCommentsList",
+        {
+          feeds_post_code: post.value,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.status === "success") {
+          // SetCommentList(response.data.feedsCommentsList);    problem is here
+          console.log(commentList);
+          toast.success(`${response.data.mssg}`);
+        }
+        if (response.data.status === "access denied") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
   const removeActivity = (i) => {
     const deleteListData = comentdata.filter((item, id) => {
@@ -280,7 +368,10 @@ export default function Home() {
                             }}
                             options={options}
                             defaultValuevalue={post}
-                            onChange={e => { setPost(e); getFeed(e) }}
+                            onChange={(e) => {
+                              setPost(e);
+                              getFeed(e);
+                            }}
                             placeholder={"Technology"}
                           />
                         </div>
@@ -585,9 +676,7 @@ export default function Home() {
                   );
                 })}
 
-
-
-                {getpost != [] &&
+              {getpost != [] &&
                 getpost.map((data, i2) => {
                   return (
                     <>
@@ -602,12 +691,17 @@ export default function Home() {
                             <div class="status-indicator bg-success"></div>
                           </div>
                           <div class="font-weight-bold">
-                            <div class="text-truncate">{data}</div>
+                            <div class="text-truncate">
+                              {`${data.employee_details[0].first_name} ${data.employee_details[0].last_name}`}
+                            </div>
+
                             <div class="small text-gray-500">
-                              Frontend Developer at TP Digital Technology
+                              {data.employee_details[0].employee_type}
                             </div>
                           </div>
-                          <span class="ml-auto small">3 hours</span>
+                          <span class="ml-auto small">
+                            {data.post_datetime}
+                          </span>
                         </div>
                         <div class="p-3 border-bottom osahan-post-body">
                           <p
@@ -615,7 +709,7 @@ export default function Home() {
                             // key={i}
                             style={{ fontWeight: "bold", fontSize: 20 }}
                           >
-                            <div>{data}</div>
+                            <div>{data.post_details}</div>
                           </p>
                         </div>
                         <div class="p-3 osahan-post-footer text-center d-flex jcc">
@@ -661,6 +755,7 @@ export default function Home() {
                                       paddingRight: 20,
                                     }}
                                   >
+                                    <p>{}</p>
                                     <p
                                       class="my-3 px-2 py-1"
                                       key={i2}
@@ -748,18 +843,21 @@ export default function Home() {
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm pt-4 pb-4">
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
+                  <div class="dropdown-item d-flex align-items-center">
+                    <div class="mr-2">
                       <div class="icon-circle-profile">
                         <i class="feather-user left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      <Link to="/Profile">
-                        <span class="font-weight-bold">User Name</span>
-                      </Link>
+                      <h5 class="font-weight-bold">{userDetails.user_name}</h5>
                     </div>
-                  </a>
+                    <div>
+                      <h6 class="font-weight-bold ml-1 ">
+                        ({userDetails.employee_type})
+                      </h6>
+                    </div>
+                  </div>
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                       <div class="icon-circle-profile">
