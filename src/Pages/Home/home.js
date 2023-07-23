@@ -5,15 +5,31 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import Select from "react-select";
 import { toast } from "react-toastify";
 
 export default function Home() {
-  let options = [];
-
-  const [commentList, SetCommentList] = useState("");
-
+  const [techno, setTechno] = useState("");
+  const [technoData, SetTechnoData] = useState([]);
   const [userDetails, SetUserDetails] = useState("");
+  const [getpost, setGetpost] = useState([]);
+  const [thoughts, setThoughts] = useState(""); // this is for post value
+  const [thought, setThought] = useState(""); // this is for comment value
+  const [comentdata, setcomentdata] = useState([]);
+  const [comentList, setcomentList] = useState([]);
+
+  const handleThoughtsChange = (e) => {
+    setThoughts(e.target.value);
+  };
+  const handleThoughtsChange1 = (e) => {
+    setThought(e.target.value);
+  };
+
+ 
+  const disnan = (postId) => {
+    document.getElementById("open_" + postId).style.display = "none";
+  };
+
+  //Protecting this page
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
@@ -21,21 +37,23 @@ export default function Home() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://testredprism.co/api/getUserDetails", {
-  //       headers: {
-  //         "auth-token": localStorage.getItem("authToken"),
-  //       },
-  //     })
-  //     .then((res) => {
-  //       SetUserDetails(res.data.userDetails);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
+  // Get user details
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/getUserDetails", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        SetUserDetails(res.data.userDetails);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
+  //Get tech list
   useEffect(() => {
     axios
       .get("http://testredprism.co/api/home/getTechList", {
@@ -44,143 +62,22 @@ export default function Home() {
         },
       })
       .then((res) => {
-        console.log(res.data);
-        let techList = res.data.techList;
-        for (let index = 0; index < techList.length; index++) {
-          options.push({
-            value: techList[index]["_id"],
-            label: techList[index]["tech_name"],
-          });
-        }
+        // console.log(res.data.techList)
+        SetTechnoData(res.data.techList);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
 
-  // useEffect(() => {
-  //   const tabsBox = document.querySelector(".tabs-box"),
-  //     allTabs = tabsBox.querySelectorAll(".tab"),
-  //     arrowIcons = document.querySelectorAll(".icon i");
-
-  //   let isDragging = false;
-
-  //   const handleIcons = (scrollVal) => {
-  //     let maxScrollableWidth = tabsBox.scrollWidth - tabsBox.clientWidth;
-  //     arrowIcons[0].parentElement.style.display =
-  //       scrollVal <= 0 ? "none" : "flex";
-  //     arrowIcons[1].parentElement.style.display =
-  //       maxScrollableWidth - scrollVal <= 1 ? "none" : "flex";
-  //   };
-
-  //   arrowIcons.forEach((icon) => {
-  //     icon.addEventListener("click", () => {
-  //       // if clicked icon is left, reduce 350 from tabsBox scrollLeft else add
-  //       let scrollWidth = (tabsBox.scrollLeft +=
-  //         icon.id === "left" ? -340 : 340);
-  //       handleIcons(scrollWidth);
-  //     });
-  //   });
-
-  //   allTabs.forEach((tab) => {
-  //     tab.addEventListener("click", () => {
-  //       tabsBox.querySelector(".active").classList.remove("active");
-  //       tab.classList.add("active");
-  //     });
-  //   });
-
-  //   const dragging = (e) => {
-  //     if (!isDragging) return;
-  //     tabsBox.classList.add("dragging");
-  //     tabsBox.scrollLeft -= e.movementX;
-  //     handleIcons(tabsBox.scrollLeft);
-  //   };
-
-  //   const dragStop = () => {
-  //     isDragging = false;
-  //     tabsBox.classList.remove("dragging");
-  //   };
-
-  //   tabsBox.addEventListener("mousedown", () => (isDragging = true));
-  //   tabsBox.addEventListener("mousemove", dragging);
-  //   document.addEventListener("mouseup", dragStop);
-  //   function auto_grow(element) {
-  //     element.style.height = "5px";
-  //     element.style.height = element.scrollHeight + "px";
-  //   }
-  //   window.onscroll = function () {
-  //     myFunction();
-  //   };
-
-  //   var navbar = document.getElementById("navbar");
-  //   var sticky = navbar.offsetTop;
-
-  //   const myFunction = () => {
-  //     if (window.pageYOffset >= sticky) {
-  //       navbar.classList.add("sticky");
-  //     } else {
-  //       navbar.classList.remove("sticky");
-  //     }
-  //   };
-  //   if (!("boxShadow" in document.body.style)) {
-  //     document.body.setAttribute("class", "noBoxShadow");
-  //   }
-  // }, []);
-  const [post, setPost] = useState("");
-  const [getpost, setGetpost] = useState([]);
-  const [thoughts, setThoughts] = useState("");
-  const [thought, setThought] = useState("");
-  const [listdata, setListdata] = useState([]);
-  const [listdata1, setListdata1] = useState("Like");
-  const [comentdata, setcomentdata] = useState([]);
-  const [like, setlike] = useState("");
-  // Like section with backend
-  const handellike = () => {
-    setlike(like + 1);
-    if (like >= 1) {
-      setlike("");
-    }
-    if (like == 1) {
-      setListdata1("Like");
-    }
-
-    axios
-      .post(
-        "http://testredprism.co/api/home/saveFeedsPostLikeDislike",
-        { feeds_post_code: post.value, type: listdata1 },
-        {
-          headers: {
-            "auth-token": localStorage.getItem("authToken"),
-          },
-        }
-      )
-      .then((response) => {
-        if (response.data.status === "success") {
-          toast.success(`${response.data.mssg}`);
-          console.log(listdata1);
-        }
-        if (response.data.status === "access denied") {
-          toast.error(`${response.data.mssg}`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-  const handleThoughtsChange = (e) => {
-    setThoughts(e.target.value);
-  };
-  const handleThoughtsChange1 = (e) => {
-    setThought(e.target.value);
-  };
-
-  const handlePost = (e) => {
-    // Make a POST request to the backend with the thoughts data
+  // Save post data
+  const handlePost = () => {
+    // console.log("Post Save " + techno);
     axios
       .post(
         "http://testredprism.co/api/home/saveFeedsPost",
         {
-          tech_code: post.value,
+          tech_code: techno,
           post_details: thoughts,
         },
 
@@ -191,18 +88,11 @@ export default function Home() {
         }
       )
       .then((response) => {
-        console.log(post);
         if (response.data.status === "success") {
-          // setListdata((listdata) => {
-          //   const updatedList = [...listdata, thoughts];
-          //   setThoughts("");
-
-          //   return updatedList;
-          // });
-
           toast.success(`${response.data.mssg}`);
+          setThoughts("");
         }
-        if (response.data.status === "access denied") {
+        if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
         }
       })
@@ -210,13 +100,16 @@ export default function Home() {
         console.error(error);
       });
   };
-  // get feed post
-  const getFeed = (e) => {
+
+  // Get feed post list
+
+  const technoChange = (tech_code) => {
+    // console.log(tech_code);
     axios
       .post(
         "http://testredprism.co/api/home/getFeedsPost",
         {
-          tech_code: e.value,
+          tech_code: tech_code,
           from_index: 0,
         },
         {
@@ -227,11 +120,41 @@ export default function Home() {
       )
       .then((response) => {
         if (response.data.status === "success") {
+          // console.log(response.data.feedsList[0]._id);
           setGetpost(response.data.feedsList);
 
           toast.success(`${response.data.mssg}`);
         }
-        if (response.data.status === "access denied") {
+        if (response.data.status === "error") {
+          // console.log(response.data);
+          // toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  // Like section with backend
+
+  const handellike = (postId) => {
+    // console.log(postId);
+    axios
+      .post(
+        "http://testredprism.co/api/home/saveFeedsPostLikeDislike",
+        { feeds_post_code: postId, type: "Like" },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        // console.log(response.data);
+        if (response.data.status === "success") {
+          // toast.success(`${response.data.mssg}`);
+        }
+        if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
         }
       })
@@ -240,53 +163,83 @@ export default function Home() {
       });
   };
 
-  // comment section function with backend
-  const disblk = () => {
-    document.getElementById("open").style.display = "block";
+  // //  Dislike section with backend
+
+  const handelDislike = (postId) => {
+    // console.log(postId);
+    axios
+      .post(
+        "http://testredprism.co/api/home/saveFeedsPostLikeDislike",
+        { feeds_post_code: postId, type: "Dislike" },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        // console.log(response.data);
+        if (response.data.status === "success") {
+          // toast.success(`${response.data.mssg}`);
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-  const disnan = () => {
-    document.getElementById("open").style.display = "none";
-  };
-  const handleComent = () => {
+
+  // comment section api
+
+  const handleComent = (id) => {
+    // console.log(id);
     setcomentdata((comentdata) => {
       const updatedComent = [...comentdata, thought];
       setThought("");
-
-      axios
-        .post(
-          "http://testredprism.co/api/home/saveFeedsComment",
-          {
-            feeds_post_code: post.value,
-            comment: thought,
-          },
-          {
-            headers: {
-              "auth-token": localStorage.getItem("authToken"),
-            },
-          }
-        )
-        .then((response) => {
-          if (response.data.status === "success") {
-            toast.success(`${response.data.mssg}`);
-          }
-          if (response.data.status === "access denied") {
-            toast.error(`${response.data.mssg}`);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
       return updatedComent;
     });
-    disnan();
-    getcomment();
+
+    axios
+      .post(
+        "http://testredprism.co/api/home/saveFeedsComment",
+        {
+          feeds_post_code: id,
+          comment: thought,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data.feeds_comment_id);
+
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+   
   };
-  const getcomment = () => {
+
+  // comment list section api
+
+  const disblk = (postId) => {
+    document.getElementById("open_" + postId).style.display = "block";
+    // console.log(postId);
     axios
       .post(
         "http://testredprism.co/api/home/getFeedsPostCommentsList",
         {
-          feeds_post_code: post.value,
+          feeds_post_code: postId,
         },
         {
           headers: {
@@ -296,23 +249,49 @@ export default function Home() {
       )
       .then((response) => {
         if (response.data.status === "success") {
-          // SetCommentList(response.data.feedsCommentsList);    problem is here
-          console.log(commentList);
+          setcomentList(response.data.feedsCommentsList)
           toast.success(`${response.data.mssg}`);
         }
-        if (response.data.status === "access denied") {
-          toast.error(`${response.data.mssg}`);
+        if (response.data.status === "error") {
+          // toast.error(`${response.data.mssg}`);
         }
       })
       .catch((error) => {
         console.error(error);
       });
   };
+
+
+  // comment delete section api
   const removeActivity = (i) => {
     const deleteListData = comentdata.filter((item, id) => {
       return i != id;
     });
     setcomentdata(deleteListData);
+    axios
+    .post(
+      "http://testredprism.co/api/home/deleteFeedsComment",
+      {
+        // feeds_comment_code:  ,
+      },
+      {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      }
+    )
+    .then((response) => {
+      if (response.data.status === "success") {
+        setcomentList(response.data.feedsCommentsList)
+        toast.success(`${response.data.mssg}`);
+      }
+      if (response.data.status === "error") {
+        // toast.error(`${response.data.mssg}`);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   };
 
   return (
@@ -323,9 +302,6 @@ export default function Home() {
             <main className="col col-xl-7 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
               <div className="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
                 <div className="wrapper" style={{ overflowX: "inherit" }}>
-                  {/* <div className="icon">
-                    <i id="left" className="feather-arrow-left"></i>
-                  </div> */}
                   <div class="col-lg-12 ">
                     <div
                       class="d-flex justify-content-around"
@@ -343,131 +319,31 @@ export default function Home() {
                             src="https://img.icons8.com/ios/50/000000/circuit.png"
                             alt=""
                           />
-                          <Select
-                            styles={{
-                              container: (baseStyles, state) => ({
-                                ...baseStyles,
-
-                                display: "inherit",
-                              }),
-                              control: (baseStyles, state) => ({
-                                ...baseStyles,
-
-                                border: "none",
-                                backgroundColor: "#fff",
-                              }),
-                              placeholder: (baseStyles, state) => ({
-                                ...baseStyles,
-                                color: "Black",
-                                fontWeight: "bold",
-                              }),
-                              indicatorSeparator: (baseStyles, state) => ({
-                                ...baseStyles,
-                                display: "none",
-                              }),
-                            }}
-                            options={options}
-                            defaultValuevalue={post}
+                          <select
+                            class="form-control form-control-lg"
+                            name="currentCompany"
+                            id="currentCompany"
                             onChange={(e) => {
-                              setPost(e);
-                              getFeed(e);
+                              setTechno(e.target.value);
+                              technoChange(e.target.value);
                             }}
-                            placeholder={"Technology"}
-                          />
+                            value={techno}
+                          >
+                            <option>--Technology--</option>
+                            {technoData.map((item, id) => {
+                              return (
+                                <>
+                                  <option value={item._id} key={id._id}>
+                                    {item.tech_name}
+                                  </option>
+                                </>
+                              );
+                            })}
+                          </select>
                         </div>
                       </div>
-
-                      {/* <div class="dropdown">
-                  <div className="d-flex align-items-center">
-                    <img
-                      class="dropdown-menu-img"
-                      src="https://img.icons8.com/ios/50/popular-man.png"
-                      alt=""
-                    />
-                    <Select
-                      styles={{
-                        container: (baseStyles, state) => ({
-                          ...baseStyles,
-
-                          display: "inherit",
-                        }),
-                        control: (baseStyles, state) => ({
-                          ...baseStyles,
-
-                          border: "none",
-                          backgroundColor: "#fff",
-                        }),
-                        placeholder: (baseStyles, state) => ({
-                          ...baseStyles,
-                          color: "Black",
-                          fontWeight: "bold",
-                        }),
-                        indicatorSeparator: (baseStyles, state) => ({
-                          ...baseStyles,
-                          display: "none",
-                        }),
-                      }}
-                      options={options}
-                      isMulti
-                      placeholder={"Type"}
-                    />
-                  </div>
-                </div> */}
-
-                      {/* <div class="dropdown">
-                  <div className="d-flex align-items-center">
-                    <i class="feather-map-pin mr-2 menu-icon"></i>
-                    <Select
-                      styles={{
-                        container: (baseStyles, state) => ({
-                          ...baseStyles,
-
-                          display: "inherit",
-                        }),
-                        control: (baseStyles, state) => ({
-                          ...baseStyles,
-
-                          border: "none",
-                          backgroundColor: "#fff",
-                        }),
-                        placeholder: (baseStyles, state) => ({
-                          ...baseStyles,
-                          color: "Black",
-                          fontWeight: "bold",
-                        }),
-                        indicatorSeparator: (baseStyles, state) => ({
-                          ...baseStyles,
-                          display: "none",
-                        }),
-                      }}
-                      options={options}
-                      isMulti
-                      placeholder={"Location"}
-                    />
-                  </div>
-                </div> */}
                     </div>
                   </div>
-                  {/* <ul className="tabs-box">
-                    <li className="tab">Coding</li>
-                    <li className="tab active">JavaScript</li>
-                    <li class="tab">Podcasts</li>
-                    <li class="tab">Databases</li>
-                    <li class="tab">Web Development</li>
-                    <li class="tab">Unboxing</li>
-                    <li class="tab">History</li>
-                    <li class="tab">Programming</li>
-                    <li class="tab">Gadgets</li>
-                    <li class="tab">Algorithms</li>
-                    <li class="tab">Comedy</li>
-                    <li class="tab">Gaming</li>
-                    <li class="tab">Share Market</li>
-                    <li class="tab">Smartphones</li>
-                    <li class="tab">Data Structure</li>
-                  </ul> */}
-                  {/* <div className="icon">
-                    <i id="right" className="feather-arrow-right"></i>
-                  </div> */}
                 </div>
                 <div
                   className="tab-content"
@@ -518,164 +394,6 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              {listdata != [] &&
-                listdata.map((data, i) => {
-                  return (
-                    <>
-                      <div class="box shadow-sm border rounded bg-white mb-3 osahan-post">
-                        <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
-                          <div class="dropdown-list-image mr-3">
-                            <img
-                              class="rounded-circle"
-                              src="img/icon/smile.svg"
-                              alt=""
-                            />
-                            <div class="status-indicator bg-success"></div>
-                          </div>
-                          <div class="font-weight-bold">
-                            <div class="text-truncate">Anirban Mukherjee</div>
-                            <div class="small text-gray-500">
-                              Frontend Developer at TP Digital Technology
-                            </div>
-                          </div>
-                          <span class="ml-auto small">3 hours</span>
-                        </div>
-                        <div class="p-3 border-bottom osahan-post-body">
-                          <p
-                            class="mb-0"
-                            key={i}
-                            style={{ fontWeight: "bold", fontSize: 20 }}
-                          >
-                            <div>{data}</div>
-                          </p>
-                        </div>
-                        <div class="p-3 osahan-post-footer text-center d-flex jcc">
-                          <button
-                            class="mr-3 text-secondary btn btn-link "
-                            onClick={handellike}
-                          >
-                            <i class="feather-heart text-danger icon-font"></i>
-                            {like}
-                          </button>
-                          <button
-                            class="mr-3 text-secondary btn btn-link"
-                            onClick={disblk}
-                          >
-                            <i class="feather-message-square icon-font"></i>
-                            {}
-                          </button>
-                          <Link
-                            to="#"
-                            data-action="share/whatsapp/share"
-                            target="_blank"
-                            class="mr-3 text-secondary"
-                          >
-                            <img
-                              src="img/icon/whatsapp.png"
-                              alt=""
-                              class="icon-image"
-                            />
-                          </Link>
-                        </div>
-                        {/* comment section start */}
-                        <div>
-                          {comentdata != [] &&
-                            comentdata.map((data1, i2) => {
-                              return (
-                                <>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      justifyContent: "space-between",
-                                      alignItems: "center",
-                                      paddingLeft: 20,
-                                      paddingRight: 20,
-                                    }}
-                                  >
-                                    <p
-                                      class="my-3 px-2 py-1"
-                                      key={i2}
-                                      style={{
-                                        fontWeight: "bold",
-                                        fontSize: 15,
-                                      }}
-                                    >
-                                      {data1}
-                                    </p>
-                                    <button
-                                      style={{
-                                        fontWeight: "bold",
-                                        fontSize: "25",
-                                        border: "none",
-                                      }}
-                                      onClick={() => removeActivity(i)}
-                                    >
-                                      X
-                                    </button>
-                                  </div>
-                                </>
-                              );
-                            })}
-                        </div>
-                        <section
-                          id="open"
-                          style={{ backgroundColor: "#eee", display: "none" }}
-                        >
-                          <div class="container m-0 p-0">
-                            <div class="row d-flex justify-content-center">
-                              <div class="col-md-12">
-                                <div class="card">
-                                  <div
-                                    class="card-footer py-3 border-0"
-                                    style={{ backgroundColor: "#f8f9fa" }}
-                                  >
-                                    <div class="d-flex flex-start w-100">
-                                      <div class="form-outline w-100">
-                                        <textarea
-                                          class="form-control"
-                                          id="textAreaExample"
-                                          rows="4"
-                                          style={{ background: "#fff" }}
-                                          value={thought}
-                                          onChange={handleThoughtsChange1}
-                                        ></textarea>
-
-                                        <label
-                                          class="form-label"
-                                          for="textAreaExample"
-                                        >
-                                          Comment
-                                        </label>
-                                      </div>
-                                    </div>
-                                    <div class="float-end mt-2 pt-1">
-                                      <button
-                                        type="button"
-                                        class="btn btn-primary btn-sm aply-btn mr-2"
-                                        onClick={handleComent}
-                                      >
-                                        Post comment
-                                      </button>
-                                      <button
-                                        type="button"
-                                        class="btn btn-outline-primary btn-sm"
-                                        onClick={disnan}
-                                      >
-                                        Close
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </section>
-                        {/* comment section end */}
-                      </div>
-                    </>
-                  );
-                })}
-
               {getpost != [] &&
                 getpost.map((data, i2) => {
                   return (
@@ -715,17 +433,23 @@ export default function Home() {
                         <div class="p-3 osahan-post-footer text-center d-flex jcc">
                           <button
                             class="mr-3 text-secondary btn btn-link "
-                            onClick={handellike}
+                            onClick={
+                              data.user_like.length > 0
+                                ? () => handelDislike(data._id)
+                                : () => handellike(data._id)
+                            }
                           >
-                            <i class="feather-heart text-danger icon-font"></i>
-                            {like}
+                            <i class="feather-heart text-danger icon-font">
+                              {data.totalLike}
+                            </i>
                           </button>
                           <button
                             class="mr-3 text-secondary btn btn-link"
-                            onClick={disblk}
+                            onClick={() => disblk(data._id)}
                           >
-                            <i class="feather-message-square icon-font"></i>
-                            {}
+                            <i class="feather-message-square icon-font">
+                              {data.totalComments}
+                            </i>
                           </button>
                           <Link
                             to="#"
@@ -740,6 +464,38 @@ export default function Home() {
                             />
                           </Link>
                         </div>
+                        
+                        {/* comment list  */}
+                            <div>
+                              {comentList !=[] &&
+                              comentList.map((list,listid)=>{
+                                return(
+                                  <>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                      alignItems: "center",
+                                      paddingLeft: 20,
+                                      paddingRight: 20,
+                                    }}
+                                  >
+                                    <p
+                                      class="my-3 px-2 py-1"
+                                      key={listid}
+                                      style={{
+                                        fontWeight: "bold",
+                                        fontSize: 15,
+                                      }}
+                                    >
+                                      {list.comment}
+                                    </p>
+                                  </div>
+                                  </>
+                                )
+                              })}
+                            </div>
+                            
                         {/* comment section start */}
                         <div>
                           {comentdata != [] &&
@@ -755,7 +511,6 @@ export default function Home() {
                                       paddingRight: 20,
                                     }}
                                   >
-                                    <p>{}</p>
                                     <p
                                       class="my-3 px-2 py-1"
                                       key={i2}
@@ -782,7 +537,7 @@ export default function Home() {
                             })}
                         </div>
                         <section
-                          id="open"
+                          id={`open_` + data._id}
                           style={{ backgroundColor: "#eee", display: "none" }}
                         >
                           <div class="container m-0 p-0">
@@ -816,14 +571,14 @@ export default function Home() {
                                       <button
                                         type="button"
                                         class="btn btn-primary btn-sm aply-btn mr-2"
-                                        onClick={handleComent}
+                                        onClick={() => handleComent(data._id)}
                                       >
                                         Post comment
                                       </button>
                                       <button
                                         type="button"
                                         class="btn btn-outline-primary btn-sm"
-                                        onClick={disnan}
+                                        onClick={() => disnan(data._id)}
                                       >
                                         Close
                                       </button>
