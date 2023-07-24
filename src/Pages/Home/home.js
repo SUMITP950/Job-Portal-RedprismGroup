@@ -14,8 +14,7 @@ export default function Home() {
   const [getpost, setGetpost] = useState([]);
   const [thoughts, setThoughts] = useState(""); // this is for post value
   const [thought, setThought] = useState(""); // this is for comment value
-  const [comentdata, setcomentdata] = useState([]);
-  const [comentList, setcomentList] = useState([]);
+  const [comentList, setcomentList] = useState({});
 
   const handleThoughtsChange = (e) => {
     setThoughts(e.target.value);
@@ -24,7 +23,6 @@ export default function Home() {
     setThought(e.target.value);
   };
 
- 
   const disnan = (postId) => {
     document.getElementById("open_" + postId).style.display = "none";
   };
@@ -72,7 +70,6 @@ export default function Home() {
 
   // Save post data
   const handlePost = () => {
-    // console.log("Post Save " + techno);
     axios
       .post(
         "http://testredprism.co/api/home/saveFeedsPost",
@@ -89,7 +86,6 @@ export default function Home() {
       )
       .then((response) => {
         if (response.data.status === "success") {
-          toast.success(`${response.data.mssg}`);
           setThoughts("");
         }
         if (response.data.status === "error") {
@@ -122,8 +118,6 @@ export default function Home() {
         if (response.data.status === "success") {
           // console.log(response.data.feedsList[0]._id);
           setGetpost(response.data.feedsList);
-
-          toast.success(`${response.data.mssg}`);
         }
         if (response.data.status === "error") {
           // console.log(response.data);
@@ -194,12 +188,6 @@ export default function Home() {
   // comment section api
 
   const handleComent = (id) => {
-    // console.log(id);
-    setcomentdata((comentdata) => {
-      const updatedComent = [...comentdata, thought];
-      setThought("");
-      return updatedComent;
-    });
 
     axios
       .post(
@@ -215,10 +203,10 @@ export default function Home() {
         }
       )
       .then((response) => {
-        console.log(response.data.feeds_comment_id);
 
         if (response.data.status === "success") {
-          toast.success(`${response.data.mssg}`);
+          disblk(id);
+          setThought("");
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -227,14 +215,13 @@ export default function Home() {
       .catch((error) => {
         console.error(error);
       });
-   
+    return removeActivity();
   };
 
   // comment list section api
 
   const disblk = (postId) => {
     document.getElementById("open_" + postId).style.display = "block";
-    // console.log(postId);
     axios
       .post(
         "http://testredprism.co/api/home/getFeedsPostCommentsList",
@@ -249,8 +236,8 @@ export default function Home() {
       )
       .then((response) => {
         if (response.data.status === "success") {
-          setcomentList(response.data.feedsCommentsList)
-          toast.success(`${response.data.mssg}`);
+          setcomentList({feedId: postId, commentlist: response.data.feedsCommentsList});
+          
         }
         if (response.data.status === "error") {
           // toast.error(`${response.data.mssg}`);
@@ -261,37 +248,33 @@ export default function Home() {
       });
   };
 
-
   // comment delete section api
-  const removeActivity = (i) => {
-    const deleteListData = comentdata.filter((item, id) => {
-      return i != id;
-    });
-    setcomentdata(deleteListData);
+  const removeActivity = (commentId, feedpostId) => {
+  
+    console.log(commentId)
     axios
-    .post(
-      "http://testredprism.co/api/home/deleteFeedsComment",
-      {
-        // feeds_comment_code:  ,
-      },
-      {
-        headers: {
-          "auth-token": localStorage.getItem("authToken"),
+      .post(
+        "http://testredprism.co/api/home/deleteFeedsComment",
+        {
+          feeds_comment_code: commentId,
         },
-      }
-    )
-    .then((response) => {
-      if (response.data.status === "success") {
-        setcomentList(response.data.feedsCommentsList)
-        toast.success(`${response.data.mssg}`);
-      }
-      if (response.data.status === "error") {
-        // toast.error(`${response.data.mssg}`);
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.status === "success") {
+          disblk(feedpostId);
+        }
+        if (response.data.status === "error") {
+          // toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -464,78 +447,73 @@ export default function Home() {
                             />
                           </Link>
                         </div>
-                        
+
                         {/* comment list  */}
-                            <div>
-                              {comentList !=[] &&
-                              comentList.map((list,listid)=>{
-                                return(
-                                  <>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      justifyContent: "space-between",
-                                      alignItems: "center",
-                                      paddingLeft: 20,
-                                      paddingRight: 20,
-                                    }}
-                                  >
-                                    <p
-                                      class="my-3 px-2 py-1"
-                                      key={listid}
-                                      style={{
-                                        fontWeight: "bold",
-                                        fontSize: 15,
-                                      }}
-                                    >
-                                      {list.comment}
-                                    </p>
-                                  </div>
-                                  </>
-                                )
-                              })}
-                            </div>
-                            
-                        {/* comment section start */}
                         <div>
-                          {comentdata != [] &&
-                            comentdata.map((data1, i2) => {
+                          {comentList.feedId === data._id &&
+                            comentList.commentlist.map((list, listid) => {
                               return (
                                 <>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      justifyContent: "space-between",
-                                      alignItems: "center",
-                                      paddingLeft: 20,
-                                      paddingRight: 20,
-                                    }}
-                                  >
-                                    <p
-                                      class="my-3 px-2 py-1"
-                                      key={i2}
+                                  <div class="border m-3 p-2 rounded">
+                                    <div class="dropdown-list-image mr-3 d-flex pl-3">
+                                      <img
+                                        class="rounded-circle"
+                                        src="img/icon/smile.svg"
+                                        alt=""
+                                      />
+                                      <div class="font-weight-bold pl-1">
+                                        <div class="text-truncate">
+                                          {`${list.employee_details[0].first_name} ${list.employee_details[0].last_name}`}
+                                        </div>
+                                        <div class="small text-gray-500 pl-1">
+                                          {
+                                            list.employee_details[0]
+                                              .employee_type
+                                          }
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div
                                       style={{
-                                        fontWeight: "bold",
-                                        fontSize: 15,
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        paddingLeft: 20,
+                                        paddingRight: 20,
                                       }}
                                     >
-                                      {data1}
-                                    </p>
-                                    <button
-                                      style={{
-                                        fontWeight: "bold",
-                                        fontSize: "25",
-                                        border: "none",
-                                      }}
-                                      onClick={() => removeActivity(i2)}
-                                    >
-                                      X
-                                    </button>
+                                      <p
+                                        class="my-3 px-2 py-1"
+                                        key={listid}
+                                        style={{
+                                          fontWeight: "bold",
+                                          fontSize: 15,
+                                        }}
+                                      >
+                                        {list.comment}
+                                      </p>
+                                      
+                                      {userDetails._id===list.employee_details[0]._id ?
+                                      <button
+                                        style={{
+                                          fontWeight: "bold",
+                                          fontSize: "25",
+                                          border: "none",
+                                        }}
+                                        onClick={() => removeActivity(list._id,data._id)}
+                                      >
+                                        X
+                                      </button> : null }
+                                      
+
+                                    </div>
                                   </div>
                                 </>
                               );
                             })}
                         </div>
+
                         <section
                           id={`open_` + data._id}
                           style={{ backgroundColor: "#eee", display: "none" }}
@@ -571,7 +549,11 @@ export default function Home() {
                                       <button
                                         type="button"
                                         class="btn btn-primary btn-sm aply-btn mr-2"
-                                        onClick={() => handleComent(data._id)}
+                                        onClick={() =>
+                                          handleComent(
+                                            data._id
+                                          )
+                                        }
                                       >
                                         Post comment
                                       </button>
@@ -656,8 +638,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Jobs">
-                        <span class="font-weight-bold">Jobs</span>
+                      <Link to="/Jobpost">
+                        <span class="font-weight-bold">Job Post</span>
                       </Link>
                     </div>
                   </a>
