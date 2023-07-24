@@ -46,6 +46,7 @@ import ProfileEdit from "./Pages/ProfileEdit/ProfileEdit";
 import Registerhr from "./Pages/RegisterHR/Registerhr";
 import CompanyAddDetails from "./Pages/Companyadd/CompanyAddDetails";
 import Sendotpjobseeker from "./Pages/Send-otp/Sendotpjobseeker";
+import WalkingJob from "./Pages/WalkingJob/WalkingJob";
 
 
 export default function Router() {
@@ -58,6 +59,14 @@ export default function Router() {
             element={
               <>
                 <Nav /> <Home />
+              </>
+            }
+          />
+          <Route
+            path="/WalkingJob"
+            element={
+              <>
+                <Nav /> <WalkingJob />
               </>
             }
           />
