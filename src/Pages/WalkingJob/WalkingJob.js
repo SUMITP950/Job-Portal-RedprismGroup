@@ -2,21 +2,36 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Select from "react-select";
 import { Link, useNavigate } from "react-router-dom";
-
-import { SearchResultsList } from "../../Component/SearchBar/SearchResultList";
 import { toast } from "react-toastify";
 import { data } from "jquery";
 
 const WalkingJob = () => {
-
-const [getLocation,setgetLocation]=useState("");
-const [getLocationList,setgetLocationList]=useState([]);
-
+  const [getLocation, setgetLocation] = useState("");
+  const [getLocationList, setgetLocationList] = useState([]);
+  const [getArea, setArea] = useState("");
+  const [getAreaList, setgetAreaList] = useState([]);
+  const [wDate, setwDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [walkingJobsListg, setwalkingJobsListg] = useState([]);
 
   useEffect(() => {
     document.title = "Job Post";
   }, []);
- 
+
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/walkingJobPost/getServiceAreaList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setgetAreaList(res.data.serviceAreaList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   useEffect(() => {
     axios
       .get("http://testredprism.co/api/walkingJobPost/getLocationList", {
@@ -25,13 +40,92 @@ const [getLocationList,setgetLocationList]=useState([]);
         },
       })
       .then((res) => {
-       setgetLocationList(res.data.locationList)
-     
+        setgetLocationList(res.data.locationList);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/walkingJobPost/getMyWalkingJobPost", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setwalkingJobsListg(res.data.walkingJobsList);
+        // console.log(res.data.walkingJobsList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const handelsubmit = (event) => {
+    event.preventDefault();
+    axios
+      .post(
+        "http://testredprism.co/api/walkingJobPost/saveWalkingJobPost",
+        {
+          location_code: getLocation,
+          service_area_code: getArea,
+          description: description,
+          walking_date: wDate,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        // console.log(response.data);
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          setArea("");
+          setDescription("");
+          setgetLocation("");
+          setwDate("");
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  // const handelUpdate = (item) => {
+  const handelEdit = (item) => {
+    axios
+      .post(
+        "http://testredprism.co/api/walkingJobPost/getWalkingJobPostDetails",
+        {
+          walking_job_code: item,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.status === "success") {
+          // toast.success(`${response.data.mssg}`);
+          // var element = document.getElementById("profile-tab");
+          // element.classList.add("active");
+          // var elementMain = document.getElementById("home");
+          // elementMain.classList.add("active", "show");
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
@@ -135,240 +229,216 @@ const [getLocationList,setgetLocationList]=useState([]);
               </div>
             </div>
           </aside>
-          <main className="col col-xl-7 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12 pb-5" style={{backgroundColor:"#fff"}}>
-            
-              <ul
-                className="nav nav-justified border-bottom osahan-line-tab mb-5"
-                id="myTab"
-                role="tablist"
+          <main
+            className="col col-xl-7 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12 pb-5"
+            style={{ backgroundColor: "#fff" }}
+          >
+            <ul
+              className="nav nav-justified border-bottom osahan-line-tab mb-5"
+              id="myTab"
+              role="tablist"
+            >
+              <li className="nav-item">
+                <a
+                  className="nav-link active"
+                  id="profile-tab"
+                  data-toggle="tab"
+                  href="#home"
+                  role="tab"
+                  aria-controls="home"
+                  aria-selected="false"
+                >
+                  <img src="img/icons8-password-48.png" style={{ width: 32 }} />
+                  Enter New Walkling Job
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  id="home-tab"
+                  data-toggle="tab"
+                  href="#profile"
+                  role="tab"
+                  aria-controls="profile"
+                  aria-selected="true"
+                >
+                  <img
+                    src="img/icons8-male-user-100.png"
+                    style={{ width: 32 }}
+                  />
+                  List Job
+                </a>
+              </li>
+            </ul>
+            <div className="tab-content" id="myTab p-3">
+              <div
+                className="tab-pane fade show active"
+                id="home"
+                role="tabpanel"
+                aria-labelledby="pills-home-tab"
               >
-                <li className="nav-item">
-                  <a
-                    className="nav-link active"
-                    id="profile-tab"
-                    data-toggle="tab"
-                    href="#home"
-                    role="tab"
-                    aria-controls="home"
-                    aria-selected="false"
-                  >
-                    <img
-                      src="img/icons8-password-48.png"
-                      style={{ width: 32 }}
-                    />
-                 Enter New Walkling Job
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    id="home-tab"
-                    data-toggle="tab"
-                    href="#profile"
-                    role="tab"
-                    aria-controls="profile"
-                    aria-selected="true"
-                  >
-                    <img
-                      src="img/icons8-male-user-100.png"
-                      style={{ width: 32 }}
-                    />
-                    List Job
-                  </a>
-                </li>
-              </ul>
-              <div className="tab-content" id="myTab p-3">
-                <div
-                  className="tab-pane fadev active"
-                  id="home"
-                  role="tabpanel"
-                  aria-labelledby="pills-home-tab"
-                >
-                  
-                      
-                        <div className="card">
-                          <div className="card-header">
-                            <h3 className="card-title">Post a Job</h3>
-                          </div>
-                          <div className="card-body ">
-                            <form  >
-                              <div className="form-group">
-                                <label htmlFor="title">Job Title</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="title"
-                                  placeholder="Enter the job title"
-                             
-                                 
-                                  
-                                />
-                              </div>
-
-                              <div className="form-group">
-                                <label htmlFor="salaryRange">
-                                  Salary Range
-                                </label>
-                                <select
-                                  className="form-control"
-                                  id="salaryRange"
-                                 
-                                  required
-                                >
-                                  <option value="">
-                                    -- Select Salary Range --
-                                  </option>
-                                  <option value="60k-1LPA">60k - 1LPA</option>
-                                  <option value="1LPA-2LPA">1LPA - 2LPA</option>
-                                  <option value="2LPA-6LPA">2LPA - 6LPA</option>
-                                  <option value="6LPA-12LPA">
-                                    6LPA - 12LPA
-                                  </option>
-                                  <option value="12LPA-Above">
-                                    12LPA and Above
-                                  </option>
-                                </select>
-                              </div>
-                              <div className="form-group">
-                                <b
-                                  htmlFor="description"
-                                  style={{ paddingLeft: "8px" }}
-                                >
-                                  Location
-                                </b>
-                                <div className="form-group">
-                                <select  onChange={(e)=>(setgetLocation(e.target.value))} value ={getLocation} className="form-control"
-                                  id="salaryRange">
-                                  <option>-- Select Location --</option>
-                                  {getLocationList.map((item, id) => {
-                        return (
-                          <>
-                            <option value={item._id} key={id._id}>
-                              {item.state} , {item.city} , {item.area}
-                            </option>
-                          </>
-                        );
-                      })}
-                                  </select>
-                                </div>
-                              </div>
-                              <div className="form-group">
-                                <b
-                                  htmlFor="description"
-                                  style={{ paddingLeft: "8px" }}
-                                >
-                                  Technology
-                                </b>
-                                <div className="form-group">
-                                <select    className="form-control"
-                                  id="salaryRange">
-                                  <option>jhsbdcvhik</option>
-                                  <option>ohihdbcvisdb</option>
-                                  <option>ajdbnsciksadhn</option>
-                                  <option>ajsbdhixbash</option>
-                                  <option>ujdgcujhd</option>
-                                  </select>
-                                </div>
-                              </div>
-                            
-                              <div className="form-group">
-                                <label htmlFor="experienceYear">
-                                  Experience in Year
-                                </label>
-                                <select
-                                  className="form-control"
-                                  id="experienceYear"
-                          
-                                  required
-                                >
-                                  <option value="">
-                                    -- Select Experience in Year --
-                                  </option>
-                                  <option value="Fresher">Fresher</option>
-                                  <option value="0-1 Year">0-1 Year</option>
-                                  <option value="1-2 Year">1-2 Year</option>
-                                  <option value="2-3 Year">2-3 Year</option>
-                                  <option value="3-4 Year">3-4 Year</option>
-                                  <option value="4-5 Year">4-5 Year</option>
-                                  <option value="5-6 Year">5-6 Year</option>
-                                  <option value="6-7 Year">6-7 Year</option>
-                                  <option value="7-8 Year">7-8 Year</option>
-                                </select>
-                              </div>
-
-                              <div className="form-group">
-                                <label htmlFor="description">
-                                  Job Description
-                                </label>
-                                <textarea
-                                  className="form-control"
-                                  id="description"
-                                  placeholder="Enter the job description"
-                                  rows="5"
-                       
-                                  required
-                                ></textarea>
-                              </div>
-
-                              <button
-                                type="submit"
-                                className="btn apply-btn"
-                              
-                              >submit
-                              </button>
-                            </form>
-                          </div>
-                       
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Post a Job</h3>
+                  </div>
+                  <div className="card-body ">
+                    <form>
+                      <div className="form-group">
+                        <label htmlFor="salaryRange">Walking Date</label>
+                        <input
+                          type="date"
+                          value={wDate}
+                          onChange={(e) => setwDate(e.target.value)}
+                        />
                       </div>
-                    
-                </div>
-                <div
-                  className="tab-pane fade active show"
-                  id="profile"
-                  role="tabpanel"
-                  aria-labelledby="pills-profile-tab"
-                >
-                  <form>
-                    <div className="form-group first">
-                      <label htmlFor="username">Username</label>
-                      <input
-                        type="text"
-                        name="username"
-                        className="form-control"
-                        placeholder="Enter Your Username"
-                        id="username"
-                        defaultValue
-                      />
-                    </div>
-                    <div className="form-group last mb-3">
-                      <label htmlFor="password">Password</label>
-                      <input
-                        type="password"
-                        name="password"
-                        className="form-control"
-                        placeholder="Your Password"
-                        defaultValue
-                      />
-                    </div>
-                    <button type="submit" className="btn btn-block btn-primary">
-                      <strong>SIGN IN</strong>
-                    </button>
-                    <div className="d-flex mb-3 align-items-center mt-3">
-                      <span className="mr-auto">
-                        <a className="forgot-pass" href="/sendotpjobseeker">
-                          Forgot Password ?
-                        </a>
-                      </span>
-                      <span className="ml-auto">
-                        <a className="forgot-pass" href="/RegisterJobSheeker">
-                          Creat a new account
-                        </a>
-                      </span>
-                    </div>
-                  </form>
+                      <div className="form-group">
+                        <b htmlFor="description" style={{ paddingLeft: "8px" }}>
+                          Location
+                        </b>
+                        <div className="form-group">
+                          <select
+                            onChange={(e) => setgetLocation(e.target.value)}
+                            value={getLocation}
+                            className="form-control"
+                            id="salaryRange"
+                          >
+                            <option>-- Select Location --</option>
+                            {getLocationList.map((item, id) => {
+                              return (
+                                <>
+                                  <option value={item._id} key={id._id}>
+                                    {item.state} , {item.city} , {item.area}
+                                  </option>
+                                </>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <b htmlFor="description" style={{ paddingLeft: "8px" }}>
+                          Service Area
+                        </b>
+                        <div className="form-group">
+                          <select
+                            onChange={(e) => setArea(e.target.value)}
+                            value={getArea}
+                            className="form-control"
+                            id="salaryRange"
+                          >
+                            <option>-- Select Location --</option>
+                            {getAreaList.map((item, id) => {
+                              return (
+                                <>
+                                  <option value={item._id} key={id._id}>
+                                    {item.service_area}
+                                  </option>
+                                </>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="description">Job Description</label>
+                        <textarea
+                          className="form-control"
+                          id="description"
+                          placeholder="Enter the job description"
+                          rows="5"
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          required
+                        ></textarea>
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="btn apply-btn"
+                        onClick={handelsubmit}
+                      >
+                        submit
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
-        
+              <div
+                className="tab-pane fade"
+                id="profile"
+                role="tabpanel"
+                aria-labelledby="pills-profile-tab"
+              >
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">PostDate&time</th>
+
+                        <th scope="col">Location</th>
+
+                        <th scope="col">ServiceArea</th>
+
+                        <th scope="col">Description</th>
+
+                        <th scope="col">Status</th>
+
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+
+                    {walkingJobsListg.map((item, id) => {
+                      return (
+                        <tbody>
+                          <tr>
+                            <td>{item.post_datetime}</td>
+
+                            <td key={id._id}>
+                              {item.location.length > 0
+                                ? `${item.location[0].area},${item.location[0].city},${item.location[0].state}`
+                                : ""}
+                            </td>
+
+                            <td key={id._id}>
+                              {item.service_area_details.length > 0
+                                ? item.service_area_details[0].service_area
+                                : ""}
+                            </td>
+
+                            <td>{item.description}</td>
+
+                            <td>{}</td>
+
+                            <td
+                              style={{
+                                display: "flex",
+
+                                alignItems: "center",
+
+                                justifyContent: "center",
+                              }}
+                            >
+                              <button
+                                type="button"
+                                class="btn btn-primary mr-2"
+                                onClick={() => handelEdit(item._id)}
+                              >
+                                Edit
+                              </button>
+
+                              <button type="button" class="btn btn-danger">
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      );
+                    })}
+                  </table>
+                </div>
+              </div>
+            </div>
           </main>
           <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 ">
             <div class="border rounded bg-white mb-3">
