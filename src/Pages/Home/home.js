@@ -70,6 +70,7 @@ export default function Home() {
 
   // Save post data
   const handlePost = () => {
+    // console.log("Post Save " + techno);
     axios
       .post(
         "http://testredprism.co/api/home/saveFeedsPost",
@@ -188,7 +189,6 @@ export default function Home() {
   // comment section api
 
   const handleComent = (id) => {
-
     axios
       .post(
         "http://testredprism.co/api/home/saveFeedsComment",
@@ -203,10 +203,8 @@ export default function Home() {
         }
       )
       .then((response) => {
-
         if (response.data.status === "success") {
           disblk(id);
-          setThought("");
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -236,8 +234,10 @@ export default function Home() {
       )
       .then((response) => {
         if (response.data.status === "success") {
-          setcomentList({feedId: postId, commentlist: response.data.feedsCommentsList});
-          
+          setcomentList({
+            feedId: postId,
+            commentlist: response.data.feedsCommentsList,
+          });
         }
         if (response.data.status === "error") {
           // toast.error(`${response.data.mssg}`);
@@ -250,8 +250,7 @@ export default function Home() {
 
   // comment delete section api
   const removeActivity = (commentId, feedpostId) => {
-  
-    console.log(commentId)
+    console.log(commentId);
     axios
       .post(
         "http://testredprism.co/api/home/deleteFeedsComment",
@@ -493,20 +492,22 @@ export default function Home() {
                                       >
                                         {list.comment}
                                       </p>
-                                      
-                                      {userDetails._id===list.employee_details[0]._id ?
-                                      <button
-                                        style={{
-                                          fontWeight: "bold",
-                                          fontSize: "25",
-                                          border: "none",
-                                        }}
-                                        onClick={() => removeActivity(list._id,data._id)}
-                                      >
-                                        X
-                                      </button> : null }
-                                      
 
+                                      {userDetails._id ===
+                                      list.employee_details[0]._id ? (
+                                        <button
+                                          style={{
+                                            fontWeight: "bold",
+                                            fontSize: "25",
+                                            border: "none",
+                                          }}
+                                          onClick={() =>
+                                            removeActivity(list._id, data._id)
+                                          }
+                                        >
+                                          X
+                                        </button>
+                                      ) : null}
                                     </div>
                                   </div>
                                 </>
@@ -514,6 +515,67 @@ export default function Home() {
                             })}
                         </div>
 
+                        {/* comment section start
+                        <div>
+                          {comentdata != [] &&
+                            comentdata.map((data1, i2) => {
+                              return (
+                                <>
+                                  <div class="border m-3 p-2 rounded">
+                                    <div class="dropdown-list-image mr-3 d-flex pl-3">
+                                      <img
+                                        class="rounded-circle"
+                                        src="img/icon/smile.svg"
+                                        alt=""
+                                      />
+                                      <div class="font-weight-bold pl-1">
+                                        <div class="text-truncate">
+                                          {`${data.employee_details[0].first_name} ${data.employee_details[0].last_name}`}
+                                        </div>
+                                        <div class="small text-gray-500 pl-1">
+                                          {
+                                            data.employee_details[0]
+                                              .employee_type
+                                          }
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        paddingLeft: 20,
+                                        paddingRight: 20,
+                                      }}
+                                    >
+                                      <p
+                                        class="my-3 px-2 py-1"
+                                        key={i2}
+                                        style={{
+                                          fontWeight: "bold",
+                                          fontSize: 15,
+                                        }}
+                                      >
+                                        {data1}
+                                      </p>
+                                      <button
+                                        style={{
+                                          fontWeight: "bold",
+                                          fontSize: "25",
+                                          border: "none",
+                                        }}
+                                        onClick={() => removeActivity(i2)}
+                                      >
+                                        X
+                                      </button>
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })}
+                        </div> */}
                         <section
                           id={`open_` + data._id}
                           style={{ backgroundColor: "#eee", display: "none" }}
@@ -549,11 +611,7 @@ export default function Home() {
                                       <button
                                         type="button"
                                         class="btn btn-primary btn-sm aply-btn mr-2"
-                                        onClick={() =>
-                                          handleComent(
-                                            data._id
-                                          )
-                                        }
+                                        onClick={() => handleComent(data._id)}
                                       >
                                         Post comment
                                       </button>
@@ -638,8 +696,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Jobpost">
-                        <span class="font-weight-bold">Job Post</span>
+                      <Link to="/Jobs">
+                        <span class="font-weight-bold">Jobs</span>
                       </Link>
                     </div>
                   </a>
