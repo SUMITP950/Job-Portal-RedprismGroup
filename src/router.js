@@ -47,6 +47,7 @@ import Registerhr from "./Pages/RegisterHR/Registerhr";
 import CompanyAddDetails from "./Pages/Companyadd/CompanyAddDetails";
 import Sendotpjobseeker from "./Pages/Send-otp/Sendotpjobseeker";
 import WalkingJob from "./Pages/WalkingJob/WalkingJob";
+import JobPost from "./Pages/JobPost/JobPost";
 
 
 export default function Router() {
@@ -282,11 +283,20 @@ export default function Router() {
             }
           />
           <Route
-            path="/JobPost"
+            path="/jobPost"
             element={
               <>
                 <Nav />
-                <EmployerJobPost />
+                <JobPost/>
+              </>
+            }
+          />
+          <Route
+            path="/walkingjob"
+            element={
+              <>
+                <Nav />
+               <WalkingJob/>
               </>
             }
           />

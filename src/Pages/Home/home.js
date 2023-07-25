@@ -696,8 +696,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Jobs">
-                        <span class="font-weight-bold">Jobs</span>
+                      <Link to="/jobPost">
+                        <span class="font-weight-bold">Job Post</span>
                       </Link>
                     </div>
                   </a>
@@ -708,8 +708,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Jobprofile">
-                        <span class="font-weight-bold">My Jobs</span>
+                      <Link to="/walkingjob">
+                        <span class="font-weight-bold">Walking Job</span>
                       </Link>
                     </div>
                   </a>
