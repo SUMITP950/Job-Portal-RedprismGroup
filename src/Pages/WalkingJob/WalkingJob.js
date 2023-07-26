@@ -4,6 +4,7 @@ import Select from "react-select";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { data } from "jquery";
+import { date } from "yup";
 
 const WalkingJob = () => {
   const [getLocation, setgetLocation] = useState("");
@@ -13,6 +14,8 @@ const WalkingJob = () => {
   const [wDate, setwDate] = useState("");
   const [description, setDescription] = useState("");
   const [walkingJobsListg, setwalkingJobsListg] = useState([]);
+  const [mode, setmode] = useState("Submit");
+  const [walkingJobId,setWalkingJobId]=useState("");
 
   useEffect(() => {
     document.title = "Job Post";
@@ -87,6 +90,7 @@ const WalkingJob = () => {
           setDescription("");
           setgetLocation("");
           setwDate("");
+          setmode("Submit");
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -98,6 +102,7 @@ const WalkingJob = () => {
   };
   // const handelUpdate = (item) => {
   const handelEdit = (item) => {
+    
     axios
       .post(
         "http://testredprism.co/api/walkingJobPost/getWalkingJobPostDetails",
@@ -113,19 +118,76 @@ const WalkingJob = () => {
       .then((response) => {
         if (response.data.status === "success") {
           // toast.success(`${response.data.mssg}`);
-          // var element = document.getElementById("profile-tab");
-          // element.classList.add("active");
-          // var elementMain = document.getElementById("home");
-          // elementMain.classList.add("active", "show");
+          var element = document.getElementById("profile-tab");
+          element.classList.add("active");
+          document.getElementById("home-tab").classList.remove("active");
+          var elementMain = document.getElementById("home");
+          elementMain.classList.add("active", "show");
+          setmode("Update");
+
+          document.getElementById("profile").classList.remove("active");
+          let jobDetails = response.data.walkingJobsDetails[0];
+        
+          setDescription(response.data.walkingJobsDetails[0].description);
+          
+          setwDate(jobDetails.walking_date)
+    console.log( toString(wDate))
+    // ("20-02-1999");
+    // console.log(wDate);
+    
+          jobDetails.service_area_details.length > 0
+
+            ? setArea(jobDetails.service_area_details[0]._id)
+            : setArea("");
+            jobDetails.location.length > 0
+            ? setgetLocation(jobDetails.location[0]._id)
+            : setgetLocation("");
+            setWalkingJobId(item);
+
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
+
         }
       })
       .catch((error) => {
         console.error(error);
       });
   };
+
+  const hadleupdate= (e)=>{
+    e.preventDefault();
+    axios
+    .post(
+      "http://testredprism.co/api/walkingJobPost/updateWalkingJobPostDetails",
+      {
+        walking_job_code: walkingJobId,
+        location_code: getLocation,
+        service_area_code: getArea,
+        description: description,
+        walking_date: wDate,
+      },
+      {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      }
+    )
+    .then((response) => {
+      if (response.data.status === "success") {
+        
+        toast.success(`${response.data.mssg}`);
+
+      }
+      if (response.data.status === "error") {
+        toast.error(`${response.data.mssg}`);
+
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
 
   return (
     <>
@@ -355,10 +417,13 @@ const WalkingJob = () => {
 
                       <button
                         type="submit"
+                        id="subnitUpdate"
                         className="btn apply-btn"
-                        onClick={handelsubmit}
+                      
+                        onClick={mode==="Submit" ? handelsubmit : hadleupdate}
                       >
-                        submit
+                        
+                        { mode==="Submit" ? "Submit" : "Update" }
                       </button>
                     </form>
                   </div>
