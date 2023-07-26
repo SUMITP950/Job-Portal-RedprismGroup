@@ -1,13 +1,15 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Select from "react-select";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../Component/auth.js";
-
-import { SearchResultsList } from "../../Component/SearchBar/SearchResultList";
 import { toast } from "react-toastify";
 
 const JobPost = () => {
+  // Get user details
+
   const [userDetails, SetUserDetails] = useState("");
 
   const fetchUserDetails = async () => {
@@ -16,86 +18,207 @@ const JobPost = () => {
   };
 
   useEffect(() => {
-    document.title = "Job Post";
-  }, []);
-  // const [results, setResults] = useState([]);
-  const options = [
-    { value: "Kolkata", label: "Kolkata" },
-    { value: "Delhi", label: "Delhi" },
-    { value: "Mumbai", label: "Mumbai" },
-  ];
-  const options1 = [
-    { value: "React js", label: "React js" },
-    { value: "Python", label: "Python" },
-    { value: "Java", label: "Java" },
-  ];
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [location, setLoctions] = useState("");
-  const [technicalSkills, setTechnicalSkills] = useState("");
-  const [salaryRange, setSalaryRange] = useState("");
-  const [experienceYear, setExperienceYear] = useState("");
-
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
-  const handleLocationsChange = (selectedOptions) => {
-    const locations = selectedOptions.map((option) => option.value);
-    setLoctions(locations);
-  };
-
-  const handleTechnicalSkillsChange = (selectedOptions) => {
-    const selectedSkills = selectedOptions.map((option) => option.value);
-    setTechnicalSkills(selectedSkills);
-  };
-
-  const handleSalaryRangeChange = (event) => {
-    setSalaryRange(event.target.value);
-  };
-
-  const handleExperienceYearChange = (event) => {
-    setExperienceYear(event.target.value);
-  };
-
-  // Get user details
-  useEffect(() => {
     fetchUserDetails();
   }, []);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setSubmitting(true);
+  // Title
+  useEffect(() => {
+    document.title = "Job Post";
+  }, []);
 
-    const formData = {
-      title: title,
-      description: description,
-      location: location,
-      technicalSkills: technicalSkills,
-      salaryRange: salaryRange,
-      experienceYear: experienceYear,
-    };
-
-    try {
-      await axios.post("http://localhost:3030/job_post", formData);
-      // console.log("Form submitted successfully");
-      toast.success(`Form submitted successfully`);
-    } catch (error) {
-      // console.error("Form submission error:", error);
-      toast.success(`Failed : ${error.message}`);
+  //Protecting this page
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      navigate("/");
     }
-    setSubmitting(false);
-    setTitle("");
-    setDescription("");
-    setLoctions("");
-    setTechnicalSkills("");
-    setSalaryRange("");
-    setExperienceYear("");
+  }, []);
+
+  const [title, setTitle] = useState("");
+  const [designation, setDesignation] = useState("");
+  const [email, setEmail] = useState("");
+  const [phnumber, setPhNumber] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLoctions] = useState("");
+  const [locationList, setLoctionList] = useState([]);
+  const [company, setCompany] = useState("");
+  const [companyList, setCompanyList] = useState([]);
+  const [technicalSkills, setTechnicalSkills] = useState("");
+  const [technicalSkillsList, setTechnicalSkillsList] = useState([]);
+  const [salaryRange, setSalaryRange] = useState("");
+  const [salaryRangeList, setSalaryRangeList] = useState([]);
+  const [experienceYear, setExperienceYear] = useState("");
+  const [experienceYearList, setExperienceYearList] = useState([]);
+  const [targetedEmployee, SetTargetedEmployee] = useState("");
+  const [serviceAreaCode, SetServiceAreaCode] = useState("");
+  const [serviceAreaCodeList, SetServiceAreaCodeList] = useState([]);
+  const [getJobPostList, setGetJobPostList] = useState([]);
+
+  //Fetch location list
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getLocationList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setLoctionList(res.data.locationList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  //Fetch Technology list
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getTechList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setTechnicalSkillsList(res.data.techList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  //Fetch Company list
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getCompanyList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setCompanyList(res.data.companyList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  //Fetch Experience list
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getExpList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setExperienceYearList(res.data.expList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  //Fetch salary list
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getSalaryRange", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setSalaryRangeList(res.data.salaryRangeList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  //Fetch services list
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getServiceAreaList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        SetServiceAreaCodeList(res.data.serviceAreaList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  // Save job post
+
+  const handleApi = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://testredprism.co/api/jobPost/saveJobPost",
+        {
+          tech_code: technicalSkills,
+          location_code: location,
+          company_code: company,
+          salary_range_code: salaryRange,
+          exp_code: experienceYear,
+          service_area_code: serviceAreaCode,
+          targeted_employee: targetedEmployee,
+          job_title: title,
+          designation: designation,
+          description: description,
+          email: email,
+          ph_num: phnumber,
+        },
+
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          setEmail("");
+          setTitle("");
+          setDescription("");
+          setDesignation("");
+          setCompany("");
+          setPhNumber("");
+          setLoctions("");
+          setExperienceYear("");
+          setSalaryRange("");
+          setTechnicalSkills("");
+          SetServiceAreaCode("");
+          SetTargetedEmployee("");
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
+
+  // Get job post list
+
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getMyJobPost", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setGetJobPostList(res.data.jobsList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
@@ -210,7 +333,7 @@ const JobPost = () => {
             >
               <li className="nav-item">
                 <a
-                  className="nav-link "
+                  className="nav-link active"
                   id="home-tab"
                   data-toggle="tab"
                   href="#home"
@@ -223,7 +346,7 @@ const JobPost = () => {
               </li>
               <li className="nav-item">
                 <a
-                  className="nav-link active"
+                  className="nav-link"
                   id="profile-tab"
                   data-toggle="tab"
                   href="#profile"
@@ -237,7 +360,7 @@ const JobPost = () => {
             </ul>
             <div className="tab-content" id="myTab p-3">
               <div
-                className="tab-pane fade"
+                className="tab-pane fade  active show"
                 id="home"
                 role="tabpanel"
                 aria-labelledby="pills-home-tab"
@@ -247,7 +370,7 @@ const JobPost = () => {
                     <h3 className="card-title">Post a Job</h3>
                   </div>
                   <div className="card-body">
-                    <form onSubmit={handleSubmit}>
+                    <form>
                       <div className="form-group">
                         <label htmlFor="title">Job Title</label>
                         <input
@@ -256,55 +379,115 @@ const JobPost = () => {
                           id="title"
                           placeholder="Enter the job title"
                           value={title}
-                          onChange={handleTitleChange}
+                          onChange={(e) => setTitle(e.target.value)}
                           required
                         />
                       </div>
-
                       <div className="form-group">
-                        <label htmlFor="salaryRange">Salary Range</label>
-                        <select
+                        <label htmlFor="title">Job Designation</label>
+                        <input
+                          type="text"
                           className="form-control"
-                          id="salaryRange"
-                          value={salaryRange}
-                          onChange={handleSalaryRangeChange}
+                          id="title"
+                          placeholder="Enter Your Job Designation "
+                          value={designation}
+                          onChange={(e) => setDesignation(e.target.value)}
                           required
-                        >
-                          <option value="">-- Select Salary Range --</option>
-                          <option value="60k-1LPA">60k - 1LPA</option>
-                          <option value="1LPA-2LPA">1LPA - 2LPA</option>
-                          <option value="2LPA-6LPA">2LPA - 6LPA</option>
-                          <option value="6LPA-12LPA">6LPA - 12LPA</option>
-                          <option value="12LPA-Above">12LPA and Above</option>
-                        </select>
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="title">Email</label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          id="title"
+                          placeholder="Enter Your Email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="title">Contact Number</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="title"
+                          placeholder="Enter Your Ph number"
+                          value={phnumber}
+                          onChange={(e) => setPhNumber(e.target.value)}
+                          required
+                        />
                       </div>
                       <div className="form-group">
                         <b htmlFor="description" style={{ paddingLeft: "8px" }}>
                           Location
                         </b>
                         <div className="form-group">
-                          <select className="form-control">
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
+                          <select
+                            className="form-control"
+                            value={location}
+                            onChange={(e) => setLoctions(e.target.value)}
+                          >
+                            <option>-- Select Location --</option>
+                            {locationList.map((item, id) => {
+                              return (
+                                <>
+                                  <option value={item._id} key={id._id}>
+                                    {item.state} , {item.city} , {item.area}
+                                  </option>
+                                </>
+                              );
+                            })}
                           </select>
                         </div>
                       </div>
+
                       <div className="form-group">
                         <b htmlFor="description" style={{ paddingLeft: "8px" }}>
                           Technology
                         </b>
                         <div className="form-group">
-                          <select className="form-control">
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
+                          <select
+                            className="form-control"
+                            value={technicalSkills}
+                            onChange={(e) => setTechnicalSkills(e.target.value)}
+                          >
+                            <option>-- Select Technology --</option>
+                            {technicalSkillsList.map((item, id) => {
+                              return (
+                                <>
+                                  <option value={item._id} key={id._id}>
+                                    {item.tech_name}
+                                  </option>
+                                </>
+                              );
+                            })}
                           </select>
                         </div>
                       </div>
 
+                      <div className="form-group">
+                        <label htmlFor="experienceYear">Company</label>
+                        <select
+                          className="form-control"
+                          id="experienceYear"
+                          value={company}
+                          onChange={(e) => setCompany(e.target.value)}
+                          required
+                        >
+                          <option>-- Select Company --</option>
+                          {companyList.map((item, id) => {
+                            return (
+                              <>
+                                <option value={item._id} key={id._id}>
+                                  {item.company_name}
+                                </option>
+                              </>
+                            );
+                          })}
+                        </select>
+                      </div>
                       <div className="form-group">
                         <label htmlFor="experienceYear">
                           Experience in Year
@@ -313,21 +496,78 @@ const JobPost = () => {
                           className="form-control"
                           id="experienceYear"
                           value={experienceYear}
-                          onChange={handleExperienceYearChange}
+                          onChange={(e) => setExperienceYear(e.target.value)}
                           required
                         >
-                          <option value="">
-                            -- Select Experience in Year --
-                          </option>
-                          <option value="Fresher">Fresher</option>
-                          <option value="0-1 Year">0-1 Year</option>
-                          <option value="1-2 Year">1-2 Year</option>
-                          <option value="2-3 Year">2-3 Year</option>
-                          <option value="3-4 Year">3-4 Year</option>
-                          <option value="4-5 Year">4-5 Year</option>
-                          <option value="5-6 Year">5-6 Year</option>
-                          <option value="6-7 Year">6-7 Year</option>
-                          <option value="7-8 Year">7-8 Year</option>
+                          <option>-- Select Experience in Year --</option>
+                          {experienceYearList.map((item, id) => {
+                            return (
+                              <>
+                                <option value={item._id} key={id._id}>
+                                  {item.experience}
+                                </option>
+                              </>
+                            );
+                          })}
+                        </select>
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="salaryRange">Salary Range</label>
+                        <select
+                          className="form-control"
+                          id="salaryRange"
+                          value={salaryRange}
+                          onChange={(e) => setSalaryRange(e.target.value)}
+                          required
+                        >
+                          <option>-- Select Salary Range --</option>
+                          {salaryRangeList.map((item, id) => {
+                            return (
+                              <>
+                                <option value={item._id} key={id._id}>
+                                  {item.salary_range}
+                                </option>
+                              </>
+                            );
+                          })}
+                        </select>
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="salaryRange">Service Area</label>
+                        <select
+                          className="form-control"
+                          id="salaryRange"
+                          value={serviceAreaCode}
+                          onChange={(e) => SetServiceAreaCode(e.target.value)}
+                          required
+                        >
+                          <option>-- Select Service Area --</option>
+                          {serviceAreaCodeList.map((item, id) => {
+                            return (
+                              <>
+                                <option value={item._id} key={id._id}>
+                                  {item.service_area}
+                                </option>
+                              </>
+                            );
+                          })}
+                        </select>
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="salaryRange">Targeted Employee</label>
+                        <select
+                          className="form-control"
+                          id="salaryRange"
+                          onChange={(e) => SetTargetedEmployee(e.target.value)}
+                          value={targetedEmployee}
+                          required
+                        >
+                          <option>-- Select Targeted Employee --</option>
+                          <option>All</option>
+                          <option>Fresher</option>
                         </select>
                       </div>
 
@@ -337,9 +577,9 @@ const JobPost = () => {
                           className="form-control"
                           id="description"
                           placeholder="Enter the job description"
-                          rows="5"
                           value={description}
-                          onChange={handleDescriptionChange}
+                          onChange={(e) => setDescription(e.target.value)}
+                          rows="5"
                           required
                         ></textarea>
                       </div>
@@ -347,21 +587,106 @@ const JobPost = () => {
                       <button
                         type="submit"
                         className="btn apply-btn"
-                        disabled={submitting}
+                        onClick={handleApi}
                       >
-                        {submitting ? "Submitting..." : "Submit"}
+                        Submit
                       </button>
                     </form>
                   </div>
                 </div>
               </div>
               <div
-                className="tab-pane fade active show"
+                className="tab-pane fade"
                 id="profile"
                 role="tabpanel"
                 aria-labelledby="pills-profile-tab"
               >
-                {/* Job Post list*/}
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">TargetedEmployee</th>
+                        <th scope="col">Jobtitle</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phnum</th>
+                        <th scope="col">PostDate&time</th>
+                        <th scope="col">Technology</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Company</th>
+                        <th scope="col">Salaryrange</th>
+                        <th scope="col">Experience</th>
+                        <th scope="col">ServiceArea</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    {getJobPostList.map((item, id) => {
+                      return (
+                        <tbody>
+                          <tr>
+                            <td>{item.targeted_employee}</td>
+                            <td>{item.job_title}</td>
+                            <td>{item.designation}</td>
+                            <td>{item.email}</td>
+                            <td>{item.ph_num}</td>
+                            <td>{item.post_datetime}</td>
+                            <td key={id._id}>
+                              {item.technology.length > 0
+                                ? item.technology[0].tech_name
+                                : ""}
+                            </td>
+                            <td key={id._id}>
+                              {item.location.length > 0
+                                ? `${item.location[0].area},${item.location[0].city},${item.location[0].state}`
+                                : ""}
+                            </td>
+                            <td key={id._id}>
+                              {item.company_details.length > 0
+                                ? item.company_details[0].company_name
+                                : ""}
+                            </td>
+                            <td key={id._id}>
+                              {item.salary_range.length > 0
+                                ? item.salary_range[0].salary_range
+                                : ""}
+                            </td>
+                            <td key={id._id}>
+                              {item.experience_master.length > 0
+                                ? item.experience_master[0].experience
+                                : ""}
+                            </td>
+                            <td key={id._id}>
+                              {item.service_area_details.length > 0
+                                ? item.service_area_details[0].service_area
+                                : ""}
+                            </td>
+                            <td>{item.description}</td>
+                            <td>{item.status}</td>
+                            <td
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <button
+                                type="button"
+                                class="btn btn-primary mr-2"
+                              >
+                                Edit
+                              </button>
+                              <button type="button" class="btn btn-danger">
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      );
+                    })}
+                  </table>
+                </div>
               </div>
             </div>
           </main>
