@@ -34,6 +34,8 @@ const JobPost = () => {
     }
   }, []);
 
+  //
+
   const [title, setTitle] = useState("");
   const [designation, setDesignation] = useState("");
   const [email, setEmail] = useState("");
@@ -53,6 +55,41 @@ const JobPost = () => {
   const [serviceAreaCode, SetServiceAreaCode] = useState("");
   const [serviceAreaCodeList, SetServiceAreaCodeList] = useState([]);
   const [getJobPostList, setGetJobPostList] = useState([]);
+  const [mode, setMode] = useState("Submit");
+  const [jobPostCode, setjobPostCode] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getMyJobPost", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        if (res.data.status === "success") {
+          setGetJobPostList(res.data.jobsList);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const reload = () => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getMyJobPost", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setGetJobPostList(res.data.jobsList);
+        console.log(getJobPostList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   //Fetch location list
   useEffect(() => {
@@ -193,6 +230,8 @@ const JobPost = () => {
           setTechnicalSkills("");
           SetServiceAreaCode("");
           SetTargetedEmployee("");
+          setMode("Submit");
+          reload();
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -205,20 +244,167 @@ const JobPost = () => {
 
   // Get job post list
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   axios
+  //     .get("http://testredprism.co/api/jobPost/getMyJobPost", {
+  //       headers: {
+  //         "auth-token": localStorage.getItem("authToken"),
+  //       },
+  //     })
+  //     .then((res) => {
+  //       setGetJobPostList(res.data.jobsList);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
+
+  // Edit job post
+
+  const handleEdit = (jobpostcode) => {
     axios
-      .get("http://testredprism.co/api/jobPost/getMyJobPost", {
-        headers: {
-          "auth-token": localStorage.getItem("authToken"),
+      .post(
+        "http://testredprism.co/api/jobPost/getJobPostDetails",
+        {
+          job_post_code: jobpostcode,
         },
-      })
-      .then((res) => {
-        setGetJobPostList(res.data.jobsList);
+
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.status === "success") {
+          let jobDetails = response.data.jobsDetails[0];
+          setEmail(response.data.jobsDetails[0].email);
+          setTitle(response.data.jobsDetails[0].job_title);
+          setDescription(response.data.jobsDetails[0].description);
+          setDesignation(response.data.jobsDetails[0].designation);
+          response.data.jobsDetails[0].company_details.length > 0
+            ? setCompany(jobDetails.company_details[0]._id)
+            : setCompany("");
+          response.data.jobsDetails[0].technology.length > 0
+            ? setTechnicalSkills(jobDetails.technology[0]._id)
+            : setTechnicalSkills("");
+          response.data.jobsDetails[0].salary_range.length > 0
+            ? setSalaryRange(jobDetails.salary_range[0]._id)
+            : setSalaryRange("");
+          response.data.jobsDetails[0].experience_master.length > 0
+            ? setExperienceYear(jobDetails.experience_master[0]._id)
+            : setExperienceYear("");
+          response.data.jobsDetails[0].service_area_details.length > 0
+            ? SetServiceAreaCode(jobDetails.service_area_details[0]._id)
+            : SetServiceAreaCode("");
+          response.data.jobsDetails[0].location.length > 0
+            ? setLoctions(jobDetails.location[0]._id)
+            : setLoctions("");
+
+          setPhNumber(response.data.jobsDetails[0].ph_num);
+          SetTargetedEmployee(response.data.jobsDetails[0].targeted_employee);
+          var element = document.getElementById("home-tab");
+          element.classList.add("active");
+          document.getElementById("profile-tab").classList.remove("active");
+          var elementMain = document.getElementById("home");
+          elementMain.classList.add("active", "show");
+          document.getElementById("profile").classList.remove("active");
+          setMode("Update");
+          setjobPostCode(jobpostcode);
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  };
+
+  // Update data api
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://testredprism.co/api/jobPost/updateJobPostDetails",
+        {
+          job_post_code: jobPostCode,
+          tech_code: technicalSkills,
+          location_code: location,
+          company_code: company,
+          salary_range_code: salaryRange,
+          exp_code: experienceYear,
+          service_area_code: serviceAreaCode,
+          targeted_employee: targetedEmployee,
+          job_title: title,
+          designation: designation,
+          description: description,
+          email: email,
+          ph_num: phnumber,
+        },
+
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        console.log("sakkaskajshkashkaskaskkas", response.data);
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          setjobPostCode("");
+          setEmail("");
+          setTitle("");
+          setDescription("");
+          setDesignation("");
+          setCompany("");
+          setPhNumber("");
+          setLoctions("");
+          setExperienceYear("");
+          setSalaryRange("");
+          setTechnicalSkills("");
+          SetServiceAreaCode("");
+          SetTargetedEmployee("");
+          reload();
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  // delete data api
+  const handleDelete = (jobpostcode) => {
+    axios
+      .post(
+        "http://testredprism.co/api/jobPost/deleteJobsPost",
+        {
+          job_post_code: jobpostcode,
+        },
+
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          reload();
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
@@ -587,9 +773,9 @@ const JobPost = () => {
                       <button
                         type="submit"
                         className="btn apply-btn"
-                        onClick={handleApi}
+                        onClick={mode === "Submit" ? handleApi : handleUpdate}
                       >
-                        Submit
+                        {mode === "Submit" ? "Submit" : "Update"}
                       </button>
                     </form>
                   </div>
@@ -622,69 +808,75 @@ const JobPost = () => {
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
-                    {getJobPostList.map((item, id) => {
-                      return (
-                        <tbody>
-                          <tr>
-                            <td>{item.targeted_employee}</td>
-                            <td>{item.job_title}</td>
-                            <td>{item.designation}</td>
-                            <td>{item.email}</td>
-                            <td>{item.ph_num}</td>
-                            <td>{item.post_datetime}</td>
-                            <td key={id._id}>
-                              {item.technology.length > 0
-                                ? item.technology[0].tech_name
-                                : ""}
-                            </td>
-                            <td key={id._id}>
-                              {item.location.length > 0
-                                ? `${item.location[0].area},${item.location[0].city},${item.location[0].state}`
-                                : ""}
-                            </td>
-                            <td key={id._id}>
-                              {item.company_details.length > 0
-                                ? item.company_details[0].company_name
-                                : ""}
-                            </td>
-                            <td key={id._id}>
-                              {item.salary_range.length > 0
-                                ? item.salary_range[0].salary_range
-                                : ""}
-                            </td>
-                            <td key={id._id}>
-                              {item.experience_master.length > 0
-                                ? item.experience_master[0].experience
-                                : ""}
-                            </td>
-                            <td key={id._id}>
-                              {item.service_area_details.length > 0
-                                ? item.service_area_details[0].service_area
-                                : ""}
-                            </td>
-                            <td>{item.description}</td>
-                            <td>{item.status}</td>
-                            <td
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <button
-                                type="button"
-                                class="btn btn-primary mr-2"
+                    {getJobPostList &&
+                      getJobPostList.map((item, id) => {
+                        return (
+                          <tbody>
+                            <tr>
+                              <td>{item.targeted_employee}</td>
+                              <td>{item.job_title}</td>
+                              <td>{item.designation}</td>
+                              <td>{item.email}</td>
+                              <td>{item.ph_num}</td>
+                              <td>{item.post_datetime}</td>
+                              <td key={id._id}>
+                                {item.technology.length > 0
+                                  ? item.technology[0].tech_name
+                                  : ""}
+                              </td>
+                              <td key={id._id}>
+                                {item.location.length > 0
+                                  ? `${item.location[0].area},${item.location[0].city},${item.location[0].state}`
+                                  : ""}
+                              </td>
+                              <td key={id._id}>
+                                {item.company_details.length > 0
+                                  ? item.company_details[0].company_name
+                                  : ""}
+                              </td>
+                              <td key={id._id}>
+                                {item.salary_range.length > 0
+                                  ? item.salary_range[0].salary_range
+                                  : ""}
+                              </td>
+                              <td key={id._id}>
+                                {item.experience_master.length > 0
+                                  ? item.experience_master[0].experience
+                                  : ""}
+                              </td>
+                              <td key={id._id}>
+                                {item.service_area_details.length > 0
+                                  ? item.service_area_details[0].service_area
+                                  : ""}
+                              </td>
+                              <td>{item.description}</td>
+                              <td>{item.status}</td>
+                              <td
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}
                               >
-                                Edit
-                              </button>
-                              <button type="button" class="btn btn-danger">
-                                Delete
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      );
-                    })}
+                                <button
+                                  type="button"
+                                  class="btn btn-primary mr-2"
+                                  onClick={() => handleEdit(item._id)}
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-danger"
+                                  onClick={() => handleDelete(item._id)}
+                                >
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        );
+                      })}
                   </table>
                 </div>
               </div>
