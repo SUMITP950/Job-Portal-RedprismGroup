@@ -1,26 +1,81 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Select from "react-select";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { data } from "jquery";
-import { date } from "yup";
+import { auth } from "../../Component/auth.js";
 
 const WalkingJob = () => {
   const [getLocation, setgetLocation] = useState("");
   const [getLocationList, setgetLocationList] = useState([]);
   const [getArea, setArea] = useState("");
   const [getAreaList, setgetAreaList] = useState([]);
-  const [wDate, setwDate] = useState("");
+  const [wDate, setwDate] = useState();
   const [description, setDescription] = useState("");
   const [walkingJobsListg, setwalkingJobsListg] = useState([]);
   const [mode, setmode] = useState("Submit");
-  const [walkingJobId,setWalkingJobId]=useState("");
+  const [walkingJobId, setWalkingJobId] = useState("");
+
+  // Get user details
+
+  const [userDetails, SetUserDetails] = useState("");
+
+  const fetchUserDetails = async () => {
+    const userData = await auth();
+    SetUserDetails(userData);
+  };
 
   useEffect(() => {
-    document.title = "Job Post";
+    fetchUserDetails();
   }, []);
 
+  // Title
+  useEffect(() => {
+    document.title = "Walking Job Post";
+  }, []);
+
+  //Protecting this page
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      navigate("/");
+    }
+  }, []);
+
+  // get My job postlist
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/walkingJobPost/getMyWalkingJobPost", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setwalkingJobsListg(res.data.walkingJobsList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const reload = () => {
+    axios
+      .get("http://testredprism.co/api/walkingJobPost/getMyWalkingJobPost", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setwalkingJobsListg(res.data.walkingJobsList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  // get service area list
   useEffect(() => {
     axios
       .get("http://testredprism.co/api/walkingJobPost/getServiceAreaList", {
@@ -35,6 +90,8 @@ const WalkingJob = () => {
         console.error(error);
       });
   }, []);
+
+  // get locationlist
   useEffect(() => {
     axios
       .get("http://testredprism.co/api/walkingJobPost/getLocationList", {
@@ -44,21 +101,6 @@ const WalkingJob = () => {
       })
       .then((res) => {
         setgetLocationList(res.data.locationList);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-  useEffect(() => {
-    axios
-      .get("http://testredprism.co/api/walkingJobPost/getMyWalkingJobPost", {
-        headers: {
-          "auth-token": localStorage.getItem("authToken"),
-        },
-      })
-      .then((res) => {
-        setwalkingJobsListg(res.data.walkingJobsList);
-        // console.log(res.data.walkingJobsList);
       })
       .catch((error) => {
         console.error(error);
@@ -83,7 +125,6 @@ const WalkingJob = () => {
         }
       )
       .then((response) => {
-        // console.log(response.data);
         if (response.data.status === "success") {
           toast.success(`${response.data.mssg}`);
           setArea("");
@@ -91,6 +132,7 @@ const WalkingJob = () => {
           setgetLocation("");
           setwDate("");
           setmode("Submit");
+          reload();
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -102,7 +144,6 @@ const WalkingJob = () => {
   };
   // const handelUpdate = (item) => {
   const handelEdit = (item) => {
-    
     axios
       .post(
         "http://testredprism.co/api/walkingJobPost/getWalkingJobPostDetails",
@@ -117,37 +158,43 @@ const WalkingJob = () => {
       )
       .then((response) => {
         if (response.data.status === "success") {
-          // toast.success(`${response.data.mssg}`);
+          let jobDetails = response.data.walkingJobsDetails[0];
+
+          setDescription(response.data.walkingJobsDetails[0].description);
+
+          function formatDate(d) {
+            var d = new Date(d),
+              month = "" + (d.getMonth() + 1),
+              day = "" + d.getDate(),
+              year = d.getFullYear();
+
+            if (month.length < 2) month = "0" + month;
+
+            if (day.length < 2) day = "0" + day;
+
+            return [year, month, day].join("-");
+          }
+
+          setwDate(formatDate(jobDetails.walking_date));
+
+          jobDetails.service_area_details.length > 0
+            ? setArea(jobDetails.service_area_details[0]._id)
+            : setArea("");
+          jobDetails.location.length > 0
+            ? setgetLocation(jobDetails.location[0]._id)
+            : setgetLocation("");
+
           var element = document.getElementById("profile-tab");
           element.classList.add("active");
           document.getElementById("home-tab").classList.remove("active");
           var elementMain = document.getElementById("home");
           elementMain.classList.add("active", "show");
-          setmode("Update");
-
           document.getElementById("profile").classList.remove("active");
-          let jobDetails = response.data.walkingJobsDetails[0];
-        
-          setDescription(response.data.walkingJobsDetails[0].description);
-          
-          setwDate(jobDetails.walking_date)
-    console.log( toString(wDate))
-    // ("20-02-1999");
-    // console.log(wDate);
-    
-          jobDetails.service_area_details.length > 0
-
-            ? setArea(jobDetails.service_area_details[0]._id)
-            : setArea("");
-            jobDetails.location.length > 0
-            ? setgetLocation(jobDetails.location[0]._id)
-            : setgetLocation("");
-            setWalkingJobId(item);
-
+          setmode("Update");
+          setWalkingJobId(item);
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
-
         }
       })
       .catch((error) => {
@@ -155,39 +202,70 @@ const WalkingJob = () => {
       });
   };
 
-  const hadleupdate= (e)=>{
+  const hadleupdate = (e) => {
     e.preventDefault();
     axios
-    .post(
-      "http://testredprism.co/api/walkingJobPost/updateWalkingJobPostDetails",
-      {
-        walking_job_code: walkingJobId,
-        location_code: getLocation,
-        service_area_code: getArea,
-        description: description,
-        walking_date: wDate,
-      },
-      {
-        headers: {
-          "auth-token": localStorage.getItem("authToken"),
+      .post(
+        "http://testredprism.co/api/walkingJobPost/updateWalkingJobPostDetails",
+        {
+          walking_job_code: walkingJobId,
+          location_code: getLocation,
+          service_area_code: getArea,
+          description: description,
+          walking_date: wDate,
         },
-      }
-    )
-    .then((response) => {
-      if (response.data.status === "success") {
-        
-        toast.success(`${response.data.mssg}`);
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          setWalkingJobId("");
+          setArea("");
+          setDescription("");
+          setgetLocation("");
+          setwDate("");
+          reload();
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-      }
-      if (response.data.status === "error") {
-        toast.error(`${response.data.mssg}`);
+  const handleDelete = (item) => {
+    axios
+      .post(
+        "http://testredprism.co/api/walkingJobPost/deleteWalkingJobPost",
+        {
+          walking_job_code: item,
+        },
 
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          reload();
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
@@ -310,7 +388,6 @@ const WalkingJob = () => {
                   aria-controls="home"
                   aria-selected="false"
                 >
-                  <img src="img/icons8-password-48.png" style={{ width: 32 }} />
                   Enter New Walkling Job
                 </a>
               </li>
@@ -324,10 +401,6 @@ const WalkingJob = () => {
                   aria-controls="profile"
                   aria-selected="true"
                 >
-                  <img
-                    src="img/icons8-male-user-100.png"
-                    style={{ width: 32 }}
-                  />
                   List Job
                 </a>
               </li>
@@ -419,11 +492,9 @@ const WalkingJob = () => {
                         type="submit"
                         id="subnitUpdate"
                         className="btn apply-btn"
-                      
-                        onClick={mode==="Submit" ? handelsubmit : hadleupdate}
+                        onClick={mode === "Submit" ? handelsubmit : hadleupdate}
                       >
-                        
-                        { mode==="Submit" ? "Submit" : "Update" }
+                        {mode === "Submit" ? "Submit" : "Update"}
                       </button>
                     </form>
                   </div>
@@ -439,7 +510,7 @@ const WalkingJob = () => {
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">PostDate&time</th>
+                        <th scope="col">Walkingjob Date</th>
 
                         <th scope="col">Location</th>
 
@@ -447,59 +518,64 @@ const WalkingJob = () => {
 
                         <th scope="col">Description</th>
 
-                        <th scope="col">Status</th>
+                       
 
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
 
-                    {walkingJobsListg.map((item, id) => {
-                      return (
-                        <tbody>
-                          <tr>
-                            <td>{item.post_datetime}</td>
+                    {walkingJobsListg &&
+                      walkingJobsListg.map((item, id) => {
+                        return (
+                          <tbody>
+                            <tr>
+                              <td>{item.walking_date.slice(0,10)}</td>
 
-                            <td key={id._id}>
-                              {item.location.length > 0
-                                ? `${item.location[0].area},${item.location[0].city},${item.location[0].state}`
-                                : ""}
-                            </td>
+                              <td key={id._id}>
+                                {item.location.length > 0
+                                  ? `${item.location[0].area},${item.location[0].city},${item.location[0].state}`
+                                  : ""}
+                              </td>
 
-                            <td key={id._id}>
-                              {item.service_area_details.length > 0
-                                ? item.service_area_details[0].service_area
-                                : ""}
-                            </td>
+                              <td key={id._id}>
+                                {item.service_area_details.length > 0
+                                  ? item.service_area_details[0].service_area
+                                  : ""}
+                              </td>
 
-                            <td>{item.description}</td>
+                              <td>{item.description}</td>
 
-                            <td>{}</td>
+                             
 
-                            <td
-                              style={{
-                                display: "flex",
+                              <td
+                                style={{
+                                  display: "flex",
 
-                                alignItems: "center",
+                                  alignItems: "center",
 
-                                justifyContent: "center",
-                              }}
-                            >
-                              <button
-                                type="button"
-                                class="btn btn-primary mr-2"
-                                onClick={() => handelEdit(item._id)}
+                                  justifyContent: "center",
+                                }}
                               >
-                                Edit
-                              </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-primary mr-2"
+                                  onClick={() => handelEdit(item._id)}
+                                >
+                                  Edit
+                                </button>
 
-                              <button type="button" class="btn btn-danger">
-                                Delete
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      );
-                    })}
+                                <button
+                                  type="button"
+                                  class="btn btn-danger"
+                                  onClick={() => handleDelete(item._id)}
+                                >
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        );
+                      })}
                   </table>
                 </div>
               </div>
@@ -515,9 +591,12 @@ const WalkingJob = () => {
                     </div>
                   </div>
                   <div>
-                    <Link to="/Profile">
-                      <span class="font-weight-bold">User Name</span>
-                    </Link>
+                    <h5 class="font-weight-bold">{userDetails.user_name}</h5>
+                  </div>
+                  <div>
+                    <h6 class="font-weight-bold ml-1 ">
+                      ({userDetails.employee_type})
+                    </h6>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
