@@ -818,7 +818,7 @@ const JobPost = () => {
                               <td>{item.designation}</td>
                               <td>{item.email}</td>
                               <td>{item.ph_num}</td>
-                              <td>{item.post_datetime}</td>
+                              <td>{item.post_datetime.slice(0,10)}</td>
                               <td key={id._id}>
                                 {item.technology.length > 0
                                   ? item.technology[0].tech_name
