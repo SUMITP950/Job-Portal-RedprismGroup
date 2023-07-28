@@ -78,7 +78,7 @@ const WalkingJob = () => {
   // get service area list
   useEffect(() => {
     axios
-      .get("http://testredprism.co/api/walkingJobPost/getServiceAreaList", {
+      .get(`${process.env.REACT_APP_API_URL}/api/walkingJobPost/getServiceAreaList`, {
         headers: {
           "auth-token": localStorage.getItem("authToken"),
         },
@@ -94,7 +94,7 @@ const WalkingJob = () => {
   // get locationlist
   useEffect(() => {
     axios
-      .get("http://testredprism.co/api/walkingJobPost/getLocationList", {
+      .get(`${process.env.REACT_APP_API_URL}/api/walkingJobPost/getLocationList`, {
         headers: {
           "auth-token": localStorage.getItem("authToken"),
         },
@@ -111,7 +111,7 @@ const WalkingJob = () => {
     event.preventDefault();
     axios
       .post(
-        "http://testredprism.co/api/walkingJobPost/saveWalkingJobPost",
+        `${process.env.REACT_APP_API_URL}/api/walkingJobPost/saveWalkingJobPost`,
         {
           location_code: getLocation,
           service_area_code: getArea,
@@ -146,7 +146,7 @@ const WalkingJob = () => {
   const handelEdit = (item) => {
     axios
       .post(
-        "http://testredprism.co/api/walkingJobPost/getWalkingJobPostDetails",
+        `${process.env.REACT_APP_API_URL}/api/walkingJobPost/getWalkingJobPostDetails`,
         {
           walking_job_code: item,
         },
@@ -558,18 +558,18 @@ const WalkingJob = () => {
                               >
                                 <button
                                   type="button"
-                                  class="btn btn-primary mr-2"
+                                  class="btn  mx-3 px-2"
                                   onClick={() => handelEdit(item._id)}
                                 >
-                                  Edit
+                                  <i class="feather-edit menu-icon ml-auto text-primary"></i>
                                 </button>
 
                                 <button
                                   type="button"
-                                  class="btn btn-danger"
+                                  class="btn  px-2"
                                   onClick={() => handleDelete(item._id)}
                                 >
-                                  Delete
+                                   <i class="feather-trash-2 menu-icon ml-auto text-danger"></i>
                                 </button>
                               </td>
                             </tr>

@@ -51,6 +51,23 @@ export default function Home() {
       });
   }, []);
 
+
+
+const gettechlst=()=>{ axios
+  .get("http://testredprism.co/api/home/getTechList", {
+    headers: {
+      "auth-token": localStorage.getItem("authToken"),
+    },
+  })
+  .then((res) => {
+    // console.log(res.data.techList)
+    SetTechnoData(res.data.techList);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+}
   //Get tech list
   useEffect(() => {
     axios
@@ -73,7 +90,7 @@ export default function Home() {
     // console.log("Post Save " + techno);
     axios
       .post(
-        "http://testredprism.co/api/home/saveFeedsPost",
+        `${process.env.REACT_APP_API_URL}/api/home/saveFeedsPost`,
         {
           tech_code: techno,
           post_details: thoughts,
@@ -104,7 +121,7 @@ export default function Home() {
     // console.log(tech_code);
     axios
       .post(
-        "http://testredprism.co/api/home/getFeedsPost",
+        `${process.env.REACT_APP_API_URL}/api/home/getFeedsPost`,
         {
           tech_code: tech_code,
           from_index: 0,
@@ -117,7 +134,7 @@ export default function Home() {
       )
       .then((response) => {
         if (response.data.status === "success") {
-          // console.log(response.data.feedsList[0]._id);
+          console.log(response.data);
           setGetpost(response.data.feedsList);
         }
         if (response.data.status === "error") {
@@ -136,7 +153,7 @@ export default function Home() {
     // console.log(postId);
     axios
       .post(
-        "http://testredprism.co/api/home/saveFeedsPostLikeDislike",
+        `${process.env.REACT_APP_API_URL}/api/home/saveFeedsPostLikeDislike`,
         { feeds_post_code: postId, type: "Like" },
         {
           headers: {
@@ -145,9 +162,10 @@ export default function Home() {
         }
       )
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
         if (response.data.status === "success") {
           // toast.success(`${response.data.mssg}`);
+          
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -164,7 +182,7 @@ export default function Home() {
     // console.log(postId);
     axios
       .post(
-        "http://testredprism.co/api/home/saveFeedsPostLikeDislike",
+        `${process.env.REACT_APP_API_URL}/api/home/saveFeedsPostLikeDislike`,
         { feeds_post_code: postId, type: "Dislike" },
         {
           headers: {
@@ -191,7 +209,7 @@ export default function Home() {
   const handleComent = (id) => {
     axios
       .post(
-        "http://testredprism.co/api/home/saveFeedsComment",
+        `${process.env.REACT_APP_API_URL}/api/home/saveFeedsComment`,
         {
           feeds_post_code: id,
           comment: thought,
@@ -205,6 +223,7 @@ export default function Home() {
       .then((response) => {
         if (response.data.status === "success") {
           disblk(id);
+        setThought("")
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -222,7 +241,7 @@ export default function Home() {
     document.getElementById("open_" + postId).style.display = "block";
     axios
       .post(
-        "http://testredprism.co/api/home/getFeedsPostCommentsList",
+        `${process.env.REACT_APP_API_URL}/api/home/getFeedsPostCommentsList`,
         {
           feeds_post_code: postId,
         },
@@ -253,7 +272,7 @@ export default function Home() {
     console.log(commentId);
     axios
       .post(
-        "http://testredprism.co/api/home/deleteFeedsComment",
+        `${process.env.REACT_APP_API_URL}/api/home/deleteFeedsComment`,
         {
           feeds_comment_code: commentId,
         },
@@ -385,7 +404,7 @@ export default function Home() {
                           <div class="dropdown-list-image mr-3">
                             <img
                               class="rounded-circle"
-                              src="img/icon/smile.svg"
+                              src={`${process.env.REACT_APP_API_URL}/${data.employee_details[0].employee_image}`}
                               alt=""
                             />
                             <div class="status-indicator bg-success"></div>
@@ -457,7 +476,8 @@ export default function Home() {
                                     <div class="dropdown-list-image mr-3 d-flex pl-3">
                                       <img
                                         class="rounded-circle"
-                                        src="img/icon/smile.svg"
+                                        src={`${process.env.REACT_APP_API_URL}/${list.employee_details[0].employee_image}`
+                                     }
                                         alt=""
                                       />
                                       <div class="font-weight-bold pl-1">
@@ -586,35 +606,43 @@ export default function Home() {
                                 <div class="card">
                                   <div
                                     class="card-footer py-3 border-0"
-                                    style={{ backgroundColor: "#f8f9fa" }}
+                                    style={{ backgroundColor: "#fff" }}
                                   >
                                     <div class="d-flex flex-start w-100">
+                                        <img src={`${process.env.REACT_APP_API_URL}/${data.employee_details[0].employee_image}`} style={{height:"30px",borderRadius:"50%"}} />
                                       <div class="form-outline w-100">
                                         <textarea
                                           class="form-control"
                                           id="textAreaExample"
                                           rows="4"
+                                          placeholder="Comment...."
                                           style={{ background: "#fff" }}
                                           value={thought}
                                           onChange={handleThoughtsChange1}
-                                        ></textarea>
-
-                                        <label
-                                          class="form-label"
-                                          for="textAreaExample"
                                         >
-                                          Comment
-                                        </label>
+                                       
+                                        </textarea>
                                       </div>
-                                    </div>
-                                    <div class="float-end mt-2 pt-1">
                                       <button
                                         type="button"
-                                        class="btn btn-primary btn-sm aply-btn mr-2"
+                                       
+                                        style={{
+                                          background: "none",
+
+                                          border: "none",
+
+                                          cursor: "pointer",
+                                          outline: "inherit",
+                                        }}
                                         onClick={() => handleComent(data._id)}
                                       >
-                                        Post comment
+                                        <i
+                                          className="feather-arrow-right-circle"
+                                          style={{ fontSize: "25px",color:"rgb(199 199 188)" }}
+                                        />
                                       </button>
+                                    </div>
+                                    <div class="float-end mt-2 pt-1">
                                       <button
                                         type="button"
                                         class="btn btn-outline-primary btn-sm"
@@ -645,10 +673,20 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                      <h5 class="font-weight-bold">{userDetails.user_name}</h5>
+                      <h5 class="font-weight-bold" >
+                        {userDetails.user_name}
+                      </h5>
                     </div>
                     <div>
-                      <h6 class="font-weight-bold ml-1 ">
+                      <h6
+                        class="font-weight-bold ml-1 "
+                        style={{
+                          whiteSpace: "nowrap",
+                          width: "50px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
                         ({userDetails.employee_type})
                       </h6>
                     </div>
