@@ -15,6 +15,7 @@ export default function Home() {
   const [thoughts, setThoughts] = useState(""); // this is for post value
   const [thought, setThought] = useState(""); // this is for comment value
   const [comentList, setcomentList] = useState({});
+  const [nolikcmt, setnolikcmt] = useState(""); //total comment & like
 
   const handleThoughtsChange = (e) => {
     setThoughts(e.target.value);
@@ -51,31 +52,48 @@ export default function Home() {
       });
   }, []);
 
+  const noslikecoment = (id) => {
+    console.log(id);
+    axios
+      .post(
+        "http://testredprism.co/api/home/getTotalLikeComments",
+        {
+          feeds_post_code: id,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.status === "success") {
+          toast.success(`${res.data.mssg}`);
+          console.log(res.data);
+          document.querySelector(".feed_like_" + id).innerText =
+            res.data.totalLikes;
+        }
+        // console.log(res.data.totalLikes);
 
+        // setnolikcmt(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-const gettechlst=()=>{ axios
-  .get("http://testredprism.co/api/home/getTechList", {
-    headers: {
-      "auth-token": localStorage.getItem("authToken"),
-    },
-  })
-  .then((res) => {
-    // console.log(res.data.techList)
-    SetTechnoData(res.data.techList);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-}
   //Get tech list
   useEffect(() => {
     axios
-      .get("http://testredprism.co/api/home/getTechList", {
-        headers: {
-          "auth-token": localStorage.getItem("authToken"),
-        },
-      })
+      .get(
+        "http://testredprism.co/api/home/getTechList",
+
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
       .then((res) => {
         // console.log(res.data.techList)
         SetTechnoData(res.data.techList);
@@ -134,7 +152,7 @@ const gettechlst=()=>{ axios
       )
       .then((response) => {
         if (response.data.status === "success") {
-          console.log(response.data);
+          // console.log(response.data);
           setGetpost(response.data.feedsList);
         }
         if (response.data.status === "error") {
@@ -164,8 +182,9 @@ const gettechlst=()=>{ axios
       .then((response) => {
         console.log(response.data);
         if (response.data.status === "success") {
+          noslikecoment(postId);
+
           // toast.success(`${response.data.mssg}`);
-          
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -193,6 +212,8 @@ const gettechlst=()=>{ axios
       .then((response) => {
         // console.log(response.data);
         if (response.data.status === "success") {
+          noslikecoment(postId);
+
           // toast.success(`${response.data.mssg}`);
         }
         if (response.data.status === "error") {
@@ -223,7 +244,34 @@ const gettechlst=()=>{ axios
       .then((response) => {
         if (response.data.status === "success") {
           disblk(id);
-        setThought("")
+          setThought("");
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    return removeActivity();
+  };
+
+  const fetchComment = (id) => {
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/api/home/getTotalLikeComments`,
+        {
+          feeds_post_code: id,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -433,14 +481,22 @@ const gettechlst=()=>{ axios
                         </div>
                         <div class="p-3 osahan-post-footer text-center d-flex jcc">
                           <button
-                            class="mr-3 text-secondary btn btn-link "
+                            class={
+                              `mr-3 text-secondary btn btn-link feed_like_btn_` +
+                              data._id
+                            }
                             onClick={
                               data.user_like.length > 0
                                 ? () => handelDislike(data._id)
                                 : () => handellike(data._id)
                             }
                           >
-                            <i class="feather-heart text-danger icon-font">
+                            <i
+                              class={
+                                `feather-heart text-danger icon-font feed_like_` +
+                                data._id
+                              }
+                            >
                               {data.totalLike}
                             </i>
                           </button>
@@ -476,8 +532,7 @@ const gettechlst=()=>{ axios
                                     <div class="dropdown-list-image mr-3 d-flex pl-3">
                                       <img
                                         class="rounded-circle"
-                                        src={`${process.env.REACT_APP_API_URL}/${list.employee_details[0].employee_image}`
-                                     }
+                                        src={`${process.env.REACT_APP_API_URL}/${list.employee_details[0].employee_image}`}
                                         alt=""
                                       />
                                       <div class="font-weight-bold pl-1">
@@ -609,7 +664,13 @@ const gettechlst=()=>{ axios
                                     style={{ backgroundColor: "#fff" }}
                                   >
                                     <div class="d-flex flex-start w-100">
-                                        <img src={`${process.env.REACT_APP_API_URL}/${data.employee_details[0].employee_image}`} style={{height:"30px",borderRadius:"50%"}} />
+                                      <img
+                                        src={`${process.env.REACT_APP_API_URL}/${userDetails.employee_image}`}
+                                        style={{
+                                          height: "30px",
+                                          borderRadius: "50%",
+                                        }}
+                                      />
                                       <div class="form-outline w-100">
                                         <textarea
                                           class="form-control"
@@ -619,13 +680,10 @@ const gettechlst=()=>{ axios
                                           style={{ background: "#fff" }}
                                           value={thought}
                                           onChange={handleThoughtsChange1}
-                                        >
-                                       
-                                        </textarea>
+                                        ></textarea>
                                       </div>
                                       <button
                                         type="button"
-                                       
                                         style={{
                                           background: "none",
 
@@ -634,11 +692,17 @@ const gettechlst=()=>{ axios
                                           cursor: "pointer",
                                           outline: "inherit",
                                         }}
-                                        onClick={() => handleComent(data._id)}
+                                        onClick={() => {
+                                          handleComent(data._id);
+                                          fetchComment(data._id);
+                                        }}
                                       >
                                         <i
                                           className="feather-arrow-right-circle"
-                                          style={{ fontSize: "25px",color:"rgb(199 199 188)" }}
+                                          style={{
+                                            fontSize: "25px",
+                                            color: "rgb(199 199 188)",
+                                          }}
                                         />
                                       </button>
                                     </div>
@@ -673,9 +737,7 @@ const gettechlst=()=>{ axios
                       </div>
                     </div>
                     <div>
-                      <h5 class="font-weight-bold" >
-                        {userDetails.user_name}
-                      </h5>
+                      <h5 class="font-weight-bold">{userDetails.user_name}</h5>
                     </div>
                     <div>
                       <h6
