@@ -1,30 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React,{ useEffect } from "react";
+import { Link,useNavigate} from "react-router-dom";
+
 
 export default function Nav() {
-  const [resume, setResume] = useState(null);
+ const navigate = useNavigate()
 
-  const handleFileUpload = (event) => {
-    setResume(event.target.files[0]);
-  };
 
-  const handleSubmit = async (event) => {
+const protectingPage=()=>{
+  if (!localStorage.getItem("authToken")) {
+    navigate("/");
+  }
+}
+
+
+  
+  const handleLogout =(event) => {
     event.preventDefault();
-
-    const formData = new FormData();
-    formData.append("resume", resume);
-
-    try {
-      const response = await axios.post(
-        "https://jsonplaceholder.typicode.com/posts",
-        formData
-      );
-      console.log(response.data);
-      // Do something with the response if needed
-    } catch (error) {
-      console.error(error);
-    }
+   localStorage.removeItem("authToken")
+   protectingPage();
   };
   return (
     <div>
@@ -456,12 +449,8 @@ export default function Nav() {
                 data-toggle="modal"
                 data-target="#staticBackdrop"
               >
-                <img
-                  src="https://img.icons8.com/fluency/48/upload-2.png"
-                  alt=""
-                  class="icon-img"
-                />
-                &nbsp; Upload Resume
+                <i class="feather-log-out text-danger "></i>
+                &nbsp; Sign Out
               </button>
             </li>
           </ul>
@@ -482,7 +471,7 @@ export default function Nav() {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Select Your Resume / Updated CV
+               Do you want to logout? 
               </h5>
               <button
                 type="button"
@@ -496,21 +485,10 @@ export default function Nav() {
             <div class="modal-body">
               <br />
               <form className="d-none d-sm-inline-block form-inline m-auto my-md-0 mw-100 navbar-search">
-                <div className="input-group py-0">
-                  <input
-                    type="file"
-                    className="form-control shadow-none search-btn  "
-                    onChange={handleFileUpload}
-                  />
-
-                  <button
-                    className="btn apply-btn py-0 my-2"
-                    type="submit"
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </button>
-                </div>
+            <div style={{display:'flex',alignItems:"center",justifyContent:"center"}}>
+              <button class=" btn btn-danger" onClick={handleLogout} style={{marginLeft:30,marginRight:20,width:'80px',borderRadius:"20px"}}>Yes</button>
+              <button class="btn btn-success " data-dismiss="modal" style={{width:'80px',borderRadius:"20px"}}>No</button>
+            </div>
               </form>
             </div>
           </div>
