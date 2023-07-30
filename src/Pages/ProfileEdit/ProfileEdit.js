@@ -22,42 +22,100 @@ export default function ProfileEdit() {
   const [Year, SetYear] = useState("");
   const [Gender, SetGender] = useState("");
 
-  const handleChange = (event) => {
-    SetDmonth(event.target.value);
-    SetDay(event.target.value);
-    SetYear(event.target.value);
-    SetGender(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   SetDmonth(event.target.value);
+  //   SetDay(event.target.value);
+  //   SetYear(event.target.value);
+  //   SetGender(event.target.value);
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    const data = {
-      Name,
-      username,
-      Email,
-      mobile,
-      Location,
-      Website,
-      Organization,
-      Company,
-      Position,
-      From,
-      To,
-      Dmonth,
-      Day,
-      Year,
-      Gender,
-    };
+  //   const data = {
+  //     Name,
+  //     username,
+  //     Email,
+  //     mobile,
+  //     Location,
+  //     Website,
+  //     Organization,
+  //     Company,
+  //     Position,
+  //     From,
+  //     To,
+  //     Dmonth,
+  //     Day,
+  //     Year,
+  //     Gender,
+  //   };
+  //   axios
+  //     .post("https://jsonplaceholder.typicode.com/posts", data)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
+  useEffect(() => {
     axios
-      .post("https://jsonplaceholder.typicode.com/posts", data)
-      .then((response) => {
-        console.log(response.data);
+      .get("http://testredprism.co/api/profileDetails/getMyProfileDetails", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        SetName(res.data.profileDetails[0].user_name);
+        setFirstName(res.data.profileDetails[0].first_name);
+        setLastName(res.data.profileDetails[0].last_name);
+        setEmployeeType(res.data.profileDetails[0].employee_type);
+        setEmployeeImage(res.data.profileDetails[0].employee_image);
+        setEmail(res.data.profileDetails[0].email_id);
+        setPhNumber(res.data.profileDetails[0].ph_num);
+        setLookingJob(res.data.profileDetails[0].looking_job);
+        setNoticePeriod(res.data.profileDetails[0].notice_period);
+        setImmediateJoiner(res.data.profileDetails[0].immediate_joinner);
+        setFresher(res.data.profileDetails[0].fresher);
+        setCv(res.data.profileDetails[0].resume);
+        setAchievement(res.data.profileDetails[0].achievement);
+        setLocation(
+          res.data.profileDetails[0].location.length > 0
+            ? `${res.data.profileDetails[0].location[0].area},${res.data.profileDetails[0].location[0].city},${res.data.profileDetails[0].location[0].state}`
+            : ""
+        );
+        setCompany(
+          res.data.profileDetails[0].company_details.length > 0
+            ? res.data.profileDetails[0].company_details[0].company_name
+            : ""
+        );
+        setTechnology(
+          res.data.profileDetails[0].technology.length > 0
+            ? res.data.profileDetails[0].technology[0].tech_name
+            : ""
+        );
+        setExperience(
+          res.data.profileDetails[0].experience_master.length > 0
+            ? res.data.profileDetails[0].experience_master[0].experience
+            : ""
+        );
+
+        if (res.data.profileDetails[0].employee_type === "Hr") {
+          document.getElementById("cv").style.display = "none";
+          document.getElementById("tech").style.display = "none";
+          document.getElementById("lookingjob").style.display = "none";
+          document.getElementById("noticePeriod").style.display = "none";
+          document.getElementById("immediateJoiner").style.display = "none";
+          document.getElementById("fresher").style.display = "none";
+          document.getElementById("experience").style.display = "none";
+          document.getElementById("location").style.display = "none";
+        }
       })
       .catch((error) => {
         console.error(error);
       });
-  };
+  }, []);
   return (
     <>
       {" "}
@@ -252,7 +310,7 @@ export default function ProfileEdit() {
                           </label>
                           <div class="form-group">
                             <input
-                              onChange={(e) => SetName(e.target.value)}
+                              // onChange={(e) => SetName(e.target.value)}
                               value={Name}
                               type="text"
                               class="form-control"
