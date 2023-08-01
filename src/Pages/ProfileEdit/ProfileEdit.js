@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import { toast } from "react-toastify";
 
 export default function ProfileEdit() {
   useEffect(() => {
     document.title = "Profile Edit";
+  }, []);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      navigate("/");
+    }
   }, []);
   const [LastName, SetLastName] = useState("");
   const [FirstName, setFirstName] = useState("");
@@ -16,12 +23,17 @@ export default function ProfileEdit() {
   const [Experience, SetExperience] = useState("");
   const [technology, setTechnology] = useState("");
   const [technologyList, setTechnologyList] = useState([]);
-  const [Company, SetCompany] = useState("");
+  const [company, SetCompany] = useState("");
   const [companyList, setCompanyList] = useState([]);
   const [ExperienceList, SetExperienceList] = useState([]);
   const [employeeImage, setEmployeeImage] = useState("");
-
-
+  const [employeeType, setEmployeeType] = useState("");
+  const [employeeStatus, setEmployeeStatus] = useState("");
+  const [employeeStatusIcon, setEmployeeStatusIcon] = useState("");
+  const [lookingjob, setLookingjob] = useState("");
+  const [noticePeriod, setnoticePeriod] = useState("");
+  const [immediateJoiner, setimmediateJoiner] = useState("");
+  const [freasher, setFreasher] = useState("");
 
   // const handleChange = (event) => {
   //   SetDmonth(event.target.value);
@@ -59,6 +71,7 @@ export default function ProfileEdit() {
   //       console.error(error);
   //     });
   // };
+
   //Fetch Company list
   useEffect(() => {
     axios
@@ -74,6 +87,7 @@ export default function ProfileEdit() {
         console.error(error);
       });
   }, []);
+
   // fatch experience list
   useEffect(() => {
     axios
@@ -90,7 +104,6 @@ export default function ProfileEdit() {
       });
   }, []);
 
-
   // fatch technology list
   useEffect(() => {
     axios
@@ -100,15 +113,18 @@ export default function ProfileEdit() {
         },
       })
       .then((res) => {
-     
         setTechnologyList(res.data.techList);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+
   // Get profile details
   useEffect(() => {
+    getMyProfileDetails();
+  }, []);
+  const getMyProfileDetails = () => {
     axios
       .get("http://testredprism.co/api/profileDetails/getMyProfileDetails", {
         headers: {
@@ -116,51 +132,41 @@ export default function ProfileEdit() {
         },
       })
       .then((res) => {
-
+        let profileDetails = res.data.profileDetails[0];
         setUsername(res.data.profileDetails[0].user_name);
         setFirstName(res.data.profileDetails[0].first_name);
         SetLastName(res.data.profileDetails[0].last_name);
-       setTechnology(res.data.profileDetails[0].technology[0].tech_name);
+        setTechnology(res.data.profileDetails[0].technology[0].tech_name);
         setEmployeeImage(res.data.profileDetails[0].employee_image);
         setEmail(res.data.profileDetails[0].email_id);
         SetMobile(res.data.profileDetails[0].ph_num);
-
-        setLocation(
-          res.data.profileDetails[0].location.length > 0
-            ? `${res.data.profileDetails[0].location[0].area},${res.data.profileDetails[0].location[0].city},${res.data.profileDetails[0].location[0].state}`
-            : ""
-        );
-        SetCompany(
-          res.data.profileDetails[0].company_details.length > 0
-            ? res.data.profileDetails[0].company_details[0].company_name
-            : ""
-        );
-        // setTechnology(
-        //   res.data.profileDetails[0].technology.length > 0
-        //     ? res.data.profileDetails[0].technology[0].tech_name
+        setEmployeeType(res.data.profileDetails[0].employee_type);
+        setEmployeeStatus(res.data.profileDetails[0].employee_status);
+        setEmployeeStatusIcon(res.data.profileDetails[0].status_icon);
+        setLookingjob(res.data.profileDetails[0].looking_job);
+        setnoticePeriod(res.data.profileDetails[0].notice_period);
+        setimmediateJoiner(res.data.profileDetails[0].immediate_joinner);
+        setFreasher(res.data.profileDetails[0].fresher);
+        // setLocation(
+        //   res.data.profileDetails[0].location.length > 0
+        //     ? `${res.data.profileDetails[0].location[0].area},${res.data.profileDetails[0].location[0].city},${res.data.profileDetails[0].location[0].state}`
         //     : ""
         // );
-        SetExperience(
-          res.data.profileDetails[0].experience_master.length > 0
-            ? res.data.profileDetails[0].experience_master[0].experience
-            : ""
-        );
-
-        //   if (res.data.profileDetails[0].employee_type === "Hr") {
-        //     document.getElementById("cv").style.display = "none";
-        //     document.getElementById("tech").style.display = "none";
-        //     document.getElementById("lookingjob").style.display = "none";
-        //     document.getElementById("noticePeriod").style.display = "none";
-        //     document.getElementById("immediateJoiner").style.display = "none";
-        //     document.getElementById("fresher").style.display = "none";
-        //     document.getElementById("experience").style.display = "none";
-        //     document.getElementById("location").style.display = "none";
-        //   }
+        res.data.profileDetails[0].location.length > 0
+          ? setLocation(profileDetails.location[0]._id)
+          : setLocation("");
+        res.data.profileDetails[0].company_details.length > 0
+          ? SetCompany(profileDetails.company_details[0]._id)
+          : SetCompany("");
+        res.data.profileDetails[0].experience_master.length > 0
+          ? SetExperience(profileDetails.experience_master[0]._id)
+          : SetExperience("");
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  };
+
   const handleFile = (e) => {
     // document.getElementById("progress").style.display = "flex";
 
@@ -177,24 +183,88 @@ export default function ProfileEdit() {
             "Content-Type": "multipart/form-data",
           },
           // onUploadProgress: (event) => {
-            // setProgressBar(Math.round(100 * event.loaded) / event.total);
+          // setProgressBar(Math.round(100 * event.loaded) / event.total);
           // },
         }
       )
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         if (res.data.status === "success") {
-          // getProfileDetails();
-          // setTimeout(function () {
-          //   document.getElementById("progress").style.display = "none";
-          // }, 900);
           toast.success(`${res.data.mssg}`);
         }
         if (res.data.status === "error") {
-          
-          // setTimeout(function () {
-          //   document.getElementById("progress").style.display = "none";
-          // }, 900);
+          toast.error(`${res.data.mssg}`);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  // const savehr = (e) => {
+  //   e.preventDefault();
+  //   axios
+  //     .post(
+  //       "http://testredprism.co/api/profileDetails/updateHrProfileDetails",
+  //       {
+  //         first_name: FirstName,
+  //         last_name: LastName,
+  //         user_name: username,
+  //         ph_num: mobile,
+  //         email_id: Email,
+  //         company_code: Company,
+  //       },
+  //       {
+  //         headers: {
+  //           "auth-token": localStorage.getItem("authToken"),
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       if (res.data.status === "success") {
+  //         toast.success(`${res.data.mssg}`);
+  //       }
+  //       if (res.data.status === "error") {
+  //         toast.error(`${res.data.mssg}`);
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
+  const saveJobSeeker = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://testredprism.co/api/profileDetails/updateJobSeekerProfileDetails",
+
+        {
+          first_name: FirstName,
+          last_name: LastName,
+          user_name: username,
+          ph_num: mobile,
+          email_id: Email,
+          company_code: company,
+          employee_status: employeeStatus,
+          status_icon: employeeStatusIcon,
+          tech_code: technology,
+          exp_code: Experience,
+          location_code: Location,
+          looking_job: lookingjob,
+          notice_period: noticePeriod,
+          immediate_joinner: immediateJoiner,
+          fresher: freasher,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status === "success") {
+          toast.success(`${res.data.mssg}`);
+        }
+        if (res.data.status === "error") {
+          console.log(res.data);
           toast.error(`${res.data.mssg}`);
         }
       })
@@ -209,20 +279,19 @@ export default function ProfileEdit() {
             <aside class="col-md-4">
               <div class="mb-3 border rounded bg-white profile-box text-center w-10">
                 <div class="p-4 d-flex align-items-center">
-                {employeeImage && (
-                  <img
-                    src={`http://testredprism.co/${employeeImage}`}
-                    class="img-fluid mt-2 mb-2 "
-                    alt="Responsive image"
-                    style={{
-                      width: "175px",
-                      maxWidth: "100%",
-                      height: "175px",
-                      borderRadius: "50%",
-                      
-                    }}
-                  />
-                )}
+                  {employeeImage && (
+                    <img
+                      src={`http://testredprism.co/${employeeImage}`}
+                      class="img-fluid mt-2 mb-2 "
+                      alt="Responsive image"
+                      style={{
+                        width: "175px",
+                        maxWidth: "100%",
+                        height: "175px",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  )}
                   <div class="p-4">
                     <label
                       data-toggle="tooltip"
@@ -252,134 +321,6 @@ export default function ProfileEdit() {
                   </div>
                 </div>
               </div>
-              <div class="border rounded bg-white mb-3">
-                <div class="box-title border-bottom p-3">
-                  <h6 class="m-0">About</h6>
-                  <p class="mb-0 mt-0 small">
-                    Tell about yourself in two sentences.
-                  </p>
-                </div>
-                <div class="box-body">
-                  <div class="p-3 border-bottom">
-                    <div class="form-group mb-4">
-                      <label class="mb-1">BIO</label>
-                      <div class="position-relative">
-                        <textarea
-                          class="form-control"
-                          rows="4"
-                          name="text"
-                          placeholder="Enter Bio"
-                        >
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor
-                        </textarea>
-                      </div>
-                    </div>
-                    <div class="form-group mb-0">
-                      <label class="mb-1 w-100">SKILLS</label>
-                      <div class="custom-control custom-checkbox d-inline mr-3">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="customCheck1"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="customCheck1"
-                          style={{ marginLeft: "12px" }}
-                          // onChange={(e) => SetGender(e.target.value)}
-                        >
-                          JavaScript, jQuery
-                        </label>
-                      </div>
-                      <div class="custom-control custom-checkbox d-inline">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="customCheck2"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="customCheck2"
-                          style={{ marginLeft: "12px" }}
-                        >
-                          HTML5, CSS3
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="overflow-hidden text-center p-3">
-                    <a
-                      class="font-weight-bold btn btn-light rounded p-3 d-block"
-                      href="#"
-                    >
-                      {" "}
-                      SAVE{" "}
-                    </a>
-                  </div>
-                </div>
-              </div>
-              {/* <div class="border rounded bg-white mb-3">
-                <div class="box-title border-bottom p-3">
-                  <h6 class="m-0">Social profiles</h6>
-                  <p class="mb-0 mt-0 small">
-                    Add elsewhere links to your profile.
-                  </p>
-                </div>
-                <div class="box-body">
-                  <div class="p-3 border-bottom">
-                    <div class="position-relative icon-form-control mb-2">
-                      <i class="feather-instagram position-absolute text-warning"></i>
-                      <input
-                        placeholder="Add Instagram link"
-                        type="text"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="position-relative icon-form-control mb-2">
-                      <i class="feather-facebook position-absolute text-primary"></i>
-                      <input
-                        placeholder="Add Facebook link"
-                        type="text"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="position-relative icon-form-control mb-2">
-                      <i class="feather-twitter position-absolute text-info"></i>
-                      <input
-                        placeholder="Add Twitter link"
-                        type="text"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="position-relative icon-form-control mb-2">
-                      <i class="feather-youtube position-absolute text-danger"></i>
-                      <input
-                        placeholder="Add Youtube link"
-                        type="text"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="position-relative icon-form-control mb-0">
-                      <i class="feather-github position-absolute text-dark"></i>
-                      <input
-                        placeholder="Add Github link"
-                        type="text"
-                        class="form-control"
-                      />
-                    </div>
-                  </div>
-                  <div class="overflow-hidden text-center p-3">
-                    <a
-                      class="font-weight-bold btn btn-light rounded p-3 d-block"
-                      href="#"
-                    >
-                      {" "}
-                      Update Social Profiles{" "}
-                    </a>
-                  </div>
-                </div>
-              </div> */}
             </aside>
             <main class="col-md-8">
               <div class="border rounded bg-white mb-3">
@@ -404,7 +345,7 @@ export default function ProfileEdit() {
                           </label>
                           <div class="form-group">
                             <input
-                              // onChange={(e) => SetName(e.target.value)}
+                              onChange={(e) => setFirstName(e.target.value)}
                               value={FirstName}
                               type="text"
                               class="form-control"
@@ -452,276 +393,8 @@ export default function ProfileEdit() {
                           </div>
                         </div>
                       </div>
-
-                     
                     </div>
-                    {/* <label class="form-label">
-                      Birth date
-                      <span class="text-danger">*</span>
-                    </label>
-                    <div class="row">
-                      <div class="col-md-6 mb-3 mb-sm-6">
-                        <div class="js-form-message">
-                          <div class="form-group">
-                            <select
-                              class="form-control custom-select"
-                              required
-                              // onChange={handleChange}
-                              value={Dmonth}
-                              data-msg="Please select month."
-                              data-error-class="u-has-error"
-                              data-success-class="u-has-success"
-                            >
-                              <option value="">Select month</option>
-                              <option value="birthMonthSelect1">January</option>
-                              <option value="birthMonthSelect2">
-                                February
-                              </option>
-                              <option value="birthMonthSelect3">March</option>
-                              <option
-                                value="birthMonthSelect4"
-                                selected="selected"
-                              >
-                                April
-                              </option>
-                              <option value="birthMonthSelect5">May</option>
-                              <option value="birthMonthSelect6">June</option>
-                              <option value="birthMonthSelect7">July</option>
-                              <option value="birthMonthSelect8">August</option>
-                              <option value="birthMonthSelect9">
-                                September
-                              </option>
-                              <option value="birthMonthSelect10">
-                                October
-                              </option>
-                              <option value="birthMonthSelect11">
-                                November
-                              </option>
-                              <option value="birthMonthSelect12">
-                                December
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
 
-                      <div class="col-sm-4 col-md-2 mb-3 mb-sm-6">
-                        <div class="js-form-message">
-                          <div class="form-group">
-                            <select
-                              // onChange={handleChange}
-                              value={Day}
-                              class="form-control custom-select"
-                              required=""
-                              data-msg="Please select date."
-                              data-error-class="u-has-error"
-                              data-success-class="u-has-success"
-                            >
-                              <option value="">Select date</option>
-                              <option value="birthDateSelect1">1</option>
-                              <option value="birthDateSelect2">2</option>
-                              <option value="birthDateSelect3">3</option>
-                              <option value="birthDateSelect4">4</option>
-                              <option value="birthDateSelect5">5</option>
-                              <option value="birthDateSelect6">6</option>
-                              <option value="birthDateSelect7">7</option>
-                              <option value="birthDateSelect8">8</option>
-                              <option value="birthDateSelect9">9</option>
-                              <option value="birthDateSelect10">10</option>
-                              <option value="birthDateSelect11">11</option>
-                              <option
-                                value="birthDateSelect12"
-                                selected="selected"
-                              >
-                                12
-                              </option>
-                              <option value="birthDateSelect13">13</option>
-                              <option value="birthDateSelect14">14</option>
-                              <option value="birthDateSelect15">15</option>
-                              <option value="birthDateSelect16">16</option>
-                              <option value="birthDateSelect17">17</option>
-                              <option value="birthDateSelect18">18</option>
-                              <option value="birthDateSelect19">19</option>
-                              <option value="birthDateSelect20">20</option>
-                              <option value="birthDateSelect21">21</option>
-                              <option value="birthDateSelect22">22</option>
-                              <option value="birthDateSelect23">23</option>
-                              <option value="birthDateSelect24">24</option>
-                              <option value="birthDateSelect25">25</option>
-                              <option value="birthDateSelect26">26</option>
-                              <option value="birthDateSelect27">27</option>
-                              <option value="birthDateSelect28">28</option>
-                              <option value="birthDateSelect29">29</option>
-                              <option value="birthDateSelect30">30</option>
-                              <option value="birthDateSelect31">31</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-sm-4 col-md-2 mb-3 mb-sm-6">
-                        <div class="js-form-message">
-                          <div class="form-group">
-                            <select
-                              // onChange={handleChange}
-                              value={Year}
-                              class="form-control custom-select"
-                              required=""
-                              data-msg="Please select year."
-                              data-error-class="u-has-error"
-                              data-success-class="u-has-success"
-                            >
-                              <option value="">Select year</option>
-                              <option value="birthYearSelect1900">1900</option>
-                              <option value="birthYearSelect1901">1901</option>
-                              <option value="birthYearSelect1902">1902</option>
-                              <option value="birthYearSelect1903">1903</option>
-                              <option value="birthYearSelect1904">1904</option>
-                              <option value="birthYearSelect1905">1905</option>
-                              <option value="birthYearSelect1906">1906</option>
-                              <option value="birthYearSelect1907">1907</option>
-                              <option value="birthYearSelect1908">1908</option>
-                              <option value="birthYearSelect1909">1909</option>
-                              <option value="birthYearSelect1910">1910</option>
-                              <option value="birthYearSelect1911">1911</option>
-                              <option value="birthYearSelect1912">1912</option>
-                              <option value="birthYearSelect1913">1913</option>
-                              <option value="birthYearSelect1914">1914</option>
-                              <option value="birthYearSelect1915">1915</option>
-                              <option value="birthYearSelect1916">1916</option>
-                              <option value="birthYearSelect1917">1917</option>
-                              <option value="birthYearSelect1918">1918</option>
-                              <option value="birthYearSelect1919">1919</option>
-                              <option value="birthYearSelect1920">1920</option>
-                              <option value="birthYearSelect1921">1921</option>
-                              <option value="birthYearSelect1922">1922</option>
-                              <option value="birthYearSelect1923">1923</option>
-                              <option value="birthYearSelect1924">1924</option>
-                              <option value="birthYearSelect1925">1925</option>
-                              <option value="birthYearSelect1926">1926</option>
-                              <option value="birthYearSelect1927">1927</option>
-                              <option value="birthYearSelect1928">1928</option>
-                              <option value="birthYearSelect1929">1929</option>
-                              <option value="birthYearSelect1930">1930</option>
-                              <option value="birthYearSelect1931">1931</option>
-                              <option value="birthYearSelect1932">1932</option>
-                              <option value="birthYearSelect1933">1933</option>
-                              <option value="birthYearSelect1934">1934</option>
-                              <option value="birthYearSelect1935">1935</option>
-                              <option value="birthYearSelect1936">1936</option>
-                              <option value="birthYearSelect1937">1937</option>
-                              <option value="birthYearSelect1938">1938</option>
-                              <option value="birthYearSelect1939">1939</option>
-                              <option value="birthYearSelect1940">1940</option>
-                              <option value="birthYearSelect1941">1941</option>
-                              <option value="birthYearSelect1942">1942</option>
-                              <option value="birthYearSelect1943">1943</option>
-                              <option value="birthYearSelect1944">1944</option>
-                              <option value="birthYearSelect1945">1945</option>
-                              <option value="birthYearSelect1946">1946</option>
-                              <option value="birthYearSelect1947">1947</option>
-                              <option value="birthYearSelect1948">1948</option>
-                              <option value="birthYearSelect1949">1949</option>
-                              <option value="birthYearSelect1950">1950</option>
-                              <option value="birthYearSelect1951">1951</option>
-                              <option value="birthYearSelect1952">1952</option>
-                              <option value="birthYearSelect1953">1953</option>
-                              <option value="birthYearSelect1954">1954</option>
-                              <option value="birthYearSelect1955">1955</option>
-                              <option value="birthYearSelect1956">1956</option>
-                              <option value="birthYearSelect1957">1957</option>
-                              <option value="birthYearSelect1958">1958</option>
-                              <option value="birthYearSelect1959">1959</option>
-                              <option value="birthYearSelect1960">1960</option>
-                              <option value="birthYearSelect1961">1961</option>
-                              <option value="birthYearSelect1962">1962</option>
-                              <option value="birthYearSelect1963">1963</option>
-                              <option value="birthYearSelect1964">1964</option>
-                              <option value="birthYearSelect1965">1965</option>
-                              <option value="birthYearSelect1966">1966</option>
-                              <option value="birthYearSelect1967">1967</option>
-                              <option value="birthYearSelect1968">1968</option>
-                              <option value="birthYearSelect1969">1969</option>
-                              <option value="birthYearSelect1970">1970</option>
-                              <option value="birthYearSelect1971">1971</option>
-                              <option value="birthYearSelect1972">1972</option>
-                              <option value="birthYearSelect1973">1973</option>
-                              <option value="birthYearSelect1974">1974</option>
-                              <option value="birthYearSelect1975">1975</option>
-                              <option value="birthYearSelect1976">1976</option>
-                              <option value="birthYearSelect1977">1977</option>
-                              <option value="birthYearSelect1978">1978</option>
-                              <option value="birthYearSelect1979">1979</option>
-                              <option value="birthYearSelect1980">1980</option>
-                              <option value="birthYearSelect1981">1981</option>
-                              <option value="birthYearSelect1982">1982</option>
-                              <option value="birthYearSelect1983">1983</option>
-                              <option value="birthYearSelect1984">1984</option>
-                              <option value="birthYearSelect1985">1985</option>
-                              <option
-                                value="birthYearSelect1986"
-                                selected="selected"
-                              >
-                                1986
-                              </option>
-                              <option value="birthYearSelect1987">1987</option>
-                              <option value="birthYearSelect1988">1988</option>
-                              <option value="birthYearSelect1989">1989</option>
-                              <option value="birthYearSelect1990">1990</option>
-                              <option value="birthYearSelect1991">1991</option>
-                              <option value="birthYearSelect1992">1992</option>
-                              <option value="birthYearSelect1993">1993</option>
-                              <option value="birthYearSelect1994">1994</option>
-                              <option value="birthYearSelect1995">1995</option>
-                              <option value="birthYearSelect1996">1996</option>
-                              <option value="birthYearSelect1997">1997</option>
-                              <option value="birthYearSelect1998">1998</option>
-                              <option value="birthYearSelect1999">1999</option>
-                              <option value="birthYearSelect2000">2000</option>
-                              <option value="birthYearSelect2001">2001</option>
-                              <option value="birthYearSelect2002">2002</option>
-                              <option value="birthYearSelect2003">2003</option>
-                              <option value="birthYearSelect2004">2004</option>
-                              <option value="birthYearSelect2005">2005</option>
-                              <option value="birthYearSelect2006">2006</option>
-                              <option value="birthYearSelect2007">2007</option>
-                              <option value="birthYearSelect2008">2008</option>
-                              <option value="birthYearSelect2009">2009</option>
-                              <option value="birthYearSelect2010">2010</option>
-                              <option value="birthYearSelect2011">2011</option>
-                              <option value="birthYearSelect2012">2012</option>
-                              <option value="birthYearSelect2013">2013</option>
-                              <option value="birthYearSelect2014">2014</option>
-                              <option value="birthYearSelect2015">2015</option>
-                              <option value="birthYearSelect2016">2016</option>
-                              <option value="birthYearSelect2017">2017</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-sm-4 col-md-2 mb-2">
-                        <div class="js-form-message">
-                          <div class="form-group">
-                            <select
-                              // onChange={handleChange}
-                              value={Gender}
-                              class="form-control custom-select"
-                              required=""
-                              data-msg="Please select your gender."
-                              data-error-class="u-has-error"
-                              data-success-class="u-has-success"
-                            >
-                              <option value="genderSelect1" selected="">
-                                Male
-                              </option>
-                              <option value="genderSelect2">Female</option>
-                              <option value="genderSelect3">Other</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
                     <div class="row">
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
@@ -786,11 +459,11 @@ export default function ProfileEdit() {
                           <select
                             className="form-control"
                             id="experienceYear"
-                           
+                            value={company}
                             onChange={(e) => SetCompany(e.target.value)}
                             required
                           >
-                            <option>{Company}</option>
+                            {/* <option>{Company}</option> */}
                             {companyList.map((item, id) => {
                               return (
                                 <>
@@ -807,29 +480,27 @@ export default function ProfileEdit() {
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
                           <label id="websiteLabel" class="form-label">
-                          Experience
-                            
+                            Experience
                           </label>
                           <div class="form-group">
-                          <select
-                            className="form-control"
-                            id="experienceYear"
-                           
-                            onChange={(e) => SetExperience(e.target.value)}
-                            required
-                          >
-                            <option>{Experience}</option>
-                            {ExperienceList.map((item, id) => {
-                              return (
-                                <>
-                                  <option value={item._id} key={id._id}>
-                                    {item.experience}
-                                  </option>
-                                </>
-                              );
-                            })}
-                          </select>
-                         
+                            <select
+                              className="form-control"
+                              id="experienceYear"
+                              onChange={(e) => SetExperience(e.target.value)}
+                              value={Experience}
+                              required
+                            >
+                              {/* <option>{Experience}</option> */}
+                              {ExperienceList.map((item, id) => {
+                                return (
+                                  <>
+                                    <option value={item._id} key={id._id}>
+                                      {item.experience}
+                                    </option>
+                                  </>
+                                );
+                              })}
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -886,29 +557,43 @@ export default function ProfileEdit() {
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
                           <label id="websiteLabel" class="form-label">
-                          Skills
-                            
+                            Skills
                           </label>
                           <div class="form-group">
-                          <select
-                            className="form-control"
-                            id="experienceYear"
-                           
-                            onChange={(e) => setTechnology(e.target.value)}
-                            required
-                          >
-                            <option>{technology}</option>
-                            {technologyList.map((item, id) => {
-                              return (
-                                <>
-                                  <option value={item._id} key={id._id}>
-                                    {item.tech_name}
-                                  </option>
-                                </>
-                              );
-                            })}
-                          </select>
-                         
+                            <select
+                              className="form-control"
+                              id="experienceYear"
+                              onChange={(e) => setTechnology(e.target.value)}
+                              required
+                              value={technology}
+                            >
+                              {/* <option>{technology}</option> */}
+                              {technologyList.map((item, id) => {
+                                return (
+                                  <>
+                                    <option value={item._id} key={id._id}>
+                                      {item.tech_name}
+                                    </option>
+                                  </>
+                                );
+                              })}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 mb-2">
+                        <div class="js-form-message">
+                          <label id="websiteLabel" class="form-label">
+                            Employee Type
+                          </label>
+                          <div class="form-group">
+                            <select
+                              className="form-control"
+                              id="experienceYear"
+                              disabled
+                            >
+                              <option>{employeeType}</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -1025,12 +710,12 @@ export default function ProfileEdit() {
                   {" "}
                   &nbsp;&nbsp;&nbsp;&nbsp; Cancel &nbsp;&nbsp;&nbsp;&nbsp;{" "}
                 </a>
-                <a
+                <button
+                  onClick={saveJobSeeker}
                   class="font-weight-bold btn rounded p-3 savechanges btn-warning"
-                  href="#"
                 >
                   &nbsp;&nbsp;&nbsp;&nbsp; Save Changes &nbsp;&nbsp;&nbsp;&nbsp;{" "}
-                </a>
+                </button>
               </div>
             </main>
           </div>
