@@ -344,38 +344,10 @@ export default function JobSearch() {
                 </div>
               </div>
             </div>
-            <main class="col col-xl-9 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-              <div class="box rounded mb-3 osahan-share-post">
-                <div class="wrapper-2">
-                  <ul class="tabs-box justify-content-center">
-                    <li class="tab">
-                      <i class="feather-home mr-2 menu-icon"></i> Work Form Home
-                    </li>
-                    <li class="tab active">
-                      <i class="feather-clock mr-2 menu-icon"></i> Part time
-                    </li>
-                    <li class="tab">
-                      <i class="feather-cloud-off mr-2 menu-icon"></i> Night
-                      Shift
-                    </li>
-                    <li class="tab">
-                      <i class="feather-user mr-2 menu-icon"></i> Jobs For Women
-                    </li>
-                    <li class="tab">
-                      <img
-                        src="img/icon/2255545.png"
-                        alt=""
-                        class="icon-image"
-                      />
-                      Jobs For Fresher
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </main>
+         
           </div>
           {
-            <div class="row">
+            <div class="row mt-5">
               {data.map((data, i) => (
                 <>
                   {" "}

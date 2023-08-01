@@ -189,7 +189,7 @@ export default function Training(props) {
                               </p>
                             </div>
                             <div className="card-footer">
-                              <Link to="#" className="btn btn-block apply-btn">
+                              <Link to="https://www.redprismgroup.com/online-training" className="btn btn-block apply-btn">
                                 View Details
                               </Link>
                             </div>

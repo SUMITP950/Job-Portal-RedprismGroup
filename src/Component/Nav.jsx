@@ -486,7 +486,7 @@ const protectingPage=()=>{
               <br />
               <form className="d-none d-sm-inline-block form-inline m-auto my-md-0 mw-100 navbar-search">
             <div style={{display:'flex',alignItems:"center",justifyContent:"center"}}>
-              <button class=" btn btn-danger" onClick={handleLogout} style={{marginLeft:30,marginRight:20,width:'80px',borderRadius:"20px"}}>Yes</button>
+              <button class=" btn btn-danger" data-dismiss="modal" onClick={handleLogout} style={{marginLeft:30,marginRight:20,width:'80px',borderRadius:"20px"}}>Yes</button>
               <button class="btn btn-success " data-dismiss="modal" style={{width:'80px',borderRadius:"20px"}}>No</button>
             </div>
               </form>
