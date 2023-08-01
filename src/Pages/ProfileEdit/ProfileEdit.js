@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function ProfileEdit() {
   useEffect(() => {
     document.title = "Profile Edit";
   }, []);
-  const [Name, SetName] = useState("");
+  const [LastName, SetLastName] = useState("");
+  const [FirstName, setFirstName] = useState("");
   const [username, setUsername] = useState("");
-  const [Email, SetEmail] = useState("");
+  const [Email, setEmail] = useState("");
   const [mobile, SetMobile] = useState("");
-  const [Location, SetLocation] = useState("");
-  const [Website, SetWebsite] = useState("");
-  const [Organization, SetOrganization] = useState("");
+  const [Location, setLocation] = useState("");
+  const [Experience, SetExperience] = useState("");
+  const [technology, setTechnology] = useState("");
+  const [technologyList, setTechnologyList] = useState([]);
   const [Company, SetCompany] = useState("");
-  const [Position, SetPosition] = useState("");
-  const [From, SetFrom] = useState("");
-  const [To, SetTo] = useState("");
-  const [Dmonth, SetDmonth] = useState("");
-  const [Day, SetDay] = useState("");
-  const [Year, SetYear] = useState("");
-  const [Gender, SetGender] = useState("");
+  const [companyList, setCompanyList] = useState([]);
+  const [ExperienceList, SetExperienceList] = useState([]);
+  const [employeeImage, setEmployeeImage] = useState("");
+
+
 
   // const handleChange = (event) => {
   //   SetDmonth(event.target.value);
@@ -58,6 +59,55 @@ export default function ProfileEdit() {
   //       console.error(error);
   //     });
   // };
+  //Fetch Company list
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getCompanyList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setCompanyList(res.data.companyList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+  // fatch experience list
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getExpList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        SetExperienceList(res.data.expList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+
+  // fatch technology list
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobseekerRegister/getTechList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+     
+        setTechnologyList(res.data.techList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+  // Get profile details
   useEffect(() => {
     axios
       .get("http://testredprism.co/api/profileDetails/getMyProfileDetails", {
@@ -66,56 +116,90 @@ export default function ProfileEdit() {
         },
       })
       .then((res) => {
-        console.log(res.data);
-        SetName(res.data.profileDetails[0].user_name);
+
+        setUsername(res.data.profileDetails[0].user_name);
         setFirstName(res.data.profileDetails[0].first_name);
-        setLastName(res.data.profileDetails[0].last_name);
-        setEmployeeType(res.data.profileDetails[0].employee_type);
+        SetLastName(res.data.profileDetails[0].last_name);
+       setTechnology(res.data.profileDetails[0].technology[0].tech_name);
         setEmployeeImage(res.data.profileDetails[0].employee_image);
         setEmail(res.data.profileDetails[0].email_id);
-        setPhNumber(res.data.profileDetails[0].ph_num);
-        setLookingJob(res.data.profileDetails[0].looking_job);
-        setNoticePeriod(res.data.profileDetails[0].notice_period);
-        setImmediateJoiner(res.data.profileDetails[0].immediate_joinner);
-        setFresher(res.data.profileDetails[0].fresher);
-        setCv(res.data.profileDetails[0].resume);
-        setAchievement(res.data.profileDetails[0].achievement);
+        SetMobile(res.data.profileDetails[0].ph_num);
+
         setLocation(
           res.data.profileDetails[0].location.length > 0
             ? `${res.data.profileDetails[0].location[0].area},${res.data.profileDetails[0].location[0].city},${res.data.profileDetails[0].location[0].state}`
             : ""
         );
-        setCompany(
+        SetCompany(
           res.data.profileDetails[0].company_details.length > 0
             ? res.data.profileDetails[0].company_details[0].company_name
             : ""
         );
-        setTechnology(
-          res.data.profileDetails[0].technology.length > 0
-            ? res.data.profileDetails[0].technology[0].tech_name
-            : ""
-        );
-        setExperience(
+        // setTechnology(
+        //   res.data.profileDetails[0].technology.length > 0
+        //     ? res.data.profileDetails[0].technology[0].tech_name
+        //     : ""
+        // );
+        SetExperience(
           res.data.profileDetails[0].experience_master.length > 0
             ? res.data.profileDetails[0].experience_master[0].experience
             : ""
         );
 
-        if (res.data.profileDetails[0].employee_type === "Hr") {
-          document.getElementById("cv").style.display = "none";
-          document.getElementById("tech").style.display = "none";
-          document.getElementById("lookingjob").style.display = "none";
-          document.getElementById("noticePeriod").style.display = "none";
-          document.getElementById("immediateJoiner").style.display = "none";
-          document.getElementById("fresher").style.display = "none";
-          document.getElementById("experience").style.display = "none";
-          document.getElementById("location").style.display = "none";
-        }
+        //   if (res.data.profileDetails[0].employee_type === "Hr") {
+        //     document.getElementById("cv").style.display = "none";
+        //     document.getElementById("tech").style.display = "none";
+        //     document.getElementById("lookingjob").style.display = "none";
+        //     document.getElementById("noticePeriod").style.display = "none";
+        //     document.getElementById("immediateJoiner").style.display = "none";
+        //     document.getElementById("fresher").style.display = "none";
+        //     document.getElementById("experience").style.display = "none";
+        //     document.getElementById("location").style.display = "none";
+        //   }
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+  const handleFile = (e) => {
+    // document.getElementById("progress").style.display = "flex";
+
+    const file = e.target.files[0];
+    const formdata = new FormData();
+    formdata.append("employee_image", file);
+    axios
+      .post(
+        "http://testredprism.co/api/profileDetails/updateProfilePhoto",
+        formdata,
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+            "Content-Type": "multipart/form-data",
+          },
+          // onUploadProgress: (event) => {
+            // setProgressBar(Math.round(100 * event.loaded) / event.total);
+          // },
+        }
+      )
+      .then((res) => {
+        console.log(res.data)
+        if (res.data.status === "success") {
+          // getProfileDetails();
+          // setTimeout(function () {
+          //   document.getElementById("progress").style.display = "none";
+          // }, 900);
+          toast.success(`${res.data.mssg}`);
+        }
+        if (res.data.status === "error") {
+          
+          // setTimeout(function () {
+          //   document.getElementById("progress").style.display = "none";
+          // }, 900);
+          toast.error(`${res.data.mssg}`);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <>
       {" "}
@@ -125,11 +209,20 @@ export default function ProfileEdit() {
             <aside class="col-md-4">
               <div class="mb-3 border rounded bg-white profile-box text-center w-10">
                 <div class="p-4 d-flex align-items-center">
+                {employeeImage && (
                   <img
-                    src="img/p13.png"
-                    class="img-fluid rounded-circle"
+                    src={`http://testredprism.co/${employeeImage}`}
+                    class="img-fluid mt-2 mb-2 "
                     alt="Responsive image"
+                    style={{
+                      width: "175px",
+                      maxWidth: "100%",
+                      height: "175px",
+                      borderRadius: "50%",
+                      
+                    }}
                   />
+                )}
                   <div class="p-4">
                     <label
                       data-toggle="tooltip"
@@ -144,6 +237,7 @@ export default function ProfileEdit() {
                         name="file-attachment"
                         type="file"
                         class="d-none"
+                        onChange={handleFile}
                       />
                     </label>
                     <button
@@ -193,7 +287,7 @@ export default function ProfileEdit() {
                           class="custom-control-label"
                           for="customCheck1"
                           style={{ marginLeft: "12px" }}
-                          onChange={(e) => SetGender(e.target.value)}
+                          // onChange={(e) => SetGender(e.target.value)}
                         >
                           JavaScript, jQuery
                         </label>
@@ -225,7 +319,7 @@ export default function ProfileEdit() {
                   </div>
                 </div>
               </div>
-              <div class="border rounded bg-white mb-3">
+              {/* <div class="border rounded bg-white mb-3">
                 <div class="box-title border-bottom p-3">
                   <h6 class="m-0">Social profiles</h6>
                   <p class="mb-0 mt-0 small">
@@ -285,7 +379,7 @@ export default function ProfileEdit() {
                     </a>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </aside>
             <main class="col-md-8">
               <div class="border rounded bg-white mb-3">
@@ -297,7 +391,7 @@ export default function ProfileEdit() {
                 </div>
                 <div class="box-body p-3">
                   <form
-                    onSubmit={handleSubmit}
+                    // onSubmit={handleSubmit}
                     class="js-validate"
                     novalidate="novalidate"
                   >
@@ -305,13 +399,41 @@ export default function ProfileEdit() {
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
                           <label id="nameLabel" class="form-label">
-                            Name
+                            First Name
                             <span class="text-danger">*</span>
                           </label>
                           <div class="form-group">
                             <input
                               // onChange={(e) => SetName(e.target.value)}
-                              value={Name}
+                              value={FirstName}
+                              type="text"
+                              class="form-control"
+                              name="name"
+                              placeholder="Enter your name"
+                              aria-label="Enter your name"
+                              required
+                              aria-describedby="nameLabel"
+                              data-msg="Please enter your name."
+                              data-error-class="u-has-error"
+                              data-success-class="u-has-success"
+                            />
+                            <small class="form-text text-muted">
+                              Displayed on your public profile, notifications
+                              and other places.
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 mb-2">
+                        <div class="js-form-message">
+                          <label id="nameLabel" class="form-label">
+                            Last Name
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="form-group">
+                            <input
+                              onChange={(e) => SetLastName(e.target.value)}
+                              value={LastName}
                               type="text"
                               class="form-control"
                               name="name"
@@ -331,32 +453,9 @@ export default function ProfileEdit() {
                         </div>
                       </div>
 
-                      <div class="col-sm-6 mb-2">
-                        <div class="js-form-message">
-                          <label id="usernameLabel" class="form-label">
-                            Username
-                            <span class="text-danger">*</span>
-                          </label>
-                          <div class="form-group">
-                            <input
-                              value={username}
-                              onChange={(e) => setUsername(e.target.value)}
-                              type="text"
-                              class="form-control"
-                              name="username"
-                              placeholder="Enter your username"
-                              aria-label="Enter your username"
-                              required
-                              aria-describedby="usernameLabel"
-                              data-msg="Please enter your username."
-                              data-error-class="u-has-error"
-                              data-success-class="u-has-success"
-                            />
-                          </div>
-                        </div>
-                      </div>
+                     
                     </div>
-                    <label class="form-label">
+                    {/* <label class="form-label">
                       Birth date
                       <span class="text-danger">*</span>
                     </label>
@@ -367,7 +466,7 @@ export default function ProfileEdit() {
                             <select
                               class="form-control custom-select"
                               required
-                              onChange={handleChange}
+                              // onChange={handleChange}
                               value={Dmonth}
                               data-msg="Please select month."
                               data-error-class="u-has-error"
@@ -410,7 +509,7 @@ export default function ProfileEdit() {
                         <div class="js-form-message">
                           <div class="form-group">
                             <select
-                              onChange={handleChange}
+                              // onChange={handleChange}
                               value={Day}
                               class="form-control custom-select"
                               required=""
@@ -464,7 +563,7 @@ export default function ProfileEdit() {
                         <div class="js-form-message">
                           <div class="form-group">
                             <select
-                              onChange={handleChange}
+                              // onChange={handleChange}
                               value={Year}
                               class="form-control custom-select"
                               required=""
@@ -605,7 +704,7 @@ export default function ProfileEdit() {
                         <div class="js-form-message">
                           <div class="form-group">
                             <select
-                              onChange={handleChange}
+                              // onChange={handleChange}
                               value={Gender}
                               class="form-control custom-select"
                               required=""
@@ -622,7 +721,7 @@ export default function ProfileEdit() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                     <div class="row">
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
@@ -635,7 +734,7 @@ export default function ProfileEdit() {
                               type="email"
                               class="form-control"
                               name="email"
-                              onChange={(e) => SetEmail(e.target.value)}
+                              onChange={(e) => setEmail(e.target.value)}
                               value={Email}
                               placeholder="Enter your email address"
                               aria-label="Enter your email address"
@@ -663,7 +762,7 @@ export default function ProfileEdit() {
                               type="text"
                               class="form-control"
                               name="location"
-                              onChange={(e) => SetLocation(e.target.value)}
+                              onChange={(e) => setLocation(e.target.value)}
                               value={Location}
                               placeholder="Enter your location"
                               aria-label="Enter your location"
@@ -684,50 +783,53 @@ export default function ProfileEdit() {
                             Organization
                             <span class="text-danger">*</span>
                           </label>
-                          <div class="form-group">
-                            <input
-                              type="text"
-                              class="form-control"
-                              name="organization"
-                              onChange={(e) => SetOrganization(e.target.value)}
-                              value={Organization}
-                              placeholder="Enter your organization name"
-                              aria-label="Enter your organization name"
-                              required
-                              aria-describedby="organizationLabel"
-                              data-msg="Please enter your organization name"
-                              data-error-class="u-has-error"
-                              data-success-class="u-has-success"
-                            />
-                          </div>
+                          <select
+                            className="form-control"
+                            id="experienceYear"
+                           
+                            onChange={(e) => SetCompany(e.target.value)}
+                            required
+                          >
+                            <option>{Company}</option>
+                            {companyList.map((item, id) => {
+                              return (
+                                <>
+                                  <option value={item._id} key={id._id}>
+                                    {item.company_name}
+                                  </option>
+                                </>
+                              );
+                            })}
+                          </select>
                         </div>
                       </div>
 
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
                           <label id="websiteLabel" class="form-label">
-                            Website
-                            <span class="text-danger">*</span>
+                          Experience
+                            
                           </label>
                           <div class="form-group">
-                            <input
-                              class="form-control"
-                              type="url"
-                              name="website"
-                              onChange={(e) => SetWebsite(e.target.value)}
-                              value={Website}
-                              placeholder="Enter your website"
-                              aria-label="Enter your website"
-                              required
-                              aria-describedby="websiteLabel"
-                              data-msg="Password enter a valid website"
-                              data-error-class="u-has-error"
-                              data-success-class="u-has-success"
-                            />
-                            <small class="form-text text-muted">
-                              Your home page, blog or company site, e.g.
-                              http://example.com
-                            </small>
+                          <select
+                            className="form-control"
+                            id="experienceYear"
+                           
+                            onChange={(e) => SetExperience(e.target.value)}
+                            required
+                          >
+                            <option>{Experience}</option>
+                            {ExperienceList.map((item, id) => {
+                              return (
+                                <>
+                                  <option value={item._id} key={id._id}>
+                                    {item.experience}
+                                  </option>
+                                </>
+                              );
+                            })}
+                          </select>
+                         
                           </div>
                         </div>
                       </div>
@@ -757,8 +859,60 @@ export default function ProfileEdit() {
                           </div>
                         </div>
                       </div>
-
                       <div class="col-sm-6 mb-2">
+                        <div class="js-form-message">
+                          <label id="usernameLabel" class="form-label">
+                            Username
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="form-group">
+                            <input
+                              value={username}
+                              onChange={(e) => setUsername(e.target.value)}
+                              type="text"
+                              class="form-control"
+                              name="username"
+                              placeholder="Enter your username"
+                              aria-label="Enter your username"
+                              required
+                              aria-describedby="usernameLabel"
+                              data-msg="Please enter your username."
+                              data-error-class="u-has-error"
+                              data-success-class="u-has-success"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 mb-2">
+                        <div class="js-form-message">
+                          <label id="websiteLabel" class="form-label">
+                          Skills
+                            
+                          </label>
+                          <div class="form-group">
+                          <select
+                            className="form-control"
+                            id="experienceYear"
+                           
+                            onChange={(e) => setTechnology(e.target.value)}
+                            required
+                          >
+                            <option>{technology}</option>
+                            {technologyList.map((item, id) => {
+                              return (
+                                <>
+                                  <option value={item._id} key={id._id}>
+                                    {item.tech_name}
+                                  </option>
+                                </>
+                              );
+                            })}
+                          </select>
+                         
+                          </div>
+                        </div>
+                      </div>
+                      {/* <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
                           <label class="form-label">
                             Preferred language
@@ -776,12 +930,12 @@ export default function ProfileEdit() {
                             </select>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </form>
                 </div>
               </div>
-              <div class="border rounded bg-white mb-3">
+              {/* <div class="border rounded bg-white mb-3">
                 <div class="box-title border-bottom p-3">
                   <h6 class="m-0">Experience</h6>
                   <p class="mb-0 mt-0 small">
@@ -832,10 +986,10 @@ export default function ProfileEdit() {
                       </label>
 
                       <div class="input-group">
-                        <input
+                        <select
                           type="text"
-                          onChange={(e) => SetCompany(e.target.value)}
-                          value={Company}
+                          onChange={(e) => SetOrganization(e.target.value)}
+                          value={Organization}
                           class="form-control"
                           placeholder="Enter your company title"
                           aria-label="Enter your company title"
@@ -862,7 +1016,7 @@ export default function ProfileEdit() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div class="mb-3 text-right">
                 <a
                   class="font-weight-bold btn btn-link rounded btn-light  p-3"
