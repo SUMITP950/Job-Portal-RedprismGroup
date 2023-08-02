@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -20,6 +19,7 @@ export default function ProfileEdit() {
   const [Email, setEmail] = useState("");
   const [mobile, SetMobile] = useState("");
   const [Location, setLocation] = useState("");
+  const [LocationList, setLocationList] = useState([]);
   const [Experience, SetExperience] = useState("");
   const [technology, setTechnology] = useState("");
   const [technologyList, setTechnologyList] = useState([]);
@@ -34,6 +34,8 @@ export default function ProfileEdit() {
   const [noticePeriod, setnoticePeriod] = useState("");
   const [immediateJoiner, setimmediateJoiner] = useState("");
   const [freasher, setFreasher] = useState("");
+  const [oldpassword,setOldPassword]=useState("")
+  const [newpassword,setNewPassword]=useState("")
 
   // const handleChange = (event) => {
   //   SetDmonth(event.target.value);
@@ -71,7 +73,47 @@ export default function ProfileEdit() {
   //       console.error(error);
   //     });
   // };
+// password section api
+const deletephoto=()=>{
+  axios
+  .get("http://testredprism.co/api/profileDetails/removeProfilePhoto", {
+    headers: {
+      "auth-token": localStorage.getItem("authToken"),
+    },
+  })
+  .then((res) => {
+    if (res.data.status === "success") {
+      toast.success(`${res.data.mssg}`);
+      getMyProfileDetails()
+    }
+    if (res.data.status === "error") {
+      toast.error(`${res.data.mssg}`);
+    }
+   
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
+}
+
+const passwordset=()=>{axios.post("http://testredprism.co/api/profileDetails/changePassword",   {
+  old_password: oldpassword ,
+  new_password: newpassword
+},{
+  headers: {
+    "auth-token": localStorage.getItem("authToken"),
+  },
+}).then((res) => {
+  console.log(res.data);
+  if (res.data.status === "success") {
+    toast.success(`${res.data.mssg}`);
+  }
+  if (res.data.status === "error") {
+    toast.error(`${res.data.mssg}`);
+  }
+})
+.catch((err) => console.log(err));}
   //Fetch Company list
   useEffect(() => {
     axios
@@ -82,6 +124,21 @@ export default function ProfileEdit() {
       })
       .then((res) => {
         setCompanyList(res.data.companyList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+  //location list
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/jobPost/getLocationList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        setLocationList(res.data.locationList);
       })
       .catch((error) => {
         console.error(error);
@@ -133,10 +190,11 @@ export default function ProfileEdit() {
       })
       .then((res) => {
         let profileDetails = res.data.profileDetails[0];
+        // console.log(res.data.profileDetails[0].email_id);
         setUsername(res.data.profileDetails[0].user_name);
         setFirstName(res.data.profileDetails[0].first_name);
         SetLastName(res.data.profileDetails[0].last_name);
-        setTechnology(res.data.profileDetails[0].technology[0].tech_name);
+        // setTechnology(res.data.profileDetails[0].technology[0].tech_name);
         setEmployeeImage(res.data.profileDetails[0].employee_image);
         setEmail(res.data.profileDetails[0].email_id);
         SetMobile(res.data.profileDetails[0].ph_num);
@@ -147,11 +205,8 @@ export default function ProfileEdit() {
         setnoticePeriod(res.data.profileDetails[0].notice_period);
         setimmediateJoiner(res.data.profileDetails[0].immediate_joinner);
         setFreasher(res.data.profileDetails[0].fresher);
-        // setLocation(
-        //   res.data.profileDetails[0].location.length > 0
-        //     ? `${res.data.profileDetails[0].location[0].area},${res.data.profileDetails[0].location[0].city},${res.data.profileDetails[0].location[0].state}`
-        //     : ""
-        // );
+        console.log(165, Email);
+
         res.data.profileDetails[0].location.length > 0
           ? setLocation(profileDetails.location[0]._id)
           : setLocation("");
@@ -161,6 +216,16 @@ export default function ProfileEdit() {
         res.data.profileDetails[0].experience_master.length > 0
           ? SetExperience(profileDetails.experience_master[0]._id)
           : SetExperience("");
+
+        if (res.data.profileDetails[0].employee_type === "Hr") {
+          console.log("tech");
+          document.getElementById("tech").style.display = "none";
+          document.getElementById("experience").style.display = "none";
+          document.getElementById("location").style.display = "none";
+        }
+        res.data.profileDetails[0].technology.length > 0
+          ? setTechnology(profileDetails.technology[0]._id)
+          : setTechnology("");
       })
       .catch((error) => {
         console.error(error);
@@ -191,6 +256,7 @@ export default function ProfileEdit() {
         console.log(res.data);
         if (res.data.status === "success") {
           toast.success(`${res.data.mssg}`);
+          getMyProfileDetails();
         }
         if (res.data.status === "error") {
           toast.error(`${res.data.mssg}`);
@@ -198,36 +264,37 @@ export default function ProfileEdit() {
       })
       .catch((err) => console.log(err));
   };
-  // const savehr = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .post(
-  //       "http://testredprism.co/api/profileDetails/updateHrProfileDetails",
-  //       {
-  //         first_name: FirstName,
-  //         last_name: LastName,
-  //         user_name: username,
-  //         ph_num: mobile,
-  //         email_id: Email,
-  //         company_code: Company,
-  //       },
-  //       {
-  //         headers: {
-  //           "auth-token": localStorage.getItem("authToken"),
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       if (res.data.status === "success") {
-  //         toast.success(`${res.data.mssg}`);
-  //       }
-  //       if (res.data.status === "error") {
-  //         toast.error(`${res.data.mssg}`);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  const savehr = (e) => {
+    e.preventDefault();
+
+    axios
+      .post(
+        "http://testredprism.co/api/profileDetails/updateHrProfileDetails",
+        {
+          first_name: FirstName,
+          last_name: LastName,
+          user_name: username,
+          ph_num: mobile,
+          email_id: Email,
+          company_code: company,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status === "success") {
+          toast.success(`${res.data.mssg}`);
+        }
+        if (res.data.status === "error") {
+          toast.error(`${res.data.mssg}`);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const saveJobSeeker = (e) => {
     e.preventDefault();
@@ -264,7 +331,7 @@ export default function ProfileEdit() {
           toast.success(`${res.data.mssg}`);
         }
         if (res.data.status === "error") {
-          console.log(res.data);
+          console.log(technology);
           toast.error(`${res.data.mssg}`);
         }
       })
@@ -315,13 +382,61 @@ export default function ProfileEdit() {
                       data-original-title="Delete"
                       type="submit"
                       class="btn btn-danger"
+                      onClick={deletephoto}
                     >
                       <i class="feather-trash-2"></i>
                     </button>
                   </div>
+                  
                 </div>
               </div>
+            
+              <label id="nameLabel" class="form-label">
+                           Old Password
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="form-group">
+                            <input
+                              onChange={(e) => setOldPassword(e.target.value)}
+                               value={oldpassword}
+                              type="password"
+                              class="form-control"
+                              name="name"
+                              placeholder="Enter your name"
+                              aria-label="Enter your name"
+                              required
+                              aria-describedby="nameLabel"
+                              data-msg="Please enter your name."
+                              data-error-class="u-has-error"
+                              data-success-class="u-has-success"
+                            />
+                            
+                          </div>
+                          <label id="nameLabel" class="form-label">
+                          New Password
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="form-group">
+                            <input
+                              onChange={(e) => setNewPassword(e.target.value)}
+                               value={newpassword}
+                              type="password"
+                              class="form-control"
+                              name="name"
+                              placeholder="Enter your name"
+                              aria-label="Enter your name"
+                              required
+                              aria-describedby="nameLabel"
+                              data-msg="Please enter your name."
+                              data-error-class="u-has-error"
+                              data-success-class="u-has-success"
+                            />
+                            
+                          </div>
+                          <button className="btn apply-btn text-center" onClick={passwordset}>Set Password</button>
+                    
             </aside>
+            
             <main class="col-md-8">
               <div class="border rounded bg-white mb-3">
                 <div class="box-title border-bottom p-3">
@@ -336,7 +451,7 @@ export default function ProfileEdit() {
                     class="js-validate"
                     novalidate="novalidate"
                   >
-                    <div class="row">
+                    <div className="row">
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
                           <label id="nameLabel" class="form-label">
@@ -393,9 +508,7 @@ export default function ProfileEdit() {
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="row">
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
                           <label id="emailLabel" class="form-label">
@@ -424,32 +537,35 @@ export default function ProfileEdit() {
                         </div>
                       </div>
 
-                      <div class="col-sm-6 mb-2">
+                      <div class="col-sm-6 mb-2" id="location">
                         <div class="js-form-message">
                           <label id="locationLabel" class="form-label">
                             Location
                             <span class="text-danger">*</span>
                           </label>
                           <div class="form-group">
-                            <input
-                              type="text"
-                              class="form-control"
-                              name="location"
-                              onChange={(e) => setLocation(e.target.value)}
-                              value={Location}
-                              placeholder="Enter your location"
-                              aria-label="Enter your location"
-                              required
-                              aria-describedby="locationLabel"
-                              data-msg="Please enter your location."
-                              data-error-class="u-has-error"
-                              data-success-class="u-has-success"
-                            />
+                          <select
+                            className="form-control"
+                            id="experienceYear"
+                            value={Location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            required
+                          >
+                            {/* <option>{Company}</option> */}
+                            {LocationList.map((item, id) => {
+                              return (
+                                <>
+                                  <option value={item._id} key={id._id}>
+                                    {`${item.area} , ${item.city} , ${item.state}`}
+                                  </option>
+                                </>
+                              );
+                            })}
+                          </select>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
+
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
                           <label id="organizationLabel" class="form-label">
@@ -477,7 +593,7 @@ export default function ProfileEdit() {
                         </div>
                       </div>
 
-                      <div class="col-sm-6 mb-2">
+                      <div class="col-sm-6 mb-2" id="experience">
                         <div class="js-form-message">
                           <label id="websiteLabel" class="form-label">
                             Experience
@@ -504,8 +620,7 @@ export default function ProfileEdit() {
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
+
                       <div class="col-sm-6 mb-2">
                         <div class="js-form-message">
                           <label id="phoneNumberLabel" class="form-label">
@@ -554,7 +669,7 @@ export default function ProfileEdit() {
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-6 mb-2">
+                      <div class="col-sm-6 mb-2" id="tech">
                         <div class="js-form-message">
                           <label id="websiteLabel" class="form-label">
                             Skills
@@ -562,7 +677,6 @@ export default function ProfileEdit() {
                           <div class="form-group">
                             <select
                               className="form-control"
-                              id="experienceYear"
                               onChange={(e) => setTechnology(e.target.value)}
                               required
                               value={technology}
@@ -636,8 +750,8 @@ export default function ProfileEdit() {
 
                       <div class="input-group">
                         <input
-                          onChange={(e) => SetFrom(e.target.value)}
-                          value={From}
+                          // onChange={(e) => SetFrom(e.target.value)}
+                          // value={From}
                           type="text"
                           class="form-control"
                           placeholder="From"
@@ -653,8 +767,8 @@ export default function ProfileEdit() {
 
                       <div class="input-group">
                         <input
-                          onChange={(e) => SetTo(e.target.value)}
-                          value={To}
+                          // onChange={(e) => SetTo(e.target.value)}
+                          // value={To}
                           type="text"
                           class="form-control"
                           placeholder="TO"
@@ -673,8 +787,8 @@ export default function ProfileEdit() {
                       <div class="input-group">
                         <select
                           type="text"
-                          onChange={(e) => SetOrganization(e.target.value)}
-                          value={Organization}
+                          // onChange={(e) => SetOrganization(e.target.value)}
+                          // value={Organization}
                           class="form-control"
                           placeholder="Enter your company title"
                           aria-label="Enter your company title"
@@ -691,8 +805,8 @@ export default function ProfileEdit() {
                         <input
                           type="text"
                           class="form-control"
-                          onChange={(e) => SetPosition(e.target.value)}
-                          value={Position}
+                          // onChange={(e) => SetPosition(e.target.value)}
+                          // value={Position}
                           placeholder="Enter your position"
                           aria-label="Enter your position"
                           aria-describedby="positionLabel"
@@ -711,7 +825,9 @@ export default function ProfileEdit() {
                   &nbsp;&nbsp;&nbsp;&nbsp; Cancel &nbsp;&nbsp;&nbsp;&nbsp;{" "}
                 </a>
                 <button
-                  onClick={saveJobSeeker}
+                  onClick={
+                    employeeType === "Job Seeker" ? saveJobSeeker : savehr
+                  }
                   class="font-weight-bold btn rounded p-3 savechanges btn-warning"
                 >
                   &nbsp;&nbsp;&nbsp;&nbsp; Save Changes &nbsp;&nbsp;&nbsp;&nbsp;{" "}
