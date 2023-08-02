@@ -6,6 +6,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { LiaComments } from "react-icons/lia";
+import { IoSend } from "react-icons/io5";
+import {MdDeleteForever} from "react-icons/md";
+import { WhatsappShareButton, WhatsappIcon } from "react-share";
 
 export default function Home() {
   const [techno, setTechno] = useState("");
@@ -16,6 +21,7 @@ export default function Home() {
   const [thought, setThought] = useState(""); // this is for comment value
   const [comentList, setcomentList] = useState({});
   const [nolikcmt, setnolikcmt] = useState(""); //total comment & like
+  const [like, setLike] = useState(false);
 
   const handleThoughtsChange = (e) => {
     setThoughts(e.target.value);
@@ -52,35 +58,35 @@ export default function Home() {
       });
   }, []);
 
-  const noslikecoment = (id) => {
-    console.log(id);
-    axios
-      .post(
-        "http://testredprism.co/api/home/getTotalLikeComments",
-        {
-          feeds_post_code: id,
-        },
-        {
-          headers: {
-            "auth-token": localStorage.getItem("authToken"),
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data.status === "success") {
-          toast.success(`${res.data.mssg}`);
-          console.log(res.data);
-          document.querySelector(".feed_like_" + id).innerText =
-            res.data.totalLikes;
-        }
-        // console.log(res.data.totalLikes);
+  // const noslikecoment = (id) => {
+  //   console.log(id);
+  //   axios
+  //     .post(
+  //       "http://testredprism.co/api/home/getTotalLikeComments",
+  //       {
+  //         feeds_post_code: id,
+  //       },
+  //       {
+  //         headers: {
+  //           "auth-token": localStorage.getItem("authToken"),
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       if (res.data.status === "success") {
+  //         toast.success(`${res.data.mssg}`);
+  //         console.log(res.data);
+  //         document.querySelector(".feed_like_" + id).innerText =
+  //           res.data.totalLikes;
+  //       }
+  //       // console.log(res.data.totalLikes);
 
-        // setnolikcmt(res.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  //       // setnolikcmt(res.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
 
   //Get tech list
   useEffect(() => {
@@ -182,9 +188,12 @@ export default function Home() {
       .then((response) => {
         console.log(response.data);
         if (response.data.status === "success") {
-          noslikecoment(postId);
+          setLike(true);
+          setLike(like + 1);
+          
+          toast.success(`${response.data.mssg}`);
 
-          // toast.success(`${response.data.mssg}`);
+        
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -212,9 +221,12 @@ export default function Home() {
       .then((response) => {
         // console.log(response.data);
         if (response.data.status === "success") {
-          noslikecoment(postId);
+          setLike(false);
+          setLike(like - 1);
+          
+          toast.success(`${response.data.mssg}`);
 
-          // toast.success(`${response.data.mssg}`);
+          
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -245,6 +257,7 @@ export default function Home() {
         if (response.data.status === "success") {
           disblk(id);
           setThought("");
+         
         }
         if (response.data.status === "error") {
           toast.error(`${response.data.mssg}`);
@@ -256,32 +269,32 @@ export default function Home() {
     return removeActivity();
   };
 
-  const fetchComment = (id) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/api/home/getTotalLikeComments`,
-        {
-          feeds_post_code: id,
-        },
-        {
-          headers: {
-            "auth-token": localStorage.getItem("authToken"),
-          },
-        }
-      )
-      .then((response) => {
-        if (response.data.status === "success") {
-          toast.success(`${response.data.mssg}`);
-        }
-        if (response.data.status === "error") {
-          toast.error(`${response.data.mssg}`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    return removeActivity();
-  };
+  // const fetchComment = (id) => {
+  //   axios
+  //     .post(
+  //       `${process.env.REACT_APP_API_URL}/api/home/getTotalLikeComments`,
+  //       {
+  //         feeds_post_code: id,
+  //       },
+  //       {
+  //         headers: {
+  //           "auth-token": localStorage.getItem("authToken"),
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       if (response.data.status === "success") {
+  //         toast.success(`${response.data.mssg}`);
+  //       }
+  //       if (response.data.status === "error") {
+  //         toast.error(`${response.data.mssg}`);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  //   return removeActivity();
+  // };
 
   // comment list section api
 
@@ -467,7 +480,7 @@ export default function Home() {
                             </div>
                           </div>
                           <span class="ml-auto small">
-                            {data.post_datetime}
+                            {data.post_datetime.slice(0, 10)}
                           </span>
                         </div>
                         <div class="p-3 border-bottom osahan-post-body">
@@ -491,35 +504,38 @@ export default function Home() {
                                 : () => handellike(data._id)
                             }
                           >
-                            <i
-                              class={
-                                `feather-heart text-danger icon-font feed_like_` +
-                                data._id
-                              }
-                            >
+                            {like ? (
+                            <AiFillHeart
+                              size={18}
+                              className="text-danger"
+                              // onClick={()=>handelLike(data._id)}
+                              style={{ cursor: "pointer" }}
+                            />
+                          ) : (
+                            <AiOutlineHeart
+                              size={18}
+                              // onClick={()=>handelDisLike(data._id)}
+                              style={{ cursor: "pointer" }}
+                            />
+                          )}
                               {data.totalLike}
-                            </i>
+                            
                           </button>
                           <button
                             class="mr-3 text-secondary btn btn-link"
                             onClick={() => disblk(data._id)}
                           >
-                            <i class="feather-message-square icon-font">
+                             <LiaComments size={19} className="text-primary" />
                               {data.totalComments}
-                            </i>
+                           
                           </button>
-                          <Link
-                            to="#"
-                            data-action="share/whatsapp/share"
-                            target="_blank"
-                            class="mr-3 text-secondary"
-                          >
-                            <img
-                              src="img/icon/whatsapp.png"
-                              alt=""
-                              class="icon-image"
-                            />
-                          </Link>
+                          <WhatsappShareButton
+                        title="Sharing Content"
+                        url="https://www.redprismgroup.com/">
+                          <WhatsappIcon logoFillColor="white" round={true} size={20}>
+
+                          </WhatsappIcon>
+                        </WhatsappShareButton>
                         </div>
 
                         {/* comment list  */}
@@ -580,7 +596,10 @@ export default function Home() {
                                             removeActivity(list._id, data._id)
                                           }
                                         >
-                                          X
+                                         <MdDeleteForever
+                                          size={20}
+                                          className="text-danger"
+                                        />
                                         </button>
                                       ) : null}
                                     </div>
@@ -590,67 +609,7 @@ export default function Home() {
                             })}
                         </div>
 
-                        {/* comment section start
-                        <div>
-                          {comentdata != [] &&
-                            comentdata.map((data1, i2) => {
-                              return (
-                                <>
-                                  <div class="border m-3 p-2 rounded">
-                                    <div class="dropdown-list-image mr-3 d-flex pl-3">
-                                      <img
-                                        class="rounded-circle"
-                                        src="img/icon/smile.svg"
-                                        alt=""
-                                      />
-                                      <div class="font-weight-bold pl-1">
-                                        <div class="text-truncate">
-                                          {`${data.employee_details[0].first_name} ${data.employee_details[0].last_name}`}
-                                        </div>
-                                        <div class="small text-gray-500 pl-1">
-                                          {
-                                            data.employee_details[0]
-                                              .employee_type
-                                          }
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                        paddingLeft: 20,
-                                        paddingRight: 20,
-                                      }}
-                                    >
-                                      <p
-                                        class="my-3 px-2 py-1"
-                                        key={i2}
-                                        style={{
-                                          fontWeight: "bold",
-                                          fontSize: 15,
-                                        }}
-                                      >
-                                        {data1}
-                                      </p>
-                                      <button
-                                        style={{
-                                          fontWeight: "bold",
-                                          fontSize: "25",
-                                          border: "none",
-                                        }}
-                                        onClick={() => removeActivity(i2)}
-                                      >
-                                        X
-                                      </button>
-                                    </div>
-                                  </div>
-                                </>
-                              );
-                            })}
-                        </div> */}
+                       
                         <section
                           id={`open_` + data._id}
                           style={{ backgroundColor: "#eee", display: "none" }}
@@ -675,7 +634,7 @@ export default function Home() {
                                         <textarea
                                           class="form-control"
                                           id="textAreaExample"
-                                          rows="4"
+                                          rows="3"
                                           placeholder="Comment...."
                                           style={{ background: "#fff" }}
                                           value={thought}
@@ -694,16 +653,14 @@ export default function Home() {
                                         }}
                                         onClick={() => {
                                           handleComent(data._id);
-                                          fetchComment(data._id);
+                                          // fetchComment(data._id);
                                         }}
                                       >
-                                        <i
-                                          className="feather-arrow-right-circle"
-                                          style={{
-                                            fontSize: "25px",
-                                            color: "rgb(199 199 188)",
-                                          }}
-                                        />
+                                         <IoSend
+                                        size={35}
+                                        className="text-primary"
+                                      />
+                                   
                                       </button>
                                     </div>
                                     <div class="float-end mt-2 pt-1">
@@ -729,7 +686,7 @@ export default function Home() {
             </main>
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
-                <div class="shadow-sm pt-4 pb-4">
+                <div class="shadow-sm pt-4 pb-3">
                   <div class="dropdown-item d-flex align-items-center">
                     <div class="mr-2">
                       <div class="icon-circle-profile">
@@ -753,18 +710,7 @@ export default function Home() {
                       </h6>
                     </div>
                   </div>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle-profile">
-                        <i class="feather-edit left-menu-icon"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <Link to="/ProfileEdit">
-                        <span class="font-weight-bold">Edit Profile</span>
-                      </Link>
-                    </div>
-                  </a>
+                
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                       <div class="icon-circle-profile">
@@ -773,7 +719,7 @@ export default function Home() {
                     </div>
                     <div>
                       <Link to="/Profile">
-                        <span class="font-weight-bold">User Profile</span>
+                        <span class="font-weight-bold">My Profile</span>
                       </Link>
                     </div>
                   </a>
@@ -813,13 +759,29 @@ export default function Home() {
                       </Link>
                     </div>
                   </a>
+                  <a class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                      <div class="icon-circle-profile ">
+                        <img
+                          src="img/icon/2255545.png"
+                          alt=""
+                          class="icon-image"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Link to="/Jobsearch">
+                        <span class="font-weight-bold">Job Search</span>
+                      </Link>
+                    </div>
+                  </a>
                 </div>
               </div>
             </aside>
             <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
-                <div class="shadow-sm">
-                  <h6 class="pt-3 text-center">Other Option</h6>
+                <div class="shadow-sm pt-3 pb-4">
+                  <h6 class="pt-2 text-center">Other Option</h6>
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
@@ -888,22 +850,7 @@ export default function Home() {
                       </Link>
                     </div>
                   </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle-profile border-rm">
-                        <img
-                          src="https://static.thenounproject.com/png/960899-200.png"
-                          alt=""
-                          class="icon-image"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Link to="/">
-                        <span class="font-weight-bold">Sign Out</span>
-                      </Link>
-                    </div>
-                  </a>
+                  
                 </div>
               </div>
             </aside>
