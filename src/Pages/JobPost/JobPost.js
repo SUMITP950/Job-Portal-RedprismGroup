@@ -413,98 +413,76 @@ const JobPost = () => {
         <div className="row justify-content-around mt-5">
           <aside className="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
             <div className="border rounded bg-white mb-3">
-              <div className="shadow-sm">
+              <div className="shadow-sm pt-3 pb-4">
                 <h6 className="pt-3 text-center">Other Option</h6>
-                <a
-                  className="dropdown-item d-flex align-items-center"
-                  href="/Setting"
-                >
-                  <div className="mr-3">
-                    <div className="icon-circle-profile border-rm">
-                      <i className="feather-settings left-menu-icon" />
+                <Link  to="/Setting" class="dropdown-item d-flex align-items-center" >
+                    <div class="mr-3">
+                      <div class="icon-circle-profile border-rm">
+                        <i class="feather-settings left-menu-icon"></i>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <span className="font-weight-bold">Settings</span>
-                  </div>
-                </a>
-                <a
-                  className="dropdown-item d-flex align-items-center"
-                  href="/SampleResume"
-                >
-                  <div className="mr-3">
-                    <div className="icon-circle-profile border-rm">
-                      <i className="feather-file-text left-menu-icon" />
+                    <div>
+                     
+                        <span class="font-weight-bold">Settings</span>
+                      
                     </div>
-                  </div>
-                  <div>
-                    <span className="font-weight-bold">Simple Resume</span>
-                  </div>
-                </a>
-                <a
-                  className="dropdown-item d-flex align-items-center"
-                  href="/Training"
-                >
-                  <div className="mr-3">
-                    <div className="icon-circle-profile border-rm">
-                      <img
-                        src="img/icon/training.png"
-                        alt
-                        className="icon-image"
-                      />
+                  </Link>
+                  <Link to="/SampleResume" class="dropdown-item d-flex align-items-center" >
+                    <div class="mr-3">
+                      <div class="icon-circle-profile border-rm">
+                        <i class="feather-log-out left-menu-icon"></i>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <span className="font-weight-bold">Trainings</span>
-                  </div>
-                </a>
-                <a
-                  className="dropdown-item d-flex align-items-center"
-                  href="/FresherJob"
-                >
-                  <div className="mr-3">
-                    <div className="icon-circle-profile border-rm">
-                      <img
-                        src="img/icon/2255545.png"
-                        alt
-                        className="icon-image"
-                      />
+                    <div>
+                     
+                        <span class="font-weight-bold">Simple Resume</span>
+                      
                     </div>
-                  </div>
-                  <div>
-                    <span className="font-weight-bold">Fresher Jobs</span>
-                  </div>
-                </a>
-                <a
-                  className="dropdown-item d-flex align-items-center"
-                  href="/Internship"
-                >
-                  <div className="mr-3">
-                    <div className="icon-circle-profile border-rm">
-                      <img
-                        src="https://static.thenounproject.com/png/960899-200.png"
-                        alt
-                        className="icon-image"
-                      />
+                  </Link >
+                  <Link to="/Training" class="dropdown-item d-flex align-items-center" >
+                    <div class="mr-3">
+                      <div class="icon-circle-profile border-rm">
+                        <i class="feather-file-text left-menu-icon"></i>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <span className="font-weight-bold">Internship</span>
-                  </div>
-                </a>
-                <a
-                  className="dropdown-item d-flex align-items-center"
-                  href="/SigninAsHr"
-                >
-                  <div className="mr-3">
-                    <div className="icon-circle-profile border-rm">
-                      <i className="feather-log-out left-menu-icon" />
+                    <div>
+                     
+                        <span class="font-weight-bold">Trainings</span>
+                      
                     </div>
-                  </div>
-                  <div>
-                    <span className="font-weight-bold">Sign Out</span>
-                  </div>
-                </a>
+                  </Link>
+                  <Link  to="/FresherJob" class="dropdown-item d-flex align-items-center">
+                    <div class="mr-3">
+                      <div class="icon-circle-profile border-rm">
+                        <img
+                          src="img/icon/training.png"
+                          alt=""
+                          class="icon-image"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      
+                        <span class="font-weight-bold">Fresher Jobs</span>
+                      
+                    </div>
+                  </Link>
+                  <Link to="/Internship" class="dropdown-item d-flex align-items-center">
+                    <div class="mr-3">
+                      <div class="icon-circle-profile border-rm">
+                        <img
+                          src="img/icon/2255545.png"
+                          alt=""
+                          class="icon-image"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      
+                        <span class="font-weight-bold">Internship</span>
+                     
+                    </div>
+                  </Link>
               </div>
             </div>
           </aside>
@@ -900,66 +878,71 @@ const JobPost = () => {
                     </h6>
                   </div>
                 </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle-profile">
-                      <i class="feather-edit left-menu-icon"></i>
+               
+                <Link to="/Profile" class="dropdown-item d-flex align-items-center" >
+                    <div class="mr-3">
+                      <div class="icon-circle-profile">
+                        <img src="img/icon/smile.svg" alt="" />
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <Link to="/ProfileEdit">
-                      <span class="font-weight-bold">Edit Profile</span>
-                    </Link>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle-profile">
-                      <img src="img/icon/smile.svg" alt="" />
+                    <div>
+                     
+                        <span class="font-weight-bold">My Profile</span>
+                      
                     </div>
-                  </div>
-                  <div>
-                    <Link to="/Profile">
-                      <span class="font-weight-bold">User Profile</span>
-                    </Link>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle-profile">
-                      <i class="feather-users left-menu-icon"></i>
+                  </Link >
+                  <Link  to="/MyBuddies" class="dropdown-item d-flex align-items-center">
+                    <div class="mr-3">
+                      <div class="icon-circle-profile">
+                        <i class="feather-users left-menu-icon"></i>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <Link to="/MyBuddies">
-                      <span class="font-weight-bold">My Buddies</span>
-                    </Link>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle-profile">
-                      <i class="feather-briefcase left-menu-icon"></i>
+                    <div>
+                      
+                        <span class="font-weight-bold">My Buddies</span>
+                     
                     </div>
-                  </div>
-                  <div>
-                    <Link to="/Jobs">
-                      <span class="font-weight-bold">Jobs</span>
-                    </Link>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle-profile">
-                      <i class="feather-save left-menu-icon"></i>
+                  </Link>
+                  <Link  to="/jobPost" class="dropdown-item d-flex align-items-center" >
+                    <div class="mr-3">
+                      <div class="icon-circle-profile">
+                        <i class="feather-briefcase left-menu-icon"></i>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <Link to="/Jobprofile">
-                      <span class="font-weight-bold">My Jobs</span>
-                    </Link>
-                  </div>
-                </a>
+                    <div>
+                    
+                        <span class="font-weight-bold">Job Post</span>
+                      
+                    </div>
+                  </Link>
+                  <Link to="/walkingjob" class="dropdown-item d-flex align-items-center" >
+                    <div class="mr-3">
+                      <div class="icon-circle-profile">
+                        <i class="feather-save left-menu-icon"></i>
+                      </div>
+                    </div>
+                    <div>
+                      
+                        <span class="font-weight-bold">Walking Job</span>
+                     
+                    </div>
+                  </Link>
+                  <Link to="/Jobsearch" class="dropdown-item d-flex align-items-center">
+                    <div class="mr-3">
+                      <div class="icon-circle-profile ">
+                        <img
+                          src="img/icon/2255545.png"
+                          alt=""
+                          class="icon-image"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      
+                        <span class="font-weight-bold">Job Search</span>
+                      
+                    </div>
+                  </Link>
               </div>
             </div>
           </aside>

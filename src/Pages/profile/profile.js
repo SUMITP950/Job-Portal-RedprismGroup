@@ -873,18 +873,18 @@ export default function Profile() {
           <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
           <div class="overflow-hidden text-center p-6 mb-2">
           
-          <a class="d-flex align-items-center font-weight-bold btn btn-light rounded p-3 " href="#">
+          <Link to="/ProfileEdit"class="d-flex align-items-center font-weight-bold btn btn-light rounded p-3 " >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <i class="feather-edit left-menu-icon " ></i>
                       </div>
                     </div>
                     <div>
-                      <Link to="/ProfileEdit">
+                     
                         <h6 class=" mt-2 ml-1">Edit Profile</h6>
-                      </Link>
+                 
                     </div>
-                  </a>
+                  </Link>
                   </div>
             <div
               class="shadow-sm border rounded bg-white job-item mb-3"

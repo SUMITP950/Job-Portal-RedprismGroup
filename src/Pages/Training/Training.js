@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Training(props) {
+  const [userDetails, SetUserDetails] = useState("");
   useEffect(() => {
     document.title = "Training";
   });
@@ -14,9 +15,25 @@ export default function Training(props) {
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
-      navigate("/SigninAsHr");
+      navigate("/");
     }
   }, []);
+  // Get user details
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/getUserDetails", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        SetUserDetails(res.data.userDetails);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
 
   const [text, setText] = useState("");
   const [data, SetData] = useState([]);
@@ -44,22 +61,33 @@ export default function Training(props) {
           <div className="row justify-content-around">
             <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
               <div class="border rounded bg-white mb-3">
-                <div class="shadow-sm">
+                <div class="shadow-sm pt-3 pb-4">
                   <h6 class="pt-3 text-center">Other Option</h6>
-                  <Link to="/Setting" class="dropdown-item d-flex align-items-center">
+                  <Link  to="/Setting" class="dropdown-item d-flex align-items-center" >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-settings left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      
+                     
                         <span class="font-weight-bold">Settings</span>
                       
                     </div>
                   </Link>
-
                   <Link to="/SampleResume" class="dropdown-item d-flex align-items-center" >
+                    <div class="mr-3">
+                      <div class="icon-circle-profile border-rm">
+                        <i class="feather-log-out left-menu-icon"></i>
+                      </div>
+                    </div>
+                    <div>
+                     
+                        <span class="font-weight-bold">Sample Resume</span>
+                      
+                    </div>
+                  </Link >
+                  <Link to="/Training" class="dropdown-item d-flex align-items-center" >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-file-text left-menu-icon"></i>
@@ -67,11 +95,11 @@ export default function Training(props) {
                     </div>
                     <div>
                      
-                        <span class="font-weight-bold">Simple Resume</span>
+                        <span class="font-weight-bold">Trainings</span>
                       
                     </div>
                   </Link>
-                  <Link to="/Training"class="dropdown-item d-flex align-items-center" >
+                  <Link  to="/FresherJob" class="dropdown-item d-flex align-items-center">
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <img
@@ -83,11 +111,11 @@ export default function Training(props) {
                     </div>
                     <div>
                       
-                        <span class="font-weight-bold">Trainings</span>
+                        <span class="font-weight-bold">Fresher Jobs</span>
                       
                     </div>
                   </Link>
-                  <Link to="/FresherJob" class="dropdown-item d-flex align-items-center" >
+                  <Link to="/Internship" class="dropdown-item d-flex align-items-center">
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <img
@@ -98,41 +126,9 @@ export default function Training(props) {
                       </div>
                     </div>
                     <div>
-                     
-                        <span class="font-weight-bold">Fresher Jobs</span>
-                      
-                    </div>
-                  </Link>
-                  <Link to="/Internship" class="dropdown-item d-flex align-items-center" >
-                    <div class="mr-3">
-                      <div class="icon-circle-profile border-rm">
-                        <img
-                          src="https://static.thenounproject.com/png/960899-200.png"
-                          alt=""
-                          class="icon-image"
-                        />
-                      </div>
-                    </div>
-                    <div>
                       
                         <span class="font-weight-bold">Internship</span>
                      
-                    </div>
-                  </Link>
-                  <Link
-                    to="/SigninAsHr"
-                    onClick={()=>{
-                      localStorage.removeItem('authToken')
-                    }}
-                    class="dropdown-item d-flex align-items-center"
-                  >
-                    <div class="mr-3">
-                      <div class="icon-circle-profile border-rm">
-                        <i class="feather-log-out left-menu-icon"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <span class="font-weight-bold">Sign Out</span>
                     </div>
                   </Link>
                 </div>
@@ -203,79 +199,94 @@ export default function Training(props) {
 
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 ">
               <div class="border rounded bg-white mb-3">
-                <div class="shadow-sm pt-4 pb-4">
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
+              <div class="shadow-sm pt-4 pb-3">
+                  <div class="dropdown-item d-flex align-items-center">
+                    <div class="mr-2">
                       <div class="icon-circle-profile">
                         <i class="feather-user left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      <Link to="/Profile">
-                        <span class="font-weight-bold">User Name</span>
-                      </Link>
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle-profile">
-                        <i class="feather-edit left-menu-icon"></i>
-                      </div>
+                      <h5 class="font-weight-bold">{userDetails.user_name}</h5>
                     </div>
                     <div>
-                      <Link to="/ProfileEdit">
-                        <span class="font-weight-bold">Edit Profile</span>
-                      </Link>
+                      <h6
+                        class="font-weight-bold ml-1 "
+                        style={{
+                          whiteSpace: "nowrap",
+                          width: "50px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        ({userDetails.employee_type})
+                      </h6>
                     </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
+                  </div>
+                  <Link to="/Profile" class="dropdown-item d-flex align-items-center" >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <img src="img/icon/smile.svg" alt="" />
                       </div>
                     </div>
                     <div>
-                      <Link to="/Profile">
-                        <span class="font-weight-bold">User Profile</span>
-                      </Link>
+                     
+                        <span class="font-weight-bold">My Profile</span>
+                      
                     </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
+                  </Link >
+                  <Link  to="/MyBuddies" class="dropdown-item d-flex align-items-center">
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <i class="feather-users left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      <Link to="/MyBuddies">
+                      
                         <span class="font-weight-bold">My Buddies</span>
-                      </Link>
+                     
                     </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
+                  </Link>
+                  <Link  to="/jobPost" class="dropdown-item d-flex align-items-center" >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <i class="feather-briefcase left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      <Link to="/Jobs">
-                        <span class="font-weight-bold">Jobs</span>
-                      </Link>
+                    
+                        <span class="font-weight-bold">Job Post</span>
+                      
                     </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
+                  </Link>
+                  <Link to="/walkingjob" class="dropdown-item d-flex align-items-center" >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <i class="feather-save left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      <Link to="/Jobprofile">
-                        <span class="font-weight-bold">My Jobs</span>
-                      </Link>
+                      
+                        <span class="font-weight-bold">Walking Job</span>
+                     
                     </div>
-                  </a>
+                  </Link>
+                  <Link to="/Jobsearch" class="dropdown-item d-flex align-items-center">
+                    <div class="mr-3">
+                      <div class="icon-circle-profile ">
+                        <img
+                          src="img/icon/2255545.png"
+                          alt=""
+                          class="icon-image"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      
+                        <span class="font-weight-bold">Job Search</span>
+                      
+                    </div>
+                  </Link>
                 </div>
               </div>
             </aside>
