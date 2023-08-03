@@ -19,7 +19,7 @@ export default function MyBuddies(props) {
       <div class="py-4">
         <div class="container-fluid body-padding">
           <div class="row justify-content-around">
-            <main class="col col-xl-7 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+            <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
               <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
                 <div class="row pt-3 pb-3 text-center">
                   <div class="col-lg-4">
@@ -382,9 +382,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Profile">
-                      <span class="font-weight-bold">User Name</span>
-                    </Link>
+                      <Link to="/Profile">
+                        <span class="font-weight-bold">User Name</span>
+                      </Link>
                     </div>
                   </a>
                   <a
@@ -397,9 +397,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/ProfileEdit">
-                      <span class="font-weight-bold">Edit Profile</span>
-                    </Link>
+                      <Link to="/ProfileEdit">
+                        <span class="font-weight-bold">Edit Profile</span>
+                      </Link>
                     </div>
                   </a>
                   <a
@@ -412,8 +412,8 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Profile">
-                      <span class="font-weight-bold">User Profile</span>
+                      <Link to="/Profile">
+                        <span class="font-weight-bold">User Profile</span>
                       </Link>
                     </div>
                   </a>
@@ -427,8 +427,8 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/MyBuddies">
-                      <span class="font-weight-bold">My Buddies</span>
+                      <Link to="/MyBuddies">
+                        <span class="font-weight-bold">My Buddies</span>
                       </Link>
                     </div>
                   </a>
@@ -442,9 +442,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Jobs">
-                      <span class="font-weight-bold">Jobs</span>
-                    </Link>
+                      <Link to="/Jobs">
+                        <span class="font-weight-bold">Jobs</span>
+                      </Link>
                     </div>
                   </a>
                   <a
@@ -457,9 +457,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Jobprofile">
-                      <span class="font-weight-bold">My Jobs</span>
-                     </Link>
+                      <Link to="/Jobprofile">
+                        <span class="font-weight-bold">My Jobs</span>
+                      </Link>
                     </div>
                   </a>
                 </div>
@@ -479,8 +479,8 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Setting">
-                      <span class="font-weight-bold">Settings</span>
+                      <Link to="/Setting">
+                        <span class="font-weight-bold">Settings</span>
                       </Link>
                     </div>
                   </a>
@@ -494,8 +494,8 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/SampleResume">
-                      <span class="font-weight-bold">Simple Resume</span>
+                      <Link to="/SampleResume">
+                        <span class="font-weight-bold">Simple Resume</span>
                       </Link>
                     </div>
                   </a>
@@ -509,8 +509,8 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Training">
-                      <span class="font-weight-bold">Trainings</span>
+                      <Link to="/Training">
+                        <span class="font-weight-bold">Trainings</span>
                       </Link>
                     </div>
                   </a>
@@ -528,8 +528,8 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/FresherJob">
-                      <span class="font-weight-bold">Fresher Jobs</span>
+                      <Link to="/FresherJob">
+                        <span class="font-weight-bold">Fresher Jobs</span>
                       </Link>
                     </div>
                   </a>
@@ -547,9 +547,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/Internship">
-                      <span class="font-weight-bold">Internship</span>
-                    </Link>
+                      <Link to="/Internship">
+                        <span class="font-weight-bold">Internship</span>
+                      </Link>
                     </div>
                   </a>
                   <a
@@ -566,8 +566,8 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                    <Link to="/">
-                      <span class="font-weight-bold">Sign Out</span>
+                      <Link to="/">
+                        <span class="font-weight-bold">Sign Out</span>
                       </Link>
                     </div>
                   </a>
