@@ -6,6 +6,12 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 
 const Registerhr = () => {
+  const navigation = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      navigation("/Home");
+    }
+  }, []);
 
   const [data, SetData] = useState([]);
 
@@ -13,7 +19,7 @@ const Registerhr = () => {
     document.title = "Registration";
   }, []);
 
- useEffect(() => {
+  useEffect(() => {
     axios
       .get("http://testredprism.co/api/hrRegister/getCompanyList")
       .then((res) => {
@@ -56,7 +62,6 @@ const Registerhr = () => {
     }),
     onSubmit: (values) => {
       // console.log(values);
-      
     },
   });
   // registration varify Start
@@ -65,8 +70,7 @@ const Registerhr = () => {
   const formik1 = useFormik({
     initialValues: {
       otp: "",
-      otpId:"",
-      
+      otpId: "",
     },
     validationSchema: yup.object({
       otp: yup
@@ -84,7 +88,6 @@ const Registerhr = () => {
   // registration varify End
 
   // registration create start
-
 
   // form validation
 
@@ -117,12 +120,11 @@ const Registerhr = () => {
 
   // registration tech skills start
 
-
   // form validation
 
   const formik3 = useFormik({
     initialValues: {
-      currentCompany:"",
+      currentCompany: "",
     },
     validationSchema: yup.object({
       currentCompany: yup.string().required("*Required"),
@@ -146,7 +148,6 @@ const Registerhr = () => {
       // lookingForJob: "",
       // noticePeriod: "",
       // immediateJoiner: "",
-
     },
     validationSchema: yup.object({
       // lookingForJob: yup.string().required("*Required"),
@@ -159,138 +160,133 @@ const Registerhr = () => {
     },
   });
 
-
-  
-  const handleContact=()=>{
+  const handleContact = () => {
     if (
       formik.values.firstName &&
       formik.values.lastName &&
       formik.values.email &&
       formik.values.mobile &&
       formik.values.term
-    ){
-    axios
-      .post("http://testredprism.co/api/hrRegister/emailCheck", {
-        email_id : formik.values.email ,
-      })
-      .then((response) => {
-        // console.log(response.data);
-      if(response.data.status==="success"){
-          sendOtp();
-        }
-      if(response.data.status==="error"){
-          toast.error(`${response.data.mssg}`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Failed : ${error.message}`);
-      });
-    }
-  }
-
-
-
-  const sendOtp=()=>{
-    axios
-      .post("http://testredprism.co/api/hrRegister/registerSendOtp", {
-        ph_num : formik.values.mobile ,
-      })
-      .then((response) => {
-        // console.log(response.data);
-      if(response.data.status==="success"){
-        // toast.success(`${response.data.mssg}`)
-        formik1.values.otpId = response.data.otp_id;
-        changeForm("verify");
-        alert(`Your otp is ${response.data.otp}`);
-        }
-      if(response.data.status==="error"){
-          toast.error(`${response.data.mssg}`);
-        }
-      })
-      .catch((error) => {
-        // console.error(error);
-        toast.error(`Failed : ${error.message}`);
-      });
-  }
-
-  const otpSuccess=()=>{
-    // console.log(formik.values.otpId);
-    if (formik1.values.otp) {
-    axios
-    .post("http://testredprism.co/api/hrRegister/registerOtpCheck", {
-      ph_num : formik.values.mobile ,
-      otp : formik1.values.otp ,
-      otp_id : formik1.values.otpId ,
-    })
-    .then((response) => {
-      // console.log(response.data);
-    if(response.data.status==="success"){
-      toast.success(`${response.data.mssg}`)
-      changeForm("create");
-      }
-    if(response.data.status==="error"){
-        toast.error(`${response.data.mssg}`);
-      }
-    })
-    .catch((error) => {
-      // console.error(error);
-      toast.error(`Failed : ${error.message}`);
-    });
-  }
-  }
-
-const handleUsername=()=>{
-  if (formik2.values.username && formik2.values.password){
-  axios
-      .post("http://testredprism.co/api/hrRegister/usernameCheck", {
-        user_name: formik2.values.username
-      })
-      .then((response) => {
-        // console.log(response.data);
-      if(response.data.status==="success"){
-        changeForm("skill");
-        }
-      if(response.data.status==="error"){
-          toast.error(`${response.data.mssg}`);
-        }
-      })
-      .catch((error) => {
-        // console.error(error);
-        toast.error(`Failed : ${error.message}`);
-      });
-    }
-}
-
-
-  const handleApi=()=>{
-    axios
-        .post("http://testredprism.co/api/hrRegister/register", {
-          // employee_status: "Status",
-          // status_icon: "Icon",
-          first_name: formik.values.firstName,
-          last_name: formik.values.lastName,
-          user_name: formik2.values.username,
-          password: formik2.values.password,
-          ph_num: formik.values.mobile,
+    ) {
+      axios
+        .post("http://testredprism.co/api/hrRegister/emailCheck", {
           email_id: formik.values.email,
-          company_code: formik3.values.currentCompany,
         })
         .then((response) => {
           // console.log(response.data);
-          if(response.data.status==="error"){
-            toast.error(`Failed : ${response.data.mssg}`);
+          if (response.data.status === "success") {
+            sendOtp();
           }
-          if(response.data.status==="success"){
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error(`Failed : ${error.message}`);
+        });
+    }
+  };
+
+  const sendOtp = () => {
+    axios
+      .post("http://testredprism.co/api/hrRegister/registerSendOtp", {
+        ph_num: formik.values.mobile,
+      })
+      .then((response) => {
+        // console.log(response.data);
+        if (response.data.status === "success") {
+          // toast.success(`${response.data.mssg}`)
+          formik1.values.otpId = response.data.otp_id;
+          changeForm("verify");
+          alert(`Your otp is ${response.data.otp}`);
+        }
+        if (response.data.status === "error") {
+          toast.error(`${response.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        // console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
+  };
+
+  const otpSuccess = () => {
+    // console.log(formik.values.otpId);
+    if (formik1.values.otp) {
+      axios
+        .post("http://testredprism.co/api/hrRegister/registerOtpCheck", {
+          ph_num: formik.values.mobile,
+          otp: formik1.values.otp,
+          otp_id: formik1.values.otpId,
+        })
+        .then((response) => {
+          // console.log(response.data);
+          if (response.data.status === "success") {
             toast.success(`${response.data.mssg}`);
-            navigate("/SigninAsHr");
+            changeForm("create");
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
           }
         })
         .catch((error) => {
           // console.error(error);
           toast.error(`Failed : ${error.message}`);
         });
-  }
+    }
+  };
+
+  const handleUsername = () => {
+    if (formik2.values.username && formik2.values.password) {
+      axios
+        .post("http://testredprism.co/api/hrRegister/usernameCheck", {
+          user_name: formik2.values.username,
+        })
+        .then((response) => {
+          // console.log(response.data);
+          if (response.data.status === "success") {
+            changeForm("skill");
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          // console.error(error);
+          toast.error(`Failed : ${error.message}`);
+        });
+    }
+  };
+
+  const handleApi = () => {
+    axios
+      .post("http://testredprism.co/api/hrRegister/register", {
+        // employee_status: "Status",
+        // status_icon: "Icon",
+        first_name: formik.values.firstName,
+        last_name: formik.values.lastName,
+        user_name: formik2.values.username,
+        password: formik2.values.password,
+        ph_num: formik.values.mobile,
+        email_id: formik.values.email,
+        company_code: formik3.values.currentCompany,
+      })
+      .then((response) => {
+        // console.log(response.data);
+        if (response.data.status === "error") {
+          toast.error(`Failed : ${response.data.mssg}`);
+        }
+        if (response.data.status === "success") {
+          toast.success(`${response.data.mssg}`);
+          navigate("/SigninAsHr");
+        }
+      })
+      .catch((error) => {
+        // console.error(error);
+        toast.error(`Failed : ${error.message}`);
+      });
+  };
 
   const changeForm = (formName) => {
     document.getElementById("basic").style.display = "none";
@@ -508,7 +504,7 @@ const handleUsername=()=>{
                 </div>
                 <div className="form-group d-flex align-items-center justify-content-center">
                   <div className="form-check">
-                  <input
+                    <input
                       className="form-check-input"
                       name="term"
                       type="checkbox"
@@ -528,7 +524,7 @@ const handleUsername=()=>{
                   <button
                     className="btn btn-pink mb-5 px-5"
                     type="submit"
-                    style={{fontWeight: "600", fontSize: "16px" }}
+                    style={{ fontWeight: "600", fontSize: "16px" }}
                     onClick={handleContact}
                   >
                     Continue
@@ -1007,7 +1003,7 @@ const handleUsername=()=>{
                         </em>
                       )}
                   </div> */}
-                 <div
+                  <div
                     className="col-md-8 d-flex "
                     style={{ justifyContent: "space-around" }}
                   >

@@ -15,10 +15,16 @@ export default function Home() {
   const [userDetails, SetUserDetails] = useState("");
   const [getpost, setGetpost] = useState([]);
   const [thoughts, setThoughts] = useState(""); // this is for post value
+  const [fromindex, setFromIndex] = useState(2);
+  const [fromindexLimit, setFromIndexLimit] = useState(0);
 
   const handleThoughtsChange = (e) => {
     setThoughts(e.target.value);
   };
+
+  useEffect(() => {
+    document.title = "Home";
+  }, []);
 
   //Protecting this page
   const navigate = useNavigate();
@@ -44,8 +50,6 @@ export default function Home() {
       });
   }, []);
 
- 
-
   //Get tech list
   useEffect(() => {
     axios
@@ -62,7 +66,6 @@ export default function Home() {
         // console.log(res.data.techList)
         SetTechnoData(res.data.techList);
         setTechno(res.data.techList[0]._id);
-        
       })
       .catch((error) => {
         console.error(error);
@@ -100,10 +103,9 @@ export default function Home() {
   };
 
   // Get feed post list by default
-  useEffect(()=>{
+  useEffect(() => {
     technoChange();
-  },[techno])
-
+  }, [techno]);
 
   // Get feed post list
 
@@ -114,7 +116,7 @@ export default function Home() {
         `${process.env.REACT_APP_API_URL}/api/home/getFeedsPost`,
         {
           tech_code: techno,
-          from_index: 0,
+          from_index: fromindex,
         },
         {
           headers: {
@@ -124,8 +126,9 @@ export default function Home() {
       )
       .then((response) => {
         if (response.data.status === "success") {
-          // console.log(response.data);
           setGetpost(response.data.feedsList);
+          // setFromIndex(fromindex + response.data.limit);
+          setFromIndexLimit(response.data.limit);
         }
         if (response.data.status === "error") {
           // console.log(response.data);
@@ -136,13 +139,22 @@ export default function Home() {
         console.error(error);
       });
   };
-
+  const postInc = (a) => {
+    // let b = Number(a);
+    // let c = Number(fromindex);
+    // let d = b + c;
+    // setFromIndex(d);
+    // setFromIndex(fromindex + a);
+    // console.log(fromindex);
+    setFromIndex(fromindex + fromindexLimit);
+    console.log(fromindex);
+  };
   return (
     <div>
       <div className="py-4">
-        <div className="container-fluid body-padding">
+        <div className="container-fluid">
           <div className="row justify-content-around">
-            <main className="col col-xl-7 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+            <main className="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
               <div className="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
                 <div className="wrapper" style={{ overflowX: "inherit" }}>
                   <div class="col-lg-12 ">
@@ -154,36 +166,36 @@ export default function Home() {
                         padding: "10px",
                       }}
                     >
-                      <div class="dropdown">
-                        <div className="d-flex align-items-center">
-                          <b>Choose Your Technology &nbsp;&nbsp;</b>
-                          <img
-                            class="dropdown-menu-img"
-                            src="https://img.icons8.com/ios/50/000000/circuit.png"
-                            alt=""
-                          />
-                          <select
-                            class="form-control form-control-lg"
-                            name="currentCompany"
-                            id="currentCompany"
-                            onChange={(e) => {
-                              setTechno(e.target.value);
-                              technoChange();
-                            }}
-                            value={techno}
-                          >
-                            {/* <option>--Technology--</option> */}
-                            {technoData.map((item, id) => {
-                              return (
-                                <>
-                                  <option value={item._id} key={id._id}>
-                                    {item.tech_name}
-                                  </option>
-                                </>
-                              );
-                            })}
-                          </select>
-                        </div>
+                      <div className="d-flex align-items-center">
+                        <b style={{ width: "330px" }}>
+                          Choose Your Technology &nbsp;&nbsp;
+                        </b>
+                        <img
+                          class="dropdown-menu-img"
+                          src="https://img.icons8.com/ios/50/000000/circuit.png"
+                          alt=""
+                        />
+                        <select
+                          class="form-control form-control-lg"
+                          name="currentCompany"
+                          id="currentCompany"
+                          onChange={(e) => {
+                            setTechno(e.target.value);
+                            technoChange();
+                          }}
+                          value={techno}
+                        >
+                          {/* <option>--Technology--</option> */}
+                          {technoData.map((item, id) => {
+                            return (
+                              <>
+                                <option value={item._id} key={id._id}>
+                                  {item.tech_name}
+                                </option>
+                              </>
+                            );
+                          })}
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -239,11 +251,13 @@ export default function Home() {
               </div>
               {getpost != [] &&
                 getpost.map((data, i2) => {
-                  return (
-                    <FeedPost feed_post_data={data} key={i2} />
-                    
-                  );
+                  return <FeedPost feed_post_data={data} key={i2} />;
                 })}
+              <div className=" text-center">
+                <button className="btn apply-btn text-center" onClick={postInc}>
+                  Load More
+                </button>
+              </div>
             </main>
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
@@ -271,56 +285,63 @@ export default function Home() {
                       </h6>
                     </div>
                   </div>
-                
-                  <Link to="/Profile" class="dropdown-item d-flex align-items-center" >
+
+                  <Link
+                    to="/Profile"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <img src="img/icon/smile.svg" alt="" />
                       </div>
                     </div>
                     <div>
-                     
-                        <span class="font-weight-bold">My Profile</span>
-                      
+                      <span class="font-weight-bold">My Profile</span>
                     </div>
-                  </Link >
-                  <Link  to="/MyBuddies" class="dropdown-item d-flex align-items-center">
+                  </Link>
+                  <Link
+                    to="/MyBuddies"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <i class="feather-users left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      
-                        <span class="font-weight-bold">My Buddies</span>
-                     
+                      <span class="font-weight-bold">My Buddies</span>
                     </div>
                   </Link>
-                  <Link  to="/jobPost" class="dropdown-item d-flex align-items-center" >
+                  <Link
+                    to="/jobPost"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <i class="feather-briefcase left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                    
-                        <span class="font-weight-bold">Job Post</span>
-                      
+                      <span class="font-weight-bold">Job Post</span>
                     </div>
                   </Link>
-                  <Link to="/walkingjob" class="dropdown-item d-flex align-items-center" >
+                  <Link
+                    to="/walkingjob"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <i class="feather-save left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      
-                        <span class="font-weight-bold">Walking Job</span>
-                     
+                      <span class="font-weight-bold">Walking Job</span>
                     </div>
                   </Link>
-                  <Link to="/Jobsearch" class="dropdown-item d-flex align-items-center">
+                  <Link
+                    to="/Jobsearch"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile ">
                         <img
@@ -331,9 +352,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                      
-                        <span class="font-weight-bold">Job Search</span>
-                      
+                      <span class="font-weight-bold">Job Search</span>
                     </div>
                   </Link>
                 </div>
@@ -343,43 +362,49 @@ export default function Home() {
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm pt-3 pb-4">
                   <h6 class="pt-2 text-center">Other Option</h6>
-                  <Link  to="/Setting" class="dropdown-item d-flex align-items-center" >
+                  <Link
+                    to="/Setting"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-settings left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                     
-                        <span class="font-weight-bold">Settings</span>
-                      
+                      <span class="font-weight-bold">Settings</span>
                     </div>
                   </Link>
-                  <Link to="/SampleResume" class="dropdown-item d-flex align-items-center" >
+                  <Link
+                    to="/SampleResume"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-log-out left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                     
-                        <span class="font-weight-bold">Sample Resume</span>
-                      
+                      <span class="font-weight-bold">Sample Resume</span>
                     </div>
-                  </Link >
-                  <Link to="/Training" class="dropdown-item d-flex align-items-center" >
+                  </Link>
+                  <Link
+                    to="/Training"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-file-text left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                     
-                        <span class="font-weight-bold">Trainings</span>
-                      
+                      <span class="font-weight-bold">Trainings</span>
                     </div>
                   </Link>
-                  <Link  to="/FresherJob" class="dropdown-item d-flex align-items-center">
+                  <Link
+                    to="/FresherJob"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <img
@@ -390,12 +415,13 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                      
-                        <span class="font-weight-bold">Fresher Jobs</span>
-                      
+                      <span class="font-weight-bold">Fresher Jobs</span>
                     </div>
                   </Link>
-                  <Link to="/Internship" class="dropdown-item d-flex align-items-center">
+                  <Link
+                    to="/Internship"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <img
@@ -406,12 +432,9 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                      
-                        <span class="font-weight-bold">Internship</span>
-                     
+                      <span class="font-weight-bold">Internship</span>
                     </div>
                   </Link>
-                  
                 </div>
               </div>
             </aside>

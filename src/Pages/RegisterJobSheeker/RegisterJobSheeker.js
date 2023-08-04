@@ -7,6 +7,12 @@ import { toast } from "react-toastify";
 import Sendotp from "../Send-otp/Sendotp";
 
 function RegisterJobSheeker() {
+  const navigation = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      navigation("/Home");
+    }
+  }, []);
   useEffect(() => {
     document.title = "Registration";
   }, []);
@@ -315,27 +321,24 @@ function RegisterJobSheeker() {
 
   const handleApi = () => {
     axios
-      .post(
-        "http://testredprism.co/api/jobseekerRegister/register",
-        {
-          employee_status: "Status",
-          status_icon: "Icon",
-          first_name: formik.values.firstName,
-          last_name: formik.values.lastName,
-          user_name: formik2.values.username,
-          password: formik2.values.password,
-          ph_num: formik.values.mobile,
-          email_id: formik.values.email,
-          company_code: formik3.values.currentCompany,
-          tech_code: formik3.values.technicalSkills,
-          exp_code: formik3.values.ExperienceInYear,
-          location_code: formik.values.city,
-          looking_job: formik4.values.lookingForJob,
-          notice_period: formik4.values.noticePeriod,
-          immediate_joinner: formik4.values.immediateJoiner,
-          fresher: formik3.values.fresher,
-        }
-      )
+      .post("http://testredprism.co/api/jobseekerRegister/register", {
+        employee_status: "Status",
+        status_icon: "Icon",
+        first_name: formik.values.firstName,
+        last_name: formik.values.lastName,
+        user_name: formik2.values.username,
+        password: formik2.values.password,
+        ph_num: formik.values.mobile,
+        email_id: formik.values.email,
+        company_code: formik3.values.currentCompany,
+        tech_code: formik3.values.technicalSkills,
+        exp_code: formik3.values.ExperienceInYear,
+        location_code: formik.values.city,
+        looking_job: formik4.values.lookingForJob,
+        notice_period: formik4.values.noticePeriod,
+        immediate_joinner: formik4.values.immediateJoiner,
+        fresher: formik3.values.fresher,
+      })
       .then((response) => {
         // console.log(response.data);
         if (response.data.status === "error") {

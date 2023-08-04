@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
   useEffect(() => {
     document.title = "Red Prism";
   }, []);
-  
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      navigate("/Home");
+    }
+  }, []);
   return (
     <div>
       <div class="container-fluid page-set">

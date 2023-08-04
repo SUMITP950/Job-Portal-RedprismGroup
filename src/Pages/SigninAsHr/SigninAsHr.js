@@ -9,6 +9,12 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 
 export default function SigninAsHr() {
+  const navigation = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      navigation("/Home");
+    }
+  });
   useEffect(() => {
     document.title = "Sign In As HR";
   }, []);
