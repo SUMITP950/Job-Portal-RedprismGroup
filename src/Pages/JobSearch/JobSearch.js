@@ -154,6 +154,7 @@ export default function JobSearch() {
   }, [location]);
 
   const joblist = () => {
+    document.getElementById("loader").style.display="flex";
     setGetpost([]);
     axios
       .post(
@@ -177,6 +178,7 @@ export default function JobSearch() {
         if (response.data.status === "error") {
           // console.log(response.data);
         }
+        document.getElementById("loader").style.display="none";
       })
       .catch((error) => {
         console.error(error);
@@ -196,6 +198,7 @@ export default function JobSearch() {
 
   //job apply
   const jobApply = () => {
+    document.getElementById("loader").style.display="flex";
     const formData = new FormData();
     formData.append("job_post_code", jobPostId);
     formData.append("message", jobDescription);
@@ -220,6 +223,7 @@ export default function JobSearch() {
           toast.error(`${response.data.mssg}`);
           // console.log(response.data.mssg);
         }
+        document.getElementById("loader").style.display="none";
       })
       .catch((error) => {
         console.error(error);
@@ -481,7 +485,7 @@ export default function JobSearch() {
                       class="btn btn-success "
                       style={{ width: "80px", borderRadius: "20px" }}
                       onClick={jobApply}
-                      // data-dismiss="modal"
+                      data-dismiss="modal"
                     >
                       Apply
                     </button>

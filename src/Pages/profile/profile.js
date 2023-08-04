@@ -82,6 +82,8 @@ export default function Profile() {
   }, []);
 
   const getProfileDetails = () => {
+    
+    document.getElementById("loader").style.display="flex";
     axios
       .get("http://testredprism.co/api/profileDetails/getMyProfileDetails", {
         headers: {
@@ -132,7 +134,10 @@ export default function Profile() {
           document.getElementById("fresher").style.display = "none";
           document.getElementById("experience").style.display = "none";
           document.getElementById("location").style.display = "none";
+
         }
+    document.getElementById("loader").style.display="none";
+
       })
       .catch((error) => {
         console.error(error);
