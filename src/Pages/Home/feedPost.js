@@ -22,6 +22,7 @@ export default function FeedPost(props) {
   const [myLike, setmyLike] = useState(dataMyLike); //total comment & like
   const [totalLike, settotalLike] = useState(data.totalLike); //total comment & like
   const [totalComment, settotalComment] = useState(data.totalComments); //total comment & like
+  
 
   // Get user details
   useEffect(() => {

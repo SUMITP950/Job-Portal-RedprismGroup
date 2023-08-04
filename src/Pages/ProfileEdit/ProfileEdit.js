@@ -32,7 +32,8 @@ export default function ProfileEdit() {
   const [employeeStatusIcon, setEmployeeStatusIcon] = useState("");
   const [lookingjob, setLookingjob] = useState("");
   const [noticePeriod, setnoticePeriod] = useState("");
-  const [immediateJoiner, setimmediateJoiner] = useState("");
+  const [immediateJoiner, setimmediateJoiner] = useState();
+  // const [ImmediateJoinerList, setImmediateJoinerList] = useState([]);
   const [freasher, setFreasher] = useState("");
   const [oldpassword,setOldPassword]=useState("")
   const [newpassword,setNewPassword]=useState("")
@@ -190,7 +191,7 @@ const passwordset=()=>{axios.post("http://testredprism.co/api/profileDetails/cha
       })
       .then((res) => {
         let profileDetails = res.data.profileDetails[0];
-        // console.log(res.data.profileDetails[0].email_id);
+    
         setUsername(res.data.profileDetails[0].user_name);
         setFirstName(res.data.profileDetails[0].first_name);
         SetLastName(res.data.profileDetails[0].last_name);
@@ -711,25 +712,45 @@ const passwordset=()=>{axios.post("http://testredprism.co/api/profileDetails/cha
                           </div>
                         </div>
                       </div>
-                      {/* <div class="col-sm-6 mb-2">
+                      <div class="col-sm-6 mb-2" id="tech">
                         <div class="js-form-message">
-                          <label class="form-label">
-                            Preferred language
-                            <span class="text-danger">*</span>
+                          <label id="websiteLabel" class="form-label">
+                          Immediate Joinner
                           </label>
                           <div class="form-group">
-                            <select class="custom-select">
-                              <option value="">Select language</option>
-                              <option value="languageSelect1" selected="">
-                                English
-                              </option>
-                              <option value="languageSelect2">Français</option>
-                              <option value="languageSelect3">Deutsch</option>
-                              <option value="languageSelect4">Português</option>
+                            <select
+                              className="form-control"
+                              onChange={(e) => setimmediateJoiner(e.target.value)}
+                              value={immediateJoiner}
+                              required
+                            >
+                              
+                              <option >{immediateJoiner}</option>
+                              <option >{immediateJoiner==="Yes"? setimmediateJoiner("No"):immediateJoiner}</option>
                             </select>
                           </div>
                         </div>
-                      </div> */}
+                      </div>
+                      <div class="col-sm-6 mb-2" id="tech">
+                        <div class="js-form-message">
+                          <label id="websiteLabel" class="form-label">
+                         Freasher
+                          </label>
+                          <div class="form-group">
+                            <select
+                              className="form-control"
+                              value={freasher}
+                              onChange={(e) => setFreasher(e.target.value)}
+                              // value={freasher==="No"?document.getElementById("yes").innerText="Yes":document.getElementById("no").innerText="No"}
+                              required
+                            >
+                              
+                              <option id="yes" >{freasher}</option>
+                              <option id="no">{freasher==="Yes"? setFreasher("No"):freasher}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </form>
                 </div>
