@@ -41,6 +41,7 @@ export default function Training(props) {
     setText(e.target.value);
   };
   useEffect(() => {
+    document.getElementById("loader").style.display="flex";
     axios
       .get("http://testredprism.co/api/trainings/getTrainingList", {
         headers: {
@@ -49,11 +50,13 @@ export default function Training(props) {
       })
       .then((res) => {
         SetData(res.data.trainingList);
+        document.getElementById("loader").style.display="none";
       })
       .catch((error) => {
         console.error(error);
       });
-  });
+  },[]);
+  
   return (
     <>
       <div className="py-4">

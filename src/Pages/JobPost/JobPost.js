@@ -6,6 +6,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../Component/auth.js";
 import { toast } from "react-toastify";
+import {FaEdit} from "react-icons/fa";
+import {RiDeleteBin3Fill} from "react-icons/ri";
 
 const JobPost = () => {
   // Get user details
@@ -841,20 +843,18 @@ const JobPost = () => {
                                   justifyContent: "center",
                                 }}
                               >
-                                <button
-                                  type="button"
-                                  class="btn btn-primary mr-2"
-                                  onClick={() => handleEdit(item._id)}
-                                >
-                                  Edit
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-danger"
-                                  onClick={() => handleDelete(item._id)}
-                                >
-                                  Delete
-                                </button>
+                               
+                                 <FaEdit
+                                  className="text-success mr-2" 
+                                  style={{ cursor: "pointer"}}
+                                  size={20} 
+                                  onClick={() => handleEdit(item._id)}/>
+                                <RiDeleteBin3Fill 
+                                className="text-danger" 
+                                style={{ cursor: "pointer" }}
+                                size={20}
+                                onClick={() => handleDelete(item._id)}/>
+                                
                               </td>
                             </tr>
                           </tbody>
@@ -878,7 +878,7 @@ const JobPost = () => {
                     <h5 class="font-weight-bold">{userDetails.user_name}</h5>
                   </div>
                   <div>
-                    <h6 class="font-weight-bold ml-1 ">
+                    <h6 class="font-weight-bold ml-1 line-reduce">
                       ({userDetails.employee_type})
                     </h6>
                   </div>
