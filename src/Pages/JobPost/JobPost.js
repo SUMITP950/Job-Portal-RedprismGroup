@@ -8,6 +8,8 @@ import { auth } from "../../Component/auth.js";
 import { toast } from "react-toastify";
 import {FaEdit} from "react-icons/fa";
 import {RiDeleteBin3Fill} from "react-icons/ri";
+import { SiPostman } from "react-icons/si";
+import { BsCardChecklist } from "react-icons/bs";
 
 const JobPost = () => {
   // Get user details
@@ -511,8 +513,8 @@ const JobPost = () => {
                   role="tab"
                   aria-controls="home"
                   aria-selected="false"
-                >
-                  Post Your Job
+                ><SiPostman size={30} className="text-primary"/>
+                 &nbsp; Post Your Job
                 </a>
               </li>
               <li className="nav-item">
@@ -524,8 +526,8 @@ const JobPost = () => {
                   role="tab"
                   aria-controls="profile"
                   aria-selected="true"
-                >
-                  Job Post List
+                ><BsCardChecklist size={30} className="text-primary"/>
+                 &nbsp; Job Post List
                 </a>
               </li>
             </ul>

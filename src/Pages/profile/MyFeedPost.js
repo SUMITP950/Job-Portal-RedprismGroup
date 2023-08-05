@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -10,11 +10,199 @@ import {RiDeleteBin6Fill} from "react-icons/ri";
 import { WhatsappShareButton, WhatsappIcon } from "react-share";
 
 
-const MyFeedPost = () => {
+const MyFeedPost = (props) => {
+
+  const data = props.feed_post_data;
+
+  let dataMyLike = "No";
+  if (data.user_like.length > 0) {
+    dataMyLike = "Yes";
+  }
+
+  const [getpost, setGetpost] = useState([]);
+  const [userDetails, SetUserDetails] = useState("");
+  const [thought, setThought] = useState(""); // this is for comment value
+  const [comentList, setcomentList] = useState({});
+  const [myLike, setmyLike] = useState(dataMyLike); //total comment & like
+  const [totalLike, settotalLike] = useState(data.totalLike); //total comment & like
+  const [totalComment, settotalComment] = useState(data.totalComments); //total comment & like
 
 
+  const handleThoughtsChange1 = (e) => {
+    setThought(e.target.value);
+  };
 
-    
+  const disnan = (postId) => {
+    document.getElementById("open_" + postId).style.display = "none";
+  };
+
+  // Get user details
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/getUserDetails", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        SetUserDetails(res.data.userDetails);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+    // Fetch feed post
+
+
+    // Delete Feedpost
+    const deleteFeedpost = (feedpostId) => {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/api/profileDetails/deleteMyFeedPost`,
+          {
+            feeds_post_code: feedpostId,
+          },
+          {
+            headers: {
+              "auth-token": localStorage.getItem("authToken"),
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.status === "success") {
+            // getFeedsPost();
+            
+            toast.success(`${response.data.mssg}`);
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+  
+    // likes
+    const handellike = (postId) => {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/api/profileDetails/saveFeedsPostLikeDislike`,
+          { feeds_post_code: postId, type: "Like" },
+          {
+            headers: {
+              "auth-token": localStorage.getItem("authToken"),
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.status === "success") {
+            setmyLike("Yes");
+          getPostTotalLikeComments(postId);
+            // getFeedsPost();
+           
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+
+    const getPostTotalLikeComments = (postId) => {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/api/home/getTotalLikeComments`,
+          { feeds_post_code: postId },
+          {
+            headers: {
+              "auth-token": localStorage.getItem("authToken"),
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.status === "success") {
+              settotalLike(response.data.totalLikes);
+              settotalComment(response.data.totalComments);
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    // Dislike
+    const handelDislike = (postId) => {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/api/profileDetails/saveFeedsPostLikeDislike`,
+          { feeds_post_code: postId, type: "Dislike" },
+          {
+            headers: {
+              "auth-token": localStorage.getItem("authToken"),
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.status === "success") {
+            setmyLike("No");
+         
+          getPostTotalLikeComments(postId);
+            // getFeedsPost();
+            
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+  
+    // comment section api
+  
+    const handleComent = (id) => {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/api/profileDetails/saveFeedsComment`,
+          {
+            feeds_post_code: id,
+            comment: thought,
+          },
+          {
+            headers: {
+              "auth-token": localStorage.getItem("authToken"),
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.status === "success") {
+            disblk(id);
+            setThought("");
+            // getFeedsPost();
+            getPostTotalLikeComments(id);
+          }
+          if (response.data.status === "error") {
+            toast.error(`${response.data.mssg}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      return removeActivity();
+    };
+
     // comment list section api
 
   const disblk = (postId) => {
@@ -65,7 +253,8 @@ const MyFeedPost = () => {
       .then((response) => {
         if (response.data.status === "success") {
           disblk(feedpostId);
-          getFeedsPost();
+          getPostTotalLikeComments(feedpostId);
+          // getFeedsPost();
         }
         if (response.data.status === "error") {
           // toast.error(`${response.data.mssg}`);
@@ -117,27 +306,27 @@ const MyFeedPost = () => {
           <button
             class="mr-3 text-secondary btn btn-link "
             onClick={
-              data.user_like.length > 0
-                ? () => handelDisLike(data._id)
-                : () => handelLike(data._id)
+              myLike === "Yes"
+                ? () => handelDislike(data._id)
+                : () => handellike(data._id)
             }
           >
-            {like ? (
+            {myLike === "Yes" ? (
               <AiFillHeart
                 size={18}
                 className="text-danger"
-                // onClick={()=>handelLike(data._id)}
+                
                 style={{ cursor: "pointer" }}
               />
             ) : (
               <AiOutlineHeart
                 size={18}
-                // onClick={()=>handelDisLike(data._id)}
+              
                 style={{ cursor: "pointer" }}
               />
             )}
 
-            {data.totalLike}
+            {totalLike} 
           </button>
           <button
             class="mr-3 text-secondary btn btn-link"
@@ -145,7 +334,7 @@ const MyFeedPost = () => {
           >
             <LiaComments size={19} className="text-primary" />
 
-            {data.totalComments}
+            {totalComment}
           </button>
           <WhatsappShareButton
             title="Sharing Content"
