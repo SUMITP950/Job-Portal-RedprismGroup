@@ -6,7 +6,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../../Component/auth.js";
-
+import { BiRun } from "react-icons/bi";
+import { BsCardChecklist } from "react-icons/bs";
 const WalkingJob = () => {
   const [getLocation, setgetLocation] = useState("");
   const [getLocationList, setgetLocationList] = useState([]);
@@ -348,7 +349,7 @@ const WalkingJob = () => {
             </div>
           </aside>
           <main
-            className="col col-xl-7 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12 pb-5"
+            className="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12 pb-5"
             style={{ backgroundColor: "#fff" }}
           >
             <ul
@@ -356,7 +357,7 @@ const WalkingJob = () => {
               id="myTab"
               role="tablist"
             >
-              <li className="nav-item">
+              <li className="nav-item ">
                 <a
                   className="nav-link active"
                   id="profile-tab"
@@ -365,7 +366,7 @@ const WalkingJob = () => {
                   role="tab"
                   aria-controls="home"
                   aria-selected="false"
-                >
+                ><BiRun size={30} className="text-primary"/>
                   Enter New Walkling Job
                 </a>
               </li>
@@ -378,8 +379,8 @@ const WalkingJob = () => {
                   role="tab"
                   aria-controls="profile"
                   aria-selected="true"
-                >
-                  List Job
+                ><BsCardChecklist size={30} className="text-primary"/>
+                 &nbsp; List Job
                 </a>
               </li>
             </ul>
@@ -572,7 +573,7 @@ const WalkingJob = () => {
                     <h5 class="font-weight-bold">{userDetails.user_name}</h5>
                   </div>
                   <div>
-                    <h6 class="font-weight-bold ml-1 ">
+                    <h6 class="font-weight-bold ml-1 line-reduce">
                       ({userDetails.employee_type})
                     </h6>
                   </div>

@@ -72,6 +72,10 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+.line-reduce{ white-space: nowrap;
+  width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;}
 :root {
   --blue: #007bff;
   --indigo: #6610f2;

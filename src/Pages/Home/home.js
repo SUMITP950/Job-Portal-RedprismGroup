@@ -8,8 +8,10 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import FeedPost from "./feedPost";
+import { data } from "jquery";
 
 export default function Home() {
+  const [showMore, setShowMore] = useState(false);
   const [techno, setTechno] = useState("");
   const [technoData, SetTechnoData] = useState([]);
   const [userDetails, SetUserDetails] = useState("");
@@ -107,10 +109,14 @@ export default function Home() {
     technoChange();
   }, [techno]);
 
+  useEffect(() => {
+    technoChange();
+  }, [fromindex]);
+
   // Get feed post list
 
   const technoChange = () => {
-    setGetpost([]);
+    
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/api/home/getFeedsPost`,
@@ -126,8 +132,9 @@ export default function Home() {
       )
       .then((response) => {
         if (response.data.status === "success") {
-          setGetpost(response.data.feedsList);
-          // setFromIndex(fromindex + response.data.limit);
+          console.log(response.data);
+          setGetpost(pre=>[...pre,...response.data.feedsList]);
+         
           setFromIndexLimit(response.data.limit);
         }
         if (response.data.status === "error") {
@@ -146,6 +153,7 @@ export default function Home() {
     // setFromIndex(d);
     // setFromIndex(fromindex + a);
     // console.log(fromindex);
+    setShowMore(true)
     setFromIndex(fromindex + fromindexLimit);
     console.log(fromindex);
   };
@@ -180,6 +188,7 @@ export default function Home() {
                           name="currentCompany"
                           id="currentCompany"
                           onChange={(e) => {
+                            setGetpost([]);
                             setTechno(e.target.value);
                             technoChange();
                           }}
@@ -251,8 +260,9 @@ export default function Home() {
               </div>
               {getpost != [] &&
                 getpost.map((data, i2) => {
-                  return <FeedPost feed_post_data={data} key={i2} />;
+                  return <FeedPost feed_post_data={data} key={i2 } />;
                 })}
+              
               <div className=" text-center">
                 <button className="btn apply-btn text-center" onClick={postInc}>
                   Load More
@@ -273,13 +283,8 @@ export default function Home() {
                     </div>
                     <div>
                       <h6
-                        class="font-weight-bold ml-1 "
-                        style={{
-                          whiteSpace: "nowrap",
-                          width: "50px",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
+                        className="font-weight-bold ml-1 line-reduce"
+                        
                       >
                         ({userDetails.employee_type})
                       </h6>
