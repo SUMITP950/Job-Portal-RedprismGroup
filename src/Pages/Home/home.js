@@ -11,14 +11,14 @@ import FeedPost from "./feedPost";
 import { data } from "jquery";
 
 export default function Home() {
-  const [showMore, setShowMore] = useState(false);
+
   const [techno, setTechno] = useState("");
   const [technoData, SetTechnoData] = useState([]);
   const [userDetails, SetUserDetails] = useState("");
   const [getpost, setGetpost] = useState([]);
   const [thoughts, setThoughts] = useState(""); // this is for post value
-  const [fromindex, setFromIndex] = useState(2);
-  const [fromindexLimit, setFromIndexLimit] = useState(0);
+  const [fromindex, setFromIndex] = useState(0);
+  const [fromindexLimit, setFromIndexLimit] = useState(2);
 
   const handleThoughtsChange = (e) => {
     setThoughts(e.target.value);
@@ -106,12 +106,14 @@ export default function Home() {
 
   // Get feed post list by default
   useEffect(() => {
+    document.getElementById("loader").style.display="flex";
     technoChange();
   }, [techno]);
 
-  useEffect(() => {
-    technoChange();
-  }, [fromindex]);
+  // useEffect(() => {
+  //   technoChange();
+   
+  // }, [fromindex]);
 
   // Get feed post list
 
@@ -130,11 +132,16 @@ export default function Home() {
         }
       )
       .then((response) => {
+       
         if (response.data.status === "success") {
           console.log(response.data);
+          let newIndex = fromindex + response.data.limit;
+          console.log(newIndex);
+          console.log(techno);
+          setFromIndex(newIndex)
+          document.getElementById("loader").style.display="none";
+          // setGetpost([...getpost, response.data.feedsList]);
           setGetpost((pre) => [...pre, ...response.data.feedsList]);
-
-          setFromIndexLimit(response.data.limit);
         }
         if (response.data.status === "error") {
           // console.log(response.data);
@@ -145,17 +152,7 @@ export default function Home() {
         console.error(error);
       });
   };
-  const postInc = (a) => {
-    // let b = Number(a);
-    // let c = Number(fromindex);
-    // let d = b + c;
-    // setFromIndex(d);
-    // setFromIndex(fromindex + a);
-    // console.log(fromindex);
-    setShowMore(true);
-    setFromIndex(fromindex + fromindexLimit);
-    console.log(fromindex);
-  };
+ 
   return (
     <div>
       <div className="py-4">
@@ -263,7 +260,7 @@ export default function Home() {
                 })}
 
               <div className=" text-center">
-                <button className="btn apply-btn text-center" onClick={postInc}>
+                <button className="btn apply-btn text-center" onClick={technoChange}>
                   Load More
                 </button>
               </div>
