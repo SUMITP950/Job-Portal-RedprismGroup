@@ -35,8 +35,8 @@ export default function ProfileEdit() {
   const [immediateJoiner, setimmediateJoiner] = useState();
   // const [ImmediateJoinerList, setImmediateJoinerList] = useState([]);
   const [freasher, setFreasher] = useState("");
-  const [oldpassword,setOldPassword]=useState("")
-  const [newpassword,setNewPassword]=useState("")
+  const [oldpassword, setOldPassword] = useState("");
+  const [newpassword, setNewPassword] = useState("");
 
   // const handleChange = (event) => {
   //   SetDmonth(event.target.value);
@@ -74,47 +74,53 @@ export default function ProfileEdit() {
   //       console.error(error);
   //     });
   // };
-// password section api
-const deletephoto=()=>{
-  axios
-  .get("http://testredprism.co/api/profileDetails/removeProfilePhoto", {
-    headers: {
-      "auth-token": localStorage.getItem("authToken"),
-    },
-  })
-  .then((res) => {
-    if (res.data.status === "success") {
-      toast.success(`${res.data.mssg}`);
-      getMyProfileDetails()
-    }
-    if (res.data.status === "error") {
-      toast.error(`${res.data.mssg}`);
-    }
-   
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+  // password section api
+  const deletephoto = () => {
+    axios
+      .get("http://testredprism.co/api/profileDetails/removeProfilePhoto", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        if (res.data.status === "success") {
+          toast.success(`${res.data.mssg}`);
+          getMyProfileDetails();
+        }
+        if (res.data.status === "error") {
+          toast.error(`${res.data.mssg}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-}
-
-const passwordset=()=>{axios.post("http://testredprism.co/api/profileDetails/changePassword",   {
-  old_password: oldpassword ,
-  new_password: newpassword
-},{
-  headers: {
-    "auth-token": localStorage.getItem("authToken"),
-  },
-}).then((res) => {
-  console.log(res.data);
-  if (res.data.status === "success") {
-    toast.success(`${res.data.mssg}`);
-  }
-  if (res.data.status === "error") {
-    toast.error(`${res.data.mssg}`);
-  }
-})
-.catch((err) => console.log(err));}
+  const passwordset = () => {
+    axios
+      .post(
+        "http://testredprism.co/api/profileDetails/changePassword",
+        {
+          old_password: oldpassword,
+          new_password: newpassword,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("authToken"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status === "success") {
+          toast.success(`${res.data.mssg}`);
+        }
+        if (res.data.status === "error") {
+          toast.error(`${res.data.mssg}`);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   //Fetch Company list
   useEffect(() => {
     axios
@@ -191,7 +197,7 @@ const passwordset=()=>{axios.post("http://testredprism.co/api/profileDetails/cha
       })
       .then((res) => {
         let profileDetails = res.data.profileDetails[0];
-    
+
         setUsername(res.data.profileDetails[0].user_name);
         setFirstName(res.data.profileDetails[0].first_name);
         SetLastName(res.data.profileDetails[0].last_name);
@@ -388,56 +394,57 @@ const passwordset=()=>{axios.post("http://testredprism.co/api/profileDetails/cha
                       <i class="feather-trash-2"></i>
                     </button>
                   </div>
-                  
                 </div>
               </div>
-            
+
               <label id="nameLabel" class="form-label">
-                           Old Password
-                            <span class="text-danger">*</span>
-                          </label>
-                          <div class="form-group">
-                            <input
-                              onChange={(e) => setOldPassword(e.target.value)}
-                               value={oldpassword}
-                              type="password"
-                              class="form-control"
-                              name="name"
-                              placeholder="Enter your name"
-                              aria-label="Enter your name"
-                              required
-                              aria-describedby="nameLabel"
-                              data-msg="Please enter your name."
-                              data-error-class="u-has-error"
-                              data-success-class="u-has-success"
-                            />
-                            
-                          </div>
-                          <label id="nameLabel" class="form-label">
-                          New Password
-                            <span class="text-danger">*</span>
-                          </label>
-                          <div class="form-group">
-                            <input
-                              onChange={(e) => setNewPassword(e.target.value)}
-                               value={newpassword}
-                              type="password"
-                              class="form-control"
-                              name="name"
-                              placeholder="Enter your name"
-                              aria-label="Enter your name"
-                              required
-                              aria-describedby="nameLabel"
-                              data-msg="Please enter your name."
-                              data-error-class="u-has-error"
-                              data-success-class="u-has-success"
-                            />
-                            
-                          </div>
-                          <button className="btn apply-btn text-center" onClick={passwordset}>Set Password</button>
-                    
+                Old Password
+                <span class="text-danger">*</span>
+              </label>
+              <div class="form-group">
+                <input
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  value={oldpassword}
+                  type="password"
+                  class="form-control"
+                  name="name"
+                  placeholder="Enter your name"
+                  aria-label="Enter your name"
+                  required
+                  aria-describedby="nameLabel"
+                  data-msg="Please enter your name."
+                  data-error-class="u-has-error"
+                  data-success-class="u-has-success"
+                />
+              </div>
+              <label id="nameLabel" class="form-label">
+                New Password
+                <span class="text-danger">*</span>
+              </label>
+              <div class="form-group">
+                <input
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  value={newpassword}
+                  type="password"
+                  class="form-control"
+                  name="name"
+                  placeholder="Enter your name"
+                  aria-label="Enter your name"
+                  required
+                  aria-describedby="nameLabel"
+                  data-msg="Please enter your name."
+                  data-error-class="u-has-error"
+                  data-success-class="u-has-success"
+                />
+              </div>
+              <button
+                className="btn apply-btn text-center"
+                onClick={passwordset}
+              >
+                Set Password
+              </button>
             </aside>
-            
+
             <main class="col-md-8">
               <div class="border rounded bg-white mb-3">
                 <div class="box-title border-bottom p-3">
@@ -545,24 +552,24 @@ const passwordset=()=>{axios.post("http://testredprism.co/api/profileDetails/cha
                             <span class="text-danger">*</span>
                           </label>
                           <div class="form-group">
-                          <select
-                            className="form-control"
-                            id="experienceYear"
-                            value={Location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            required
-                          >
-                            {/* <option>{Company}</option> */}
-                            {LocationList.map((item, id) => {
-                              return (
-                                <>
-                                  <option value={item._id} key={id._id}>
-                                    {`${item.area} , ${item.city} , ${item.state}`}
-                                  </option>
-                                </>
-                              );
-                            })}
-                          </select>
+                            <select
+                              className="form-control"
+                              id="experienceYear"
+                              value={Location}
+                              onChange={(e) => setLocation(e.target.value)}
+                              required
+                            >
+                              {/* <option>{Company}</option> */}
+                              {LocationList.map((item, id) => {
+                                return (
+                                  <>
+                                    <option value={item._id} key={id._id}>
+                                      {`${item.area} , ${item.city} , ${item.state}`}
+                                    </option>
+                                  </>
+                                );
+                              })}
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -715,18 +722,25 @@ const passwordset=()=>{axios.post("http://testredprism.co/api/profileDetails/cha
                       <div class="col-sm-6 mb-2" id="tech">
                         <div class="js-form-message">
                           <label id="websiteLabel" class="form-label">
-                          Immediate Joinner
+                            Immediate Joinner
                           </label>
                           <div class="form-group">
                             <select
                               className="form-control"
-                              onChange={(e) => setimmediateJoiner(e.target.value)}
+                              onChange={(e) =>
+                                setimmediateJoiner(e.target.value)
+                              }
                               value={immediateJoiner}
                               required
                             >
-                              
-                              <option >{immediateJoiner}</option>
-                              <option >{immediateJoiner==="Yes"? setimmediateJoiner("No"):immediateJoiner}</option>
+                              <option>{immediateJoiner}</option>
+                              <option>
+                                {immediateJoiner === "Yes"
+                                  ? "No"
+                                  : immediateJoiner === "No"
+                                  ? "Yes"
+                                  : ""}
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -734,7 +748,7 @@ const passwordset=()=>{axios.post("http://testredprism.co/api/profileDetails/cha
                       <div class="col-sm-6 mb-2" id="tech">
                         <div class="js-form-message">
                           <label id="websiteLabel" class="form-label">
-                         Freasher
+                            Freasher
                           </label>
                           <div class="form-group">
                             <select
@@ -744,9 +758,63 @@ const passwordset=()=>{axios.post("http://testredprism.co/api/profileDetails/cha
                               // value={freasher==="No"?document.getElementById("yes").innerText="Yes":document.getElementById("no").innerText="No"}
                               required
                             >
-                              
-                              <option id="yes" >{freasher}</option>
-                              <option id="no">{freasher==="Yes"? setFreasher("No"):freasher}</option>
+                              <option id="yes">{freasher}</option>
+                              <option id="no">
+                                {freasher === "Yes"
+                                  ? "No"
+                                  : freasher === "No"
+                                  ? "Yes"
+                                  : ""}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 mb-2" id="tech">
+                        <div class="js-form-message">
+                          <label id="websiteLabel" class="form-label">
+                            Notice Period
+                          </label>
+                          <div class="form-group">
+                            <select
+                              className="form-control"
+                              onChange={(e) => setnoticePeriod(e.target.value)}
+                              value={noticePeriod}
+                              required
+                            >
+                              <option>{noticePeriod}</option>
+                              <option>
+                                {noticePeriod === "Yes"
+                                  ? "No"
+                                  : noticePeriod === "No"
+                                  ? "Yes"
+                                  : ""}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 mb-2" id="tech">
+                        <div class="js-form-message">
+                          <label id="websiteLabel" class="form-label">
+                            Looking Job
+                          </label>
+                          <div class="form-group">
+                            <select
+                              className="form-control"
+                              value={lookingjob}
+                              onChange={(e) => setLookingjob(e.target.value)}
+                              // value={freasher==="No"?document.getElementById("yes").innerText="Yes":document.getElementById("no").innerText="No"}
+                              required
+                            >
+                              <option id="yes">{lookingjob}</option>
+                              <option id="no">
+                                {lookingjob === "Yes"
+                                  ? "No"
+                                  : lookingjob === "No"
+                                  ? "Yes"
+                                  : ""}
+                              </option>
                             </select>
                           </div>
                         </div>

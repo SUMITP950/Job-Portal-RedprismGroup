@@ -116,7 +116,6 @@ export default function Home() {
   // Get feed post list
 
   const technoChange = () => {
-    
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/api/home/getFeedsPost`,
@@ -133,8 +132,8 @@ export default function Home() {
       .then((response) => {
         if (response.data.status === "success") {
           console.log(response.data);
-          setGetpost(pre=>[...pre,...response.data.feedsList]);
-         
+          setGetpost((pre) => [...pre, ...response.data.feedsList]);
+
           setFromIndexLimit(response.data.limit);
         }
         if (response.data.status === "error") {
@@ -153,7 +152,7 @@ export default function Home() {
     // setFromIndex(d);
     // setFromIndex(fromindex + a);
     // console.log(fromindex);
-    setShowMore(true)
+    setShowMore(true);
     setFromIndex(fromindex + fromindexLimit);
     console.log(fromindex);
   };
@@ -260,9 +259,9 @@ export default function Home() {
               </div>
               {getpost != [] &&
                 getpost.map((data, i2) => {
-                  return <FeedPost feed_post_data={data} key={i2 } />;
+                  return <FeedPost feed_post_data={data} key={i2} />;
                 })}
-              
+
               <div className=" text-center">
                 <button className="btn apply-btn text-center" onClick={postInc}>
                   Load More
@@ -282,10 +281,7 @@ export default function Home() {
                       <h5 class="font-weight-bold">{userDetails.user_name}</h5>
                     </div>
                     <div>
-                      <h6
-                        className="font-weight-bold ml-1 line-reduce"
-                        
-                      >
+                      <h6 className="font-weight-bold ml-1 line-reduce">
                         ({userDetails.employee_type})
                       </h6>
                     </div>
