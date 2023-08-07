@@ -485,7 +485,7 @@ export default function JobSearch() {
                       class="btn btn-success "
                       style={{ width: "80px", borderRadius: "20px" }}
                       onClick={jobApply}
-                      data-dismiss="modal"
+                      // data-dismiss="modal"
                     >
                       Apply
                     </button>
