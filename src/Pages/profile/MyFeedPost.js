@@ -288,7 +288,9 @@ const MyFeedPost = (props) => {
             <RiDeleteBin6Fill
               size={19}
               className="text-danger"
-              onClick={() => deleteFeedpost(data._id)}
+              data-toggle="modal"
+              data-target="#staticBackdrop2"
+              // onClick={() => deleteFeedpost(data._id)}
             />
             <br />
           </span>
@@ -347,7 +349,43 @@ const MyFeedPost = (props) => {
             ></WhatsappIcon>
           </WhatsappShareButton>
         </div>
-
+         {/* modal body */}
+        <div
+        class="modal fade"
+        id="staticBackdrop2"
+        data-backdrop="static"
+        data-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+               Do you want to delete your post ? 
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <br />
+              <form className="d-none d-sm-inline-block form-inline m-auto my-md-0 mw-100 navbar-search">
+            <div style={{display:'flex',alignItems:"center",justifyContent:"center"}}>
+              <button class=" btn btn-danger" data-dismiss="modal" onClick={() => deleteFeedpost(data._id)} style={{marginLeft:30,marginRight:20,width:'80px',borderRadius:"20px"}}>Yes</button>
+              <button class="btn btn-success " data-dismiss="modal" style={{width:'80px',borderRadius:"20px"}}>No</button>
+            </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
         {/* comment list  */}
         <div id="comment list">
           {comentList.feedId === data._id &&

@@ -473,7 +473,7 @@ export default function JobSearch() {
                     <br />
                     <textarea
                       type="text"
-                      placeholder="Enter job description"
+                      placeholder="Enter your message"
                       rows={5}
                       cols="60"
                       value={jobDescription}

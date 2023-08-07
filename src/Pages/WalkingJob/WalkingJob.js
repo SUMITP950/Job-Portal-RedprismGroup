@@ -8,6 +8,9 @@ import { toast } from "react-toastify";
 import { auth } from "../../Component/auth.js";
 import { BiRun } from "react-icons/bi";
 import { BsCardChecklist } from "react-icons/bs";
+import {FaEdit} from "react-icons/fa";
+import {RiDeleteBin3Fill} from "react-icons/ri";
+
 const WalkingJob = () => {
   const [getLocation, setgetLocation] = useState("");
   const [getLocationList, setgetLocationList] = useState([]);
@@ -271,8 +274,8 @@ const WalkingJob = () => {
   return (
     <>
       {/* html start */}
-      <div className="container-fluid body-padding">
-        <div className="row justify-content-around my-5">
+      <div className="container-fluid ">
+        <div className="row justify-content-around mt-4 " >
           <aside className="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
             <div className="border rounded bg-white mb-3">
               <div className="shadow-sm pt-3 pb-4">
@@ -297,7 +300,7 @@ const WalkingJob = () => {
                     </div>
                     <div>
                      
-                        <span class="font-weight-bold">Simple Resume</span>
+                        <span class="font-weight-bold">Sample Resume</span>
                       
                     </div>
                   </Link >
@@ -349,7 +352,7 @@ const WalkingJob = () => {
             </div>
           </aside>
           <main
-            className="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12 pb-5"
+            className="col rounded col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12 pb-5"
             style={{ backgroundColor: "#fff" }}
           >
             <ul
@@ -535,21 +538,16 @@ const WalkingJob = () => {
                                   justifyContent: "center",
                                 }}
                               >
-                                <button
-                                  type="button"
-                                  class="btn  mx-3 px-2"
-                                  onClick={() => handelEdit(item._id)}
-                                >
-                                  <i class="feather-edit menu-icon ml-auto text-primary"></i>
-                                </button>
-
-                                <button
-                                  type="button"
-                                  class="btn  px-2"
-                                  onClick={() => handleDelete(item._id)}
-                                >
-                                   <i class="feather-trash-2 menu-icon ml-auto text-danger"></i>
-                                </button>
+                                 <FaEdit
+                                  className="text-success mr-2" 
+                                  style={{ cursor: "pointer"}}
+                                  size={20} 
+                                  onClick={() => handelEdit(item._id)}/>
+                                <RiDeleteBin3Fill 
+                                className="text-danger" 
+                                style={{ cursor: "pointer" }}
+                                size={20}
+                                onClick={() => handleDelete(item._id)}/>
                               </td>
                             </tr>
                           </tbody>
