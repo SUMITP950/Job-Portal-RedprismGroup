@@ -176,7 +176,7 @@ export default function Training(props) {
                         <div className="col-md-4 mb-4" key={id}>
                           <div className="card">
                             <img
-                              src={item.trainings_poster}
+                              src={`http://testredprism.co/${item.trainings_poster}`}
                               className="card-img-top crdimg"
                               alt="..."
                             />

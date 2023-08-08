@@ -266,7 +266,7 @@ export default function JobSearch() {
                       }}
                       value={techno}
                     >
-                      {/* <option>All</option> */}
+                       <option value="">All</option>
                       {technoData.map((item, id) => {
                         return (
                           <>
@@ -299,7 +299,7 @@ export default function JobSearch() {
                       }}
                       value={experience}
                     >
-                      {/* <option>All</option> */}
+                       <option value="">All</option>
                       {experienceData.map((item, id) => {
                         return (
                           <>
@@ -332,7 +332,7 @@ export default function JobSearch() {
                       }}
                       value={location}
                     >
-                      {/* <option>All</option> */}
+                      <option value="">All</option>
                       {locationData.map((item, id) => {
                         return (
                           <>
