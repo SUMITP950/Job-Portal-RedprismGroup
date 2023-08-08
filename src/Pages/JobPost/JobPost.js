@@ -413,10 +413,10 @@ const JobPost = () => {
   return (
     <>
       {/* html start */}
-      <div className="container-fluid body-padding">
-        <div className="row justify-content-around mt-5">
+      <div className="container-fluid">
+        <div className="row justify-content-around mt-4">
           <aside className="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
-            <div className="border rounded bg-white mb-3">
+            <div className="border rounded bg-white mb-3" >
               <div className="shadow-sm pt-3 pb-4">
                 <h6 className="pt-3 text-center">Other Option</h6>
                 <Link
@@ -442,7 +442,7 @@ const JobPost = () => {
                     </div>
                   </div>
                   <div>
-                    <span class="font-weight-bold">Simple Resume</span>
+                    <span class="font-weight-bold">Sample Resume</span>
                   </div>
                 </Link>
                 <Link
@@ -496,7 +496,7 @@ const JobPost = () => {
             </div>
           </aside>
           <main
-            className="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12"
+            className="col rounded col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12"
             style={{ backgroundColor: "#fff" }}
           >
             <ul

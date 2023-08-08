@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import Sendotp from "../Send-otp/Sendotp";
 
 function RegisterJobSheeker() {
+  
+ 
   const navigation = useNavigate();
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
@@ -20,9 +22,8 @@ function RegisterJobSheeker() {
   const [data, SetData] = useState([]);
   const [data1, SetData1] = useState([]);
   const [data2, SetData2] = useState([]);
-  const [data3, SetData3] = useState([]);
-  const [data4, SetData4] = useState([]);
-  const [data5, SetData5] = useState([]);
+  const [locationData, SetLocationData] = useState([]);
+
 
   useEffect(() => {
     axios
@@ -51,25 +52,10 @@ function RegisterJobSheeker() {
     axios
       .get("http://testredprism.co/api/jobseekerRegister/getLocationList")
       .then((res) => {
-        SetData3(res.data.locationList);
+        SetLocationData(res.data.locationList);
       });
   }, []);
 
-  useEffect(() => {
-    axios
-      .get("http://testredprism.co/api/jobseekerRegister/getLocationList")
-      .then((res) => {
-        SetData4(res.data.locationList);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("http://testredprism.co/api/jobseekerRegister/getLocationList")
-      .then((res) => {
-        SetData5(res.data.locationList);
-      });
-  }, []);
 
   // form validation
 
@@ -79,9 +65,7 @@ function RegisterJobSheeker() {
       lastName: "",
       email: "",
       mobile: "",
-      city: "",
-      state: "",
-      area: "",
+      location: "",
       term: "",
     },
     validationSchema: yup.object({
@@ -105,11 +89,11 @@ function RegisterJobSheeker() {
         .matches(/^[0-9]+$/, "This field  must be a number")
         .min(10, "Minimum 10 digits")
         .max(10, "Maximum 10 digits"),
-      city: yup.string().required("*Required"),
+      location: yup.string().required("*Required"),
       // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
-      state: yup.string().required("*Required"),
+      
       // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
-      area: yup.string().required("*Required"),
+     
       // .matches(/^[A-Za-z]+$/, "This field  must be a letter"),
       // .matches(/^[0-9]+$/, "This field  must be a number")
       // .min(5, "Minimum 5 digits")
@@ -333,7 +317,7 @@ function RegisterJobSheeker() {
         company_code: formik3.values.currentCompany,
         tech_code: formik3.values.technicalSkills,
         exp_code: formik3.values.ExperienceInYear,
-        location_code: formik.values.city,
+        location_code: formik.values.location,
         looking_job: formik4.values.lookingForJob,
         notice_period: formik4.values.noticePeriod,
         immediate_joinner: formik4.values.immediateJoiner,
@@ -518,8 +502,34 @@ function RegisterJobSheeker() {
                       <label htmlFor="preferNotToSay">Prefer Not to Say</label>
                     </div>
                   </div>  */}
+                   <div className="col-md-8 mb-3">
+                    <label htmlFor="phone">Location</label>
+                    <select
+                      class="form-control form-control-lg"
+                      name="location"
+                      id="currentCompany"
+                    
+                      onChange={formik.handleChange}
+                      value={formik.values.location}
+                    >
+                      <option>--Select Location--</option>
+                      {locationData.map((item, id) => {
+                        return (
+                          <>
+                            <option value={item._id} key={id._id}>
+                              {`${item.area}, ${item.city}, ${item.state}`}
+                            </option>
+                          </>
+                        );
+                      })}
+                    </select>
+                    {formik.errors.location && (
+                      <em style={{ color: "red" }}>{formik.errors.location}</em>
+                    )}
+                  </div>
                 </div>
-                <div className="form-row d-flex align-items-center justify-content-center">
+                
+                {/* <div className="form-row d-flex align-items-center justify-content-center">
                   <div className="col-md-2 mb-3">
                     <label htmlFor="validationDefault04">State</label>
                     <select
@@ -599,7 +609,7 @@ function RegisterJobSheeker() {
                       <em style={{ color: "red" }}>{formik.errors.area}</em>
                     )}
                   </div>
-                </div>
+                </div> */}
                 <div className="form-group d-flex align-items-center justify-content-center">
                   <div className="form-check">
                     <input

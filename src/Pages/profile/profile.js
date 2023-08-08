@@ -274,7 +274,7 @@ export default function Profile() {
 
   return (
     <div class="py-4">
-      <div class="container-fluid body-padding">
+      <div class="container-fluid ">
         <div class="row">
           <aside class="col col-xl-3 order-xl-1 col-lg-12 order-lg-1 col-12">
             <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">

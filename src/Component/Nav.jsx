@@ -1,5 +1,10 @@
 import React,{ useEffect } from "react";
 import { Link,useNavigate} from "react-router-dom";
+import {  FaRegUser} from "react-icons/fa";
+import {PiMessengerLogoBold} from "react-icons/pi";
+import { AiOutlineNotification} from "react-icons/ai";
+import { IoHomeOutline} from "react-icons/io5";
+
 
 
 export default function Nav() {
@@ -22,14 +27,13 @@ const protectingPage=()=>{
   return (
     <div>
       <nav
-        class="navbar navbar-expand osahan-nav-top head-padding osahan-nav-top"
+        class="navbar bg-dark navbar-expand osahan-nav-top head-padding osahan-nav-top"
         id="navbar"
       >
         <div class="container-fluid">
-          <a class="navbar-brand mr-2" href="#">
-            {/* <img src="img/logo.svg" alt=""/>  */}
-            Your Logo
-          </a>
+        
+          <Link class="menuzord-brand navbar-brand mr-2 " to="/Home"><img src="https://www.redprismgroup.com/img/logo-white.png" alt="RedPrism logo"/></Link>
+          
           <form class="d-none d-sm-inline-block form-inline m-auto my-md-0 mw-100 navbar-search">
             <div class="input-group">
               <input
@@ -83,16 +87,15 @@ const protectingPage=()=>{
               </div>
             </li>
             <li class="nav-item">
-              <Link class="nav-link" to="/Home">
-                <i class="feather-home mr-2 menu-icon"></i>
-                <span class="d-none d-lg-inline">Home</span>
+              <Link class="nav-link mx-2" to="/Home">
+              <IoHomeOutline size={22} className="text-light "/>
               </Link>
             </li>
             <li class="nav-item desktop-view-menu">
-              <a class="nav-link" href="#">
-                <i class="feather-users mr-2 menu-icon"></i>
-                <span class="d-none d-lg-inline">Buddies</span>
-              </a>
+             
+              <Link class="nav-link mx-2" to="/MyBuddies">
+              <FaRegUser size={20} className="text-light"/>
+              </Link>
             </li>
 
             {/* mobile menu view start */}
@@ -193,18 +196,18 @@ const protectingPage=()=>{
             {/* mobile menu view end */}
 
             <li class="nav-item dropdown no-arrow mx-1 osahan-list-dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
+              <Link
+                class="nav-link dropdown-toggle mx-2"
+               
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <i class="feather-message-square menu-icon"></i>
-
-                <span class="badge badge-danger badge-counter">8</span>
-              </a>
+                
+              <PiMessengerLogoBold size={22} className="text-light"/>
+              
+              </Link>
 
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow-sm">
                 <h6 class="dropdown-header">Message Center</h6>
@@ -273,29 +276,27 @@ const protectingPage=()=>{
                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
-                <Link to="/Message">
-                <a
-                  class="dropdown-item text-center small text-gray-500"
-                  href="#"
-                >
+                <Link to="/Message"  class="dropdown-item text-center small text-gray-500"
+                 >
+             
+                 
+               
                   Read More Messages
-                </a>
+                
                 </Link>
               </div>
             </li>
-            <li class="nav-item dropdown no-arrow mx-1 osahan-list-dropdown">
-              <a
-                class="nav-link dropdown-toggle"
+            <li class="nav-item dropdown no-arrow osahan-list-dropdown">
+              <Link
+                class="nav-link dropdown-toggle mx-2 "
                 href="#"
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <i class="feather-bell menu-icon"></i>
-
-                <span class="badge badge-info badge-counter">6</span>
-              </a>
+                 <AiOutlineNotification size={23} className="text-light"/>
+              </Link>
 
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow-sm">
                 <h6 class="dropdown-header">Alerts Center</h6>
@@ -344,13 +345,10 @@ const protectingPage=()=>{
                     your account.
                   </div>
                 </a>
-                <Link to="/Notifications">
-                <a
-                  class="dropdown-item text-center small text-gray-500"
-                  href="notifications.html"
-                >
+                <Link to="/Notifications"  class="dropdown-item text-center small text-gray-500">
+              
                   Show All Alerts
-                </a>
+                
                 </Link>
               </div>
             </li>
