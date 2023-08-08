@@ -347,12 +347,12 @@ export default function ProfileEdit() {
   return (
     <>
       {" "}
-      <div class="py-4">
-        <div class="container">
+      <div class="my-4">
+        <div class="container-fluid">
           <div class="row">
             <aside class="col-md-4">
               <div class="mb-3 border rounded bg-white profile-box text-center w-10">
-                <div class="p-4 d-flex align-items-center">
+                <div class="p-4 ">
                   {employeeImage && (
                     <img
                       src={`http://testredprism.co/${employeeImage}`}
@@ -366,12 +366,13 @@ export default function ProfileEdit() {
                       }}
                     />
                   )}
-                  <div class="p-4">
+             
+                  <div class="d-flex justify-content-center align-items-center">
                     <label
                       data-toggle="tooltip"
                       data-placement="top"
                       data-original-title="Upload New Picture"
-                      class="btn btn-info m-0"
+                      className="btn btn-info m-0"
                       for="fileAttachmentBtn"
                     >
                       <i class="feather-image"></i>
@@ -381,18 +382,20 @@ export default function ProfileEdit() {
                         type="file"
                         class="d-none"
                         onChange={handleFile}
-                      />
+                      />&nbsp; Upload
                     </label>
                     <button
                       data-toggle="tooltip"
                       data-placement="top"
                       data-original-title="Delete"
                       type="submit"
-                      class="btn btn-danger"
+                      class="btn btn-danger ml-2"
                       onClick={deletephoto}
                     >
                       <i class="feather-trash-2"></i>
+                      &nbsp; Delete
                     </button>
+                 
                   </div>
                 </div>
               </div>

@@ -242,7 +242,7 @@ export default function FeedPost(props) {
           </div>
           <div class="font-weight-bold">
             <div class="text-truncate">
-              {`${data.employee_details[0].first_name} ${data.employee_details[0].last_name}`}
+              {`${data.employee_details[0].first_name} ${data.employee_details[0].last_name} `}
             </div>
 
             <div class="small text-gray-500">
