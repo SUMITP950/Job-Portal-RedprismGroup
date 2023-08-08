@@ -9,16 +9,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import FeedPost from "./feedPost";
 import { data } from "jquery";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Home() {
-
   const [techno, setTechno] = useState("");
   const [technoData, SetTechnoData] = useState([]);
   const [userDetails, SetUserDetails] = useState("");
   const [getpost, setGetpost] = useState([]);
   const [thoughts, setThoughts] = useState(""); // this is for post value
-  const [fromindex, setFromIndex] = useState(0);
-  const [fromindexLimit, setFromIndexLimit] = useState(2);
+  const [fromindex, setFromIndex] = useState(0); // this is for post value
 
   const handleThoughtsChange = (e) => {
     setThoughts(e.target.value);
@@ -106,13 +105,13 @@ export default function Home() {
 
   // Get feed post list by default
   useEffect(() => {
-    document.getElementById("loader").style.display="flex";
+    document.getElementById("loader").style.display = "flex";
     technoChange();
   }, [techno]);
 
   // useEffect(() => {
   //   technoChange();
-   
+
   // }, [fromindex]);
 
   // Get feed post list
@@ -132,16 +131,16 @@ export default function Home() {
         }
       )
       .then((response) => {
-       
         if (response.data.status === "success") {
           console.log(response.data);
           let newIndex = fromindex + response.data.limit;
           console.log(newIndex);
           console.log(techno);
-          setFromIndex(newIndex)
-          document.getElementById("loader").style.display="none";
+          setFromIndex(newIndex);
+          document.getElementById("loader").style.display = "none";
           // setGetpost([...getpost, response.data.feedsList]);
           setGetpost((pre) => [...pre, ...response.data.feedsList]);
+          return newIndex;
         }
         if (response.data.status === "error") {
           // console.log(response.data);
@@ -152,7 +151,7 @@ export default function Home() {
         console.error(error);
       });
   };
- 
+
   return (
     <div>
       <div className="py-4">
@@ -254,16 +253,25 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              {getpost != [] &&
-                getpost.map((data, i2) => {
-                  return <FeedPost feed_post_data={data} key={i2} />;
-                })}
 
-              <div className=" text-center">
-                <button className="btn apply-btn text-center" onClick={technoChange}>
-                  Load More
-                </button>
-              </div>
+              <InfiniteScroll
+                dataLength={fromindex} //This is important field to render the next data
+                next={technoChange}
+                hasMore={fromindex <= 1}
+                loader={<h4>Loading...</h4>}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>Yay! You have seen it all</b>
+                  </p>
+                }
+              >
+                {getpost != [] &&
+                  getpost.map((data, i2) => {
+                    return <FeedPost feed_post_data={data} key={i2} />;
+                  })}
+              </InfiniteScroll>
+
+              <div className=" text-center"></div>
             </main>
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
