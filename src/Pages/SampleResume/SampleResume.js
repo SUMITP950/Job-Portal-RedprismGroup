@@ -71,28 +71,32 @@ export default function SampleResume(props) {
                 <div class="row">
                   {cv.map((item, id) => {
                     return (
-                    
-                        <div className="col-md-4 mb-4" key={id}>
-                          <div className="card">
-                            <img
-                              src={item.resume_image}
-                              className="card-img-top crdimg"
-                              alt="..."
-                            />
+                      <div className="col-md-4 mb-4" key={id}>
+                        <div className="card">
+                          <img
+                            src={`http://testredprism.co/${item.resume_image}`}
+                            className="card-img-top crdimg"
+                            alt="..."
+                          />
 
-                            <div className="card-body">
-                              <h5 className="card-title">{item.title}</h5>
-                              <p className="card-text">
-                                {item.details.substring(0, 100)}...
-                              </p>
-                            </div>
-                            <div className="card-footer">
-                              <a href={`http://testredprism.co/${item.resume_file}`} download className="btn btn-block apply-btn">
-                                Download
-                              </a>
-                            </div>
+                          <div className="card-body">
+                            <h5 className="card-title">{item.title}</h5>
+                            <p className="card-text">
+                              {item.details.substring(0, 100)}...
+                            </p>
+                          </div>
+                          <div className="card-footer">
+                            <a
+                              href={`http://testredprism.co/${item.resume_file}`}
+                              download
+                              target="_blank"
+                              className="btn btn-block apply-btn"
+                            >
+                              Download
+                            </a>
                           </div>
                         </div>
+                      </div>
                     );
                   })}
                 </div>
