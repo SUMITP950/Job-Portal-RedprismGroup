@@ -1,12 +1,13 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import "../../App.css";
 import { Link } from "react-router-dom";
-import Select from "react-select";
 import axios from "axios";
 
 export default function SampleResume(props) {
-
   const [userDetails, SetUserDetails] = useState("");
+  const [cv, SetCv] = useState([]);
+
   // Get user details
   useEffect(() => {
     axios
@@ -23,76 +24,83 @@ export default function SampleResume(props) {
       });
   }, []);
 
-
   useEffect(() => {
     document.title = "Sample Resume";
   }, []);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  useEffect(() => {
+    document.getElementById("loader").style.display = "flex";
+    axios
+      .get("http://testredprism.co/api/sampleResume/getSampleResumeList", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        SetCv(res.data.sampleResumeList);
+        document.getElementById("loader").style.display = "none";
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
       <div class="my-4">
         <div class="container-fluid">
           <div class="row justify-content-between">
-          <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+            <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+              <div class="col-lg-12 mb-3">
+                <div
+                  class="text-dark"
+                  style={{ fontSize: "20px", fontWeight: "bold" }}
+                >
+                  <span
+                    style={{
+                      border: "none",
+                      borderBottom: "5px solid #000",
+                      paddingBottom: "2px",
+                    }}
+                  >
+                    Sample Resume
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 card-out-border">
+                <div class="row">
+                  {cv.map((item, id) => {
+                    return (
+                    
+                        <div className="col-md-4 mb-4" key={id}>
+                          <div className="card">
+                            <img
+                              src={item.resume_image}
+                              className="card-img-top crdimg"
+                              alt="..."
+                            />
 
-<div class="col-lg-12 mb-3">
-    <div class="text-dark" style={{fontSize: "20px" , fontWeight: "bold"}}>
-        <span
-            style={{border:"3px solid #000" ,border: "none", borderBottom: "5px solid #000", paddingBottom: "2px"}}>Sample
-            Resume</span>
-    </div>
-</div>
-<div class="col-lg-12 col-md-12 card-out-border">
-    <div class="row">
-        <div class="col-lg-4 col-md-4">
-            <div class="box shadow-sm rounded bg-white mb-3 blog-card border-0">
-                <img class="card-img-top resume-image"
-                    src="https://www.slideteam.net/media/catalog/product/cache/1280x720/p/r/professional_resume_illustration_cv_design_template_slide01.jpg"
-                    alt="Card image cap" />
-                <h6 class="text-dark text-center mt-2">Consectetur adipisicing elit</h6>
-                <div class="card-body text-center">
-                    <span class="badge badge-success">View</span>
-                    <span class="badge badge-danger">Download</span>
+                            <div className="card-body">
+                              <h5 className="card-title">{item.title}</h5>
+                              <p className="card-text">
+                                {item.details.substring(0, 100)}...
+                              </p>
+                            </div>
+                            <div className="card-footer">
+                              <a href={`http://testredprism.co/${item.resume_file}`} download className="btn btn-block apply-btn">
+                                Download
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                    );
+                  })}
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4">
-            <div class="box shadow-sm rounded bg-white mb-3 blog-card border-0">
-                <img class="card-img-top resume-image"
-                    src="https://www.slideteam.net/media/catalog/product/cache/1280x720/r/e/resume_template_creative_cv_design_for_professionals_slide01.jpg"
-                    alt="Card image cap" />
-                <h6 class="text-dark text-center mt-2">Consectetur adipisicing elit</h6>
-                <div class="card-body text-center">
-                    <span class="badge badge-success ">View</span>
-                    <span class="badge badge-danger">Download</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4">
-            <div class="box shadow-sm rounded bg-white mb-3 blog-card border-0">
-                <img class="card-img-top resume-image"
-                    src="https://dsgrcdnblobprod5u3.azureedge.net/uploadedfiles/uploads/a8af7250-e605-4e0c-8cb6-005f6fa12c59-d5ef38c8-3741-4713-af61-7cf422f716bc-cubist-resume-00.webp"
-                    alt="Card image cap" />
-                <h6 class="text-dark text-center mt-2">Consectetur adipisicing elit</h6>
-                <div class="card-body text-center">
-                    <span class="badge badge-success">View</span>
-                    <span class="badge badge-danger">Download</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-</main>
+              </div>
+            </main>
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12 dn">
               <div class="border rounded bg-white mb-3">
-              <div class="shadow-sm pt-4 pb-3">
+                <div class="shadow-sm pt-4 pb-3">
                   <div class="dropdown-item d-flex align-items-center">
                     <div class="mr-2">
                       <div class="icon-circle-profile">
@@ -116,55 +124,62 @@ export default function SampleResume(props) {
                       </h6>
                     </div>
                   </div>
-                  <Link to="/Profile" class="dropdown-item d-flex align-items-center" >
+                  <Link
+                    to="/Profile"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <img src="img/icon/smile.svg" alt="" />
                       </div>
                     </div>
                     <div>
-                     
-                        <span class="font-weight-bold">My Profile</span>
-                      
+                      <span class="font-weight-bold">My Profile</span>
                     </div>
-                  </Link >
-                  <Link  to="/MyBuddies" class="dropdown-item d-flex align-items-center">
+                  </Link>
+                  <Link
+                    to="/MyBuddies"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <i class="feather-users left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      
-                        <span class="font-weight-bold">My Buddies</span>
-                     
+                      <span class="font-weight-bold">My Buddies</span>
                     </div>
                   </Link>
-                  <Link  to="/jobPost" class="dropdown-item d-flex align-items-center" >
+                  <Link
+                    to="/jobPost"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <i class="feather-briefcase left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                    
-                        <span class="font-weight-bold">Job Post</span>
-                      
+                      <span class="font-weight-bold">Job Post</span>
                     </div>
                   </Link>
-                  <Link to="/walkingjob" class="dropdown-item d-flex align-items-center" >
+                  <Link
+                    to="/walkingjob"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
                         <i class="feather-save left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      
-                        <span class="font-weight-bold">Walking Job</span>
-                     
+                      <span class="font-weight-bold">Walking Job</span>
                     </div>
                   </Link>
-                  <Link to="/Jobsearch" class="dropdown-item d-flex align-items-center">
+                  <Link
+                    to="/Jobsearch"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile ">
                         <img
@@ -175,9 +190,7 @@ export default function SampleResume(props) {
                       </div>
                     </div>
                     <div>
-                      
-                        <span class="font-weight-bold">Job Search</span>
-                      
+                      <span class="font-weight-bold">Job Search</span>
                     </div>
                   </Link>
                 </div>
@@ -187,43 +200,49 @@ export default function SampleResume(props) {
               <div class="border rounded bg-white mb-3">
                 <div class="shadow-sm  pt-3 pb-4">
                   <h6 class="pt-3 text-center">Other Option</h6>
-                  <Link  to="/Setting" class="dropdown-item d-flex align-items-center" >
+                  <Link
+                    to="/Setting"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-settings left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                     
-                        <span class="font-weight-bold">Settings</span>
-                      
+                      <span class="font-weight-bold">Settings</span>
                     </div>
                   </Link>
-                  <Link to="/SampleResume" class="dropdown-item d-flex align-items-center" >
+                  <Link
+                    to="/SampleResume"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-log-out left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                     
-                        <span class="font-weight-bold">Sample Resume</span>
-                      
+                      <span class="font-weight-bold">Sample Resume</span>
                     </div>
-                  </Link >
-                  <Link to="/Training" class="dropdown-item d-flex align-items-center" >
+                  </Link>
+                  <Link
+                    to="/Training"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <i class="feather-file-text left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                     
-                        <span class="font-weight-bold">Trainings</span>
-                      
+                      <span class="font-weight-bold">Trainings</span>
                     </div>
                   </Link>
-                  <Link  to="/FresherJob" class="dropdown-item d-flex align-items-center">
+                  <Link
+                    to="/FresherJob"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <img
@@ -234,12 +253,13 @@ export default function SampleResume(props) {
                       </div>
                     </div>
                     <div>
-                      
-                        <span class="font-weight-bold">Fresher Jobs</span>
-                      
+                      <span class="font-weight-bold">Fresher Jobs</span>
                     </div>
                   </Link>
-                  <Link to="/Internship" class="dropdown-item d-flex align-items-center">
+                  <Link
+                    to="/Internship"
+                    class="dropdown-item d-flex align-items-center"
+                  >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
                         <img
@@ -250,9 +270,7 @@ export default function SampleResume(props) {
                       </div>
                     </div>
                     <div>
-                      
-                        <span class="font-weight-bold">Internship</span>
-                     
+                      <span class="font-weight-bold">Internship</span>
                     </div>
                   </Link>
                 </div>

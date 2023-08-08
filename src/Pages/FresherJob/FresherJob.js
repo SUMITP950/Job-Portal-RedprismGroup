@@ -115,26 +115,26 @@ export default function JobSearch() {
   }, []);
 
   // get last search details
-  useEffect(() => {
-    axios
-      .get(
-        "http://testredprism.co/api/jobSearch/getLastSearchDetails",
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       "http://testredprism.co/api/jobSearch/getLastSearchDetails",
 
-        {
-          headers: {
-            "auth-token": localStorage.getItem("authToken"),
-          },
-        }
-      )
-      .then((res) => {
-        setTechno(res.data.employeeSearchDetails.tech_code);
-        setLocation(res.data.employeeSearchDetails.location_code);
-        setExperience(res.data.employeeSearchDetails.exp_code);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  //       {
+  //         headers: {
+  //           "auth-token": localStorage.getItem("authToken"),
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       setTechno(res.data.employeeSearchDetails.tech_code);
+  //       setLocation(res.data.employeeSearchDetails.location_code);
+  //       setExperience(res.data.employeeSearchDetails.exp_code);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   // get job list
   useEffect(() => {
@@ -163,7 +163,9 @@ export default function JobSearch() {
           tech_code: techno,
           location_code: location,
           exp_code: experience,
+          type: "Fresher",
           from_index: 0,
+
         },
         {
           headers: {
