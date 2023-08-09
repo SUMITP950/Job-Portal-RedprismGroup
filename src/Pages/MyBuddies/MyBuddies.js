@@ -1,23 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import "../../App.css";
-import { Link } from "react-router-dom";
-import Select from "react-select";
+import { FaUserPlus, FaUserCheck, FaUserSlash } from "react-icons/fa";
+import { FaUserXmark } from "react-icons/fa6";
 
 export default function MyBuddies(props) {
+  const [userDetails, SetUserDetails] = useState("");
+
   useEffect(() => {
-    document.title = "My Buddies";
+    document.title = "MyBuddies";
   }, []);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  //Protecting this page
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      navigate("/");
+    }
+  }, []);
+
+  // Get user details
+  useEffect(() => {
+    axios
+      .get("http://testredprism.co/api/getUserDetails", {
+        headers: {
+          "auth-token": localStorage.getItem("authToken"),
+        },
+      })
+      .then((res) => {
+        SetUserDetails(res.data.userDetails);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
       <div class="py-4">
-        <div class="container-fluid body-padding">
+        <div class="container-fluid">
           <div class="row justify-content-around">
             <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
               <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
@@ -28,23 +50,6 @@ export default function MyBuddies(props) {
                   <div class="col-lg-3"> </div>
 
                   <div class="col-lg-4">
-                    {/* <Select
-                      placeholder={"Search Buddies ..."}
-                      styles={{
-                        control:(baseStyles, state) => ({
-                            ...baseStyles,borderRadius:"50px"}),
-                       
-                        indicatorsContainer: (baseStyles, state) => ({
-                          ...baseStyles,
-                          display: "none",
-                        }),
-
-                        indicatorSeparator: (baseStyles, state) => ({
-                          ...baseStyles,
-                          display: "none",
-                        }),
-                      }}
-                    /> */}
                     <form
                       class="d-none d-sm-inline-block form-inline m-auto my-md-0 mw-100 navbar-search border"
                       style={{ borderRadius: "30px" }}
@@ -122,76 +127,96 @@ export default function MyBuddies(props) {
                   >
                     <div class="p-3  align-items-center w-100" href="#">
                       <div class="row justify-content-center">
-                        <div class="col-md-12 ">
+                        <div class="col-md-12 d-flex justify-content-between ">
+                          
                           <div
-                            class="col-md-12 mt-5 "
+                            class="col-md-6 mt-3 mr-1"
                             style={{
-                              border: "1px solid gray",
+                              // border: "1px solid gray",
                               borderRadius: "15px",
-                              backgroundColor: "rgb(255, 255, 255)",
+                              backgroundColor: "#f4f5f7",
+                              
                             }}
                           >
-                            <div class="row px-2 padding-bottom">
+                            <div class="row px-2 padding-bottom" style={{paddingTop:'12px'}}>
                               <div class="col-md-3">
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
                                   alt=""
-                                  style={{ height: "100px" }}
+                                  style={{ height: "100px", borderRadius:"50%"}}
                                 />
                               </div>
-                              <div class="col-md-6">
-                                <h4 class="text-dark mt-2">Username</h4>
-                                <p class=" ">
-                                  Business Development Manager <br />{" "}
-                                  Confidential
-                                  <br />
-                                  Mumbai, Maharashtra
-                                </p>
-                              </div>
-                              <div class="col-md-3 d-flex align-items-center">
-                                <div class="ml-4">
-                                  <a class="btn btn-dark" href="/MyBuddies">
-                                    <i class="feather-minus-circle"></i>{" "}
-                                    Unfriend
-                                  </a>
+                              <div class="col-md-8" style={{paddingLeft:'25px'}}>
+                                <h5 class="text-dark mt-2">Username</h5>
+                                <p class=" ">Business Manager</p>
+                                <div class="d-flex mb-3">
+                                <div >
+                                  <button class="btn btn-primary">
+                                    <FaUserPlus
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Confirm
+                                  </button>
+                                </div>
+
+                                <div class="ml-2">
+                                  <button class="btn btn-primary">
+                                    <FaUserXmark
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Delete
+                                  </button>
+                                </div>
                                 </div>
                               </div>
+                              
+                        
                             </div>
                           </div>
                           <div
-                            class="col-md-12 mt-5 "
+                            class="col-md-6 mt-3 "
                             style={{
-                              border: "1px solid gray",
+                              // border: "1px solid gray",
                               borderRadius: "15px",
-                              backgroundColor: "rgb(255, 255, 255)",
+                              backgroundColor: "#f4f5f7",
                             }}
                           >
-                            <div class="row px-2 padding-bottom">
-                              <div class="col-md-3">
+                            <div class="row px-2 padding-bottom" style={{paddingTop:'12px'}}>
+                              <div class="col-md-3" >
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
                                   alt=""
-                                  style={{ height: "100px" }}
+                                  style={{ height: "100px", borderRadius:"50%" }}
                                 />
                               </div>
-                              <div class="col-md-6">
-                                <h4 class="text-dark mt-2">Username</h4>
-                                <p>
-                                  Business Development Manager
-                                  <br />
-                                  Confidential
-                                  <br />
-                                  Mumbai, Maharashtra
-                                </p>
-                              </div>
-                              <div class="col-md-3  d-flex align-items-center">
-                                <div class="ml-4">
-                                  <a class="btn btn-dark" href="/MyBuddies">
-                                    <i class="feather-minus-circle"></i>{" "}
-                                    Unfriend
-                                  </a>
+                              <div class="col-md-8" style={{paddingLeft:'25px'}} >
+                                <h5 class="text-dark mt-2">Username</h5>
+                                <p>Business Manager</p>
+                                <div class="d-flex">
+                                <div >
+                                  <button class="btn btn-primary">
+                                    <FaUserPlus
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Confirm
+                                  </button>
+                                </div>
+
+                                <div class="ml-2">
+                                  <button class="btn btn-primary">
+                                    <FaUserXmark
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Delete
+                                  </button>
+                                </div>
                                 </div>
                               </div>
+                             
                             </div>
                           </div>
                         </div>
@@ -206,77 +231,95 @@ export default function MyBuddies(props) {
                   >
                     <div class="p-3 w-100">
                       <div class="row justify-content-center">
-                        <div class="col-md-12 ">
+                      <div class="col-md-12 d-flex justify-content-between ">
+                          
                           <div
-                            class="col-md-12 mt-5 "
+                            class="col-md-6 mt-3 mr-1"
                             style={{
-                              border: "1px solid gray",
+                              // border: "1px solid gray",
                               borderRadius: "15px",
-                              backgroundColor: "rgb(255, 255, 255)",
+                              backgroundColor: "#f4f5f7",
                             }}
                           >
-                            <div class="row px-2 padding-bottom">
+                            <div class="row px-2 padding-bottom" style={{paddingTop:'12px'}}>
                               <div class="col-md-3">
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
                                   alt=""
-                                  style={{ height: "100px" }}
+                                  style={{ height: "100px", borderRadius:"50%"}}
                                 />
                               </div>
-                              <div class="col-md-6">
-                                <h4 class="text-dark mt-2">Username</h4>
-                                <p class=" ">
-                                  Business Development Manager
-                                  <br />
-                                  Confidential
-                                  <br />
-                                  Mumbai, Maharashtra
-                                </p>
-                              </div>
-                              <div class="col-md-3 d-flex align-items-center">
-                                <div class="ml-4">
-                                  <a class="btn btn-dark" href="/MyBuddies">
-                                    <i class="feather-plus-circle"></i> Accept
-                                    request
-                                  </a>
+                              <div class="col-md-8" style={{paddingLeft:'25px'}}>
+                                <h5 class="text-dark mt-2">Username</h5>
+                                <p class=" ">Business Manager</p>
+                                <div class="d-flex mb-3">
+                                <div >
+                                  <button class="btn btn-primary">
+                                    <FaUserPlus
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Confirm
+                                  </button>
+                                </div>
+
+                                <div class="ml-2">
+                                  <button class="btn btn-primary">
+                                    <FaUserXmark
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Delete
+                                  </button>
+                                </div>
                                 </div>
                               </div>
+                              
+                        
                             </div>
                           </div>
                           <div
-                            class="col-md-12 mt-5 "
+                            class="col-md-6 mt-3 "
                             style={{
-                              border: "1px solid gray",
+                              // border: "1px solid gray",
                               borderRadius: "15px",
-                              backgroundColor: "rgb(255, 255, 255)",
+                              backgroundColor: "#f4f5f7",
                             }}
                           >
-                            <div class="row px-2 padding-bottom">
-                              <div class="col-md-3">
+                            <div class="row px-2 padding-bottom" style={{paddingTop:'12px'}}>
+                              <div class="col-md-3" >
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
                                   alt=""
-                                  style={{ height: "100px" }}
+                                  style={{ height: "100px", borderRadius:"50%" }}
                                 />
                               </div>
-                              <div class="col-md-6">
-                                <h4 class="text-dark mt-2">Username</h4>
-                                <p class=" ">
-                                  Business Development Manager
-                                  <br />
-                                  Confidential
-                                  <br />
-                                  Mumbai, Maharashtra
-                                </p>
-                              </div>
-                              <div class="col-md-3  d-flex align-items-center">
-                                <div class="ml-4">
-                                  <a class="btn btn-dark" href="/MyBuddies">
-                                    <i class="feather-plus-circle"></i> Accept
-                                    request
-                                  </a>
+                              <div class="col-md-8" style={{paddingLeft:'25px'}}>
+                                <h5 class="text-dark mt-2">Username</h5>
+                                <p>Business Manager</p>
+                                <div class="d-flex">
+                                <div >
+                                  <button class="btn btn-primary">
+                                    <FaUserPlus
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Confirm
+                                  </button>
+                                </div>
+
+                                <div class="ml-2">
+                                  <button class="btn btn-primary">
+                                    <FaUserXmark
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Delete
+                                  </button>
+                                </div>
                                 </div>
                               </div>
+                             
                             </div>
                           </div>
                         </div>
@@ -291,75 +334,95 @@ export default function MyBuddies(props) {
                   >
                     <div class="p-3 w-100">
                       <div class="row justify-content-center">
-                        <div class="col-md-12 ">
+                      <div class="col-md-12 d-flex justify-content-between ">
+                          
                           <div
-                            class="col-md-12 mt-5 "
+                            class="col-md-6 mt-3 mr-1"
                             style={{
-                              border: "1px solid gray",
+                              // border: "1px solid gray",
                               borderRadius: "15px",
-                              backgroundColor: "rgb(255, 255, 255)",
+                              backgroundColor: "#f4f5f7",
                             }}
                           >
-                            <div class="row px-2 padding-bottom">
+                            <div class="row px-2 padding-bottom" style={{paddingTop:'12px'}}>
                               <div class="col-md-3">
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
                                   alt=""
-                                  style={{ height: "100px" }}
+                                  style={{ height: "100px", borderRadius:"50%"}}
                                 />
                               </div>
-                              <div class="col-md-6">
-                                <h4 class="text-dark mt-2">Username</h4>
-                                <p class=" ">
-                                  Business Development Manager
-                                  <br />
-                                  Confidential
-                                  <br />
-                                  Mumbai, Maharashtra
-                                </p>
-                              </div>
-                              <div class="col-md-3 d-flex align-items-center">
-                                <div class="ml-4">
-                                  <a class="btn btn-dark" href="/MyBuddies">
-                                    <i class="feather-send"></i> Send Request
-                                  </a>
+                              <div class="col-md-8" style={{paddingLeft:'25px'}}>
+                                <h5 class="text-dark mt-2">Username</h5>
+                                <p class=" ">Business Manager</p>
+                                <div class="d-flex mb-3">
+                                <div >
+                                  <button class="btn btn-primary">
+                                    <FaUserPlus
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Confirm
+                                  </button>
+                                </div>
+
+                                <div class="ml-2">
+                                  <button class="btn btn-primary">
+                                    <FaUserXmark
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Delete
+                                  </button>
+                                </div>
                                 </div>
                               </div>
+                              
+                        
                             </div>
                           </div>
                           <div
-                            class="col-md-12 mt-5 "
+                            class="col-md-6 mt-3 "
                             style={{
-                              border: "1px solid gray",
+                              // border: "1px solid gray",
                               borderRadius: "15px",
-                              backgroundColor: "rgb(255, 255, 255)",
+                              backgroundColor: "#f4f5f7",
                             }}
                           >
-                            <div class="row px-2 padding-bottom">
-                              <div class="col-md-3">
+                            <div class="row px-2 padding-bottom" style={{paddingTop:'12px'}}>
+                              <div class="col-md-3" >
                                 <img
                                   src="img/user/man-avatar-profile-picture-vector-illustration_268834-538.avif"
                                   alt=""
-                                  style={{ height: "100px" }}
+                                  style={{ height: "100px", borderRadius:"50%" }}
                                 />
                               </div>
-                              <div class="col-md-6">
-                                <h4 class="text-dark mt-2">Username</h4>
-                                <p class=" ">
-                                  Business Development Manager
-                                  <br />
-                                  Confidential
-                                  <br />
-                                  Mumbai, Maharashtra
-                                </p>
-                              </div>
-                              <div class="col-md-3  d-flex align-items-center">
-                                <div class="ml-4">
-                                  <a class="btn btn-dark" href="/MyBuddies">
-                                    <i class="feather-send"></i> Send Request
-                                  </a>
+                              <div class="col-md-8" style={{paddingLeft:'25px'}}>
+                                <h5 class="text-dark mt-2">Username</h5>
+                                <p>Business Manager</p>
+                                <div class="d-flex">
+                                <div >
+                                  <button class="btn btn-primary">
+                                    <FaUserPlus
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Confirm
+                                  </button>
+                                </div>
+
+                                <div class="ml-2">
+                                  <button class="btn btn-primary">
+                                    <FaUserXmark
+                                      size={20}
+                                      className="text-light"
+                                    />
+                                    Delete
+                                  </button>
+                                </div>
                                 </div>
                               </div>
+                             
                             </div>
                           </div>
                         </div>
@@ -371,40 +434,26 @@ export default function MyBuddies(props) {
             </main>
             <aside class="col col-xl-2 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
-                <div class="shadow-sm pt-4 pb-4">
-                  <a
-                    class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
-                  >
-                    <div class="mr-3">
+                <div class="shadow-sm pt-4 pb-3">
+                  <div class="dropdown-item d-flex align-items-center">
+                    <div class="mr-2">
                       <div class="icon-circle-profile">
                         <i class="feather-user left-menu-icon"></i>
                       </div>
                     </div>
                     <div>
-                      <Link to="/Profile">
-                        <span class="font-weight-bold">User Name</span>
-                      </Link>
-                    </div>
-                  </a>
-                  <a
-                    class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
-                  >
-                    <div class="mr-3">
-                      <div class="icon-circle-profile">
-                        <i class="feather-edit left-menu-icon"></i>
-                      </div>
+                      <h5 class="font-weight-bold">{userDetails.user_name}</h5>
                     </div>
                     <div>
-                      <Link to="/ProfileEdit">
-                        <span class="font-weight-bold">Edit Profile</span>
-                      </Link>
+                      <h6 className="font-weight-bold ml-1 line-reduce">
+                        ({userDetails.employee_type})
+                      </h6>
                     </div>
-                  </a>
-                  <a
+                  </div>
+
+                  <Link
+                    to="/Profile"
                     class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
                   >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
@@ -412,14 +461,12 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Profile">
-                        <span class="font-weight-bold">User Profile</span>
-                      </Link>
+                      <span class="font-weight-bold">My Profile</span>
                     </div>
-                  </a>
-                  <a
+                  </Link>
+                  <Link
+                    to="/MyBuddies"
                     class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
                   >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
@@ -427,14 +474,12 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/MyBuddies">
-                        <span class="font-weight-bold">My Buddies</span>
-                      </Link>
+                      <span class="font-weight-bold">My Buddies</span>
                     </div>
-                  </a>
-                  <a
+                  </Link>
+                  <Link
+                    to="/jobPost"
                     class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
                   >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
@@ -442,14 +487,12 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Jobs">
-                        <span class="font-weight-bold">Jobs</span>
-                      </Link>
+                      <span class="font-weight-bold">Job Post</span>
                     </div>
-                  </a>
-                  <a
+                  </Link>
+                  <Link
+                    to="/walkingjob"
                     class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
                   >
                     <div class="mr-3">
                       <div class="icon-circle-profile">
@@ -457,21 +500,36 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Jobprofile">
-                        <span class="font-weight-bold">My Jobs</span>
-                      </Link>
+                      <span class="font-weight-bold">Walking Job</span>
                     </div>
-                  </a>
+                  </Link>
+                  <Link
+                    to="/Jobsearch"
+                    class="dropdown-item d-flex align-items-center"
+                  >
+                    <div class="mr-3">
+                      <div class="icon-circle-profile ">
+                        <img
+                          src="img/icon/2255545.png"
+                          alt=""
+                          class="icon-image"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <span class="font-weight-bold">Job Search</span>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </aside>
             <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12 aside-tag">
               <div class="border rounded bg-white mb-3">
-                <div class="shadow-sm">
-                  <h6 class="pt-3 text-center">Other Option</h6>
-                  <a
+                <div class="shadow-sm pt-3 pb-4">
+                  <h6 class="pt-2 text-center">Other Option</h6>
+                  <Link
+                    to="/Setting"
                     class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
                   >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
@@ -479,14 +537,12 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Setting">
-                        <span class="font-weight-bold">Settings</span>
-                      </Link>
+                      <span class="font-weight-bold">Settings</span>
                     </div>
-                  </a>
-                  <a
+                  </Link>
+                  <Link
+                    to="/SampleResume"
                     class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
                   >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
@@ -494,14 +550,12 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/SampleResume">
-                        <span class="font-weight-bold">Simple Resume</span>
-                      </Link>
+                      <span class="font-weight-bold">Sample Resume</span>
                     </div>
-                  </a>
-                  <a
+                  </Link>
+                  <Link
+                    to="/Training"
                     class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
                   >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
@@ -509,14 +563,12 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Training">
-                        <span class="font-weight-bold">Trainings</span>
-                      </Link>
+                      <span class="font-weight-bold">Trainings</span>
                     </div>
-                  </a>
-                  <a
+                  </Link>
+                  <Link
+                    to="/FresherJob"
                     class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
                   >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
@@ -528,14 +580,12 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/FresherJob">
-                        <span class="font-weight-bold">Fresher Jobs</span>
-                      </Link>
+                      <span class="font-weight-bold">Fresher Jobs</span>
                     </div>
-                  </a>
-                  <a
+                  </Link>
+                  <Link
+                    to="/Internship"
                     class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
                   >
                     <div class="mr-3">
                       <div class="icon-circle-profile border-rm">
@@ -547,30 +597,9 @@ export default function MyBuddies(props) {
                       </div>
                     </div>
                     <div>
-                      <Link to="/Internship">
-                        <span class="font-weight-bold">Internship</span>
-                      </Link>
+                      <span class="font-weight-bold">Internship</span>
                     </div>
-                  </a>
-                  <a
-                    class="dropdown-item d-flex align-items-center"
-                    href="notifications.html"
-                  >
-                    <div class="mr-3">
-                      <div class="icon-circle-profile border-rm">
-                        <img
-                          src="https://static.thenounproject.com/png/960899-200.png"
-                          alt=""
-                          class="icon-image"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Link to="/">
-                        <span class="font-weight-bold">Sign Out</span>
-                      </Link>
-                    </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </aside>

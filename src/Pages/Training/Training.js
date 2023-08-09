@@ -60,7 +60,7 @@ export default function Training(props) {
   return (
     <>
       <div className="py-4">
-        <div className="container-fluid body-padding">
+        <div className="container-fluid">
           <div className="row justify-content-around">
             <aside class="col col-xl-2 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
               <div class="border rounded bg-white mb-3">
