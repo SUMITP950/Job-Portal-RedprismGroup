@@ -20,7 +20,7 @@ export default function App() {
         }}
       >
         
-    <CircleLoader color="blue" />
+    {/* <CircleLoader color="blue" /> */}
         
       </div>
       <ToastContainer

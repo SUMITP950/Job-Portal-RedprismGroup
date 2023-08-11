@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { toast } from "react-toastify";
+import { _, toaster } from "../../Component/Controller/main_controller";
 
 function Sendotp() {
   useEffect(() => {
@@ -33,6 +33,7 @@ function Sendotp() {
     
  
   const handleApi=()=>{
+    const toastId = toaster('load');
     if(formik.values.mobile){
       axios
         .post("http://testredprism.co/api/hrForgotPassword/sendOtp", {
@@ -40,19 +41,17 @@ function Sendotp() {
         })
         .then((response) => {
           
-        if(response.data.status==="success"){
+          toaster(response.data.status, toastId, response.data.mssg);
           formik.values.otpid = response.data.otp_id;
           setShowCreatePass(true)
           alert(`Your otp is ${response.data.otp}`);
           // toast.success(`${response.data.mssg}`);
-          }
-        if(response.data.status==="error"){
-            toast.error(`${response.data.mssg}`);
-          }
+         
         })
         .catch((error) => {
         
-          toast.error(`Failed : ${error.message}`);
+          toaster('error', toastId, 'Some Error Occurred. Please Try After Some Time');
+
         });
     }
   }
@@ -62,34 +61,34 @@ function Sendotp() {
     {
       showCreatePass ? <CreatePassword otp_id={formik.values.otpid} ph_num={formik.values.mobile} /> : 
     
-      <div class="d-lg-flex half">
-        <div class="bg order-1 order-md-2 d-none d-md-block login-bg-img-otp"></div>
-        <div class="contents order-2 order-md-1">
-          <div class="container">
-            <div class="row align-items-center justify-content-center login-page-height">
-              <div class="col-md-7">
-                <h3 class="text-center">Forgot Your password ?</h3>
-                {/* <!-- <p class="mb-4 text-center">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
+      <div className="d-lg-flex half">
+        <div className="bg order-1 order-md-2 d-none d-md-block login-bg-img-otp"></div>
+        <div className="contents order-2 order-md-1">
+          <div className="container">
+            <div className="row align-items-center justify-content-center login-page-height">
+              <div className="col-md-7">
+                <h3 className="text-center">Forgot Your password ?</h3>
+                {/* <!-- <p className="mb-4 text-center">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
                             adipisicing.</p> --> */}
 
-                <div class="container card shadow d-flex justify-content-center mt-5">
+                <div className="container card shadow d-flex justify-content-center mt-5">
                   {/* <!-- nav options --> */}
 
-                  <div class="tab-content" id="myTab p-3">
+                  <div className="tab-content" id="myTab p-3">
                     {/* <!-- Login Via Mobile Username --> */}
                     <div
-                      class="tab-pane fade show active pt-3"
+                      className="tab-pane fade show active pt-3"
                       id="home"
                       role="tabpanel"
                       aria-labelledby="pills-home-tab"
                     >
                       <form onSubmit={formik.handleSubmit}>
-                        <div class="form-group last mb-3">
+                        <div className="form-group last mb-3">
                           <label for="password">Enter Your Mobile Number</label>
                           <input
                             type="number"
                             name="mobile"
-                            class="form-control"
+                            className="form-control"
                             placeholder="Enter Mobile Number"
                             id="password"
                             onChange={formik.handleChange}
@@ -97,23 +96,23 @@ function Sendotp() {
                             
                           />
                           {formik.errors.mobile && (
-                            <em style={{ color: "red" }}>
+                            <p classNameName="inp-alert">
                               {formik.errors.mobile}
-                            </em>
+                            </p>
                           )}
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-primary" onClick={handleApi}>
+                        <button type="submit" className="btn btn-block btn-primary" onClick={handleApi}>
                           <strong>Send OTP</strong>
                         </button>
 
-                        <div class="d-flex mb-3 align-items-center mt-3">
-                          <span class="ml-auto">
+                        <div className="d-flex mb-3 align-items-center mt-3">
+                          <span className="ml-auto">
                             <Link to="/SigninAsHr">
                               Back to Login
                               </Link>
                           </span>
-                          {/* <!-- <span class="ml-auto"><a href="#" class="forgot-pass"><strong>Creat a new
+                          {/* <!-- <span className="ml-auto"><a href="#" className="forgot-pass"><strong>Creat a new
                                                         account</strong></a></span> --> */}
                         </div>
                       </form>
@@ -172,6 +171,7 @@ console.log(props.ph_num);
 
 
   const handleCreatePass=()=>{
+    const toastId = toaster('load');
     if(formik.values.otp && formik.values.newpassword){
       axios
       .post("http://testredprism.co/api/hrForgotPassword/savePassword", {
@@ -181,50 +181,47 @@ console.log(props.ph_num);
           password: formik.values.newpassword,
       })
       .then((response) => {
-      if(response.data.status==="success"){
-        toast.success(`${response.data.mssg}`)
+        toaster(response.data.status, toastId, response.data.mssg);
         navigate("/SigninAsHr");
-        }
-      if(response.data.status==="error"){
-          toast.error(`${response.data.mssg}`);
-        }
+
+     
       })
       .catch((error) => {
         // console.error(error);
-        toast.error(`Failed : ${error.message}`);
+        toaster('error', toastId, 'Some Error Occurred. Please Try After Some Time');
       });
     }
   }
 
   return(
-    <div class="d-lg-flex half">
-    <div class="bg order-1 order-md-2 d-none d-md-block login-bg-img-otp"></div>
-    <div class="contents order-2 order-md-1">
-      <div class="container">
-        <div class="row align-items-center justify-content-center login-page-height">
-          <div class="col-md-7">
-            <h3 class="text-center">Forgot Your password ?</h3>
-            {/* <!-- <p class="mb-4 text-center">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
+    <div className="d-lg-flex half">
+    <div className="bg order-1 order-md-2 d-none d-md-block login-bg-img-otp"></div>
+    <div className="contents order-2 order-md-1">
+      <div className="container">
+        <div className="row align-items-center justify-content-center login-page-height">
+          <div className="col-md-7">
+            <h3 className="text-center">Forgot Your password ?</h3>
+            {/* <!-- <p className="mb-4 text-center">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
                         adipisicing.</p> --> */}
 
-            <div class="container card shadow d-flex justify-content-center mt-5">
+            <div className="container card shadow d-flex justify-content-center mt-5">
               {/* <!-- nav options --> */}
 
-              <div class="tab-content" id="myTab p-3">
+              <div className="tab-content" id="myTab p-3">
                 {/* <!-- Login Via Mobile Username --> */}
                 <div
-                  class="tab-pane fade show active pt-3"
+                  className="tab-pane fade show active pt-3"
                   id="home"
                   role="tabpanel"
                   aria-labelledby="pills-home-tab"
                 >
                   <form onSubmit={formik.handleSubmit}>
-                    <div class="form-group last mb-3">
+                    <div className="form-group last mb-3">
                       <label for="password">Enter Your OTP</label>
                       <input
                         type="text"
                         name="otp"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Enter OTP"
                         id="password"
                         onChange={formik.handleChange}
@@ -237,12 +234,12 @@ console.log(props.ph_num);
                         </em>
                       )}
                       </div>
-                      <div class="form-group last mb-3">
+                      <div className="form-group last mb-3">
                        <label for="password">Create New Password</label>
                       <input
                         type="password"
                         name="newpassword"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Enter new password"
                         id="password"
                         onChange={formik.handleChange}
@@ -256,17 +253,17 @@ console.log(props.ph_num);
                       )}
                     </div>
 
-                    <button type="submit" class="btn btn-block btn-primary" onClick={handleCreatePass}>
+                    <button type="submit" className="btn btn-block btn-primary" onClick={handleCreatePass}>
                       <strong>Confirm Password</strong>
                     </button>
 
-                    <div class="d-flex mb-3 align-items-center mt-3">
-                      <span class="ml-auto">
-                        <Link to="/SigninAsHr">
+                    <div className="d-flex mb-3 align-items-center mt-3">
+                      <span className="ml-auto">
+                        <Link to="/hr-sign-in">
                           Back to Login
                           </Link>
                       </span>
-                      {/* <!-- <span class="ml-auto"><a href="#" class="forgot-pass"><strong>Creat a new
+                      {/* <!-- <span className="ml-auto"><a href="#" className="forgot-pass"><strong>Creat a new
                                                     account</strong></a></span> --> */}
                     </div>
                   </form>
